@@ -1,0 +1,195 @@
+"""The extractor interface and the relationship schema both implementations share.
+
+One design decision worth stating, because it deviates from the spec's record
+shape: **the model is never asked for `source_url`, `form_type`, or
+`filing_date`.** Those are facts about the filing we just fetched, so the
+extractor stamps them from the `Filing` object. A model asked to reproduce a
+URL will eventually produce a plausible one that 404s, and a citation that
+points at the wrong filing is worse than no citation.
+
+The resulting records have exactly the shape Decision 3 specifies. What changes
+is who fills in which field, and therefore what the M3 check is actually
+testing: `source_sentence` — the one field that can be fabricated.
+"""
+
+from __future__ import annotations
+
+from dataclasses import dataclass
+from typing import Protocol, runtime_checkable
+
+from ..edgar import Filing
+
+# --- what the model is asked to produce -------------------------------------
+# Structured outputs reject most JSON Schema constraints (no minLength, no
+# maximum, no recursion). Every object needs additionalProperties: false and a
+# required list naming every property; nullable fields are spelled as an anyOf
+# against null rather than a type union.
+RELATIONSHIP_SCHEMA: dict = {
+    "type": "object",
+    "properties": {
+        "relationships": {
+            "type": "array",
+            "description": "Every supply relationship stated in the text. Empty if none.",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "buyer_name_raw": {
+                        "type": "string",
+                        "description": (
+                            "The purchasing party, spelled exactly as the filing "
+                            "spells it. Do not expand abbreviations or add Inc./Corp."
+                        ),
+                    },
+                    "supplier_name_raw": {
+                        "type": "string",
+                        "description": (
+                            "The supplying party, spelled exactly as the filing "
+                            "spells it. If the filing says 'a limited number of "
+                            "suppliers' without naming them, do not invent a name — "
+                            "skip the relationship entirely."
+                        ),
+                    },
+                    "relationship_type": {
+                        "type": "string",
+                        "enum": [
+                            "supplies",
+                            "purchases_from",
+                            "manufactures_for",
+                            "leases_capacity_to",
+                            "unclear",
+                        ],
+                        "description": (
+                            "Use 'unclear' when the filing describes a relationship "
+                            "without saying which direction goods or services flow. "
+                            "'Strategic partnership' is unclear, not supplies."
+                        ),
+                    },
+                    "product_or_service": {
+                        "anyOf": [{"type": "string"}, {"type": "null"}],
+                        "description": "What is supplied, if the filing says. Otherwise null.",
+                    },
+                    "quantified_pct": {
+                        "anyOf": [{"type": "number"}, {"type": "null"}],
+                        "description": (
+                            "The percentage stated in the filing, e.g. 19 for '19% of "
+                            "revenue'. Null unless the filing states a number."
+                        ),
+                    },
+                    "quantified_basis": {
+                        "anyOf": [
+                            {"type": "string", "enum": ["revenue", "cost"]},
+                            {"type": "null"},
+                        ],
+                        "description": "What the percentage is a share of. Null if no percentage.",
+                    },
+                    "source_sentence": {
+                        "type": "string",
+                        "description": (
+                            "The sentence supporting this relationship, copied "
+                            "VERBATIM from the text. Character for character, "
+                            "including punctuation. Do not summarise, join two "
+                            "sentences, correct typos, or trim words. This is "
+                            "checked against the filing and the record is discarded "
+                            "if it does not appear."
+                        ),
+                    },
+                    "extraction_confidence": {
+                        "type": "string",
+                        "enum": ["high", "medium", "low"],
+                        "description": (
+                            "high: the sentence names both parties and the "
+                            "relationship. medium: one party or the direction is "
+                            "inferred from nearby context. low: a reading of the "
+                            "sentence rather than a statement in it."
+                        ),
+                    },
+                },
+                "required": [
+                    "buyer_name_raw",
+                    "supplier_name_raw",
+                    "relationship_type",
+                    "product_or_service",
+                    "quantified_pct",
+                    "quantified_basis",
+                    "source_sentence",
+                    "extraction_confidence",
+                ],
+                "additionalProperties": False,
+            },
+        }
+    },
+    "required": ["relationships"],
+    "additionalProperties": False,
+}
+
+# Fields the extractor stamps rather than the model producing them.
+PROVENANCE_FIELDS = ("source_url", "form_type", "filing_date")
+
+SYSTEM_PROMPT = """\
+You extract supply chain relationships from SEC filings for a dataset where \
+every edge must be traceable to a specific sentence.
+
+Rules, in order of importance:
+
+1. Only report a relationship that the text states. Do not use knowledge you \
+have about these companies from anywhere else. If you know NVIDIA supplies \
+Microsoft but this filing does not say so, that relationship does not exist \
+for our purposes.
+2. `source_sentence` must be copied verbatim from the text. It is string-matched \
+back against the filing and discarded if it does not appear. A paraphrase is \
+worse than no extraction, because it looks like evidence and is not.
+3. Both parties must be named in the text. Filings often say "a limited number \
+of suppliers" or "certain third-party manufacturers" without naming anyone. \
+Those sentences describe a real dependency but support no edge — skip them.
+4. Prefer `unclear` over a guess. "We have strategic relationships with leading \
+semiconductor providers" states that a relationship exists and nothing about \
+its direction.
+5. Returning an empty list is a correct answer. Most sections of most filings \
+contain no named supply relationship at all.
+"""
+
+USER_PROMPT = """\
+Filing: {company} ({ticker}), {form_type} filed {filing_date}
+Section: {section_label}
+
+Extract every supply relationship stated in the text below.
+
+<filing_text>
+{text}
+</filing_text>
+"""
+
+
+@dataclass(frozen=True)
+class ExtractionRequest:
+    """One unit of extraction: a stretch of text plus the filing it came from."""
+
+    filing: Filing
+    section_key: str
+    section_label: str
+    text: str
+
+
+def stamp_provenance(record: dict, filing: Filing) -> dict:
+    """Attach the filing's identity to a model-produced relationship."""
+    return {
+        **record,
+        "source_url": filing.document_url,
+        "form_type": filing.form_type,
+        "filing_date": filing.filing_date,
+    }
+
+
+@runtime_checkable
+class Extractor(Protocol):
+    """Anything that turns filing text into candidate relationship records.
+
+    Implementations return records only. They never verify, resolve, or store —
+    verification is verify.py's job and it must run over whatever this produces,
+    including records this extractor is confident about.
+    """
+
+    name: str
+
+    def extract(self, request: ExtractionRequest) -> list[dict]:
+        ...

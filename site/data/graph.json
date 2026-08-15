@@ -1,0 +1,14 @@
+{
+  "meta": {
+    "data_as_of": null,
+    "node_count": 0,
+    "edge_count": 0,
+    "evidence_count": 0,
+    "unresolved_record_count": 0,
+    "excluded_companies": {},
+    "license": "Source filings are US government works in the public domain.",
+    "note": "Empty because no filing has been extracted and verified yet. Regenerate with `make refresh`."
+  },
+  "nodes": [],
+  "edges": []
+}

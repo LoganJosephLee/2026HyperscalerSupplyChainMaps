@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Hyperscaler Supply Chain Maps</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>AI Hyperscaler Supply Chain Maps</h1>
+  <span class="stamp" id="stamp">data as of &mdash;</span>
+  <nav>
+    <a href="limitations.html">Coverage &amp; limitations</a>
+    <a href="data/relationships.csv" download>CSV</a>
+    <a href="data/relationships.json" download>JSON</a>
+    <a href="https://github.com/LoganJosephLee/2026HyperscalerSupplyChainMaps">Source</a>
+  </nav>
+</header>
+
+<main>
+  <div id="graph">
+    <div id="empty-state">
+      <strong>The dataset is empty.</strong>
+      <p>
+        No relationship has been extracted and verified yet, so there is nothing to draw.
+        An empty graph is the honest state before the pipeline has run &mdash; it is not
+        a rendering failure.
+      </p>
+      <p><a href="limitations.html">What this map does and does not cover</a></p>
+    </div>
+    <div class="legend">
+      <div class="row"><span class="dot seed"></span> Seed company (the buyers)</div>
+      <div class="row"><span class="dot supplier"></span> Discovered in a filing</div>
+      <div class="row"><span class="bar"></span> Thickness = disclosed %</div>
+      <div class="row"><span class="bar dashed"></span> Relationship with no disclosed %</div>
+    </div>
+  </div>
+
+  <aside>
+    <h2 id="panel-title">Evidence</h2>
+    <div id="panel">
+      <p class="hint">
+        Click any edge to see the sentence that put it there &mdash; verbatim, with the
+        filing it came from and a link to that filing on EDGAR.
+      </p>
+    </div>
+  </aside>
+</main>
+
+<script src="vendor/sigma-bundle.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

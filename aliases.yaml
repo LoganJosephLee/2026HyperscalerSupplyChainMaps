@@ -1,0 +1,13 @@
+# Entity resolution decisions, made by hand and reviewed in version control.
+# aliases:  raw filing name -> the CIK it refers to
+# excluded: raw filing name -> why it is not in the dataset
+# Regenerate the queue with `hscm review build`; apply it with `hscm review apply`.
+aliases: {}
+excluded:
+  SK Hynix: Korean-listed. Does not file with the SEC, so no filing sentence can cite it.
+  SK hynix Inc.: Korean-listed. Does not file with the SEC, so no filing sentence can cite it.
+  Samsung Electronics: Korean-listed. Does not file with the SEC, so no filing sentence
+    can cite it. Its absence overstates Micron's apparent share of AI memory supply; see
+    the limitations page.
+  Samsung Electronics Co., Ltd.: Korean-listed. Does not file with the SEC, so no filing
+    sentence can cite it.

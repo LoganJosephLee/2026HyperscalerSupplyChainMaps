@@ -3,86 +3,126 @@
 A supply chain graph of the AI hyperscalers where every edge is traceable to a
 specific sentence in a specific SEC filing.
 
-Status: **M1 and M3's verification code are written. Neither has been run
-against a real filing yet.** See "Current status" below before trusting
-anything here.
+**Status: the pipeline is built end to end and the dataset is empty.** No filing
+has been fetched yet — the environment this was written in blocks `sec.gov` at
+the network policy level. Everything downstream of the fetch is written, tested
+against synthetic inputs, and waiting for real filings. See
+[Current status](#current-status) before trusting any of it.
 
 ## Setup
 
 ```bash
-uv sync --extra dev
+make setup
+export HSCM_EDGAR_CONTACT="you@example.com"   # SEC fair-access policy wants a real contact
 ```
 
-Set a contact address for SEC's fair-access policy (defaults to the repo
-owner's):
+## Rebuild the dataset
 
 ```bash
-export HSCM_EDGAR_CONTACT="you@example.com"
+make refresh    # fetch -> extract -> verify -> build, the whole pipeline
+make serve      # then open http://localhost:8000
+```
+
+`make refresh` is the single documented command. It is deliberately manual:
+there is no scheduled workflow, so the dataset never changes underneath you.
+Every page and both dataset exports carry a "data as of" stamp taken from the
+newest filing date in the data — not from today's date.
+
+To use the real extractor once you have an API key:
+
+```bash
+export ANTHROPIC_API_KEY=...
+export HSCM_EXTRACTOR=anthropic
+uv sync --extra anthropic
+make refresh
 ```
 
 ## Commands
 
 ```bash
-uv run hscm fetch                 # M1: cache the latest 10-K for each seed company
-uv run hscm fetch --form 20-F TSM # any of 10-K / 20-F / 10-Q / 8-K, any ticker
-uv run hscm sections              # M1: report what the section splitter found
-uv run hscm verify extractions.json --out report.json   # M3: hallucination check
-uv run pytest                     # unit tests
+uv run hscm fetch                    # M1: cache the latest 10-K for each seed company
+uv run hscm fetch --form 20-F TSM    # any of 10-K / 20-F / 10-Q / 8-K, any ticker
+uv run hscm sections                 # M1: report what the section splitter found
+uv run hscm extract                  # M2/M4: run the configured extractor
+uv run hscm verify data/extractions.json --out report.json   # M3: the hallucination check
+uv run hscm review build             # M5: queue unresolved names for a human
+uv run hscm review apply             # M5: fold decisions into aliases.yaml
+uv run hscm build                    # M7: verify, resolve, export the graph
+uv run hscm neo4j-load --dry-run     # M6: print the Cypher without a database
+make test
 ```
-
-`fetch` writes documents to `data/cache/filings/` and an index of them to
-`data/cache/manifest.json`. It is polite by default: 5 requests/second against
-SEC's limit of 10, backs off and retries when SEC throttles (403/429) or 5xxs,
-and never re-downloads a cached document unless you pass `--refresh`. The
-manifest accumulates across runs, so fetching 8-Ks does not unregister your
-10-Ks.
-
-Section splitting is form-aware: 10-K and 20-F by item, 10-Q by its own Part I /
-Part II numbering, and 8-K whole (a current report is one event, and its 1.01 /
-2.01 numbering shares nothing with the annual forms).
 
 ## Current status
 
 | Milestone | State |
 |---|---|
-| M1 — EDGAR fetcher, cache, section splitter | Written, **unverified against real filings** |
-| M2 — Extraction on the Microsoft 10-K | **Blocked** (no filing to extract from) |
+| M1 — EDGAR fetcher, cache, section splitter | Written, **never run against a real filing** |
+| M2 — Extraction on the Microsoft 10-K | **Blocked** — no filing to extract from, and no fixture can be written honestly without one |
 | M3 — Hallucination check | Logic written and unit-tested; not yet run on real extractions |
-| M4–M8 | Not started |
+| M4 — All six seeds | Pipeline written; runs when M1 runs |
+| M5 — Entity resolution + review queue | Written and tested; `aliases.yaml` seeded with the known non-filers |
+| M6 — Neo4j load + Cypher | Statements and queries written; **Neo4j never started** (Docker Hub also blocked here) |
+| M7 — JSON export + sigma.js front end | Built, and **verified in a real browser** against a test dataset |
+| M8 — Limitations page, `make refresh`, date stamp | Built |
 
-**Why M1 is unverified.** The environment this was written in blocks outbound
-access to `sec.gov`, `data.sec.gov`, `efts.sec.gov` and `gleif.org` at the
-network policy level (the egress proxy answers 403 to CONNECT). No filing could
-be fetched, so the section splitter has only been exercised against the
-synthetic 10-K in `tests/test_sections.py`. Real filing HTML is messier than any
-synthetic fixture, and the splitter is the part most likely to be wrong.
-Run `uv run hscm fetch && uv run hscm sections` on a machine with SEC access and
-read the output before extracting anything.
+**What "verified in a real browser" means.** The graph renders, force layout
+runs, clicking an edge opens the citation panel with the verbatim sentence, the
+form type, the filing date and a working EDGAR link, and clicking a node lists
+its disclosed counterparties. That was tested with Playwright against a
+synthetic graph held outside the repo. The interaction works; the data it will
+eventually show has not been checked.
 
-**Why M2 is blocked rather than stubbed.** Doing the extraction by hand requires
-the cached Microsoft 10-K. Writing a fixture without one would mean inventing
-filing sentences, which the project's ground rules prohibit outright.
+**Why M1 could not run.** The egress policy here answers 403 to `sec.gov`,
+`data.sec.gov`, `efts.sec.gov` and `gleif.org`. The section splitter has
+therefore only met synthetic 10-K/10-Q/8-K documents. Real filing HTML is
+messier than any fixture, and the splitter is the part most likely to be wrong —
+run `make fetch && uv run hscm sections` and read the output before trusting an
+extraction.
 
 ## Layout
 
 ```
-src/hscm/config.py    seed set, form types, paths, EDGAR access policy
-src/hscm/edgar.py     ticker -> CIK -> filing metadata -> cached document
-src/hscm/sections.py  HTML to text; Item splitting; concentration passages
-src/hscm/verify.py    M3 — structural validation and the hallucination check
-src/hscm/cli.py       fetch / sections / verify
+src/hscm/config.py     seed set, form types, paths, thresholds, extractor selection
+src/hscm/edgar.py      ticker -> CIK -> filing metadata -> cached document
+src/hscm/sections.py   HTML to text; Item splitting; concentration passages
+src/hscm/extract/      the Extractor interface, FixtureExtractor, AnthropicExtractor
+src/hscm/verify.py     M3 — structural validation and the hallucination check
+src/hscm/resolve.py    name -> CIK, review queue, aliases.yaml
+src/hscm/graph.py      companies and edges, JSON/CSV export, Cypher statements
+site/                  the static site: graph, citation panel, limitations page
+cypher/queries.cypher  the Cypher worth running once the graph is loaded
+aliases.yaml           human entity-resolution decisions, version controlled
 ```
+
+## Design decisions worth knowing before you read the code
+
+- **The model is never asked for `source_url`, `form_type` or `filing_date`.**
+  Those are facts about the filing we fetched, so the extractor stamps them. A
+  model asked to reproduce a URL eventually produces a plausible one that 404s.
+- **A near-miss sentence match counts as a failure.** "Nearly verbatim" is
+  precisely what a paraphrased — that is, fabricated — claim looks like. The
+  closest passage is reported for prompt debugging, never accepted as evidence.
+- **Edges are grouped by company pair in the site export, and kept one-per-
+  sentence in Neo4j and the downloadable dataset.** A canvas cannot draw forty
+  parallel lines legibly; a Cypher query about corroboration needs them separate.
+- **`country`, `sector` and `lei` are null.** They are not in
+  `company_tickers.json`, and GLEIF was unreachable here. Empty is honest.
 
 ## Data and licensing
 
-SEC filings are US government works in the public domain. Everything this
-project ingests comes from EDGAR, so the dataset can be redistributed and
-rebuilt by anyone. Commercial supply chain databases are deliberately not used.
+SEC filings are US government works in the public domain. Everything ingested
+comes from EDGAR, so the dataset can be redistributed and rebuilt by anyone.
+Commercial supply chain databases are deliberately not used.
+
+`site/vendor/sigma-bundle.js` is a vendored build of sigma.js, graphology and
+graphology-layout-forceatlas2 (MIT), so the site depends on no CDN and cannot
+break when someone else's host goes away. Rebuild it with esbuild from
+`site/vendor/sigma-bundle.entry.js`.
 
 ## Known exclusions
 
-Companies that do not file with the SEC are excluded from the dataset entirely
-— no placeholder nodes. That includes Samsung Electronics and SK Hynix, which
-are dominant in high-bandwidth memory. Their absence overstates Micron's
-apparent share of AI memory supply. This is documented rather than corrected
-for; the limitations page (M8) will name every such exclusion.
+Companies that do not file with the SEC are excluded from the dataset entirely —
+no placeholder nodes. That includes Samsung Electronics and SK Hynix, which are
+dominant in high-bandwidth memory. Their absence overstates Micron's apparent
+share of AI memory supply. This is documented rather than corrected for; every
+exclusion recorded in `aliases.yaml` is named on the limitations page.

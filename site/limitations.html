@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Coverage &amp; limitations — AI Hyperscaler Supply Chain Maps</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>Coverage &amp; limitations</h1>
+  <span class="stamp" id="stamp">data as of &mdash;</span>
+  <nav>
+    <a href="index.html">Graph</a>
+    <a href="data/relationships.csv" download>CSV</a>
+    <a href="data/relationships.json" download>JSON</a>
+  </nav>
+</header>
+
+<div class="page">
+
+<p>
+  This map is built from one source: filings on SEC EDGAR. Every edge is backed by a
+  sentence in a filing, and the sentence is shown to you when you click the edge. That
+  rule is what the project is for &mdash; and it produces specific, knowable gaps. They
+  are listed here rather than buried, because the way this map fails is somebody treating
+  it as complete.
+</p>
+
+<div class="callout">
+  <p>
+    <strong>An absent edge means nobody disclosed the relationship. It does not mean the
+    relationship does not exist.</strong> Most commercial relationships never appear in a
+    filing at all. Read this map as a floor on what is disclosed, never as a picture of
+    what is real.
+  </p>
+</div>
+
+<h2 id="coverage">What is currently in the dataset</h2>
+<table id="coverage-table">
+  <tbody>
+    <tr><th>Companies</th><td id="stat-nodes">&mdash;</td></tr>
+    <tr><th>Relationships</th><td id="stat-edges">&mdash;</td></tr>
+    <tr><th>Supporting sentences</th><td id="stat-evidence">&mdash;</td></tr>
+    <tr><th>Newest filing</th><td id="stat-asof">&mdash;</td></tr>
+    <tr><th>Records dropped in entity resolution</th><td id="stat-unresolved">&mdash;</td></tr>
+  </tbody>
+</table>
+<p id="empty-note" class="hint" hidden>
+  The dataset is currently empty. Nothing has been extracted and verified yet.
+</p>
+
+<h2>Companies excluded because they do not file with the SEC</h2>
+<p>
+  A company enters this graph only if it appears in a retrievable EDGAR filing sentence.
+  There are no placeholder nodes and no greyed-out entries for companies we know exist.
+  That is a deliberate choice with a real cost, and the largest instances of that cost are:
+</p>
+
+<table>
+  <thead><tr><th>Company</th><th>Why it is absent</th></tr></thead>
+  <tbody>
+    <tr>
+      <td>Samsung Electronics</td>
+      <td>Korean-listed. Does not file with the SEC, so no filing sentence can cite it.</td>
+    </tr>
+    <tr>
+      <td>SK Hynix</td>
+      <td>Korean-listed. Same.</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="callout">
+  <p>
+    <strong>This distorts the memory picture, and we are not correcting for it.</strong>
+    Samsung and SK Hynix are dominant suppliers of high-bandwidth memory. Excluding them
+    while including Micron &mdash; a US filer &mdash; makes Micron look like a far larger
+    share of AI memory supply than it is. An overstated Micron with this caveat attached is
+    defensible; an invented Samsung node would not be.
+  </p>
+</div>
+
+<div id="other-exclusions"></div>
+
+<h2>The 10% disclosure threshold</h2>
+<p>
+  Most of the quantified numbers in this dataset exist because of a disclosure rule, not
+  because companies chose to be forthcoming. US registrants must disclose customers that
+  account for more than 10% of revenue. The consequences for this map:
+</p>
+<ul>
+  <li>
+    A relationship worth 9% of a supplier's revenue is usually invisible. The threshold is
+    a cliff, not a gradient.
+  </li>
+  <li>
+    Disclosure is normally <em>anonymous</em> &mdash; &ldquo;one customer accounted for 19%
+    of revenue&rdquo; rather than naming that customer. Those sentences describe real
+    concentration and support no edge, so they are not in the graph.
+  </li>
+  <li>
+    Edges with no thickness are not small relationships. They are relationships where no
+    percentage was disclosed, which is the overwhelming majority.
+  </li>
+</ul>
+
+<h2>The seed set points at buyers, and disclosure runs the other way</h2>
+<p>
+  The six seed companies &mdash; Microsoft, Alphabet, Amazon, Meta, Oracle, CoreWeave
+  &mdash; are the demand side of the AI buildout. But naming obligations mostly fall on
+  <em>suppliers</em>: a chipmaker discloses that a large cloud provider is a major customer,
+  while the cloud provider's own 10-K typically says only that it depends on
+  &ldquo;a limited number of suppliers.&rdquo; Coverage is therefore thinner and less
+  quantified than the seed set suggests, and it improves only as supplier-side filings are
+  added to the dataset.
+</p>
+
+<h2>How an edge gets here</h2>
+<ol>
+  <li>The filing is fetched from EDGAR and cached.</li>
+  <li>It is split into sections; extraction reads Business, Risk Factors, and the
+      concentration passages in the financial statement notes.</li>
+  <li>A language model proposes relationships, each with a sentence it claims is verbatim.</li>
+  <li>
+    <strong>Every claimed sentence is string-matched back into the filing.</strong> Anything
+    that does not appear is discarded, not repaired. A near-miss counts as a failure: a
+    paraphrase is exactly what a fabricated claim looks like.
+  </li>
+  <li>Company names are matched against SEC's CIK registry. Anything below a high
+      confidence threshold goes to a human, whose decisions are recorded in a
+      version-controlled alias file.</li>
+</ol>
+<p>
+  Step 4 catches fabrication. It does not catch a model that read a real sentence and drew
+  the wrong conclusion from it &mdash; a real sentence attached to a wrong relationship
+  passes verification. The <code>relationship_type</code> of <code>unclear</code> exists so
+  that filings which state a relationship without stating its direction are not forced into
+  a precision they do not have.
+</p>
+
+<h2>Other things worth knowing</h2>
+<ul>
+  <li>
+    <strong>Foreign private issuers file 20-F, not 10-K.</strong> TSMC is on EDGAR and is
+    eligible, but discloses very little about named customers &mdash; so TSMC edges will
+    mostly come from the buyer side, where a US filer names it as a foundry dependency.
+  </li>
+  <li>
+    <strong>Filings are periodic.</strong> A relationship disclosed in an annual report may
+    have ended the day after it was filed. Every edge carries its filing date; treat old
+    dates accordingly.
+  </li>
+  <li>
+    <strong>Names that could not be resolved are dropped, and counted above.</strong> If a
+    filing names a supplier we cannot match to a CIK with confidence, the evidence is
+    excluded rather than attached to a guess.
+  </li>
+  <li>
+    <strong>Refreshes are manual.</strong> There is no scheduled job. The date stamp on
+    every page is the newest filing in the dataset, not today's date.
+  </li>
+</ul>
+
+<h2>Source and licence</h2>
+<p>
+  SEC filings are US government works in the public domain, so the underlying text can be
+  republished, linked, and rebuilt by anyone. No commercial supply chain database is used
+  as a source. The full dataset is downloadable as
+  <a href="data/relationships.csv" download>CSV</a> and
+  <a href="data/relationships.json" download>JSON</a>, and the code that produced it is
+  <a href="https://github.com/LoganJosephLee/2026HyperscalerSupplyChainMaps">public</a>.
+</p>
+
+</div>
+
+<script>
+fetch("data/graph.json", { cache: "no-store" })
+  .then((response) => response.json())
+  .then((data) => {
+    const meta = data.meta || {};
+    const setText = (id, value) => { document.getElementById(id).textContent = value; };
+    setText("stamp", meta.data_as_of ? `data as of ${meta.data_as_of}` : "data as of — (no filings yet)");
+    setText("stat-nodes", meta.node_count ?? 0);
+    setText("stat-edges", meta.edge_count ?? 0);
+    setText("stat-evidence", meta.evidence_count ?? 0);
+    setText("stat-asof", meta.data_as_of ?? "—");
+    setText("stat-unresolved", meta.unresolved_record_count ?? 0);
+    if (!meta.edge_count) document.getElementById("empty-note").hidden = false;
+
+    const others = Object.entries(meta.excluded_companies || {});
+    if (others.length) {
+      const rows = others
+        .map(([name, reason]) => `<tr><td>${name}</td><td>${reason}</td></tr>`)
+        .join("");
+      document.getElementById("other-exclusions").innerHTML =
+        `<h3>Further exclusions recorded while building this dataset</h3>
+         <table><thead><tr><th>Company</th><th>Why it is absent</th></tr></thead>
+         <tbody>${rows}</tbody></table>`;
+    }
+  })
+  .catch(() => {});
+</script>
+</body>
+</html>

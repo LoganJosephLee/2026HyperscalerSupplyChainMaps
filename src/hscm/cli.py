@@ -1,8 +1,12 @@
-"""Command line entry points for the milestones built so far.
+"""Command line entry points.
 
-    hscm fetch     M1 — cache the most recent filing of a form type per seed
-    hscm sections  M1 — show what the section splitter found, per cached filing
-    hscm verify    M3 — string-match extracted sentences back into the filings
+    hscm fetch       M1 — cache the most recent filing of a form type per seed
+    hscm sections    M1 — show what the section splitter found, per cached filing
+    hscm extract     M2/M4 — run the configured extractor over cached filings
+    hscm verify      M3 — string-match extracted sentences back into the filings
+    hscm review      M5 — build / apply the entity resolution review queue
+    hscm build       M7 — verify, resolve, and export the graph for the site
+    hscm neo4j-load  M6 — load the graph into Neo4j for Cypher work
 """
 
 from __future__ import annotations
@@ -176,6 +180,172 @@ def cmd_verify(args: argparse.Namespace) -> int:
     return 0 if report.failure_rate <= args.max_failure_rate else 1
 
 
+# --- M2/M4: extraction ------------------------------------------------------
+def cmd_extract(args: argparse.Namespace) -> int:
+    from .extract import ExtractionRequest, get_extractor
+
+    rows = read_manifest()
+    if not rows:
+        print("Cache is empty — run `hscm fetch` first.", file=sys.stderr)
+        return 1
+    if args.tickers:
+        wanted = {t.upper() for t in args.tickers}
+        rows = [r for r in rows if r["ticker"] in wanted]
+
+    extractor = get_extractor(args.extractor)
+    print(f"extractor: {extractor.name}")
+
+    records: list[dict] = []
+    for row in rows:
+        path = config.REPO_ROOT / row["cache_path"]
+        if not path.exists():
+            print(f"{row['ticker']}: cached file missing", file=sys.stderr)
+            continue
+
+        filing = Filing(
+            cik=row["cik"], ticker=row["ticker"], company_name=row["company_name"],
+            form_type=row["form_type"], filing_date=row["filing_date"],
+            report_date=row["report_date"], accession=row["accession"],
+            primary_document=row["primary_document"],
+        )
+        text = document_text(path.read_bytes())
+        sections = split_items(text, filing.form_type)
+
+        targets: list[tuple[str, str, str]] = []
+        for key in EXTRACTION_KEYS.get(filing.form_type.upper(), ()):
+            if key in sections:
+                targets.append((key, sections[key].label, sections[key].text))
+        # Concentration passages are extracted separately: they live in the
+        # financial statement notes rather than a numbered item, and they are
+        # where the quantified percentages are.
+        passages = find_concentration_passages(text)
+        if passages:
+            targets.append(
+                ("concentration", "Customer/supplier concentration passages",
+                 "\n\n".join(p.text for p in passages))
+            )
+
+        for key, label, section_text in targets:
+            found = extractor.extract(
+                ExtractionRequest(filing, key, label, section_text)
+            )
+            records.extend(found)
+            print(f"  {filing.ticker:<6} {key:<13} {len(section_text):>9,} chars -> {len(found)} record(s)")
+
+    out = Path(args.out) if args.out else config.DATA_DIR / "extractions.json"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(json.dumps(records, indent=2) + "\n")
+    print(f"\n{len(records)} record(s) written to {out}")
+    print("Nothing is trustworthy until `hscm verify` has run over it.")
+    return 0
+
+
+# --- M5: entity resolution --------------------------------------------------
+def _resolver(threshold: float | None = None):
+    from .resolve import Aliases, Resolver, Spine
+
+    return Resolver(Spine.load(), Aliases.load(), threshold)
+
+
+def cmd_review(args: argparse.Namespace) -> int:
+    from .resolve import Aliases, apply_review_queue, build_review_queue
+
+    if args.action == "build":
+        records = json.loads(Path(args.extractions).read_text())
+        path, pending = build_review_queue(records, _resolver(args.threshold))
+        print(f"{len(pending)} name(s) need a human decision -> {path}")
+        if pending:
+            print("\nFill in `decision` per row: accept | cik | exclude | skip")
+            print("  accept  — best_match_cik is right")
+            print("  cik     — put the correct CIK in the `cik` column")
+            print("  exclude — company is real but does not file with the SEC; give a reason")
+            print("  skip    — decide later\n")
+            for resolution in pending[:10]:
+                best = resolution.candidates[0] if resolution.candidates else None
+                guess = f"{best[1]} ({best[2]}) @ {resolution.score:.2f}" if best else "no candidate"
+                print(f"  {resolution.raw_name:<45} {guess}")
+        return 0
+
+    aliases = Aliases.load()
+    added, excluded, problems = apply_review_queue(aliases)
+    for problem in problems:
+        print(f"  !! {problem}", file=sys.stderr)
+    path = aliases.save()
+    print(f"{added} alias(es), {excluded} exclusion(s) written to {path}")
+    return 1 if problems else 0
+
+
+# --- M7/M8: graph build and export -----------------------------------------
+def cmd_build(args: argparse.Namespace) -> int:
+    from .graph import build_graph, export
+    from .resolve import Spine
+
+    records = json.loads(Path(args.extractions).read_text())
+    report = verify_records(records, _document_resolver())
+    print(report.summary())
+
+    supported = report.supported_records(records)
+    if not supported:
+        print(
+            "\nNo record survived verification — refusing to build a graph with no evidence.",
+            file=sys.stderr,
+        )
+        return 1
+
+    spine = Spine.load()
+    seed_ciks = {
+        entry.cik for entry in (spine.by_ticker(t) for t in config.SEED_TICKERS) if entry
+    }
+    graph = build_graph(supported, _resolver(), seed_ciks)
+
+    print(f"\nnodes: {len(graph.companies)}  edges: {len(graph.edges)}")
+    print(f"evidence records on edges: {sum(len(e.evidence) for e in graph.edges.values())}")
+    print(f"records dropped to unresolved names: {len(graph.unresolved)}")
+    print(f"data as of: {graph.data_as_of}")
+
+    for path in export(graph, supported):
+        print(f"  wrote {path.relative_to(config.REPO_ROOT)}")
+    return 0
+
+
+def cmd_neo4j_load(args: argparse.Namespace) -> int:
+    from .graph import build_graph, cypher_statements, export  # noqa: F401
+    from .resolve import Spine
+
+    records = json.loads(Path(args.extractions).read_text())
+    report = verify_records(records, _document_resolver())
+    supported = report.supported_records(records)
+
+    spine = Spine.load()
+    seed_ciks = {
+        entry.cik for entry in (spine.by_ticker(t) for t in config.SEED_TICKERS) if entry
+    }
+    statements = cypher_statements(build_graph(supported, _resolver(), seed_ciks))
+
+    if args.dry_run:
+        for statement, params in statements:
+            print(f"{statement};\n  -- {json.dumps(params, default=str)[:160]}")
+        print(f"\n{len(statements)} statement(s); not executed (--dry-run)")
+        return 0
+
+    try:
+        from neo4j import GraphDatabase
+    except ImportError:
+        print(
+            "neo4j driver not installed. `uv sync --extra neo4j`, or use --dry-run.",
+            file=sys.stderr,
+        )
+        return 1
+
+    driver = GraphDatabase.driver(args.uri, auth=(args.user, args.password))
+    with driver.session(database=args.database) as session:
+        for statement, params in statements:
+            session.run(statement, params)
+    driver.close()
+    print(f"loaded {len(statements)} statement(s) into {args.uri}")
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="hscm", description=__doc__)
     sub = parser.add_subparsers(dest="command", required=True)
@@ -197,6 +367,34 @@ def main(argv: list[str] | None = None) -> int:
     verify.add_argument("--out", help="write a JSON report here")
     verify.add_argument("--max-failure-rate", type=float, default=0.0)
     verify.set_defaults(func=cmd_verify)
+
+    default_extractions = str(config.DATA_DIR / "extractions.json")
+
+    extract = sub.add_parser("extract", help="run the configured extractor over cached filings")
+    extract.add_argument("tickers", nargs="*")
+    extract.add_argument("--extractor", choices=["fixture", "anthropic"],
+                         help=f"override HSCM_EXTRACTOR (currently {config.EXTRACTOR!r})")
+    extract.add_argument("--out")
+    extract.set_defaults(func=cmd_extract)
+
+    review = sub.add_parser("review", help="entity resolution review queue")
+    review.add_argument("action", choices=["build", "apply"])
+    review.add_argument("--extractions", default=default_extractions)
+    review.add_argument("--threshold", type=float, default=None)
+    review.set_defaults(func=cmd_review)
+
+    build = sub.add_parser("build", help="verify, resolve, and export the graph")
+    build.add_argument("--extractions", default=default_extractions)
+    build.set_defaults(func=cmd_build)
+
+    neo = sub.add_parser("neo4j-load", help="load the graph into Neo4j")
+    neo.add_argument("--extractions", default=default_extractions)
+    neo.add_argument("--uri", default="bolt://localhost:7687")
+    neo.add_argument("--user", default="neo4j")
+    neo.add_argument("--password", default="neo4jneo4j")
+    neo.add_argument("--database", default="neo4j")
+    neo.add_argument("--dry-run", action="store_true", help="print statements, touch no database")
+    neo.set_defaults(func=cmd_neo4j_load)
 
     args = parser.parse_args(argv)
     return args.func(args)

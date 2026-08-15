@@ -38,6 +38,27 @@ EDGAR_CONTACT = os.environ.get("HSCM_EDGAR_CONTACT", "logan.j.lee2007@gmail.com"
 USER_AGENT = f"2026HyperscalerSupplyChainMaps/0.1 ({EDGAR_CONTACT})"
 EDGAR_REQUESTS_PER_SECOND = 5.0
 
+# --- extraction (Decision 3) ------------------------------------------------
+# Which Extractor implementation runs. Nothing outside hscm.extract is aware of
+# which one is active. Flip to "anthropic" once ANTHROPIC_API_KEY is set.
+EXTRACTOR = os.environ.get("HSCM_EXTRACTOR", "fixture")
+_fixture_override = os.environ.get("HSCM_FIXTURE")
+FIXTURE_PATH = (
+    Path(_fixture_override) if _fixture_override else DATA_DIR / "fixtures" / "extractions.json"
+)
+
+# --- entity resolution (Decision 4) -----------------------------------------
+ALIASES_PATH = REPO_ROOT / "aliases.yaml"
+REVIEW_QUEUE_PATH = DATA_DIR / "review" / "entity_review_queue.csv"
+# Below this score a fuzzy match is not accepted automatically; it goes to the
+# review queue for a human. Deliberately high — a wrong merge is invisible once
+# it is in the graph, while a queue row is merely tedious.
+MATCH_ACCEPT_THRESHOLD = 0.93
+
+# --- outputs ----------------------------------------------------------------
+SITE_DIR = REPO_ROOT / "site"
+EXPORT_DIR = SITE_DIR / "data"
+
 SEC_WWW = "https://www.sec.gov"
 SEC_DATA = "https://data.sec.gov"
 COMPANY_TICKERS_URL = f"{SEC_WWW}/files/company_tickers.json"
