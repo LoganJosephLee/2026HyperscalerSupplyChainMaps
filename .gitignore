@@ -1,0 +1,8 @@
+# Cached EDGAR documents. Public domain, but derived and large — rebuild with
+# `hscm fetch` rather than committing.
+data/cache/
+
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/

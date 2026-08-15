@@ -1,0 +1,26 @@
+[project]
+name = "hscm"
+version = "0.1.0"
+description = "Evidence-backed supply chain graph of the AI hyperscalers, built from SEC EDGAR filings"
+requires-python = ">=3.11"
+dependencies = [
+    "requests>=2.32",
+    "beautifulsoup4>=4.12",
+    "lxml>=5.2",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
+[project.scripts]
+hscm = "hscm.cli:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/hscm"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
