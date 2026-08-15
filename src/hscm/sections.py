@@ -91,6 +91,24 @@ TEN_K_MARKERS: tuple[ItemMarker, ...] = (
     _marker("item7a", "Item 7A. Quantitative and Qualitative Disclosures", rf"item\s*7a{_SEP}quantitative\b"),
     _marker("item8", "Item 8. Financial Statements", rf"item\s*8{_SEP}financial\s+statements\b"),
     _marker("item9", "Item 9. Changes in and Disagreements", rf"item\s*9{_SEP}changes\s+in\s+and\s+disagreements\b"),
+    # Terminator. Without it the last located item runs to the end of the
+    # document and swallows the exhibit index and signature pages.
+    _marker("item15", "Item 15. Exhibits and Financial Statement Schedules", rf"item\s*15{_SEP}exhibit"),
+)
+
+# 10-Q numbering is not 10-K numbering, and "Item 1" means different things in
+# Part I (Financial Statements) and Part II (Legal Proceedings). Listed in
+# document order, which is what makes the increasing-position constraint work.
+TEN_Q_MARKERS: tuple[ItemMarker, ...] = (
+    _marker("part1_item1", "Part I Item 1. Financial Statements", rf"item\s*1{_SEP}financial\s+statements\b"),
+    _marker("part1_item2", "Part I Item 2. MD&A", rf"item\s*2{_SEP}management.{{0,3}}s\s+discussion\b"),
+    _marker("part1_item3", "Part I Item 3. Quantitative and Qualitative Disclosures", rf"item\s*3{_SEP}quantitative\b"),
+    _marker("part1_item4", "Part I Item 4. Controls and Procedures", rf"item\s*4{_SEP}controls\s+and\s+procedures\b"),
+    _marker("part2_item1", "Part II Item 1. Legal Proceedings", rf"item\s*1{_SEP}legal\s+proceedings\b"),
+    _marker("part2_item1a", "Part II Item 1A. Risk Factors", rf"item\s*1a{_SEP}risk\s*factors\b"),
+    _marker("part2_item2", "Part II Item 2. Unregistered Sales of Equity Securities", rf"item\s*2{_SEP}unregistered\s+sales\b"),
+    _marker("part2_item5", "Part II Item 5. Other Information", rf"item\s*5{_SEP}other\s+information\b"),
+    _marker("part2_item6", "Part II Item 6. Exhibits", rf"item\s*6{_SEP}exhibits\b"),
 )
 
 # 20-F carries the same disclosures under different numbering (Decision 1:
@@ -103,12 +121,24 @@ TWENTY_F_MARKERS: tuple[ItemMarker, ...] = (
     _marker("item7", "Item 7. Major Shareholders and Related Party Transactions", rf"item\s*7{_SEP}major\s+shareholders\b"),
     _marker("item8", "Item 8. Financial Information", rf"item\s*8{_SEP}financial\s+information\b"),
     _marker("item18", "Item 18. Financial Statements", rf"item\s*18{_SEP}financial\s+statements\b"),
+    _marker("item19", "Item 19. Exhibits", rf"item\s*19{_SEP}exhibits\b"),
 )
 
 MARKERS_BY_FORM: dict[str, tuple[ItemMarker, ...]] = {
     "10-K": TEN_K_MARKERS,
-    "10-Q": TEN_K_MARKERS,
+    "10-Q": TEN_Q_MARKERS,
     "20-F": TWENTY_F_MARKERS,
+    # 8-K deliberately has no markers: see split_items.
+    "8-K": (),
+}
+
+# The sections extraction actually reads, per form. Used to tell "this filing
+# genuinely has no risk factors" from "the splitter failed".
+EXTRACTION_KEYS: dict[str, tuple[str, ...]] = {
+    "10-K": ("item1", "item1a", "item8"),
+    "10-Q": ("part1_item1", "part2_item1a"),
+    "20-F": ("item4", "item3d", "item18"),
+    "8-K": ("body",),
 }
 
 
@@ -165,8 +195,10 @@ def document_text(html: str | bytes) -> str:
     newlines inside a text node, which are insignificant in HTML — collapses to
     single spaces.
     """
-    if isinstance(html, bytes):
-        html = html.decode("utf-8", errors="replace")
+    # Bytes are handed to BeautifulSoup undecoded so it can sniff the encoding
+    # from the meta charset and the byte pattern. Assuming UTF-8 turns every
+    # curly quote in a Windows-1252 filing into a replacement character, and a
+    # mangled quote inside a sentence makes that sentence unverifiable.
     soup = BeautifulSoup(html, "lxml")
     for tag in soup(["script", "style"]):
         tag.decompose()
@@ -309,6 +341,17 @@ def split_items(
     markers = MARKERS_BY_FORM.get(form_type.upper())
     if markers is None:
         raise ValueError(f"No item markers defined for form type {form_type!r}")
+
+    if not markers:
+        # 8-K. A current report is a handful of paragraphs about one event;
+        # splitting it into items would discard more context than it isolates,
+        # and its numbering (1.01, 2.01, 8.01) shares nothing with the annual
+        # forms. Treat the whole document as the unit of extraction.
+        if diagnostics is not None:
+            diagnostics["toc_spans"] = []
+            diagnostics["candidates"] = {}
+        text = text.strip()
+        return {"body": Section("body", f"{form_type.upper()} (whole document)", 0, len(text), text)}
 
     raw_candidates = [_candidates(text, marker) for marker in markers]
     candidate_lists, toc_spans = _drop_toc(text, raw_candidates)

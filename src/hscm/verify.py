@@ -34,6 +34,7 @@ from dataclasses import dataclass, field
 from difflib import SequenceMatcher
 from pathlib import Path
 from typing import Callable, Iterable, Sequence
+from urllib.parse import urlparse
 
 from .sections import normalize_text
 
@@ -56,6 +57,19 @@ MIN_SENTENCE_CHARS = 25  # a "sentence" shorter than this cannot support a claim
 _NON_ALNUM = re.compile(r"[^a-z0-9%]+")
 
 
+def is_sec_url(url: str) -> bool:
+    """True only if the host itself is sec.gov.
+
+    Checked on the parsed host, not as a substring: "https://example.com/sec.gov/"
+    contains the string and is not a filing.
+    """
+    try:
+        host = (urlparse(url).hostname or "").lower()
+    except ValueError:
+        return False
+    return host == "sec.gov" or host.endswith(".sec.gov")
+
+
 def collapse(text: str) -> str:
     """Case-, whitespace- and punctuation-insensitive form used for matching."""
     return _NON_ALNUM.sub(" ", text.lower()).strip()
@@ -75,8 +89,8 @@ def validate_record(record: dict) -> list[str]:
         errors.append(f"source_sentence shorter than {MIN_SENTENCE_CHARS} characters")
 
     url = record.get("source_url")
-    if isinstance(url, str) and url and "sec.gov" not in url:
-        errors.append("source_url is not an sec.gov link")
+    if isinstance(url, str) and url and not is_sec_url(url):
+        errors.append(f"source_url {url!r} is not an sec.gov link")
 
     if record.get("relationship_type") not in VALID_RELATIONSHIP_TYPES:
         errors.append(f"relationship_type {record.get('relationship_type')!r} not recognised")
@@ -120,7 +134,42 @@ def _shingles(tokens: Sequence[str], size: int) -> list[tuple[int, str]]:
     return [(i, " ".join(tokens[i : i + size])) for i in range(0, max(1, len(tokens) - size + 1))]
 
 
-def _closest_window(sentence_collapsed: str, doc_collapsed: str, max_probes: int = 200) -> tuple[float, str]:
+class PreparedDocument:
+    """A filing normalised once and reused for every sentence checked against it.
+
+    Normalising and tokenising a 2 MB 10-K per record is the difference between
+    a report that takes seconds and one that takes minutes; the token index is
+    built lazily because it is only needed when a sentence fails to match
+    outright.
+    """
+
+    __slots__ = ("normalized", "collapsed", "_tokens", "_positions")
+
+    def __init__(self, text: str) -> None:
+        self.normalized = normalize_text(text)
+        self.collapsed = collapse(self.normalized)
+        self._tokens: list[str] | None = None
+        self._positions: dict[str, list[int]] | None = None
+
+    @property
+    def tokens(self) -> list[str]:
+        if self._tokens is None:
+            self._tokens = self.collapsed.split()
+        return self._tokens
+
+    @property
+    def positions(self) -> dict[str, list[int]]:
+        if self._positions is None:
+            index: dict[str, list[int]] = {}
+            for position, token in enumerate(self.tokens):
+                index.setdefault(token, []).append(position)
+            self._positions = index
+        return self._positions
+
+
+def _closest_window(
+    sentence_collapsed: str, document: PreparedDocument, max_probes: int = 200
+) -> tuple[float, str]:
     """Best similarity between the sentence and any same-length window of the doc.
 
     Anchored on shared word runs so we compare a bounded number of windows
@@ -130,15 +179,11 @@ def _closest_window(sentence_collapsed: str, doc_collapsed: str, max_probes: int
     if not sentence_tokens:
         return 0.0, ""
 
-    doc_tokens = doc_collapsed.split()
+    doc_tokens = document.tokens
     if not doc_tokens:
         return 0.0, ""
 
-    # Token index for anchoring.
-    positions: dict[str, list[int]] = {}
-    for index, token in enumerate(doc_tokens):
-        positions.setdefault(token, []).append(index)
-
+    positions = document.positions
     width = len(sentence_tokens)
     anchors: list[int] = []
     for size in (8, 5, 3, 1):
@@ -170,19 +215,19 @@ def _closest_window(sentence_collapsed: str, doc_collapsed: str, max_probes: int
     return best_ratio, best_text
 
 
-def verify_sentence(sentence: str, document: str) -> SentenceCheck:
+def verify_sentence(sentence: str, document: str | PreparedDocument) -> SentenceCheck:
     """Check one claimed verbatim sentence against one filing's text."""
-    normalized_document = normalize_text(document)
+    prepared = document if isinstance(document, PreparedDocument) else PreparedDocument(document)
+
     normalized_sentence = normalize_text(sentence)
-    if normalized_sentence and normalized_sentence in normalized_document:
+    if normalized_sentence and normalized_sentence in prepared.normalized:
         return SentenceCheck("exact", 1.0)
 
-    collapsed_document = collapse(normalized_document)
     collapsed_sentence = collapse(normalized_sentence)
-    if collapsed_sentence and collapsed_sentence in collapsed_document:
+    if collapsed_sentence and collapsed_sentence in prepared.collapsed:
         return SentenceCheck("normalized", 1.0)
 
-    ratio, closest = _closest_window(collapsed_sentence, collapsed_document)
+    ratio, closest = _closest_window(collapsed_sentence, prepared)
     if ratio >= FUZZY_REPORT_THRESHOLD:
         return SentenceCheck("fuzzy", ratio, closest)
     return SentenceCheck("not_found", ratio, closest or None)
@@ -250,7 +295,10 @@ def verify_records(
     that filing is not available locally. A record whose filing cannot be
     retrieved is reported as `undocumented` — never as supported.
     """
-    cache: dict[str, str] = {}
+    # None is cached too: a filing we could not resolve once will not resolve on
+    # the next record citing the same URL, and re-reading it from disk to learn
+    # that again is wasted work.
+    cache: dict[str, PreparedDocument | None] = {}
     results: list[RecordResult] = []
 
     for index, record in enumerate(records):
@@ -267,17 +315,19 @@ def verify_records(
 
         if url not in cache:
             document = document_for(record)
-            if document is None:
-                results.append(
-                    RecordResult(
-                        index, buyer, supplier, url, "undocumented", None, 0.0,
-                        ["cited filing not available locally"],
-                    )
-                )
-                continue
-            cache[url] = document
+            cache[url] = PreparedDocument(document) if document is not None else None
 
-        check = verify_sentence(record["source_sentence"], cache[url])
+        prepared = cache[url]
+        if prepared is None:
+            results.append(
+                RecordResult(
+                    index, buyer, supplier, url, "undocumented", None, 0.0,
+                    ["cited filing not available locally"],
+                )
+            )
+            continue
+
+        check = verify_sentence(record["source_sentence"], prepared)
         results.append(
             RecordResult(
                 index=index,

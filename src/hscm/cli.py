@@ -15,7 +15,12 @@ from pathlib import Path
 
 from . import config
 from .edgar import EdgarClient, Filing, read_manifest, write_manifest
-from .sections import document_text, find_concentration_passages, split_items
+from .sections import (
+    EXTRACTION_KEYS,
+    document_text,
+    find_concentration_passages,
+    split_items,
+)
 from .verify import verify_records, write_report
 
 _ACCESSION_IN_URL = re.compile(r"(\d{10}\d{2}\d{6}|\d{10}-\d{2}-\d{6})")
@@ -79,25 +84,38 @@ def cmd_sections(args: argparse.Namespace) -> int:
             problems += 1
             continue
 
+        form = row["form_type"]
         text = document_text(path.read_bytes())
-        sections = split_items(text, row["form_type"])
+        diagnostics: dict = {}
+        sections = split_items(text, form, diagnostics)
         passages = find_concentration_passages(text)
 
         print(f"\n{row['ticker']}  {row['company_name']}")
-        print(f"  {row['form_type']} filed {row['filing_date']}  {len(text):,} chars of text")
+        print(f"  {form} filed {row['filing_date']}  {len(text):,} chars of text")
         print(f"  {row['document_url']}")
+        if diagnostics.get("toc_spans"):
+            spans = ", ".join(f"{s:,}-{e:,}" for s, e in diagnostics["toc_spans"])
+            print(f"  contents page(s) detected at {spans}")
         for key, section in sections.items():
-            preview = section.text[:90].replace("\n", " ")
-            print(f"    {key:<7} {section.char_count:>9,} chars  @{section.start:<9,} {preview}")
+            found = diagnostics.get("candidates", {}).get(key, 1)
+            preview = section.text[:80].replace("\n", " ")
+            print(
+                f"    {key:<13} {section.char_count:>9,} chars  @{section.start:<9,} "
+                f"({found} candidate{'s' if found != 1 else ''})  {preview}"
+            )
 
-        # These two are what extraction actually reads; call out their absence.
-        for required in ("item1", "item1a", "item3d", "item4"):
-            if required in sections and sections[required].char_count < 2000:
-                print(f"    !! {required} is suspiciously short — check the split")
+        # Sections extraction actually reads. Their absence is a split failure,
+        # not an empty filing, and it has to be loud.
+        # A one-event 8-K of a few hundred characters is normal; a 500-character
+        # Item 1A is a broken split.
+        min_chars = 0 if form.upper() == "8-K" else 2000
+        for key in EXTRACTION_KEYS.get(form.upper(), ()):
+            if key not in sections:
+                print(f"    !! {key} not located — extraction would read nothing from it")
                 problems += 1
-        if not ({"item1", "item1a"} & set(sections)) and not ({"item3d", "item4"} & set(sections)):
-            print("    !! neither Business nor Risk Factors located — split failed")
-            problems += 1
+            elif sections[key].char_count < min_chars:
+                print(f"    !! {key} is only {sections[key].char_count:,} chars — check the split")
+                problems += 1
 
         print(f"    concentration passages: {len(passages)}")
         for passage in passages[: args.show_passages]:

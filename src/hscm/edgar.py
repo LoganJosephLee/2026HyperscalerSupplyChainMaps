@@ -87,11 +87,26 @@ class EdgarClient:
         self._tickers: dict[str, tuple[int, str]] | None = None
 
     # --- low level ----------------------------------------------------------
-    def _get(self, url: str) -> requests.Response:
-        self._limiter.wait()
-        response = self._session.get(url, timeout=30)
-        response.raise_for_status()
-        return response
+    def _get(self, url: str, attempts: int = 4) -> requests.Response:
+        """GET with backoff on throttling and transient server errors.
+
+        SEC returns 403 with a rate-limit notice, or 429, when it decides you
+        are asking too fast, and briefly 503s under load. Retrying those is the
+        difference between a fetch that completes and one that dies partway
+        through the seed set. Other 4xx are permanent and raise immediately.
+        """
+        delay = 2.0
+        for attempt in range(1, attempts + 1):
+            self._limiter.wait()
+            response = self._session.get(url, timeout=30)
+            retryable = response.status_code in (403, 429, 500, 502, 503, 504)
+            if not retryable or attempt == attempts:
+                response.raise_for_status()
+                return response
+            wait = float(response.headers.get("Retry-After") or delay)
+            time.sleep(wait)
+            delay *= 2
+        raise AssertionError("unreachable")
 
     # --- spine --------------------------------------------------------------
     def ticker_map(self) -> dict[str, tuple[int, str]]:
@@ -165,17 +180,27 @@ class EdgarClient:
 
 
 # --- manifest ---------------------------------------------------------------
-def write_manifest(filings: list[Filing]) -> Path:
-    """Record what is in the cache so downstream steps never re-derive URLs."""
+def write_manifest(filings: list[Filing], merge: bool = True) -> Path:
+    """Record what is in the cache so downstream steps never re-derive URLs.
+
+    Merges with the existing manifest by default. Overwriting instead would mean
+    `hscm fetch --form 8-K` silently unregisters every 10-K already on disk,
+    leaving cached filings that nothing downstream can find.
+    """
     config.MANIFEST_PATH.parent.mkdir(parents=True, exist_ok=True)
-    rows = []
+    rows: dict[str, dict] = {}
+    if merge:
+        rows = {row["accession"]: row for row in read_manifest()}
+
     for f in filings:
         row = asdict(f)
         row["document_url"] = f.document_url
         row["index_url"] = f.index_url
         row["cache_path"] = str(f.cache_path.relative_to(config.REPO_ROOT))
-        rows.append(row)
-    config.MANIFEST_PATH.write_text(json.dumps(rows, indent=2) + "\n")
+        rows[f.accession] = row
+
+    ordered = sorted(rows.values(), key=lambda r: (r["ticker"], r["filing_date"]))
+    config.MANIFEST_PATH.write_text(json.dumps(ordered, indent=2) + "\n")
     return config.MANIFEST_PATH
 
 

@@ -32,8 +32,14 @@ uv run pytest                     # unit tests
 
 `fetch` writes documents to `data/cache/filings/` and an index of them to
 `data/cache/manifest.json`. It is polite by default: 5 requests/second against
-SEC's limit of 10, and it never re-downloads a cached document unless you pass
-`--refresh`.
+SEC's limit of 10, backs off and retries when SEC throttles (403/429) or 5xxs,
+and never re-downloads a cached document unless you pass `--refresh`. The
+manifest accumulates across runs, so fetching 8-Ks does not unregister your
+10-Ks.
+
+Section splitting is form-aware: 10-K and 20-F by item, 10-Q by its own Part I /
+Part II numbering, and 8-K whole (a current report is one event, and its 1.01 /
+2.01 numbering shares nothing with the annual forms).
 
 ## Current status
 

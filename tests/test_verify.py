@@ -10,6 +10,7 @@ from __future__ import annotations
 import pytest
 
 from hscm.verify import (
+    PreparedDocument,
     VerificationReport,
     validate_record,
     verify_records,
@@ -120,6 +121,32 @@ def test_non_sec_source_url_is_invalid():
     assert validate_record(record(source_url="https://example.com/filing.htm"))
 
 
+@pytest.mark.parametrize(
+    "url",
+    [
+        "https://example.com/www.sec.gov/Archives/edgar/data/1/x.htm",  # host is not SEC
+        "https://sec.gov.evil.test/Archives/x.htm",  # suffix attack
+        "https://notsec.gov/x.htm",
+        "not a url at all",
+    ],
+)
+def test_lookalike_urls_are_rejected(url):
+    """The host has to be sec.gov — a substring check accepts all of these."""
+    assert validate_record(record(source_url=url))
+
+
+@pytest.mark.parametrize(
+    "url",
+    [
+        "https://www.sec.gov/Archives/edgar/data/789019/000/x.htm",
+        "https://sec.gov/Archives/edgar/data/789019/000/x.htm",
+        "https://data.sec.gov/submissions/CIK0000789019.json",
+    ],
+)
+def test_genuine_sec_urls_are_accepted(url):
+    assert validate_record(record(source_url=url)) == []
+
+
 def test_unclear_is_a_permitted_relationship_type():
     assert validate_record(record(relationship_type="unclear")) == []
 
@@ -153,3 +180,34 @@ def test_empty_report_has_zero_failure_rate_but_nothing_passed():
     report = VerificationReport([])
     assert report.failure_rate == 0.0
     assert report.checked == 0
+
+
+# --- document preparation ---------------------------------------------------
+def test_each_filing_is_prepared_once_however_many_records_cite_it():
+    """Normalising a 2 MB 10-K per record is the difference between seconds and minutes."""
+    calls = []
+
+    def document_for(rec):
+        calls.append(rec["source_url"])
+        return FILING
+
+    verify_records([record(), record(), record()], document_for)
+    assert len(calls) == 1
+
+
+def test_unresolvable_filing_is_not_retried_per_record():
+    calls = []
+
+    def document_for(rec):
+        calls.append(rec["source_url"])
+        return None
+
+    report = verify_records([record(), record()], document_for)
+    assert len(calls) == 1
+    assert report.count("undocumented") == 2
+
+
+def test_prepared_document_gives_the_same_verdict_as_raw_text():
+    prepared = PreparedDocument(FILING)
+    assert verify_sentence(VERBATIM, prepared).level == verify_sentence(VERBATIM, FILING).level
+    assert not verify_sentence("We buy everything from Acme Corporation.", prepared).supported
