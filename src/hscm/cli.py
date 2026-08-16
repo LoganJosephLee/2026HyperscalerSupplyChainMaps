@@ -21,7 +21,9 @@ from . import config
 from .edgar import EdgarClient, Filing, read_manifest, write_manifest
 from .sections import (
     EXTRACTION_KEYS,
+    candidate_report,
     document_text,
+    extraction_sections,
     find_concentration_passages,
     split_items,
 )
@@ -180,6 +182,47 @@ def cmd_verify(args: argparse.Namespace) -> int:
     return 0 if report.failure_rate <= args.max_failure_rate else 1
 
 
+def cmd_diagnose(args: argparse.Namespace) -> int:
+    """Show every header candidate and how the splitter judged it.
+
+    A summary of the result cannot explain a wrong split; this can.
+    """
+    rows = read_manifest()
+    if args.tickers:
+        wanted = {t.upper() for t in args.tickers}
+        rows = [r for r in rows if r["ticker"] in wanted]
+    if not rows:
+        print("No matching cached filing. Run `hscm fetch` first.", file=sys.stderr)
+        return 1
+
+    for row in rows:
+        path = config.REPO_ROOT / row["cache_path"]
+        if not path.exists():
+            continue
+        text = document_text(path.read_bytes())
+        print(f"\n{row['ticker']}  {row['form_type']} filed {row['filing_date']}  "
+              f"{len(text):,} chars")
+        print(f"{'item':<8} {'position':>10}  {'span':>5} {'tail#':>5} {'dropped':>7} {'chosen':>6}  line")
+        for entry in candidate_report(text, row["form_type"]):
+            if args.item and entry["key"] != args.item:
+                continue
+            print(
+                f"{entry['key']:<8} {entry['position']:>10,}  "
+                f"{str(entry['in_dense_span']):>5} "
+                f"{str(entry['tail_looks_like_page_number']):>5} "
+                f"{str(entry['dropped_as_contents_row']):>7} "
+                f"{str(entry['chosen']):>6}  "
+                f"[len {entry['line_length']}] {entry['line']!r}"
+            )
+    print(
+        "\nspan    = inside a detected contents-page cluster\n"
+        "tail#   = the line ends with something that looks like a page number\n"
+        "dropped = discarded as a contents row\n"
+        "chosen  = this position became the section start"
+    )
+    return 0
+
+
 # --- M2/M4: extraction ------------------------------------------------------
 def cmd_extract(args: argparse.Namespace) -> int:
     from .extract import ExtractionRequest, get_extractor
@@ -211,10 +254,9 @@ def cmd_extract(args: argparse.Namespace) -> int:
         text = document_text(path.read_bytes())
         sections = split_items(text, filing.form_type)
 
-        targets: list[tuple[str, str, str]] = []
-        for key in EXTRACTION_KEYS.get(filing.form_type.upper(), ()):
-            if key in sections:
-                targets.append((key, sections[key].label, sections[key].text))
+        targets: list[tuple[str, str, str]] = list(
+            extraction_sections(sections, filing.form_type)
+        )
         # Concentration passages are extracted separately: they live in the
         # financial statement notes rather than a numbered item, and they are
         # where the quantified percentages are.
@@ -347,6 +389,15 @@ def cmd_neo4j_load(args: argparse.Namespace) -> int:
 
 
 def main(argv: list[str] | None = None) -> int:
+    # Windows consoles default to a legacy code page, which mangles the em
+    # dashes and quotation marks in filing text and in our own output.
+    for stream in (sys.stdout, sys.stderr):
+        if hasattr(stream, "reconfigure"):
+            try:
+                stream.reconfigure(encoding="utf-8", errors="replace")
+            except (ValueError, OSError):  # pragma: no cover - non-reconfigurable stream
+                pass
+
     parser = argparse.ArgumentParser(prog="hscm", description=__doc__)
     sub = parser.add_subparsers(dest="command", required=True)
 
@@ -356,6 +407,11 @@ def main(argv: list[str] | None = None) -> int:
     fetch.add_argument("--limit", type=int, default=1, help="filings per company")
     fetch.add_argument("--refresh", action="store_true", help="re-download cached documents")
     fetch.set_defaults(func=cmd_fetch)
+
+    diagnose = sub.add_parser("diagnose", help="show every header candidate and how it was judged")
+    diagnose.add_argument("tickers", nargs="*")
+    diagnose.add_argument("--item", help="limit to one item key, e.g. item1")
+    diagnose.set_defaults(func=cmd_diagnose)
 
     sections = sub.add_parser("sections", help="report what the section splitter found")
     sections.add_argument("tickers", nargs="*")

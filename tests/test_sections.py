@@ -238,6 +238,62 @@ def test_extraction_keys_exist_for_every_form():
     assert set(FORM_TYPES) <= set(EXTRACTION_KEYS)
 
 
+# --- what extraction actually reads -----------------------------------------
+def test_extraction_reads_the_located_sections(sections):
+    from hscm.sections import extraction_sections
+
+    keys = [key for key, _, _ in extraction_sections(sections, "10-K")]
+    assert keys == ["item1", "item1a", "item8"]
+
+
+def test_stub_item8_falls_back_to_item15():
+    """Oracle answers Item 8 with a cross-reference and files the statements under 15."""
+    from hscm.sections import Section, extraction_sections
+
+    sections = {
+        "item1": Section("item1", "Item 1. Business", 0, 10, "x" * 10_000),
+        "item1a": Section("item1a", "Item 1A. Risk Factors", 0, 10, "y" * 10_000),
+        "item8": Section("item8", "Item 8. Financial Statements", 0, 10,
+                         "The response to this item is submitted as a separate section."),
+        "item15": Section("item15", "Item 15. Exhibits", 0, 10, "z" * 160_000),
+    }
+    chosen = extraction_sections(sections, "10-K")
+    keys = [key for key, _, _ in chosen]
+    assert "item15" in keys and "item8" not in keys
+    label = next(label for key, label, _ in chosen if key == "item15")
+    assert "cross-reference" in label
+
+
+def test_healthy_item8_is_not_replaced():
+    from hscm.sections import Section, extraction_sections
+
+    sections = {
+        "item8": Section("item8", "Item 8. Financial Statements", 0, 10, "z" * 100_000),
+        "item15": Section("item15", "Item 15. Exhibits", 0, 10, "w" * 5_000),
+    }
+    assert [key for key, _, _ in extraction_sections(sections, "10-K")] == ["item8"]
+
+
+# --- candidate diagnostics --------------------------------------------------
+def test_candidate_report_explains_each_decision(text):
+    from hscm.sections import candidate_report
+
+    rows = candidate_report(text, "10-K")
+    assert rows, "the report must list candidates"
+
+    item1_rows = [r for r in rows if r["key"] == "item1"]
+    assert len(item1_rows) >= 2  # the contents row and the body header
+
+    chosen = [r for r in item1_rows if r["chosen"]]
+    assert len(chosen) == 1
+    assert not chosen[0]["dropped_as_contents_row"]
+
+    contents_row = next(r for r in item1_rows if r["dropped_as_contents_row"])
+    assert contents_row["in_dense_span"]
+    assert contents_row["tail_looks_like_page_number"]
+    assert contents_row["position"] < chosen[0]["position"]
+
+
 # --- encoding ---------------------------------------------------------------
 def test_windows_1252_filing_decodes_without_mangling_quotes():
     """Filings are not all UTF-8; a mangled quote makes its sentence unverifiable."""

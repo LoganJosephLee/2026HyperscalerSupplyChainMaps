@@ -31,9 +31,19 @@ from __future__ import annotations
 
 import re
 import unicodedata
+import warnings
 from dataclasses import dataclass
 
 from bs4 import BeautifulSoup
+
+try:  # bs4 >= 4.11
+    from bs4 import XMLParsedAsHTMLWarning
+
+    # Some filings are served as XHTML/XBRL. Parsing them with the HTML parser is
+    # deliberate — we want the text, not the XBRL facts — so the warning is noise.
+    warnings.filterwarnings("ignore", category=XMLParsedAsHTMLWarning)
+except ImportError:  # pragma: no cover - older bs4
+    pass
 
 # A consecutive gap larger than this is not more convincing than one exactly
 # this size. Without the cap the optimiser just picks the earliest-possible
@@ -324,6 +334,78 @@ def _choose_positions(
         chosen[i] = position
         end = best[i][position][1]
     return chosen
+
+
+# Below this a located section is a stub — a cross-reference, not content.
+MIN_USEFUL_SECTION_CHARS = 2_000
+
+
+def extraction_sections(
+    sections: dict[str, Section], form_type: str
+) -> list[tuple[str, str, str]]:
+    """The sections extraction should actually read, as (key, label, text).
+
+    Handles one real filing convention: some registrants answer Item 8 with
+    "the response to this item is submitted as a separate section" and put the
+    financial statements under Item 15. Oracle's 2026 10-K has a 181-character
+    Item 8 and a 167,000-character Item 15. Reading the stub would silently skip
+    every concentration disclosure in the filing.
+    """
+    out: list[tuple[str, str, str]] = []
+    for key in EXTRACTION_KEYS.get(form_type.upper(), ()):
+        section = sections.get(key)
+        if section is None:
+            continue
+        if key == "item8" and section.char_count < MIN_USEFUL_SECTION_CHARS:
+            fallback = sections.get("item15")
+            if fallback and fallback.char_count > section.char_count:
+                out.append(
+                    (
+                        fallback.key,
+                        f"{fallback.label} (Item 8 is a cross-reference)",
+                        fallback.text,
+                    )
+                )
+                continue
+        out.append((section.key, section.label, section.text))
+    return out
+
+
+def candidate_report(text: str, form_type: str = "10-K") -> list[dict]:
+    """Every header candidate the splitter considered, and how it judged each one.
+
+    Exists because a summary of the *result* cannot explain a wrong split. When
+    an item starts in the wrong place, this shows the line the splitter matched,
+    whether it looked like a contents row, and whether it was chosen.
+    """
+    markers = MARKERS_BY_FORM.get(form_type.upper())
+    if not markers:
+        return []
+
+    raw = [_candidates(text, marker) for marker in markers]
+    spans = _dense_spans(raw)
+    filtered, _ = _drop_toc(text, raw)
+    chosen = _choose_positions(filtered, len(text))
+
+    rows: list[dict] = []
+    for index, marker in enumerate(markers):
+        for position in raw[index]:
+            line_end = text.find("\n", position)
+            line = text[position : line_end if line_end != -1 else len(text)]
+            in_span = any(start <= position <= end for start, end in spans)
+            rows.append(
+                {
+                    "key": marker.key,
+                    "position": position,
+                    "line": line[:110],
+                    "line_length": len(line),
+                    "in_dense_span": in_span,
+                    "tail_looks_like_page_number": bool(_TOC_ROW_TAIL.search(line)),
+                    "dropped_as_contents_row": position not in filtered[index],
+                    "chosen": chosen[index] == position,
+                }
+            )
+    return rows
 
 
 def split_items(
