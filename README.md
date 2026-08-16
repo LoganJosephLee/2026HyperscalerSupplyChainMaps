@@ -11,10 +11,24 @@ against synthetic inputs, and waiting for real filings. See
 
 ## Setup
 
+**macOS / Linux**
+
 ```bash
 make setup
 export HSCM_EDGAR_CONTACT="you@example.com"   # SEC fair-access policy wants a real contact
 ```
+
+**Windows (PowerShell)** — there is no `make` on Windows, and PowerShell 5.1
+does not accept `&&`, so use `run.ps1`, one command per line:
+
+```powershell
+.\run.ps1 setup
+$env:HSCM_EDGAR_CONTACT = "you@example.com"
+```
+
+If PowerShell refuses to run the script ("running scripts is disabled on this
+system"), allow local scripts once with
+`Set-ExecutionPolicy -Scope CurrentUser RemoteSigned`.
 
 ## Rebuild the dataset
 
@@ -22,6 +36,10 @@ export HSCM_EDGAR_CONTACT="you@example.com"   # SEC fair-access policy wants a r
 make refresh    # fetch -> extract -> verify -> build, the whole pipeline
 make serve      # then open http://localhost:8000
 ```
+
+On Windows: `.\run.ps1 refresh` and `.\run.ps1 serve`. Every `make` target in
+this README has a `.\run.ps1` equivalent of the same name; `.\run.ps1 help`
+lists them.
 
 `make refresh` is the single documented command. It is deliberately manual:
 there is no scheduled workflow, so the dataset never changes underneath you.
