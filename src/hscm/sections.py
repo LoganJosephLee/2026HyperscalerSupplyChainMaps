@@ -61,7 +61,12 @@ ITEM_BONUS = 5_000
 TOC_WINDOW = 2_500
 TOC_MIN_DISTINCT_ITEMS = 5
 
-_SEP = r"[\.\:\)\-–—]?\s*"
+# Registrants punctuate headers every way imaginable: "Item 1. Business",
+# "ITEM 1.BUSINESS", "Item 1 - Business", "ITEM 1 — BUSINESS". The separator
+# may therefore be preceded by whitespace; requiring the punctuation to sit
+# flush against the number missed Dell's headers entirely, and its whole
+# document collapsed into Item 15.
+_SEP = r"\s*[\.\:\)\-–—]{0,2}\s*"
 
 
 @dataclass(frozen=True)
@@ -124,10 +129,14 @@ TEN_Q_MARKERS: tuple[ItemMarker, ...] = (
 # 20-F carries the same disclosures under different numbering (Decision 1:
 # TSMC is eligible because it files a 20-F, so the parser must handle it).
 TWENTY_F_MARKERS: tuple[ItemMarker, ...] = (
-    _marker("item3d", "Item 3.D. Risk Factors", rf"item\s*3{_SEP}(?:d{_SEP})?risk\s*factors\b"),
+    _marker("item3", "Item 3. Key Information", rf"item\s*3{_SEP}key\s+information\b"),
+    # Risk factors are Item 3.D, and registrants write the sub-item heading on
+    # its own line as "D. Risk Factors" rather than repeating the item number.
+    _marker("item3d", "Item 3.D. Risk Factors",
+            rf"(?:item\s*3{_SEP})?d{_SEP}risk\s*factors\b"),
     _marker("item4", "Item 4. Information on the Company", rf"item\s*4{_SEP}information\s+on\s+the\s+company\b"),
     _marker("item4a", "Item 4A. Unresolved Staff Comments", rf"item\s*4a{_SEP}unresolved\s+staff\s+comments\b"),
-    _marker("item5", "Item 5. Operating and Financial Review", rf"item\s*5{_SEP}operating\s+and\s+financial\s+review\b"),
+    _marker("item5", "Item 5. Operating and Financial Review", rf"item\s*5{_SEP}operating\s+and\s+financial\s+reviews?\b"),
     _marker("item7", "Item 7. Major Shareholders and Related Party Transactions", rf"item\s*7{_SEP}major\s+shareholders\b"),
     _marker("item8", "Item 8. Financial Information", rf"item\s*8{_SEP}financial\s+information\b"),
     _marker("item18", "Item 18. Financial Statements", rf"item\s*18{_SEP}financial\s+statements\b"),
@@ -147,7 +156,7 @@ MARKERS_BY_FORM: dict[str, tuple[ItemMarker, ...]] = {
 EXTRACTION_KEYS: dict[str, tuple[str, ...]] = {
     "10-K": ("item1", "item1a", "item8"),
     "10-Q": ("part1_item1", "part2_item1a"),
-    "20-F": ("item4", "item3d", "item18"),
+    "20-F": ("item4", "item3d", "item18"),  # item18 falls back to item8
     "8-K": ("body",),
 }
 
@@ -278,9 +287,34 @@ def _drop_toc(
     if not spans:
         return candidate_lists, []
 
+    tagged = sorted(
+        (position, item)
+        for item, positions in enumerate(candidate_lists)
+        for position in positions
+    )
+
+    def followed_by_a_crowd(position: int) -> bool:
+        """Do several other items' headers follow within a short stretch?
+
+        This is the defining property of a contents row and the one thing a
+        body header never does: after "Item 1. Business" in the body comes tens
+        of thousands of characters of prose before Item 1A. In the contents
+        page, the next ten items are a few hundred characters away.
+        """
+        nearby = {
+            item
+            for pos, item in tagged
+            if position < pos <= position + TOC_WINDOW
+        }
+        return len(nearby) >= TOC_MIN_DISTINCT_ITEMS - 1
+
     def is_contents_row(position: int) -> bool:
         if not any(start <= position <= end for start, end in spans):
             return False
+        if followed_by_a_crowd(position):
+            return True
+        # Fallback signal for the last row of a contents page, which has no
+        # crowd after it: a trailing page number.
         line_end = text.find("\n", position)
         line = text[position : line_end if line_end != -1 else len(text)]
         return bool(_TOC_ROW_TAIL.search(line))
@@ -339,6 +373,12 @@ def _choose_positions(
 # Below this a located section is a stub — a cross-reference, not content.
 MIN_USEFUL_SECTION_CHARS = 2_000
 
+# Where the content actually is when the numbered item is a cross-reference.
+# 10-K: "the response to this item is submitted as a separate section" puts the
+# financial statements under Item 15 (Oracle, NVIDIA, Celestica, Vertiv, Eaton).
+# 20-F: Item 18 refers out to the statements filed under Item 8 (TSMC).
+STUB_FALLBACKS: dict[str, str] = {"item8": "item15", "item18": "item8"}
+
 
 def extraction_sections(
     sections: dict[str, Section], form_type: str
@@ -356,13 +396,15 @@ def extraction_sections(
         section = sections.get(key)
         if section is None:
             continue
-        if key == "item8" and section.char_count < MIN_USEFUL_SECTION_CHARS:
-            fallback = sections.get("item15")
+        if section.char_count < MIN_USEFUL_SECTION_CHARS and key in STUB_FALLBACKS:
+            fallback = sections.get(STUB_FALLBACKS[key])
             if fallback and fallback.char_count > section.char_count:
+                if any(chosen == fallback.key for chosen, _, _ in out):
+                    continue  # already reading it under its own key
                 out.append(
                     (
                         fallback.key,
-                        f"{fallback.label} (Item 8 is a cross-reference)",
+                        f"{fallback.label} ({section.label} is a cross-reference)",
                         fallback.text,
                     )
                 )

@@ -332,3 +332,132 @@ def test_supplier_side_language_found(text):
 
 def test_short_table_cells_are_ignored():
     assert find_concentration_passages("Customer A\nMajor customers\n21%") == []
+
+
+# --- regressions from the first twenty real filings --------------------------
+# Each of these reproduces something the synthetic fixture did not catch and a
+# real 10-K or 20-F did.
+
+FILLER_2 = "<p>{}</p>".format(" ".join(["Body prose that separates the items."] * 400))
+
+DASH_HEADER_HTML = f"""
+<html><body>
+<table>
+  <tr><td>Item 1.</td><td>Business</td><td>5</td></tr>
+  <tr><td>Item 1A.</td><td>Risk Factors</td><td>16</td></tr>
+  <tr><td>Item 1B.</td><td>Unresolved Staff Comments</td><td>31</td></tr>
+  <tr><td>Item 2.</td><td>Properties</td><td>33</td></tr>
+  <tr><td>Item 7.</td><td>Management&rsquo;s Discussion and Analysis</td><td>40</td></tr>
+  <tr><td>Item 8.</td><td>Financial Statements and Supplementary Data</td><td>66</td></tr>
+</table>
+<p>ITEM 1 &mdash; BUSINESS</p>
+<p>We design and sell servers and storage.</p>
+{FILLER_2}
+<p>ITEM 1A &mdash; RISK FACTORS</p>
+<p>We rely on a limited number of suppliers for critical components.</p>
+{FILLER_2}
+<p>ITEM 8 &mdash; FINANCIAL STATEMENTS AND SUPPLEMENTARY DATA</p>
+<p>Concentration of credit risk information appears here.</p>
+{FILLER_2}
+</body></html>
+"""
+
+
+def test_headers_with_spaced_dashes_are_found():
+    """Dell writes "ITEM 1 — BUSINESS". Requiring flush punctuation found nothing,
+    and the entire document collapsed into Item 15."""
+    sections = split_items(document_text(DASH_HEADER_HTML), "10-K")
+    assert "item1" in sections and "item1a" in sections
+    assert "We design and sell servers" in sections["item1"].text
+    assert "limited number of suppliers" in sections["item1a"].text
+
+
+def test_first_item_does_not_start_on_the_contents_page():
+    """The bug every real filing showed: item1 began at the contents page.
+
+    The optimiser scores chains by capped gaps, and the first item has no
+    preceding gap — so the contents row and the body header tied, and the
+    tie-break took the earlier one.
+    """
+    text = document_text(DASH_HEADER_HTML)
+    sections = split_items(text, "10-K")
+    assert "Risk Factors 16" not in sections["item1"].text
+    assert sections["item1"].text.lower().startswith("item 1 - business")
+
+
+def test_contents_row_is_recognised_by_the_crowd_that_follows_it(text):
+    from hscm.sections import candidate_report
+
+    rows = candidate_report(text, "10-K")
+    dropped = [r for r in rows if r["dropped_as_contents_row"]]
+    assert dropped, "the contents page must be identified"
+    assert all(r["in_dense_span"] for r in dropped)
+
+
+TWENTY_F_HTML = f"""
+<html><body>
+<table>
+  <tr><td>ITEM 3.</td><td>KEY INFORMATION</td><td>4</td></tr>
+  <tr><td>ITEM 4.</td><td>INFORMATION ON THE COMPANY</td><td>14</td></tr>
+  <tr><td>ITEM 4A.</td><td>UNRESOLVED STAFF COMMENTS</td><td>26</td></tr>
+  <tr><td>ITEM 5.</td><td>OPERATING AND FINANCIAL REVIEWS AND PROSPECTS</td><td>27</td></tr>
+  <tr><td>ITEM 8.</td><td>FINANCIAL INFORMATION</td><td>40</td></tr>
+  <tr><td>ITEM 18.</td><td>FINANCIAL STATEMENTS</td><td>60</td></tr>
+</table>
+<p>ITEM 3.KEY INFORMATION</p>
+<p>Selected financial data follows.</p>
+{FILLER_2}
+<p>D. Risk Factors</p>
+<p>We depend on a limited number of equipment suppliers for advanced nodes.</p>
+{FILLER_2}
+<p>ITEM 4.INFORMATION ON THE COMPANY</p>
+<p>We are a dedicated semiconductor foundry.</p>
+{FILLER_2}
+<p>ITEM 4A.UNRESOLVED STAFF COMMENTS</p>
+<p>None.</p>
+<p>ITEM 5.OPERATING AND FINANCIAL REVIEWS AND PROSPECTS</p>
+<p>Revenue grew on advanced node demand.</p>
+{FILLER_2}
+<p>ITEM 8.FINANCIAL INFORMATION</p>
+<p>One customer accounted for 23% of net revenue.</p>
+{FILLER_2}
+<p>ITEM 18.FINANCIAL STATEMENTS</p>
+<p>Refer to the consolidated financial statements starting on page F-1.</p>
+</body></html>
+"""
+
+
+def test_20f_risk_factors_are_found_as_a_sub_item():
+    """TSMC writes "D. Risk Factors", not "Item 3.D Risk Factors"."""
+    sections = split_items(document_text(TWENTY_F_HTML), "20-F")
+    assert "item3d" in sections
+    assert "limited number of equipment suppliers" in sections["item3d"].text
+
+
+def test_20f_operating_review_matches_the_plural_heading():
+    """TSMC's heading is "OPERATING AND FINANCIAL REVIEWS"; \\b after the
+    singular never matched it, so Item 4A swallowed 100,000 characters."""
+    sections = split_items(document_text(TWENTY_F_HTML), "20-F")
+    assert "item5" in sections
+    assert sections["item4a"].char_count < 5_000
+
+
+def test_20f_stub_item18_falls_back_to_item8():
+    from hscm.sections import extraction_sections
+
+    sections = split_items(document_text(TWENTY_F_HTML), "20-F")
+    chosen = [key for key, _, _ in extraction_sections(sections, "20-F")]
+    assert "item8" in chosen and "item18" not in chosen
+
+
+def test_stub_fallback_does_not_duplicate_an_already_chosen_section():
+    from hscm.sections import Section, extraction_sections
+
+    sections = {
+        "item4": Section("item4", "Item 4", 0, 1, "a" * 10_000),
+        "item3d": Section("item3d", "Item 3.D", 0, 1, "b" * 10_000),
+        "item8": Section("item8", "Item 8", 0, 1, "c" * 50_000),
+        "item18": Section("item18", "Item 18", 0, 1, "stub"),
+    }
+    keys = [key for key, _, _ in extraction_sections(sections, "20-F")]
+    assert keys.count("item8") == 1

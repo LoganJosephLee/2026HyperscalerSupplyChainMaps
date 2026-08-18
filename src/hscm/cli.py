@@ -346,7 +346,12 @@ def cmd_extract(args: argparse.Namespace) -> int:
         # thumb, and the prompt adds a fixed overhead per call.
         prompt_tokens = total_chars / 4 + total_windows * 400
         print(f"\n{total_windows} API call(s), roughly {prompt_tokens:,.0f} input tokens")
-        print("At claude-sonnet-5 input pricing that is well under a dollar for one filing.")
+        print(
+            f"Order of magnitude at $2-3 per million input tokens: "
+            f"${prompt_tokens / 1_000_000 * 2:.2f}-${prompt_tokens / 1_000_000 * 3:.2f}, "
+            f"plus a little for output. Check current pricing before a large run."
+        )
+        print("Narrow it with e.g. --sections item1a, or by naming tickers.")
         print("Run without --estimate to extract for real.")
         return 0
 
