@@ -109,7 +109,10 @@ To use the real extractor once you have an API key:
         try { & uv run python -m http.server 8000 } finally { Pop-Location }
     }
 
-    'test' { & uv run pytest -q }
+    'test' {
+        $env:PYTHONWARNDEFAULTENCODING = '1'
+        & uv run pytest -q
+    }
 
     'neo4j-load' { Invoke-Hscm (@('neo4j-load', '--extractions', $Extractions) + $Rest) }
 

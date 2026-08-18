@@ -179,7 +179,7 @@ def _document_resolver():
 
 
 def cmd_verify(args: argparse.Namespace) -> int:
-    records = json.loads(Path(args.extractions).read_text())
+    records = json.loads(Path(args.extractions).read_text(encoding="utf-8"))
     if isinstance(records, dict):
         records = records.get("relationships", [])
 
@@ -215,7 +215,7 @@ def cmd_show(args: argparse.Namespace) -> int:
     right relationship from it, and that is the error class left. Reading the
     rows is the only check for it, so the rows have to be readable.
     """
-    records = json.loads(Path(args.extractions).read_text())
+    records = json.loads(Path(args.extractions).read_text(encoding="utf-8"))
     if isinstance(records, dict):
         records = records.get("relationships", [])
 
@@ -455,7 +455,7 @@ def cmd_extract(args: argparse.Namespace) -> int:
 
     out = Path(args.out) if args.out else config.DATA_DIR / "extractions.json"
     out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(json.dumps(records, indent=2) + "\n")
+    out.write_text(json.dumps(records, indent=2) + "\n", encoding="utf-8")
     print(f"\n{len(records)} record(s) written to {out}")
     print("Nothing is trustworthy until `hscm verify` has run over it.")
     return 0
@@ -468,11 +468,48 @@ def _resolver(threshold: float | None = None):
     return Resolver(Spine.load(), Aliases.load(), threshold)
 
 
+def cmd_lookup(args: argparse.Namespace) -> int:
+    """Find a company in SEC's registry, by ticker or by name.
+
+    Working the review queue means putting CIKs in a column, and a CIK typed
+    from memory is a wrong merge waiting to happen — silent, because nothing
+    downstream can tell a plausible CIK from the right one. This reads the same
+    spine the resolver reads.
+    """
+    from .resolve import Spine, normalize_name
+
+    spine = Spine.load()
+    for query in args.names:
+        print(f"\n{query}")
+        by_ticker = spine.by_ticker(query)
+        if by_ticker:
+            print(f"  {by_ticker.cik:<10} {by_ticker.ticker:<6} {by_ticker.title}   (ticker match)")
+            continue
+
+        normalized = normalize_name(query)
+        exact = spine.exact(normalized)
+        if exact:
+            print(f"  {exact.cik:<10} {exact.ticker:<6} {exact.title}   (exact match)")
+            continue
+
+        candidates = spine.by_leading_tokens(normalized) + spine.best_fuzzy(normalized)
+        if not candidates:
+            print("  nothing in the registry looks like this — it may not file with the SEC")
+            continue
+        seen: set[int] = set()
+        for score, entry in candidates:
+            if entry.cik in seen:
+                continue
+            seen.add(entry.cik)
+            print(f"  {entry.cik:<10} {entry.ticker:<6} {entry.title}   @ {score:.2f}")
+    return 0
+
+
 def cmd_review(args: argparse.Namespace) -> int:
     from .resolve import Aliases, apply_review_queue, build_review_queue
 
     if args.action == "build":
-        records = json.loads(Path(args.extractions).read_text())
+        records = json.loads(Path(args.extractions).read_text(encoding="utf-8"))
         path, pending = build_review_queue(records, _resolver(args.threshold))
         print(f"{len(pending)} name(s) need a human decision -> {path}")
         if pending:
@@ -510,7 +547,7 @@ def cmd_build(args: argparse.Namespace) -> int:
     from .graph import build_graph, export
     from .resolve import Spine
 
-    records = json.loads(Path(args.extractions).read_text())
+    records = json.loads(Path(args.extractions).read_text(encoding="utf-8"))
     report = verify_records(records, _document_resolver())
     print(report.summary())
 
@@ -542,7 +579,7 @@ def cmd_neo4j_load(args: argparse.Namespace) -> int:
     from .graph import build_graph, cypher_statements, export  # noqa: F401
     from .resolve import Spine
 
-    records = json.loads(Path(args.extractions).read_text())
+    records = json.loads(Path(args.extractions).read_text(encoding="utf-8"))
     report = verify_records(records, _document_resolver())
     supported = report.supported_records(records)
 
@@ -651,6 +688,10 @@ def main(argv: list[str] | None = None) -> int:
     review.add_argument("--extractions", default=default_extractions)
     review.add_argument("--threshold", type=float, default=None)
     review.set_defaults(func=cmd_review)
+
+    lookup = sub.add_parser("lookup", help="find a company's CIK in SEC's registry")
+    lookup.add_argument("names", nargs="+", help="ticker or company name")
+    lookup.set_defaults(func=cmd_lookup)
 
     build = sub.add_parser("build", help="verify, resolve, and export the graph")
     build.add_argument("--extractions", default=default_extractions)

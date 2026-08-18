@@ -114,11 +114,11 @@ class EdgarClient:
         if self._tickers is None:
             cache = config.CACHE_DIR / "company_tickers.json"
             if cache.exists():
-                payload = json.loads(cache.read_text())
+                payload = json.loads(cache.read_text(encoding="utf-8"))
             else:
                 payload = self._get(config.COMPANY_TICKERS_URL).json()
                 cache.parent.mkdir(parents=True, exist_ok=True)
-                cache.write_text(json.dumps(payload, indent=2))
+                cache.write_text(json.dumps(payload, indent=2), encoding="utf-8")
             self._tickers = {
                 row["ticker"].upper(): (int(row["cik_str"]), row["title"])
                 for row in payload.values()
@@ -200,11 +200,11 @@ def write_manifest(filings: list[Filing], merge: bool = True) -> Path:
         rows[f.accession] = row
 
     ordered = sorted(rows.values(), key=lambda r: (r["ticker"], r["filing_date"]))
-    config.MANIFEST_PATH.write_text(json.dumps(ordered, indent=2) + "\n")
+    config.MANIFEST_PATH.write_text(json.dumps(ordered, indent=2) + "\n", encoding="utf-8")
     return config.MANIFEST_PATH
 
 
 def read_manifest() -> list[dict]:
     if not config.MANIFEST_PATH.exists():
         return []
-    return json.loads(config.MANIFEST_PATH.read_text())
+    return json.loads(config.MANIFEST_PATH.read_text(encoding="utf-8"))

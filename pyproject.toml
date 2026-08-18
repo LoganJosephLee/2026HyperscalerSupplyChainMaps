@@ -27,3 +27,10 @@ packages = ["src/hscm"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+# Turn an implicit text encoding into a test failure. Reading or writing a file
+# without saying "utf-8" uses whatever the platform prefers — UTF-8 on Linux,
+# cp1252 on Windows — so a filing containing a non-breaking hyphen writes fine
+# on one machine and raises UnicodeEncodeError on another. This is the only
+# check that catches it without a Windows machine to run on. Requires
+# PYTHONWARNDEFAULTENCODING=1, which the Makefile and run.ps1 both set.
+filterwarnings = ["error::EncodingWarning"]
