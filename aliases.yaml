@@ -3,6 +3,9 @@
 # excluded: raw filing name -> why it is not in the dataset
 # Regenerate the queue with `hscm review build`; apply it with `hscm review apply`.
 aliases: {}
+non_filers:
+  OpenAI: Private company. Named in Microsoft's 10-K; files nothing with the SEC, so it is
+    a node with no CIK and nothing it says can corroborate the edge.
 excluded:
   SK Hynix: Korean-listed. Does not file with the SEC, so no filing sentence can cite it.
   SK hynix Inc.: Korean-listed. Does not file with the SEC, so no filing sentence can cite it.

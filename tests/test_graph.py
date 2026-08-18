@@ -12,6 +12,7 @@ from hscm.resolve import Aliases, Resolver, Spine
 from test_resolve import SPINE_PAYLOAD
 
 MSFT, NVDA, MU = 789019, 1045810, 723125
+MSFT_K, NVDA_K, MU_K = "cik-0000789019", "cik-0001045810", "cik-0000723125"
 
 
 @pytest.fixture
@@ -40,10 +41,10 @@ def record(supplier="NVIDIA Corporation", buyer="Microsoft Corporation", sentenc
 # --- assembly ---------------------------------------------------------------
 def test_edge_built_between_resolved_companies(resolver):
     graph = build_graph([record()], resolver, seed_ciks={MSFT})
-    assert set(graph.companies) == {MSFT, NVDA}
-    assert (NVDA, MSFT) in graph.edges
-    assert graph.companies[MSFT].is_seed
-    assert not graph.companies[NVDA].is_seed
+    assert set(graph.companies) == {MSFT_K, NVDA_K}
+    assert (NVDA_K, MSFT_K) in graph.edges
+    assert graph.companies[MSFT_K].is_seed
+    assert not graph.companies[NVDA_K].is_seed
 
 
 def test_repeated_statements_group_onto_one_edge(resolver):
@@ -54,7 +55,7 @@ def test_repeated_statements_group_onto_one_edge(resolver):
     ]
     graph = build_graph(records, resolver, seed_ciks={MSFT})
     assert len(graph.edges) == 1
-    edge = graph.edges[(NVDA, MSFT)]
+    edge = graph.edges[(NVDA_K, MSFT_K)]
     assert len(edge.evidence) == 2
     assert edge.latest_filing_date == "2025-11-01"
 
@@ -62,7 +63,7 @@ def test_repeated_statements_group_onto_one_edge(resolver):
 def test_identical_records_are_not_double_counted(resolver):
     """The same window extracted twice must not inflate the evidence count."""
     graph = build_graph([record(), record()], resolver, seed_ciks=set())
-    assert len(graph.edges[(NVDA, MSFT)].evidence) == 1
+    assert len(graph.edges[(NVDA_K, MSFT_K)].evidence) == 1
 
 
 def test_unresolved_names_are_counted_not_dropped_silently(resolver):
@@ -90,7 +91,7 @@ def test_self_loop_is_not_an_edge(resolver):
 def test_direction_is_supplier_to_buyer(resolver):
     graph = build_graph([record()], resolver, seed_ciks=set())
     edge = next(iter(graph.edges.values()))
-    assert (edge.supplier_cik, edge.buyer_cik) == (NVDA, MSFT)
+    assert (edge.supplier_key, edge.buyer_key) == (NVDA_K, MSFT_K)
 
 
 def test_quantified_pct_and_confidence_summarise_the_evidence(resolver):
@@ -99,7 +100,7 @@ def test_quantified_pct_and_confidence_summarise_the_evidence(resolver):
         record(sentence="Another sentence entirely, with a larger number.",
                quantified_pct=24, quantified_basis="revenue", extraction_confidence="high"),
     ]
-    edge = build_graph(records, resolver, seed_ciks=set()).edges[(NVDA, MSFT)]
+    edge = build_graph(records, resolver, seed_ciks=set()).edges[(NVDA_K, MSFT_K)]
     assert edge.max_quantified_pct == 24
     assert edge.best_confidence == "high"
 
@@ -126,7 +127,7 @@ def test_export_writes_graph_and_both_dataset_formats(tmp_path, resolver):
     assert payload["meta"]["edge_count"] == 1
     assert len(payload["nodes"]) == 2
     edge = payload["edges"][0]
-    assert edge["source"] == f"cik-{NVDA:010d}" and edge["target"] == f"cik-{MSFT:010d}"
+    assert edge["source"] == NVDA_K and edge["target"] == MSFT_K
     assert edge["quantified_pct"] == 19
     assert edge["evidence"][0]["source_url"].startswith("https://www.sec.gov/")
 
@@ -183,7 +184,7 @@ def test_unclear_only_edge_reports_no_stated_direction(resolver):
                 sentence="Additionally, we have a long-term strategic partnership with them.")],
         resolver, seed_ciks=set(),
     )
-    assert graph.edges[(NVDA, MSFT)].direction_stated is False
+    assert graph.edges[(NVDA_K, MSFT_K)].direction_stated is False
 
 
 def test_one_directional_statement_is_enough(resolver):
@@ -191,7 +192,7 @@ def test_one_directional_statement_is_enough(resolver):
         record(relationship_type="unclear"),
         record(relationship_type="supplies", sentence="They supply us with processors."),
     ]
-    assert build_graph(records, resolver, seed_ciks=set()).edges[(NVDA, MSFT)].direction_stated
+    assert build_graph(records, resolver, seed_ciks=set()).edges[(NVDA_K, MSFT_K)].direction_stated
 
 
 def test_export_carries_direction_stated(tmp_path, resolver):
@@ -199,3 +200,43 @@ def test_export_carries_direction_stated(tmp_path, resolver):
     export(graph, [], tmp_path)
     payload = json.loads((tmp_path / "graph.json").read_text())
     assert payload["edges"][0]["direction_stated"] is False
+
+
+# --- non-filer nodes ---------------------------------------------------------
+def test_non_filer_becomes_a_node_with_no_cik():
+    """Microsoft's 10-K names OpenAI. It is citable, so it is in the graph."""
+    aliases = Aliases(non_filers={"OpenAI": "Private; named in filings, files none"})
+    resolver = Resolver(Spine.from_json(SPINE_PAYLOAD), aliases)
+    graph = build_graph(
+        [record(supplier="OpenAI", buyer="Microsoft Corporation", relationship_type="unclear")],
+        resolver, seed_ciks={MSFT},
+    )
+    node = graph.companies["name-openai"]
+    assert node.cik is None
+    assert node.has_sec_filings is False
+    assert node.is_seed is False
+    assert ("name-openai", MSFT_K) in graph.edges
+
+
+def test_export_counts_non_filer_nodes(tmp_path):
+    aliases = Aliases(non_filers={"OpenAI": "Private"})
+    resolver = Resolver(Spine.from_json(SPINE_PAYLOAD), aliases)
+    graph = build_graph([record(supplier="OpenAI")], resolver, seed_ciks=set())
+    export(graph, [], tmp_path)
+    payload = json.loads((tmp_path / "graph.json").read_text())
+    assert payload["meta"]["non_filer_node_count"] == 1
+    node = next(n for n in payload["nodes"] if n["id"] == "name-openai")
+    assert node["cik"] is None and node["has_sec_filings"] is False
+
+
+def test_cypher_keys_on_node_key_so_null_ciks_do_not_collide():
+    aliases = Aliases(non_filers={"OpenAI": "x", "xAI": "y"})
+    resolver = Resolver(Spine.from_json(SPINE_PAYLOAD), aliases)
+    graph = build_graph(
+        [record(supplier="OpenAI"), record(supplier="xAI", sentence="A second sentence here.")],
+        resolver, seed_ciks=set(),
+    )
+    statements = cypher_statements(graph)
+    assert "node_key IS UNIQUE" in statements[0][0]
+    keys = {p["node_key"] for s, p in statements if "MERGE (c:Company" in s}
+    assert {"name-openai", "name-xai"} <= keys

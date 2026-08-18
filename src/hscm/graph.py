@@ -43,29 +43,39 @@ EVIDENCE_FIELDS = (
 
 @dataclass
 class Company:
-    cik: int
-    ticker: str | None
+    """A company in the graph.
+
+    `cik` is None for a company that a filing names but that files nothing
+    itself — OpenAI, and other private counterparties. Those are citable, so
+    they belong in the dataset, but SEC's registry has no identifier for them
+    and they are keyed by resolved name instead. `has_sec_filings` is what
+    distinguishes the two.
+    """
+
+    node_key: str
     canonical_name: str
+    cik: int | None = None
+    ticker: str | None = None
     is_seed: bool = False
-    has_sec_filings: bool = True  # everything on the spine is a filer by definition
+    has_sec_filings: bool = True
     lei: str | None = None       # GLEIF enrichment not yet run
     country: str | None = None
     sector: str | None = None
 
     @property
     def node_id(self) -> str:
-        return f"cik-{self.cik:010d}"
+        return self.node_key
 
 
 @dataclass
 class SupplyEdge:
-    supplier_cik: int
-    buyer_cik: int
+    supplier_key: str
+    buyer_key: str
     evidence: list[dict] = field(default_factory=list)
 
     @property
     def edge_id(self) -> str:
-        return f"cik-{self.supplier_cik:010d}--cik-{self.buyer_cik:010d}"
+        return f"{self.supplier_key}--{self.buyer_key}"
 
     @property
     def max_quantified_pct(self) -> float | None:
@@ -103,8 +113,8 @@ class SupplyEdge:
 
 @dataclass
 class Graph:
-    companies: dict[int, Company] = field(default_factory=dict)
-    edges: dict[tuple[int, int], SupplyEdge] = field(default_factory=dict)
+    companies: dict[str, Company] = field(default_factory=dict)
+    edges: dict[tuple[str, str], SupplyEdge] = field(default_factory=dict)
     unresolved: list[dict] = field(default_factory=list)
     excluded: dict[str, str] = field(default_factory=dict)
 
@@ -145,24 +155,26 @@ def build_graph(records: list[dict], resolver: Resolver, seed_ciks: set[int]) ->
             )
             continue
 
-        if supplier.cik == buyer.cik:
+        if supplier.node_key == buyer.node_key:
             # A filing describing an intra-company arrangement resolves to one
             # node on both ends. A self-loop is not a supply relationship.
             continue
 
         for resolution in (buyer, supplier):
             graph.companies.setdefault(
-                resolution.cik,
+                resolution.node_key,
                 Company(
+                    node_key=resolution.node_key,
                     cik=resolution.cik,
                     ticker=resolution.ticker,
                     canonical_name=resolution.canonical_name or resolution.raw_name,
-                    is_seed=resolution.cik in seed_ciks,
+                    is_seed=resolution.cik is not None and resolution.cik in seed_ciks,
+                    has_sec_filings=resolution.cik is not None,
                 ),
             )
 
-        key = (supplier.cik, buyer.cik)
-        edge = graph.edges.setdefault(key, SupplyEdge(supplier.cik, buyer.cik))
+        key = (supplier.node_key, buyer.node_key)
+        edge = graph.edges.setdefault(key, SupplyEdge(supplier.node_key, buyer.node_key))
         evidence = {k: record.get(k) for k in EVIDENCE_FIELDS}
         if evidence not in edge.evidence:
             edge.evidence.append(evidence)
@@ -184,6 +196,9 @@ def export(graph: Graph, records: list[dict], directory: Path | None = None) -> 
             "edge_count": len(graph.edges),
             "evidence_count": sum(len(e.evidence) for e in graph.edges.values()),
             "unresolved_record_count": len(graph.unresolved),
+            "non_filer_node_count": sum(
+                1 for c in graph.companies.values() if not c.has_sec_filings
+            ),
             "excluded_companies": graph.excluded,
             "license": "Source filings are US government works in the public domain.",
         },
@@ -194,8 +209,8 @@ def export(graph: Graph, records: list[dict], directory: Path | None = None) -> 
         "edges": [
             {
                 "id": edge.edge_id,
-                "source": f"cik-{edge.supplier_cik:010d}",
-                "target": f"cik-{edge.buyer_cik:010d}",
+                "source": edge.supplier_key,
+                "target": edge.buyer_key,
                 "quantified_pct": edge.max_quantified_pct,
                 "relationship_types": edge.relationship_types,
                 "direction_stated": edge.direction_stated,
@@ -240,15 +255,15 @@ def cypher_statements(graph: Graph) -> list[tuple[str, dict]]:
     separate.
     """
     statements: list[tuple[str, dict]] = [
-        ("CREATE CONSTRAINT company_cik IF NOT EXISTS "
-         "FOR (c:Company) REQUIRE c.cik IS UNIQUE", {}),
+        ("CREATE CONSTRAINT company_node_key IF NOT EXISTS "
+         "FOR (c:Company) REQUIRE c.node_key IS UNIQUE", {}),
     ]
 
     for company in graph.companies.values():
         statements.append(
             (
-                "MERGE (c:Company {cik: $cik}) "
-                "SET c.ticker = $ticker, c.canonical_name = $canonical_name, "
+                "MERGE (c:Company {node_key: $node_key}) "
+                "SET c.cik = $cik, c.ticker = $ticker, c.canonical_name = $canonical_name, "
                 "c.is_seed = $is_seed, c.has_sec_filings = $has_sec_filings, "
                 "c.lei = $lei, c.country = $country, c.sector = $sector",
                 asdict(company),
@@ -259,7 +274,8 @@ def cypher_statements(graph: Graph) -> list[tuple[str, dict]]:
         for evidence in edge.evidence:
             statements.append(
                 (
-                    "MATCH (s:Company {cik: $supplier_cik}), (b:Company {cik: $buyer_cik}) "
+                    "MATCH (s:Company {node_key: $supplier_key}), "
+                    "(b:Company {node_key: $buyer_key}) "
                     "MERGE (s)-[r:SUPPLIES {source_url: $source_url, "
                     "source_sentence: $source_sentence}]->(b) "
                     "SET r.form_type = $form_type, r.filing_date = date($filing_date), "
@@ -268,8 +284,8 @@ def cypher_statements(graph: Graph) -> list[tuple[str, dict]]:
                     "r.relationship_type = $relationship_type, "
                     "r.extraction_confidence = $extraction_confidence",
                     {
-                        "supplier_cik": edge.supplier_cik,
-                        "buyer_cik": edge.buyer_cik,
+                        "supplier_key": edge.supplier_key,
+                        "buyer_key": edge.buyer_key,
                         **evidence,
                     },
                 )

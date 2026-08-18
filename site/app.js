@@ -9,6 +9,7 @@
 
 const SEED_COLOR = "#f2a541";
 const SUPPLIER_COLOR = "#6aa9ff";
+const NON_FILER_COLOR = "#c39bd3";
 const EDGE_COLOR = "#3b4252";
 const EDGE_COLOR_QUANTIFIED = "#7ee0a0";
 
@@ -100,7 +101,10 @@ function renderNode(node, graphData) {
   el("panel").innerHTML = `
     <p class="pair">${escapeHtml(node.canonical_name)}</p>
     <p class="pair-sub">
-      CIK ${escapeHtml(String(node.cik).padStart(10, "0"))}${node.ticker ? " &middot; " + escapeHtml(node.ticker) : ""}
+      ${node.cik == null
+        ? "No SEC filings &mdash; in this graph only because other companies' filings name it"
+        : "CIK " + escapeHtml(String(node.cik).padStart(10, "0"))}${
+        node.ticker ? " &middot; " + escapeHtml(node.ticker) : ""}
       ${node.is_seed ? " &middot; seed company" : ""}
     </p>
     <h2>Supplies</h2>${list(asSupplier, "target")}
@@ -141,7 +145,14 @@ async function main() {
       y: Math.sin(angle) * 10,
       size: node.is_seed ? 14 : 8,
       label: node.canonical_name,
-      color: node.is_seed ? SEED_COLOR : SUPPLIER_COLOR,
+      // A company named in a filing but filing nothing itself gets its own
+      // colour: it is in the graph on someone else's disclosure, and nothing
+      // it says can ever corroborate or contradict the edge.
+      color: node.is_seed
+        ? SEED_COLOR
+        : node.has_sec_filings === false
+          ? NON_FILER_COLOR
+          : SUPPLIER_COLOR,
     });
   });
 

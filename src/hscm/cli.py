@@ -35,21 +35,31 @@ _ACCESSION_IN_URL = re.compile(r"(\d{10}\d{2}\d{6}|\d{10}-\d{2}-\d{6})")
 # --- M1 ---------------------------------------------------------------------
 def cmd_fetch(args: argparse.Namespace) -> int:
     client = EdgarClient()
-    tickers = args.tickers or list(config.SEED_TICKERS)
+    if args.tickers:
+        tickers = args.tickers
+    elif args.seeds_only:
+        tickers = list(config.SEED_TICKERS)
+    else:
+        tickers = list(config.WATCHLIST)
     fetched: list[Filing] = []
     failures: list[tuple[str, str]] = []
 
     for ticker in tickers:
+        # Honour an explicit --form; otherwise let foreign private issuers use
+        # the form they actually file.
+        form = args.form
+        if not args.form_was_given:
+            form = config.DEFAULT_FORM_BY_TICKER.get(ticker.upper(), args.form)
         try:
-            filings = client.recent_filings(ticker, args.form, limit=args.limit)
+            filings = client.recent_filings(ticker, form, limit=args.limit)
         except Exception as exc:  # network, lookup, or schema failure
             failures.append((ticker, f"{type(exc).__name__}: {exc}"))
             print(f"  {ticker:<6} FAILED  {type(exc).__name__}: {exc}", file=sys.stderr)
             continue
 
         if not filings:
-            failures.append((ticker, f"no {args.form} in submissions.recent"))
-            print(f"  {ticker:<6} none    no {args.form} found in recent filings")
+            failures.append((ticker, f"no {form} in submissions.recent"))
+            print(f"  {ticker:<6} none    no {form} found in recent filings")
             continue
 
         for filing in filings:
@@ -375,11 +385,13 @@ def cmd_review(args: argparse.Namespace) -> int:
         path, pending = build_review_queue(records, _resolver(args.threshold))
         print(f"{len(pending)} name(s) need a human decision -> {path}")
         if pending:
-            print("\nFill in `decision` per row: accept | cik | exclude | skip")
-            print("  accept  — best_match_cik is right")
-            print("  cik     — put the correct CIK in the `cik` column")
-            print("  exclude — company is real but does not file with the SEC; give a reason")
-            print("  skip    — decide later\n")
+            print("\nFill in `decision` per row: accept | cik | non-filer | exclude | skip")
+            print("  accept    — best_match_cik is right")
+            print("  cik       — put the correct CIK in the `cik` column")
+            print("  non-filer — named in a filing but files nothing itself, like")
+            print("              OpenAI; becomes a node with no CIK")
+            print("  exclude   — keep out of the dataset entirely; give a reason")
+            print("  skip      — decide later\n")
             for resolution in pending[:10]:
                 best = resolution.candidates[0] if resolution.candidates else None
                 guess = f"{best[1]} ({best[2]}) @ {resolution.score:.2f}" if best else "no candidate"
@@ -387,11 +399,12 @@ def cmd_review(args: argparse.Namespace) -> int:
         return 0
 
     aliases = Aliases.load()
-    added, excluded, problems = apply_review_queue(aliases)
+    added, excluded, non_filers, problems = apply_review_queue(aliases)
     for problem in problems:
         print(f"  !! {problem}", file=sys.stderr)
     path = aliases.save()
-    print(f"{added} alias(es), {excluded} exclusion(s) written to {path}")
+    print(f"{added} alias(es), {non_filers} non-filer(s), "
+          f"{excluded} exclusion(s) written to {path}")
     return 1 if problems else 0
 
 
@@ -486,7 +499,10 @@ def main(argv: list[str] | None = None) -> int:
     sub = parser.add_subparsers(dest="command", required=True)
 
     fetch = sub.add_parser("fetch", help="cache filings for the seed companies")
-    fetch.add_argument("tickers", nargs="*", help="default: the seed set")
+    fetch.add_argument("tickers", nargs="*",
+                       help="default: the seed set plus the supplier watchlist")
+    fetch.add_argument("--seeds-only", action="store_true",
+                       help="fetch only the six buyers")
     fetch.add_argument("--form", default="10-K", choices=config.FORM_TYPES)
     fetch.add_argument("--limit", type=int, default=1, help="filings per company")
     fetch.add_argument("--refresh", action="store_true", help="re-download cached documents")
@@ -544,6 +560,9 @@ def main(argv: list[str] | None = None) -> int:
     neo.set_defaults(func=cmd_neo4j_load)
 
     args = parser.parse_args(argv)
+    # Lets cmd_fetch tell "the user asked for 10-K" from "10-K is the default".
+    if getattr(args, "form", None) is not None:
+        args.form_was_given = any(a == "--form" for a in (argv or sys.argv[1:]))
     return args.func(args)
 
 

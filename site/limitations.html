@@ -44,17 +44,40 @@
     <tr><th>Supporting sentences</th><td id="stat-evidence">&mdash;</td></tr>
     <tr><th>Newest filing</th><td id="stat-asof">&mdash;</td></tr>
     <tr><th>Records dropped in entity resolution</th><td id="stat-unresolved">&mdash;</td></tr>
+    <tr><th>Companies present with no SEC filings</th><td id="stat-nonfilers">&mdash;</td></tr>
   </tbody>
 </table>
 <p id="empty-note" class="hint" hidden>
   The dataset is currently empty. Nothing has been extracted and verified yet.
 </p>
 
-<h2>Companies excluded because they do not file with the SEC</h2>
+<h2>Two kinds of company that never file anything</h2>
 <p>
   A company enters this graph only if it appears in a retrievable EDGAR filing sentence.
-  There are no placeholder nodes and no greyed-out entries for companies we know exist.
-  That is a deliberate choice with a real cost, and the largest instances of that cost are:
+  There are no placeholder nodes and no greyed-out entries for companies we merely know
+  exist. But "cited in a filing" and "files with the SEC" are different tests, and the
+  difference decides two very different outcomes.
+</p>
+
+<h3>Named in someone else's filing &mdash; these <em>are</em> in the graph</h3>
+<p>
+  Microsoft's 10-K names OpenAI. OpenAI is private and files nothing, so SEC's registry
+  has no identifier for it &mdash; but the sentence is citable, which is the test this
+  project actually applies. It appears as a node with no CIK, drawn in a distinct colour,
+  and its entry says so. Anthropic, xAI, SpaceX and Databricks fall in the same class.
+</p>
+<div class="callout">
+  <p>
+    <strong>Nothing these companies say can ever corroborate or contradict an edge.</strong>
+    They are in the map entirely on the word of whoever named them. A public company's
+    disclosures can be cross-checked against its own later filings; a private company's
+    cannot, because there are none.
+  </p>
+</div>
+
+<h3>Never named at all &mdash; these are <em>not</em> in the graph</h3>
+<p>
+  The larger instances of the cost of the citation rule:
 </p>
 
 <table>
@@ -105,16 +128,28 @@
   </li>
 </ul>
 
-<h2>The seed set points at buyers, and disclosure runs the other way</h2>
+<h2>Disclosure runs the opposite way from the seed set</h2>
 <p>
   The six seed companies &mdash; Microsoft, Alphabet, Amazon, Meta, Oracle, CoreWeave
   &mdash; are the demand side of the AI buildout. But naming obligations mostly fall on
-  <em>suppliers</em>: a chipmaker discloses that a large cloud provider is a major customer,
-  while the cloud provider's own 10-K typically says only that it depends on
-  &ldquo;a limited number of suppliers.&rdquo; Coverage is therefore thinner and less
-  quantified than the seed set suggests, and it improves only as supplier-side filings are
-  added to the dataset.
+  <em>suppliers</em>: a registrant must disclose customers accounting for more than 10% of
+  revenue, so a chipmaker names its large cloud customers, while the cloud provider's own
+  10-K says only that it depends on &ldquo;a limited number of suppliers.&rdquo;
 </p>
+<p>
+  This is not a theoretical concern. Microsoft's entire risk factors section &mdash; over
+  81,000 characters &mdash; yielded exactly one supply relationship, and that one states no
+  direction. Supplier-side filings are therefore read as well, which is where the named and
+  quantified disclosures actually live. Reading a company's filings asserts nothing about
+  it: an edge still requires a sentence.
+</p>
+<div class="callout">
+  <p>
+    <strong>Which filings are read is a choice, and it shapes the map.</strong> Companies
+    whose filings nobody reads here can only appear if someone else names them. The list of
+    filers read is in <code>config.py</code> and changes as the project grows.
+  </p>
+</div>
 
 <h2>How an edge gets here</h2>
 <ol>
@@ -186,6 +221,7 @@ fetch("data/graph.json", { cache: "no-store" })
     setText("stat-evidence", meta.evidence_count ?? 0);
     setText("stat-asof", meta.data_as_of ?? "—");
     setText("stat-unresolved", meta.unresolved_record_count ?? 0);
+    setText("stat-nonfilers", meta.non_filer_node_count ?? 0);
     if (!meta.edge_count) document.getElementById("empty-note").hidden = false;
 
     const others = Object.entries(meta.excluded_companies || {});

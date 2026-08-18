@@ -20,6 +20,43 @@ SEED_TICKERS: tuple[str, ...] = (
     "CRWV",   # CoreWeave
 )
 
+# --- Supply side ------------------------------------------------------------
+# Filings we read, NOT relationships we assert. Nothing here becomes an edge
+# unless a sentence in some filing states it and survives verification.
+#
+# Why these companies: naming obligations fall on suppliers, not buyers. A
+# registrant must disclose customers accounting for more than 10% of revenue,
+# so a chipmaker names its large cloud customers while the cloud provider's own
+# 10-K says only "a limited number of suppliers". Microsoft's entire risk
+# factors section yielded one relationship; the disclosure we want is on the
+# other side of the trade.
+SUPPLIER_TICKERS: tuple[str, ...] = (
+    "NVDA",   # NVIDIA
+    "AVGO",   # Broadcom
+    "AMD",    # Advanced Micro Devices
+    "MU",     # Micron
+    "MRVL",   # Marvell
+    "SMCI",   # Super Micro Computer
+    "DELL",   # Dell Technologies
+    "ANET",   # Arista Networks
+    "VRT",    # Vertiv
+    "ETN",    # Eaton
+    "CLS",    # Celestica
+    "CRDO",   # Credo
+    "COHR",   # Coherent
+    "TSM",    # TSMC — files a 20-F, not a 10-K
+)
+
+# Everything we fetch by default.
+WATCHLIST: tuple[str, ...] = SEED_TICKERS + SUPPLIER_TICKERS
+
+# Foreign private issuers file a 20-F rather than a 10-K. Asking EDGAR for a
+# 10-K from one of these returns nothing at all, which looks like a fetch
+# failure rather than the filing-convention difference it actually is.
+DEFAULT_FORM_BY_TICKER: dict[str, str] = {
+    "TSM": "20-F",
+}
+
 # Forms we ingest (Decision 2).
 FORM_TYPES: tuple[str, ...] = ("10-K", "20-F", "10-Q", "8-K")
 

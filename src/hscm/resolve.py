@@ -145,6 +145,11 @@ class Aliases:
 
     aliases: dict[str, dict] = field(default_factory=dict)
     excluded: dict[str, str] = field(default_factory=dict)
+    # Companies that appear in a filing sentence but file nothing themselves.
+    # OpenAI, Anthropic, xAI, SpaceX, Databricks — private companies named by
+    # the registrants that deal with them. They are citable, so they are in the
+    # dataset; they have no CIK, so they are keyed by name.
+    non_filers: dict[str, str] = field(default_factory=dict)
 
     @classmethod
     def load(cls, path: Path | None = None) -> "Aliases":
@@ -155,18 +160,22 @@ class Aliases:
         return cls(
             aliases={str(k): dict(v) for k, v in (payload.get("aliases") or {}).items()},
             excluded={str(k): str(v) for k, v in (payload.get("excluded") or {}).items()},
+            non_filers={str(k): str(v) for k, v in (payload.get("non_filers") or {}).items()},
         )
 
     def save(self, path: Path | None = None) -> Path:
         path = path or config.ALIASES_PATH
         payload = {
             "aliases": dict(sorted(self.aliases.items())),
+            "non_filers": dict(sorted(self.non_filers.items())),
             "excluded": dict(sorted(self.excluded.items())),
         }
         path.write_text(
             "# Entity resolution decisions, made by hand and reviewed in version control.\n"
-            "# aliases:  raw filing name -> the CIK it refers to\n"
-            "# excluded: raw filing name -> why it is not in the dataset\n"
+            "# aliases:    raw filing name -> the CIK it refers to\n"
+            "# non_filers: raw filing name -> note. Named in a filing, files nothing\n"
+            "#             itself, so it is a node with no CIK.\n"
+            "# excluded:   raw filing name -> why it is not in the dataset at all\n"
             "# Regenerate the queue with `hscm review build`; apply it with `hscm review apply`.\n"
             + yaml.safe_dump(payload, sort_keys=False, allow_unicode=True, width=100)
         )
@@ -180,6 +189,12 @@ class Aliases:
 
 
 # --- resolution -------------------------------------------------------------
+def name_key(name: str) -> str:
+    """Stable node key for a company with no CIK."""
+    slug = re.sub(r"[^a-z0-9]+", "-", normalize_name(name).lower()).strip("-")
+    return f"name-{slug or 'unknown'}"
+
+
 @dataclass(frozen=True)
 class Resolution:
     raw_name: str
@@ -196,6 +211,13 @@ class Resolution:
     def is_resolved(self) -> bool:
         return self.status == "resolved"
 
+    @property
+    def node_key(self) -> str:
+        """Identity in the graph: the CIK when there is one, the name otherwise."""
+        if self.cik is not None:
+            return f"cik-{self.cik:010d}"
+        return name_key(self.canonical_name or self.raw_name)
+
 
 class Resolver:
     def __init__(self, spine: Spine, aliases: Aliases | None = None, threshold: float | None = None):
@@ -211,6 +233,18 @@ class Resolver:
         if self.aliases.is_excluded(name):
             return Resolution(
                 name, "excluded", reason=self.aliases.excluded.get(name, "excluded by aliases.yaml")
+            )
+
+        note = self.aliases.non_filers.get(name) or self.aliases.non_filers.get(name.strip())
+        if note is not None:
+            return Resolution(
+                raw_name=name,
+                status="resolved",
+                cik=None,
+                canonical_name=name,
+                score=1.0,
+                method="non_filer",
+                reason=note,
             )
 
         decided = self.aliases.lookup(name)
@@ -338,17 +372,18 @@ def build_review_queue(
 
 def apply_review_queue(
     aliases: Aliases, path: Path | None = None
-) -> tuple[int, int, list[str]]:
+) -> tuple[int, int, int, list[str]]:
     """Fold decided rows of the review CSV into aliases.yaml.
 
-    Returns (aliases added, exclusions added, problems). Undecided rows are
-    left alone so the queue can be worked through over several sittings.
+    Returns (aliases added, exclusions added, non-filers added, problems).
+    Undecided rows are left alone so the queue can be worked through over
+    several sittings.
     """
     path = path or config.REVIEW_QUEUE_PATH
     if not path.exists():
         raise FileNotFoundError(f"No review queue at {path}. Run `hscm review build` first.")
 
-    added = excluded = 0
+    added = excluded = non_filers = 0
     problems: list[str] = []
 
     with path.open(newline="") as handle:
@@ -356,6 +391,13 @@ def apply_review_queue(
             decision = (row.get("decision") or "").strip().lower()
             raw = (row.get("raw_name") or "").strip()
             if not decision or decision == "skip" or not raw:
+                continue
+
+            if decision in {"non-filer", "nonfiler", "non_filer"}:
+                aliases.non_filers[raw] = (row.get("reason") or "").strip() or (
+                    "Named in a filing; does not file with the SEC"
+                )
+                non_filers += 1
                 continue
 
             if decision == "exclude":
@@ -380,4 +422,4 @@ def apply_review_queue(
             aliases.aliases[raw] = entry
             added += 1
 
-    return added, excluded, problems
+    return added, excluded, non_filers, problems

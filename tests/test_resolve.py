@@ -186,8 +186,8 @@ def test_apply_accepts_best_match(tmp_path):
     path = tmp_path / "queue.csv"
     _write_queue(path, [{"raw_name": "NVIDIA Corp", "best_match_cik": "1045810", "decision": "accept"}])
     aliases = Aliases()
-    added, excluded, problems = apply_review_queue(aliases, path)
-    assert (added, excluded, problems) == (1, 0, [])
+    added, excluded, non_filers, problems = apply_review_queue(aliases, path)
+    assert (added, excluded, non_filers, problems) == (1, 0, 0, [])
     assert aliases.aliases["NVIDIA Corp"]["cik"] == 1045810
 
 
@@ -208,7 +208,7 @@ def test_apply_records_exclusions_with_a_reason(tmp_path):
     _write_queue(path, [{"raw_name": "Samsung Electronics", "decision": "exclude",
                          "reason": "Korean-listed; does not file with the SEC"}])
     aliases = Aliases()
-    _, excluded, problems = apply_review_queue(aliases, path)
+    _, excluded, _, problems = apply_review_queue(aliases, path)
     assert excluded == 1 and problems == []
     assert "Korean-listed" in aliases.excluded["Samsung Electronics"]
 
@@ -218,7 +218,7 @@ def test_exclusion_without_a_reason_is_refused(tmp_path):
     path = tmp_path / "queue.csv"
     _write_queue(path, [{"raw_name": "Mystery Corp", "decision": "exclude"}])
     aliases = Aliases()
-    _, excluded, problems = apply_review_queue(aliases, path)
+    _, excluded, _, problems = apply_review_queue(aliases, path)
     assert excluded == 0
     assert problems and "reason" in problems[0]
 
@@ -230,12 +230,57 @@ def test_undecided_and_skipped_rows_are_left_alone(tmp_path):
         {"raw_name": "Later Corp", "decision": "skip"},
     ])
     aliases = Aliases()
-    added, excluded, problems = apply_review_queue(aliases, path)
-    assert (added, excluded, problems) == (0, 0, [])
+    added, excluded, non_filers, problems = apply_review_queue(aliases, path)
+    assert (added, excluded, non_filers, problems) == (0, 0, 0, [])
 
 
 def test_decision_without_a_usable_cik_is_reported(tmp_path):
     path = tmp_path / "queue.csv"
     _write_queue(path, [{"raw_name": "Typo Corp", "decision": "cik", "cik": "not-a-number"}])
-    added, _, problems = apply_review_queue(Aliases(), path)
+    added, _, _, problems = apply_review_queue(Aliases(), path)
     assert added == 0 and problems
+
+
+# --- non-filers -------------------------------------------------------------
+def test_non_filer_resolves_to_a_node_without_a_cik(spine):
+    """OpenAI is named in Microsoft's 10-K and files nothing itself."""
+    aliases = Aliases(non_filers={"OpenAI": "Private company; named in filings, files none"})
+    resolution = Resolver(spine, aliases).resolve("OpenAI")
+    assert resolution.is_resolved
+    assert resolution.cik is None
+    assert resolution.method == "non_filer"
+    assert resolution.node_key == "name-openai"
+
+
+def test_non_filer_key_is_stable_across_spellings(spine):
+    aliases = Aliases(non_filers={"OpenAI": "x", "OpenAI, Inc.": "x"})
+    resolver = Resolver(spine, aliases)
+    assert resolver.resolve("OpenAI").node_key == resolver.resolve("OpenAI, Inc.").node_key
+
+
+def test_filers_still_key_on_cik(resolver):
+    assert resolver.resolve("NVIDIA Corporation").node_key == "cik-0001045810"
+
+
+def test_apply_records_a_non_filer(tmp_path):
+    path = tmp_path / "queue.csv"
+    _write_queue(path, [{"raw_name": "OpenAI", "decision": "non-filer",
+                         "reason": "Private; named in filings, files none"}])
+    aliases = Aliases()
+    added, excluded, non_filers, problems = apply_review_queue(aliases, path)
+    assert (added, excluded, non_filers, problems) == (0, 0, 1, [])
+    assert "Private" in aliases.non_filers["OpenAI"]
+
+
+def test_non_filer_without_a_reason_gets_a_default(tmp_path):
+    path = tmp_path / "queue.csv"
+    _write_queue(path, [{"raw_name": "xAI", "decision": "non-filer"}])
+    aliases = Aliases()
+    apply_review_queue(aliases, path)
+    assert "does not file" in aliases.non_filers["xAI"]
+
+
+def test_non_filers_round_trip_through_the_file(tmp_path):
+    path = tmp_path / "aliases.yaml"
+    Aliases(non_filers={"OpenAI": "Private company"}).save(path)
+    assert Aliases.load(path).non_filers["OpenAI"] == "Private company"
