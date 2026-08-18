@@ -174,6 +174,28 @@ def test_aliases_round_trip(tmp_path):
     assert reloaded.excluded["SK Hynix"] == "not an SEC filer"
 
 
+def test_conflict_markers_are_named_not_traced(tmp_path):
+    """A merge conflict in this file is normal — it is hand-edited and shared.
+
+    Left to PyYAML it surfaces as a scanner traceback thirty frames deep that
+    says nothing about what happened or what to do about it.
+    """
+    path = tmp_path / "aliases.yaml"
+    path.write_text(
+        "aliases: {}\n<<<<<<< HEAD\nnon_filers: {}\n=======\nnon_filers: {}\n>>>>>>> other\n",
+        encoding="utf-8",
+    )
+    with pytest.raises(ValueError, match="conflict markers"):
+        Aliases.load(path)
+
+
+def test_broken_yaml_says_so_plainly(tmp_path):
+    path = tmp_path / "aliases.yaml"
+    path.write_text("aliases: {\n  oops\n", encoding="utf-8")
+    with pytest.raises(ValueError, match="not valid YAML"):
+        Aliases.load(path)
+
+
 def test_missing_alias_file_loads_empty(tmp_path):
     aliases = Aliases.load(tmp_path / "nope.yaml")
     assert aliases.aliases == {} and aliases.excluded == {}

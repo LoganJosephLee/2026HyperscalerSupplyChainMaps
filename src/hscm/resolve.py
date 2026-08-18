@@ -216,7 +216,22 @@ class Aliases:
         path = path or config.ALIASES_PATH
         if not path.exists():
             return cls()
-        payload = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+        text = path.read_text(encoding="utf-8")
+
+        # This file is hand-edited and version-controlled, so the two ways it
+        # breaks are a merge conflict and a typo. Both surface as a YAML scanner
+        # traceback thirty frames deep, which says nothing about what to do.
+        if any(line.startswith(("<<<<<<< ", "=======", ">>>>>>> ")) for line in text.splitlines()):
+            raise ValueError(
+                f"{path} still has git conflict markers in it. Resolve the conflict, "
+                f"then run this again. To take the committed version wholesale:\n"
+                f"  git checkout --theirs -- {path.name}\n"
+                f"  git add {path.name}"
+            )
+        try:
+            payload = yaml.safe_load(text) or {}
+        except yaml.YAMLError as exc:
+            raise ValueError(f"{path} is not valid YAML: {exc}") from exc
         return cls(
             aliases={str(k): dict(v) for k, v in (payload.get("aliases") or {}).items()},
             excluded={str(k): str(v) for k, v in (payload.get("excluded") or {}).items()},

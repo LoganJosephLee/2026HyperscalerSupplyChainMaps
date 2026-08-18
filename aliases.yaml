@@ -10,8 +10,43 @@
 # `hscm review apply` REWRITES this file. Entries and their notes survive;
 # comments you add by hand between them do not. Put the reasoning for a
 # decision in that entry's note, where it is data and will be kept.
-aliases: {}
+aliases:
+  Amkor:
+    cik: 1047127
+    note: Short form of Amkor Technology, Inc., which the same filing spells in full.
+  Credo:
+    cik: 1807794
+    note: Short form of Credo Technology Group Holding Ltd.
+  Marvell:
+    cik: 1835632
+    note: Short form of Marvell Technology, Inc.
+  TSMC:
+    cik: 1046179
+    note: Acronym for Taiwan Semiconductor Manufacturing Company Limited. Not a prefix of the registered
+      name, so no amount of string matching finds it.
 non_filers:
+  ASE:
+    canonical: Advanced Semiconductor Engineering, Inc.
+    note: Short form the filing defines and then uses.
+  Advanced Semiconductor Engineering, Inc.: Taiwan-listed. Files nothing with the SEC, so nothing it says
+    can corroborate or contradict an edge.
+  BizLink:
+    canonical: BizLink Technology, Inc.
+    note: Short form the filing defines and then uses.
+  BizLink Technology, Inc.: Taiwan-listed. Files nothing with the SEC, so nothing it says can corroborate
+    or contradict an edge.
+  Foxconn Technology Group:
+    canonical: Hon Hai Precision Industry Co., Ltd.
+    note: Foxconn is the trading name of Hon Hai. Broadcom's 10-K says Foxconn and NVIDIA's says Hon Hai;
+      they are one company and must be one node.
+  Groq, Inc.: Private company. Named in NVIDIA's 10-K; files nothing with the SEC.
+  Hon Hai Precision Industry Co., Ltd.: Taiwan-listed. Files nothing with the SEC, so nothing it says
+    can corroborate or contradict an edge.
+  KYEC:
+    canonical: King Yuan Electronics Company
+    note: Short form the filing defines and then uses.
+  King Yuan Electronics Company: Taiwan-listed. Files nothing with the SEC, so nothing it says can corroborate
+    or contradict an edge.
   OpenAI: Private company. Named in Microsoft's 10-K; files nothing with the SEC, so it is a node with
     no CIK and nothing it says can corroborate the edge.
   SK Hynix: Korean-listed, so it files nothing with the SEC — but NVIDIA's 10-K names it outright, and
@@ -33,4 +68,13 @@ non_filers:
   Samsung Electronics Co., Ltd.:
     canonical: Samsung Electronics
     note: Full legal name as NVIDIA's 10-K first spells it.
+  Sigurd:
+    canonical: Sigurd Microelectronics Corp.
+    note: Short form the filing defines and then uses.
+  Sigurd Microelectronics Corp.: Taiwan-listed. Files nothing with the SEC, so nothing it says can corroborate
+    or contradict an edge.
+  Siliconware Precision Industries Co., Ltd.: Taiwan-listed. Files nothing with the SEC, so nothing it
+    says can corroborate or contradict an edge.
+  Wistron Corporation: Taiwan-listed. Files nothing with the SEC, so nothing it says can corroborate or
+    contradict an edge.
 excluded: {}
