@@ -7,6 +7,7 @@
   --muted: #9aa3b2;
   --seed: #f2a541;
   --supplier: #6aa9ff;
+  --nonfiler: #c39bd3;   /* matches NON_FILER_COLOR in app.js */
   --accent: #7ee0a0;
   --warn: #ffb4a2;
   --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
@@ -85,6 +86,7 @@ main { display: grid; grid-template-columns: 1fr 400px; height: calc(100vh - 57p
 .dot { width: 10px; height: 10px; border-radius: 50%; }
 .dot.seed { background: var(--seed); }
 .dot.supplier { background: var(--supplier); }
+.dot.nonfiler { background: var(--nonfiler); }
 .bar { width: 22px; height: 3px; background: var(--muted); }
 .bar.dashed {
   height: 0;

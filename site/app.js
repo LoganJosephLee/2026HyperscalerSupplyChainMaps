@@ -148,9 +148,9 @@ async function main() {
 
   const stamp = data.meta?.data_as_of;
   el("stamp").textContent = stamp ? `data as of ${stamp}` : "data as of — (no filings yet)";
-  document.title = stamp
-    ? `AI Hyperscaler Supply Chain Maps — ${stamp}`
-    : document.title;
+  // Keep whatever the page is called and append the stamp, so the name lives in
+  // one place (the <title> tag) instead of being retyped here.
+  if (stamp) document.title = `${document.title} — ${stamp}`;
 
   if (!data.edges?.length) {
     el("empty-state").classList.add("visible");
