@@ -153,7 +153,7 @@ def test_export_writes_graph_and_both_dataset_formats(tmp_path, resolver):
 
     assert {p.name for p in written} == {"graph.json", "relationships.json", "relationships.csv"}
 
-    payload = json.loads((tmp_path / "graph.json").read_text())
+    payload = json.loads((tmp_path / "graph.json").read_text(encoding="utf-8"))
     assert payload["meta"]["data_as_of"] == "2025-07-31"
     assert payload["meta"]["edge_count"] == 1
     assert len(payload["nodes"]) == 2
@@ -162,15 +162,37 @@ def test_export_writes_graph_and_both_dataset_formats(tmp_path, resolver):
     assert edge["quantified_pct"] == 19
     assert edge["evidence"][0]["source_url"].startswith("https://www.sec.gov/")
 
-    rows = list(csv.DictReader((tmp_path / "relationships.csv").open()))
+    rows = list(csv.DictReader((tmp_path / "relationships.csv").open(encoding="utf-8")))
     assert rows[0]["source_sentence"] == records[0]["source_sentence"]
     assert rows[0]["supplier_name_raw"] == "NVIDIA Corporation"
+
+
+def test_a_filing_character_outside_latin1_survives_export(tmp_path, resolver):
+    """NVIDIA's 10-K writes "non-exclusive" with U+2010, a non-breaking hyphen.
+
+    Every export here writes text a filing supplied, and filings are full of
+    typographic characters. Writing them with the platform's preferred encoding
+    works on Linux and raises UnicodeEncodeError on Windows, which is where this
+    was found. The whole suite runs with EncodingWarning as an error to keep any
+    new file operation from reintroducing it; this checks the round trip too.
+    """
+    sentence = (
+        "In December 2025, we entered into a non\u2010exclusive license agreement "
+        "with Groq, Inc. for its language processing unit technology."
+    )
+    graph = build_graph([record(sentence=sentence)], resolver, seed_ciks=set())
+    export(graph, [record(sentence=sentence)], tmp_path)
+
+    payload = json.loads((tmp_path / "graph.json").read_text(encoding="utf-8"))
+    assert "\u2010" in payload["edges"][0]["evidence"][0]["source_sentence"]
+    rows = list(csv.DictReader((tmp_path / "relationships.csv").open(encoding="utf-8")))
+    assert "\u2010" in rows[0]["source_sentence"]
 
 
 def test_every_exported_edge_carries_at_least_one_citation(tmp_path, resolver):
     graph = build_graph([record(), record(supplier="Micron Technology, Inc.")], resolver, set())
     export(graph, [], tmp_path)
-    payload = json.loads((tmp_path / "graph.json").read_text())
+    payload = json.loads((tmp_path / "graph.json").read_text(encoding="utf-8"))
     for edge in payload["edges"]:
         assert edge["evidence"]
         for item in edge["evidence"]:
@@ -180,7 +202,7 @@ def test_every_exported_edge_carries_at_least_one_citation(tmp_path, resolver):
 def test_empty_graph_exports_cleanly(tmp_path, resolver):
     """An empty dataset must produce a valid file, not a crash or a stub node."""
     export(build_graph([], resolver, set()), [], tmp_path)
-    payload = json.loads((tmp_path / "graph.json").read_text())
+    payload = json.loads((tmp_path / "graph.json").read_text(encoding="utf-8"))
     assert payload["nodes"] == [] and payload["edges"] == []
     assert payload["meta"]["data_as_of"] is None
 
@@ -229,7 +251,7 @@ def test_one_directional_statement_is_enough(resolver):
 def test_export_carries_direction_stated(tmp_path, resolver):
     graph = build_graph([record(relationship_type="unclear")], resolver, seed_ciks=set())
     export(graph, [], tmp_path)
-    payload = json.loads((tmp_path / "graph.json").read_text())
+    payload = json.loads((tmp_path / "graph.json").read_text(encoding="utf-8"))
     assert payload["edges"][0]["direction_stated"] is False
 
 
@@ -254,7 +276,7 @@ def test_export_counts_non_filer_nodes(tmp_path):
     resolver = Resolver(Spine.from_json(SPINE_PAYLOAD), aliases)
     graph = build_graph([record(supplier="OpenAI")], resolver, seed_ciks=set())
     export(graph, [], tmp_path)
-    payload = json.loads((tmp_path / "graph.json").read_text())
+    payload = json.loads((tmp_path / "graph.json").read_text(encoding="utf-8"))
     assert payload["meta"]["non_filer_node_count"] == 1
     node = next(n for n in payload["nodes"] if n["id"] == "name-openai")
     assert node["cik"] is None and node["has_sec_filings"] is False

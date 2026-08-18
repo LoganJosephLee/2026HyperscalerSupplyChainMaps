@@ -140,7 +140,8 @@ def test_unknown_ticker_names_the_exclusion_rule(monkeypatch):
     client, _ = client_with([], monkeypatch)
     config.CACHE_DIR.mkdir(parents=True, exist_ok=True)
     (config.CACHE_DIR / "company_tickers.json").write_text(
-        json.dumps({"0": {"cik_str": 789019, "ticker": "MSFT", "title": "MICROSOFT CORP"}})
+        json.dumps({"0": {"cik_str": 789019, "ticker": "MSFT", "title": "MICROSOFT CORP"}}),
+        encoding="utf-8",
     )
     with pytest.raises(LookupError, match="does not file with the SEC"):
         client.resolve_ticker("005930.KS")

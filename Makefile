@@ -45,7 +45,7 @@ serve:
 	@cd site && python3 -m http.server 8000
 
 test:
-	$(UV) run pytest -q
+	PYTHONWARNDEFAULTENCODING=1 $(UV) run pytest -q
 
 neo4j-up:
 	docker run -d --name hscm-neo4j -p 7474:7474 -p 7687:7687 \

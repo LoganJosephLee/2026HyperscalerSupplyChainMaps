@@ -179,7 +179,7 @@ def _document_resolver():
 
 
 def cmd_verify(args: argparse.Namespace) -> int:
-    records = json.loads(Path(args.extractions).read_text())
+    records = json.loads(Path(args.extractions).read_text(encoding="utf-8"))
     if isinstance(records, dict):
         records = records.get("relationships", [])
 
@@ -215,7 +215,7 @@ def cmd_show(args: argparse.Namespace) -> int:
     right relationship from it, and that is the error class left. Reading the
     rows is the only check for it, so the rows have to be readable.
     """
-    records = json.loads(Path(args.extractions).read_text())
+    records = json.loads(Path(args.extractions).read_text(encoding="utf-8"))
     if isinstance(records, dict):
         records = records.get("relationships", [])
 
@@ -455,7 +455,7 @@ def cmd_extract(args: argparse.Namespace) -> int:
 
     out = Path(args.out) if args.out else config.DATA_DIR / "extractions.json"
     out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(json.dumps(records, indent=2) + "\n")
+    out.write_text(json.dumps(records, indent=2) + "\n", encoding="utf-8")
     print(f"\n{len(records)} record(s) written to {out}")
     print("Nothing is trustworthy until `hscm verify` has run over it.")
     return 0
@@ -472,7 +472,7 @@ def cmd_review(args: argparse.Namespace) -> int:
     from .resolve import Aliases, apply_review_queue, build_review_queue
 
     if args.action == "build":
-        records = json.loads(Path(args.extractions).read_text())
+        records = json.loads(Path(args.extractions).read_text(encoding="utf-8"))
         path, pending = build_review_queue(records, _resolver(args.threshold))
         print(f"{len(pending)} name(s) need a human decision -> {path}")
         if pending:
@@ -510,7 +510,7 @@ def cmd_build(args: argparse.Namespace) -> int:
     from .graph import build_graph, export
     from .resolve import Spine
 
-    records = json.loads(Path(args.extractions).read_text())
+    records = json.loads(Path(args.extractions).read_text(encoding="utf-8"))
     report = verify_records(records, _document_resolver())
     print(report.summary())
 
@@ -542,7 +542,7 @@ def cmd_neo4j_load(args: argparse.Namespace) -> int:
     from .graph import build_graph, cypher_statements, export  # noqa: F401
     from .resolve import Spine
 
-    records = json.loads(Path(args.extractions).read_text())
+    records = json.loads(Path(args.extractions).read_text(encoding="utf-8"))
     report = verify_records(records, _document_resolver())
     supported = report.supported_records(records)
 

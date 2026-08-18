@@ -44,7 +44,7 @@ class FixtureExtractor:
                     f"HSCM_FIXTURE at an existing file. The fixture is deliberately "
                     f"not checked in with invented content."
                 )
-            payload = json.loads(self.path.read_text())
+            payload = json.loads(self.path.read_text(encoding="utf-8"))
             self._records = payload["relationships"] if isinstance(payload, dict) else payload
         return self._records
 

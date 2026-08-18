@@ -194,7 +194,7 @@ def test_queue_holds_only_unresolved_names_ordered_by_frequency(tmp_path, resolv
         "Obscure Widget Fabricators",
         "Another Unknown Vendor",
     ]
-    rows = list(csv.DictReader(path.open()))
+    rows = list(csv.DictReader(path.open(encoding="utf-8")))
     assert rows[0]["occurrences"] == "3"
     assert rows[0]["example_sentence"].startswith("A sentence long enough")
     assert rows[0]["decision"] == ""  # a human fills this in
@@ -208,7 +208,7 @@ def test_queue_is_empty_when_everything_resolves(tmp_path, resolver):
 def _write_queue(path, rows):
     from hscm.resolve import REVIEW_COLUMNS
 
-    with path.open("w", newline="") as handle:
+    with path.open("w", newline="", encoding="utf-8") as handle:
         writer = csv.DictWriter(handle, fieldnames=REVIEW_COLUMNS)
         writer.writeheader()
         for row in rows:

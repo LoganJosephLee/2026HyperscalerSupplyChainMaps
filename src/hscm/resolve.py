@@ -102,7 +102,7 @@ class Spine:
                 f"No company spine at {path}. Run `hscm fetch` first — it caches "
                 f"SEC's company_tickers.json."
             )
-        return cls.from_json(json.loads(path.read_text()))
+        return cls.from_json(json.loads(path.read_text(encoding="utf-8")))
 
     def by_cik(self, cik: int) -> SpineEntry | None:
         return self._by_cik.get(cik)
@@ -216,7 +216,7 @@ class Aliases:
         path = path or config.ALIASES_PATH
         if not path.exists():
             return cls()
-        payload = yaml.safe_load(path.read_text()) or {}
+        payload = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
         return cls(
             aliases={str(k): dict(v) for k, v in (payload.get("aliases") or {}).items()},
             excluded={str(k): str(v) for k, v in (payload.get("excluded") or {}).items()},
@@ -246,7 +246,12 @@ class Aliases:
             "#             variant onto an existing non-filer node.\n"
             "# excluded:   raw filing name -> why it is not in the dataset at all\n"
             "# Regenerate the queue with `hscm review build`; apply it with `hscm review apply`.\n"
-            + yaml.safe_dump(payload, sort_keys=False, allow_unicode=True, width=100)
+            "#\n"
+            "# `hscm review apply` REWRITES this file. Entries and their notes survive;\n"
+            "# comments you add by hand between them do not. Put the reasoning for a\n"
+            "# decision in that entry's note, where it is data and will be kept.\n"
+            + yaml.safe_dump(payload, sort_keys=False, allow_unicode=True, width=100),
+            encoding="utf-8",
         )
         return path
 
@@ -425,7 +430,7 @@ def build_review_queue(
         if resolution.status == "review":
             pending.append(resolution)
 
-    with path.open("w", newline="") as handle:
+    with path.open("w", newline="", encoding="utf-8") as handle:
         writer = csv.DictWriter(handle, fieldnames=REVIEW_COLUMNS)
         writer.writeheader()
         for resolution in pending:
@@ -470,7 +475,7 @@ def apply_review_queue(
     added = excluded = non_filers = 0
     problems: list[str] = []
 
-    with path.open(newline="") as handle:
+    with path.open(newline="", encoding="utf-8") as handle:
         for line, row in enumerate(csv.DictReader(handle), start=2):
             decision = (row.get("decision") or "").strip().lower()
             raw = (row.get("raw_name") or "").strip()

@@ -108,7 +108,7 @@ def test_fixture_replays_records_and_stamps_provenance(tmp_path):
     path.write_text(json.dumps([
         {"supplier_name_raw": "A Vendor", "buyer_name_raw": "MICROSOFT CORP",
          "source_sentence": "A sentence from the filing.", "relationship_type": "supplies"}
-    ]))
+    ]), encoding="utf-8")
     records = FixtureExtractor(path).extract(request())
     assert len(records) == 1
     assert records[0]["source_url"] == FILING.document_url
@@ -121,7 +121,7 @@ def test_fixture_filters_by_accession_and_section(tmp_path):
         {"_accession": "0000950170-25-000001", "_section_key": "item1a", "source_sentence": "kept"},
         {"_accession": "0000950170-25-000001", "_section_key": "item1", "source_sentence": "wrong section"},
         {"_accession": "9999999999-99-999999", "_section_key": "item1a", "source_sentence": "wrong filing"},
-    ]))
+    ]), encoding="utf-8")
     records = FixtureExtractor(path).extract(request("item1a"))
     assert [r["source_sentence"] for r in records] == ["kept"]
     assert all(not key.startswith("_") for record in records for key in record)
@@ -129,7 +129,7 @@ def test_fixture_filters_by_accession_and_section(tmp_path):
 
 def test_fixture_accepts_the_wrapped_form(tmp_path):
     path = tmp_path / "fixture.json"
-    path.write_text(json.dumps({"relationships": [{"source_sentence": "kept"}]}))
+    path.write_text(json.dumps({"relationships": [{"source_sentence": "kept"}]}), encoding="utf-8")
     assert len(FixtureExtractor(path).extract(request())) == 1
 
 

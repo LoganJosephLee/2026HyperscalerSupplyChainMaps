@@ -232,11 +232,11 @@ def export(graph: Graph, records: list[dict], directory: Path | None = None) -> 
     }
 
     graph_path = directory / "graph.json"
-    graph_path.write_text(json.dumps(graph_payload, indent=2) + "\n")
+    graph_path.write_text(json.dumps(graph_payload, indent=2) + "\n", encoding="utf-8")
     written.append(graph_path)
 
     records_path = directory / "relationships.json"
-    records_path.write_text(json.dumps(records, indent=2) + "\n")
+    records_path.write_text(json.dumps(records, indent=2) + "\n", encoding="utf-8")
     written.append(records_path)
 
     csv_path = directory / "relationships.csv"
@@ -245,7 +245,7 @@ def export(graph: Graph, records: list[dict], directory: Path | None = None) -> 
         "quantified_pct", "quantified_basis", "source_sentence", "source_url",
         "form_type", "filing_date", "extraction_confidence",
     ]
-    with csv_path.open("w", newline="") as handle:
+    with csv_path.open("w", newline="", encoding="utf-8") as handle:
         writer = csv.DictWriter(handle, fieldnames=columns, extrasaction="ignore")
         writer.writeheader()
         writer.writerows(records)

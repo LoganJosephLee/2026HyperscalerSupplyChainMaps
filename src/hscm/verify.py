@@ -417,5 +417,5 @@ def write_report(report: VerificationReport, path: Path) -> Path:
             for r in report.results
         ],
     }
-    path.write_text(json.dumps(payload, indent=2) + "\n")
+    path.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
     return path
