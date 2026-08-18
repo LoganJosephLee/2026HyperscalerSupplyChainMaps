@@ -468,6 +468,43 @@ def _resolver(threshold: float | None = None):
     return Resolver(Spine.load(), Aliases.load(), threshold)
 
 
+def cmd_lookup(args: argparse.Namespace) -> int:
+    """Find a company in SEC's registry, by ticker or by name.
+
+    Working the review queue means putting CIKs in a column, and a CIK typed
+    from memory is a wrong merge waiting to happen — silent, because nothing
+    downstream can tell a plausible CIK from the right one. This reads the same
+    spine the resolver reads.
+    """
+    from .resolve import Spine, normalize_name
+
+    spine = Spine.load()
+    for query in args.names:
+        print(f"\n{query}")
+        by_ticker = spine.by_ticker(query)
+        if by_ticker:
+            print(f"  {by_ticker.cik:<10} {by_ticker.ticker:<6} {by_ticker.title}   (ticker match)")
+            continue
+
+        normalized = normalize_name(query)
+        exact = spine.exact(normalized)
+        if exact:
+            print(f"  {exact.cik:<10} {exact.ticker:<6} {exact.title}   (exact match)")
+            continue
+
+        candidates = spine.by_leading_tokens(normalized) + spine.best_fuzzy(normalized)
+        if not candidates:
+            print("  nothing in the registry looks like this — it may not file with the SEC")
+            continue
+        seen: set[int] = set()
+        for score, entry in candidates:
+            if entry.cik in seen:
+                continue
+            seen.add(entry.cik)
+            print(f"  {entry.cik:<10} {entry.ticker:<6} {entry.title}   @ {score:.2f}")
+    return 0
+
+
 def cmd_review(args: argparse.Namespace) -> int:
     from .resolve import Aliases, apply_review_queue, build_review_queue
 
@@ -651,6 +688,10 @@ def main(argv: list[str] | None = None) -> int:
     review.add_argument("--extractions", default=default_extractions)
     review.add_argument("--threshold", type=float, default=None)
     review.set_defaults(func=cmd_review)
+
+    lookup = sub.add_parser("lookup", help="find a company's CIK in SEC's registry")
+    lookup.add_argument("names", nargs="+", help="ticker or company name")
+    lookup.set_defaults(func=cmd_lookup)
 
     build = sub.add_parser("build", help="verify, resolve, and export the graph")
     build.add_argument("--extractions", default=default_extractions)
