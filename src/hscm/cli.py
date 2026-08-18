@@ -340,6 +340,18 @@ def cmd_extract(args: argparse.Namespace) -> int:
         print("Run without --estimate to extract for real.")
         return 0
 
+    stats = getattr(extractor, "stats", None)
+    if stats:
+        lost = stats["refused"] + stats["truncated"] + stats["unparseable"]
+        print(
+            f"\nwindows sent: {stats['windows']}  "
+            f"lost: {lost} (refused {stats['refused']}, truncated {stats['truncated']}, "
+            f"unparseable {stats['unparseable']})"
+        )
+        print(f"tokens: {stats['input_tokens']:,} in, {stats['output_tokens']:,} out")
+        if lost:
+            print("  !! Records from lost windows are missing from this run, not empty.")
+
     out = Path(args.out) if args.out else config.DATA_DIR / "extractions.json"
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(records, indent=2) + "\n")
@@ -455,6 +467,12 @@ def cmd_neo4j_load(args: argparse.Namespace) -> int:
 
 
 def main(argv: list[str] | None = None) -> int:
+    import logging
+
+    # A refused or truncated extraction window logs a warning. Without this,
+    # those warnings are discarded and a partial run looks like a clean one.
+    logging.basicConfig(level=logging.WARNING, format="  !! %(message)s")
+
     # Windows consoles default to a legacy code page, which mangles the em
     # dashes and quotation marks in filing text and in our own output.
     for stream in (sys.stdout, sys.stderr):

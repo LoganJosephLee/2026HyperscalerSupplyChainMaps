@@ -60,6 +60,11 @@ class AnthropicExtractor:
         self._client = anthropic.Anthropic()
         self._model = model
         self._effort = effort
+        # A window that is refused or truncated yields no records. Without a
+        # count, that is indistinguishable from a window containing nothing —
+        # which is exactly the kind of silent loss this project cannot afford.
+        self.stats = {"windows": 0, "refused": 0, "truncated": 0, "unparseable": 0,
+                      "input_tokens": 0, "output_tokens": 0}
 
     # --- preflight ----------------------------------------------------------
     def check(self) -> dict:
@@ -134,6 +139,7 @@ class AnthropicExtractor:
     def extract(self, request: ExtractionRequest) -> list[dict]:
         records: list[dict] = []
         for index, window in enumerate(self.windows(request.text), start=1):
+            self.stats["windows"] += 1
             records.extend(self._extract_window(request, window, index))
         return records
 
@@ -167,7 +173,11 @@ class AnthropicExtractor:
             )
             raise
 
+        self.stats["input_tokens"] += response.usage.input_tokens
+        self.stats["output_tokens"] += response.usage.output_tokens
+
         if response.stop_reason == "refusal":
+            self.stats["refused"] += 1
             logger.warning(
                 "%s %s window %d: refused (%s) — no records from this window",
                 filing.ticker,
@@ -178,6 +188,7 @@ class AnthropicExtractor:
             return []
 
         if response.stop_reason == "max_tokens":
+            self.stats["truncated"] += 1
             # The JSON is truncated and will not parse. Losing the window is
             # correct; silently keeping a half-parsed list is not.
             logger.warning(
@@ -192,6 +203,7 @@ class AnthropicExtractor:
         try:
             parsed = json.loads(payload)
         except json.JSONDecodeError:
+            self.stats["unparseable"] += 1
             logger.error(
                 "%s %s window %d: response was not valid JSON despite json_schema format",
                 filing.ticker,
