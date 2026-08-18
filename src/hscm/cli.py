@@ -29,6 +29,8 @@ from .sections import (
 )
 from .verify import verify_records, write_report
 
+LIST_LIMIT = 40  # how many review rows to echo before pointing at the file
+
 _ACCESSION_IN_URL = re.compile(r"(\d{10}\d{2}\d{6}|\d{10}-\d{2}-\d{6})")
 
 
@@ -481,10 +483,16 @@ def cmd_review(args: argparse.Namespace) -> int:
             print("              OpenAI; becomes a node with no CIK")
             print("  exclude   — keep out of the dataset entirely; give a reason")
             print("  skip      — decide later\n")
-            for resolution in pending[:10]:
+            # Print all of them. A truncated list with nothing saying it was
+            # truncated reads as the whole queue, and the rows below the cut are
+            # the ones nobody looks at.
+            shown = pending[:LIST_LIMIT]
+            for resolution in shown:
                 best = resolution.candidates[0] if resolution.candidates else None
                 guess = f"{best[1]} ({best[2]}) @ {resolution.score:.2f}" if best else "no candidate"
                 print(f"  {resolution.raw_name:<45} {guess}")
+            if len(pending) > len(shown):
+                print(f"\n  ... and {len(pending) - len(shown)} more, all of them in the file.")
         return 0
 
     aliases = Aliases.load()
