@@ -206,6 +206,65 @@ def cmd_verify(args: argparse.Namespace) -> int:
     return 0 if report.failure_rate <= args.max_failure_rate else 1
 
 
+def cmd_show(args: argparse.Namespace) -> int:
+    """Print extracted records for a human to read.
+
+    Verification proves a sentence is real. It cannot prove the model drew the
+    right relationship from it, and that is the error class left. Reading the
+    rows is the only check for it, so the rows have to be readable.
+    """
+    records = json.loads(Path(args.extractions).read_text())
+    if isinstance(records, dict):
+        records = records.get("relationships", [])
+
+    wanted_conf = set(args.confidence or [])
+    wanted_type = set(args.type or [])
+    shown = 0
+
+    for index, record in enumerate(records):
+        confidence = record.get("extraction_confidence")
+        rel = record.get("relationship_type")
+        if wanted_conf and confidence not in wanted_conf:
+            continue
+        if wanted_type and rel not in wanted_type:
+            continue
+        shown += 1
+
+        arrow = "<->" if rel == "unclear" else "->"
+        head = f"[{index}] {record.get('supplier_name_raw')} {arrow} {record.get('buyer_name_raw')}"
+        print(f"\n{head}")
+
+        facts = [rel or "?", f"confidence: {confidence or '?'}"]
+        pct = record.get("quantified_pct")
+        if pct is not None:
+            facts.append(f"{pct}% of {record.get('quantified_basis') or 'UNSTATED'}")
+        if record.get("product_or_service"):
+            facts.append(str(record["product_or_service"]))
+        facts.append(f"{record.get('form_type', '?')} filed {record.get('filing_date', '?')}")
+        print("    " + "  |  ".join(facts))
+
+        sentence = " ".join(str(record.get("source_sentence", "")).split())
+        for line in _wrap(sentence, args.width):
+            print(f"    {line}")
+
+    print(f"\n{shown} of {len(records)} record{'' if len(records) == 1 else 's'} shown")
+    return 0
+
+
+def _wrap(text: str, width: int) -> list[str]:
+    lines: list[str] = []
+    line = ""
+    for word in text.split():
+        if line and len(line) + 1 + len(word) > width:
+            lines.append(line)
+            line = word
+        else:
+            line = f"{line} {word}".strip()
+    if line:
+        lines.append(line)
+    return lines
+
+
 def cmd_diagnose(args: argparse.Namespace) -> int:
     """Show every header candidate and how the splitter judged it.
 
@@ -555,6 +614,15 @@ def main(argv: list[str] | None = None) -> int:
     extract.add_argument("--estimate", action="store_true",
                          help="count the API calls this would make, without making them")
     extract.set_defaults(func=cmd_extract)
+
+    show = sub.add_parser("show", help="print extracted records in a readable form for hand-checking")
+    show.add_argument("extractions", nargs="?", default=default_extractions)
+    show.add_argument("--confidence", nargs="+", choices=["high", "medium", "low"],
+                      help="only these confidence levels")
+    show.add_argument("--type", nargs="+",
+                      help="only these relationship types, e.g. --type unclear")
+    show.add_argument("--width", type=int, default=88)
+    show.set_defaults(func=cmd_show)
 
     check = sub.add_parser("check-api", help="one tiny API call to validate the request shape")
     check.set_defaults(func=cmd_check_api)

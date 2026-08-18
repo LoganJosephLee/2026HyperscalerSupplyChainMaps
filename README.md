@@ -63,6 +63,7 @@ uv run hscm fetch --form 20-F TSM    # any of 10-K / 20-F / 10-Q / 8-K, any tick
 uv run hscm sections                 # M1: report what the section splitter found
 uv run hscm extract                  # M2/M4: run the configured extractor
 uv run hscm verify data/extractions.json --out report.json   # M3: the hallucination check
+uv run hscm show --type unclear       # M3: read the records a human still has to judge
 uv run hscm review build             # M5: queue unresolved names for a human
 uv run hscm review apply             # M5: fold decisions into aliases.yaml
 uv run hscm build                    # M7: verify, resolve, export the graph
