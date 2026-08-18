@@ -468,6 +468,118 @@ def _resolver(threshold: float | None = None):
     return Resolver(Spine.load(), Aliases.load(), threshold)
 
 
+def _ask(prompt: str, default: str = "") -> str:
+    try:
+        answer = input(prompt).strip()
+    except EOFError:
+        return default
+    return answer or default
+
+
+def cmd_review_edit(args: argparse.Namespace) -> int:
+    """Work the review queue one name at a time, in the terminal.
+
+    The CSV was the wrong shape for the job. Eighteen rows of thirteen columns
+    wraps into an unreadable block in any editor, and the decisions it wants are
+    a handful of keystrokes each. Nothing here is new capability — it writes the
+    same aliases.yaml `review apply` writes — it just asks one question at a
+    time and shows the sentence the name came from, which is the thing a person
+    actually needs to see to decide.
+    """
+    from .resolve import Aliases, Spine, build_review_queue
+
+    records = json.loads(Path(args.extractions).read_text(encoding="utf-8"))
+    from .verify import validate_record
+
+    usable = [record for record in records if not validate_record(record)]
+
+    aliases = Aliases.load()
+    resolver = _resolver(args.threshold)
+    _, pending = build_review_queue(usable, resolver, config.REVIEW_QUEUE_PATH)
+    if not pending:
+        print("Nothing needs a decision. Every name resolves.")
+        return 0
+
+    examples: dict[str, dict] = {}
+    counts: dict[str, int] = {}
+    for record in usable:
+        for key in ("buyer_name_raw", "supplier_name_raw"):
+            name = (record.get(key) or "").strip()
+            if name:
+                counts[name] = counts.get(name, 0) + 1
+                examples.setdefault(name, record)
+
+    print(f"\n{len(pending)} name(s) to decide. Ctrl-C stops; everything decided so far is kept.\n")
+    decided = 0
+
+    for position, resolution in enumerate(pending, start=1):
+        name = resolution.raw_name
+        print("=" * 72)
+        print(f"[{position}/{len(pending)}]  {name}")
+        print(f"  appears in {counts.get(name, 0)} record(s)")
+        example = examples.get(name, {})
+        sentence = " ".join(str(example.get("source_sentence", "")).split())
+        for line in _wrap(sentence, 68):
+            print(f"  | {line}")
+        print()
+
+        for index, (score, title, cik) in enumerate(resolution.candidates, start=1):
+            print(f"  {index}. {title}  (CIK {cik})  @ {score:.2f}")
+        if not resolution.candidates:
+            print("  (nothing in SEC's registry looks like this)")
+        print("  n = files nothing with the SEC     x = not a company, exclude")
+        print("  s = skip for now                   q = stop here and save")
+
+        choice = _ask("  > ").lower()
+        if choice == "q":
+            break
+        if choice in {"", "s"}:
+            continue
+
+        if choice == "n":
+            canonical = _ask(f"    fold onto which name? [{name}] ", name)
+            reason = _ask("    why does it not file? [Files nothing with the SEC] ",
+                          "Files nothing with the SEC")
+            aliases.non_filers[name] = {"canonical": canonical, "note": reason}
+            decided += 1
+            continue
+
+        if choice == "x":
+            reason = _ask("    why is it out of the dataset? ")
+            if not reason:
+                print("    an exclusion needs a reason; skipped")
+                continue
+            aliases.excluded[name] = reason
+            decided += 1
+            continue
+
+        if choice.isdigit() and 1 <= int(choice) <= len(resolution.candidates):
+            _, title, cik = resolution.candidates[int(choice) - 1]
+            aliases.aliases[name] = {"cik": int(cik), "note": f"Matched to {title} by hand."}
+            decided += 1
+            continue
+
+        # Anything else is read as a CIK typed in directly.
+        digits = choice.replace("-", "").strip()
+        if digits.isdigit():
+            entry = Spine.load().by_cik(int(digits))
+            if not entry:
+                print(f"    no company with CIK {digits} in the registry; skipped")
+                continue
+            print(f"    -> {entry.title}")
+            aliases.aliases[name] = {"cik": entry.cik, "note": f"Matched to {entry.title} by hand."}
+            decided += 1
+            continue
+
+        print("    not understood; skipped")
+
+    path = aliases.save()
+    print(f"\n{decided} decision(s) written to {path}")
+    if decided:
+        print("Commit it — these decisions are the asset this project builds.")
+    return 0
+
+
 def cmd_lookup(args: argparse.Namespace) -> int:
     """Find a company in SEC's registry, by ticker or by name.
 
@@ -508,9 +620,23 @@ def cmd_lookup(args: argparse.Namespace) -> int:
 def cmd_review(args: argparse.Namespace) -> int:
     from .resolve import Aliases, apply_review_queue, build_review_queue
 
+    if args.action == "edit":
+        return cmd_review_edit(args)
+
     if args.action == "build":
         records = json.loads(Path(args.extractions).read_text(encoding="utf-8"))
-        path, pending = build_review_queue(records, _resolver(args.threshold))
+
+        # Only ask about records that could become edges. A record the validator
+        # rejects is already out of the dataset, so putting its "company" in the
+        # queue asks a person to adjudicate something nothing will ever use —
+        # "third-party foundries located in Taiwan" is not a name awaiting a CIK.
+        from .verify import validate_record
+
+        usable = [record for record in records if not validate_record(record)]
+        dropped = len(records) - len(usable)
+        if dropped:
+            print(f"({dropped} record(s) skipped — the validator already rejects them)")
+        path, pending = build_review_queue(usable, _resolver(args.threshold))
         print(f"{len(pending)} name(s) need a human decision -> {path}")
         if pending:
             print("\nFill in `decision` per row: accept | cik | non-filer | exclude | skip")
@@ -684,7 +810,7 @@ def main(argv: list[str] | None = None) -> int:
     check.set_defaults(func=cmd_check_api)
 
     review = sub.add_parser("review", help="entity resolution review queue")
-    review.add_argument("action", choices=["build", "apply"])
+    review.add_argument("action", choices=["build", "apply", "edit"])
     review.add_argument("--extractions", default=default_extractions)
     review.add_argument("--threshold", type=float, default=None)
     review.set_defaults(func=cmd_review)
