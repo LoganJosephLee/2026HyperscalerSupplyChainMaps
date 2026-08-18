@@ -35,6 +35,7 @@ header {
 }
 
 header h1 { font-size: 17px; margin: 0; font-weight: 600; letter-spacing: -0.01em; }
+header h1 .qualifier { font-weight: 400; color: var(--muted); }
 header nav { margin-left: auto; display: flex; gap: 16px; font-size: 13px; }
 
 .stamp {

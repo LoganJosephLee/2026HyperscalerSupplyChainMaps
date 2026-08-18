@@ -262,6 +262,34 @@ def test_filers_still_key_on_cik(resolver):
     assert resolver.resolve("NVIDIA Corporation").node_key == "cik-0001045810"
 
 
+def test_two_spellings_of_one_non_filer_are_one_node(spine):
+    """NVIDIA's 10-K says "Samsung Electronics Co., Ltd." once and "Samsung" later.
+
+    There is no CIK spine to collapse them onto, so without a declared canonical
+    name the graph grows two Samsungs and splits its evidence between them.
+    """
+    aliases = Aliases(
+        non_filers={
+            "Samsung Electronics Co., Ltd.": "Korean-listed; files nothing with the SEC",
+            "Samsung": {
+                "canonical": "Samsung Electronics Co., Ltd.",
+                "note": "Short form used later in the same filing",
+            },
+        }
+    )
+    resolver = Resolver(spine, aliases)
+    assert resolver.resolve("Samsung").node_key == resolver.resolve(
+        "Samsung Electronics Co., Ltd."
+    ).node_key
+
+
+def test_a_canonical_name_survives_the_file(tmp_path):
+    path = tmp_path / "aliases.yaml"
+    Aliases(non_filers={"Samsung": {"canonical": "Samsung Electronics", "note": "short form"}}).save(path)
+    reloaded = Aliases.load(path)
+    assert reloaded.non_filers["Samsung"]["canonical"] == "Samsung Electronics"
+
+
 def test_apply_records_a_non_filer(tmp_path):
     path = tmp_path / "queue.csv"
     _write_queue(path, [{"raw_name": "OpenAI", "decision": "non-filer",
@@ -269,7 +297,7 @@ def test_apply_records_a_non_filer(tmp_path):
     aliases = Aliases()
     added, excluded, non_filers, problems = apply_review_queue(aliases, path)
     assert (added, excluded, non_filers, problems) == (0, 0, 1, [])
-    assert "Private" in aliases.non_filers["OpenAI"]
+    assert "Private" in aliases.non_filers["OpenAI"]["note"]
 
 
 def test_non_filer_without_a_reason_gets_a_default(tmp_path):
@@ -277,10 +305,10 @@ def test_non_filer_without_a_reason_gets_a_default(tmp_path):
     _write_queue(path, [{"raw_name": "xAI", "decision": "non-filer"}])
     aliases = Aliases()
     apply_review_queue(aliases, path)
-    assert "does not file" in aliases.non_filers["xAI"]
+    assert "does not file" in aliases.non_filers["xAI"]["note"]
 
 
 def test_non_filers_round_trip_through_the_file(tmp_path):
     path = tmp_path / "aliases.yaml"
     Aliases(non_filers={"OpenAI": "Private company"}).save(path)
-    assert Aliases.load(path).non_filers["OpenAI"] == "Private company"
+    assert Aliases.load(path).non_filers["OpenAI"]["note"] == "Private company"

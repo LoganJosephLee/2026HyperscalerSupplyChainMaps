@@ -1,16 +1,36 @@
 # Entity resolution decisions, made by hand and reviewed in version control.
-# aliases:  raw filing name -> the CIK it refers to
-# excluded: raw filing name -> why it is not in the dataset
+# aliases:    raw filing name -> the CIK it refers to
+# non_filers: raw filing name -> note. Named in a filing, files nothing
+#             itself, so it is a node with no CIK. Use
+#             {canonical: <name>, note: <text>} to fold a spelling
+#             variant onto an existing non-filer node.
+# excluded:   raw filing name -> why it is not in the dataset at all
 # Regenerate the queue with `hscm review build`; apply it with `hscm review apply`.
 aliases: {}
 non_filers:
   OpenAI: Private company. Named in Microsoft's 10-K; files nothing with the SEC, so it is
     a node with no CIK and nothing it says can corroborate the edge.
-excluded:
-  SK Hynix: Korean-listed. Does not file with the SEC, so no filing sentence can cite it.
-  SK hynix Inc.: Korean-listed. Does not file with the SEC, so no filing sentence can cite it.
-  Samsung Electronics: Korean-listed. Does not file with the SEC, so no filing sentence
-    can cite it. Its absence overstates Micron's apparent share of AI memory supply; see
-    the limitations page.
-  Samsung Electronics Co., Ltd.: Korean-listed. Does not file with the SEC, so no filing
-    sentence can cite it.
+
+  # Foreign-listed, so no SEC filings — but named outright in NVIDIA's 10-K, which
+  # is the test this project applies. They were excluded under the original scope
+  # decision, before non-filer nodes existed; once they did, "cited but files
+  # nothing" was already a category and these belong in it. Keeping them out was
+  # what forced Micron to stand in for the whole memory supply.
+  Samsung Electronics: Korean-listed. Files nothing with the SEC, so nothing it says can
+    corroborate or contradict an edge; it is here only on the word of the US filers
+    that name it.
+  Samsung Electronics Co., Ltd.:
+    canonical: Samsung Electronics
+    note: Full legal name as NVIDIA's 10-K first spells it.
+  Samsung:
+    canonical: Samsung Electronics
+    note: Short form used later in the same filing.
+  SK Hynix: Korean-listed. Files nothing with the SEC, so nothing it says can corroborate
+    or contradict an edge; it is here only on the word of the US filers that name it.
+  SK Hynix Inc.:
+    canonical: SK Hynix
+    note: As spelled in NVIDIA's 10-K.
+  SK hynix Inc.:
+    canonical: SK Hynix
+    note: The company's own lower-case styling.
+excluded: {}

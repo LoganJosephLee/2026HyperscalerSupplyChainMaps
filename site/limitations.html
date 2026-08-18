@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Coverage &amp; limitations — AI Hyperscaler Supply Chain Maps</title>
+<title>Coverage &amp; limitations — AI Hyperscaler Supply Chain Maps (Publicly Disclosed Data)</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -66,6 +66,15 @@
   project actually applies. It appears as a node with no CIK, drawn in a distinct colour,
   and its entry says so. Anthropic, xAI, SpaceX and Databricks fall in the same class.
 </p>
+<p>
+  So do <strong>Samsung Electronics and SK Hynix</strong>, for a different reason: they are
+  Korean-listed rather than private, and file nothing with the SEC either way. NVIDIA's
+  10-K names both &mdash; &ldquo;We purchase memory from SK Hynix Inc., Micron Technology,
+  Inc., and Samsung&rdquo; &mdash; so both are citable and both are here. An earlier version
+  of this project excluded them by rule, which left Micron standing in for the entire
+  memory supply. Admitting them on the same terms as OpenAI is the more honest reading of
+  the same rule.
+</p>
 <div class="callout">
   <p>
     <strong>Nothing these companies say can ever corroborate or contradict an edge.</strong>
@@ -77,30 +86,18 @@
 
 <h3>Never named at all &mdash; these are <em>not</em> in the graph</h3>
 <p>
-  The larger instances of the cost of the citation rule:
+  This is the real cost of the citation rule, and it cannot be itemised, because a company
+  nobody names leaves no trace to itemise. There is no list of what is missing here. Non-US
+  suppliers are the largest group: they are named only when a US customer happens to write
+  their name into a filing, and most never are.
 </p>
-
-<table>
-  <thead><tr><th>Company</th><th>Why it is absent</th></tr></thead>
-  <tbody>
-    <tr>
-      <td>Samsung Electronics</td>
-      <td>Korean-listed. Does not file with the SEC, so no filing sentence can cite it.</td>
-    </tr>
-    <tr>
-      <td>SK Hynix</td>
-      <td>Korean-listed. Same.</td>
-    </tr>
-  </tbody>
-</table>
 
 <div class="callout">
   <p>
-    <strong>This distorts the memory picture, and we are not correcting for it.</strong>
-    Samsung and SK Hynix are dominant suppliers of high-bandwidth memory. Excluding them
-    while including Micron &mdash; a US filer &mdash; makes Micron look like a far larger
-    share of AI memory supply than it is. An overstated Micron with this caveat attached is
-    defensible; an invented Samsung node would not be.
+    <strong>Coverage of a company is decided by its customers, not by its size.</strong>
+    A supplier that several US filers name appears repeatedly and looks central. An equally
+    large one that nobody names is invisible. Read the shape of this graph as a map of who
+    got written down, and only then as a map of who supplies whom.
   </p>
 </div>
 

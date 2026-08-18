@@ -1,13 +1,15 @@
-# 2026 Hyperscaler Supply Chain Maps
+# AI Hyperscaler Supply Chain Maps (Publicly Disclosed Data)
 
 A supply chain graph of the AI hyperscalers where every edge is traceable to a
 specific sentence in a specific SEC filing.
 
-**Status: the pipeline is built end to end and the dataset is empty.** No filing
-has been fetched yet — the environment this was written in blocks `sec.gov` at
-the network policy level. Everything downstream of the fetch is written, tested
-against synthetic inputs, and waiting for real filings. See
-[Current status](#current-status) before trusting any of it.
+**Status: the pipeline runs end to end on real filings; the published dataset is
+still empty.** Twenty filings are cached, and a pilot extraction over four
+supplier 10-Ks produced 56 records, of which 55 were checked against the filing
+text and 55 matched — a 0.0% hallucination rate. That pilot is not the dataset:
+the hand-check of those records found three defects in the extraction schema
+that are now fixed, so the batch has to be re-extracted before it is worth
+publishing. See [Current status](#current-status) before trusting any of it.
 
 ## Setup
 
@@ -75,14 +77,36 @@ make test
 
 | Milestone | State |
 |---|---|
-| M1 — EDGAR fetcher, cache, section splitter | Written, **never run against a real filing** |
-| M2 — Extraction on the Microsoft 10-K | **Blocked** — no filing to extract from, and no fixture can be written honestly without one |
-| M3 — Hallucination check | Logic written and unit-tested; not yet run on real extractions |
-| M4 — All six seeds | Pipeline written; runs when M1 runs |
-| M5 — Entity resolution + review queue | Written and tested; `aliases.yaml` seeded with the known non-filers |
-| M6 — Neo4j load + Cypher | Statements and queries written; **Neo4j never started** (Docker Hub also blocked here) |
-| M7 — JSON export + sigma.js front end | Built, and **verified in a real browser** against a test dataset |
+| M1 — EDGAR fetcher, cache, section splitter | **Done.** 20 filings cached, including a 20-F. Three splitter bugs that only real filings expose are fixed |
+| M2 — Extraction on the Microsoft 10-K | **Done.** Microsoft's entire risk factors section yields one relationship, and it states no direction — which is the finding, not a failure |
+| M3 — Hallucination check | **Passed.** 55 records checked against filing text, 55 matched, 0.0% failure rate. The one earlier failure was a page number our HTML-to-text left mid-sentence, not a hallucination |
+| M4 — All six seeds | Supplier-side filings read as well, because naming obligations fall on suppliers. Full run not yet made |
+| M5 — Entity resolution + review queue | Written and tested; **never run on real names.** `aliases.yaml` carries the non-filer decisions |
+| M6 — Neo4j load + Cypher | Statements and queries written; **Neo4j never started** (Docker Hub blocked in the build environment) |
+| M7 — JSON export + sigma.js front end | Built, and **verified in a real browser** against a test dataset. No real dataset exported yet |
 | M8 — Limitations page, `make refresh`, date stamp | Built |
+
+### What the first hand-check found
+
+Verification proves a quoted sentence is really in the filing. It does not prove
+the model drew the right relationship out of it, and reading all 56 records
+turned up three things no automated check would have caught:
+
+1. **`purchases_from` was the wrong shape of verb.** Roles were right — TSMC
+   really was the supplier — but the edge printed as "TSMC purchases_from
+   Broadcom", the relationship backwards. Every verb now takes the supplier as
+   its subject.
+2. **One sentence was counted as several statements.** The concentration sweep
+   re-read text already inside Item 1, and the model worded
+   `product_or_service` differently each pass, so whole-record deduplication
+   missed it. The site counts statements to show corroboration; this claimed
+   independent sources that did not exist.
+3. **`quantified_basis` was too narrow.** "Approximately 95% of the wafers
+   manufactured by our CMs were produced by TSMC" is a share of units, not of
+   revenue or cost, and the enum forced the model to answer `null` — which the
+   validator then discarded. That is the most valuable number in the batch.
+
+The pilot records predate all three fixes and need re-extracting.
 
 **What "verified in a real browser" means.** The graph renders, force layout
 runs, clicking an edge opens the citation panel with the verbatim sentence, the

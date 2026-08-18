@@ -138,6 +138,16 @@ class Spine:
         return scored[:limit]
 
 
+def _non_filer_entry(name: str, value) -> dict:
+    """Accept either a bare note or {canonical, note}; store the richer form."""
+    if isinstance(value, dict):
+        return {
+            "canonical": str(value.get("canonical") or name),
+            "note": str(value.get("note") or ""),
+        }
+    return {"canonical": str(name), "note": str(value)}
+
+
 # --- alias file -------------------------------------------------------------
 @dataclass
 class Aliases:
@@ -147,9 +157,23 @@ class Aliases:
     excluded: dict[str, str] = field(default_factory=dict)
     # Companies that appear in a filing sentence but file nothing themselves.
     # OpenAI, Anthropic, xAI, SpaceX, Databricks — private companies named by
-    # the registrants that deal with them. They are citable, so they are in the
-    # dataset; they have no CIK, so they are keyed by name.
-    non_filers: dict[str, str] = field(default_factory=dict)
+    # the registrants that deal with them; Samsung and SK Hynix — foreign-listed
+    # companies named by their US customers. They are citable, so they are in
+    # the dataset; they have no CIK, so they are keyed by name.
+    #
+    # Values are {"canonical": str, "note": str}. A filing that says "Samsung"
+    # in one sentence and "Samsung Electronics Co., Ltd." in the next is talking
+    # about one company, and without a canonical name it becomes two nodes —
+    # the CIK spine that prevents this for filers does not exist here.
+    non_filers: dict[str, dict] = field(default_factory=dict)
+
+    def __post_init__(self) -> None:
+        # A bare note is the common case and stays writable by hand; normalise
+        # it here so nothing downstream has to test which form it got.
+        self.non_filers = {
+            str(name): _non_filer_entry(name, value)
+            for name, value in self.non_filers.items()
+        }
 
     @classmethod
     def load(cls, path: Path | None = None) -> "Aliases":
@@ -160,21 +184,30 @@ class Aliases:
         return cls(
             aliases={str(k): dict(v) for k, v in (payload.get("aliases") or {}).items()},
             excluded={str(k): str(v) for k, v in (payload.get("excluded") or {}).items()},
-            non_filers={str(k): str(v) for k, v in (payload.get("non_filers") or {}).items()},
+            non_filers=dict(payload.get("non_filers") or {}),
         )
 
     def save(self, path: Path | None = None) -> Path:
         path = path or config.ALIASES_PATH
         payload = {
             "aliases": dict(sorted(self.aliases.items())),
-            "non_filers": dict(sorted(self.non_filers.items())),
+            "non_filers": {
+                name: (
+                    entry["note"]
+                    if entry.get("canonical", name) == name
+                    else {"canonical": entry["canonical"], "note": entry["note"]}
+                )
+                for name, entry in sorted(self.non_filers.items())
+            },
             "excluded": dict(sorted(self.excluded.items())),
         }
         path.write_text(
             "# Entity resolution decisions, made by hand and reviewed in version control.\n"
             "# aliases:    raw filing name -> the CIK it refers to\n"
             "# non_filers: raw filing name -> note. Named in a filing, files nothing\n"
-            "#             itself, so it is a node with no CIK.\n"
+            "#             itself, so it is a node with no CIK. Use\n"
+            "#             {canonical: <name>, note: <text>} to fold a spelling\n"
+            "#             variant onto an existing non-filer node.\n"
             "# excluded:   raw filing name -> why it is not in the dataset at all\n"
             "# Regenerate the queue with `hscm review build`; apply it with `hscm review apply`.\n"
             + yaml.safe_dump(payload, sort_keys=False, allow_unicode=True, width=100)
@@ -235,16 +268,16 @@ class Resolver:
                 name, "excluded", reason=self.aliases.excluded.get(name, "excluded by aliases.yaml")
             )
 
-        note = self.aliases.non_filers.get(name) or self.aliases.non_filers.get(name.strip())
-        if note is not None:
+        entry = self.aliases.non_filers.get(name) or self.aliases.non_filers.get(name.strip())
+        if entry is not None:
             return Resolution(
                 raw_name=name,
                 status="resolved",
                 cik=None,
-                canonical_name=name,
+                canonical_name=entry.get("canonical") or name,
                 score=1.0,
                 method="non_filer",
-                reason=note,
+                reason=entry.get("note", ""),
             )
 
         decided = self.aliases.lookup(name)
@@ -309,8 +342,9 @@ REVIEW_COLUMNS = [
     "example_sentence",
     "example_url",
     # Filled in by hand:
-    "decision",  # accept | cik | exclude | skip
+    "decision",  # accept | cik | non-filer | exclude | skip
     "cik",
+    "canonical",  # non-filer only: fold this spelling onto an existing node
     "reason",
 ]
 
@@ -364,6 +398,7 @@ def build_review_queue(
                     "example_url": example.get("source_url", ""),
                     "decision": "",
                     "cik": "",
+                    "canonical": "",
                     "reason": "",
                 }
             )
@@ -394,9 +429,11 @@ def apply_review_queue(
                 continue
 
             if decision in {"non-filer", "nonfiler", "non_filer"}:
-                aliases.non_filers[raw] = (row.get("reason") or "").strip() or (
-                    "Named in a filing; does not file with the SEC"
-                )
+                aliases.non_filers[raw] = {
+                    "canonical": (row.get("canonical") or "").strip() or raw,
+                    "note": (row.get("reason") or "").strip()
+                    or "Named in a filing; does not file with the SEC",
+                }
                 non_filers += 1
                 continue
 
