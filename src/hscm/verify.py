@@ -40,6 +40,40 @@ from .sections import normalize_text
 
 REQUIRED_FIELDS = ("buyer_name_raw", "supplier_name_raw", "source_sentence", "source_url")
 
+# A filing that describes a category of supplier rather than naming one.
+# "Most of our products are manufactured by third-party foundries located in
+# Taiwan" is a true sentence, a real dependency, and no edge: there is nobody at
+# the other end of it. The extraction prompt says to skip these and the model
+# mostly does, but a description that gets through becomes a node with a
+# sentence for a name, and verification cannot catch it — the sentence really is
+# in the filing.
+#
+# Two signals, either of which is enough. The role noun is the reliable one: a
+# company describing what it buys says "foundries" or "subcontractors", and
+# almost no registered company name contains those words. The opening phrases
+# catch the rest. Both lists are deliberately short — a rejection here discards
+# real evidence, so the test has to be one we would defend out loud. Rejected
+# records are printed by `hscm verify`, not dropped quietly.
+_ROLE_NOUN = re.compile(
+    r"\b(?:supplier|manufacturer|foundry|foundries|subcontractor|vendor|"
+    r"fabricator|assembler|distributor|reseller)s?\b",
+    re.IGNORECASE,
+)
+_VAGUE_OPENING = re.compile(
+    r"^(?:a\s+|an\s+|the\s+|our\s+|its\s+|their\s+)?"
+    r"(?:third[\s-]?part(?:y|ies)|certain|various|several|multiple|numerous|"
+    r"unnamed|undisclosed|unaffiliated|limited\s+number)\b",
+    re.IGNORECASE,
+)
+
+
+def names_a_company(value: str) -> bool:
+    """False when the string describes a kind of company instead of naming one."""
+    name = (value or "").strip()
+    if not name:
+        return False
+    return not (_ROLE_NOUN.search(name) or _VAGUE_OPENING.match(name))
+
 # Every verb here takes the supplier as its subject, so an edge always reads
 # supplier -> buyer in the same direction as the verb. "purchases_from" used to
 # be in this set and was the one verb whose subject was the buyer, which made
@@ -100,6 +134,11 @@ def validate_record(record: dict) -> list[str]:
     url = record.get("source_url")
     if isinstance(url, str) and url and not is_sec_url(url):
         errors.append(f"source_url {url!r} is not an sec.gov link")
+
+    for field in ("buyer_name_raw", "supplier_name_raw"):
+        value = record.get(field)
+        if isinstance(value, str) and value.strip() and not names_a_company(value):
+            errors.append(f"{field} {value!r} describes a kind of company, does not name one")
 
     if record.get("relationship_type") not in VALID_RELATIONSHIP_TYPES:
         errors.append(f"relationship_type {record.get('relationship_type')!r} not recognised")

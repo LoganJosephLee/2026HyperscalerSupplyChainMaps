@@ -36,7 +36,9 @@ VERBATIM = (
 def record(**overrides) -> dict:
     base = {
         "buyer_name_raw": "Example Buyer Corporation",
-        "supplier_name_raw": "Example Supplier Inc.",
+        # Not "Northgate Components Inc." — the unnamed-party guard rejects "supplier",
+        # and rightly so; no registered company calls itself one.
+        "supplier_name_raw": "Northgate Components Inc.",
         "relationship_type": "supplies",
         "product_or_service": "graphics processing units",
         "quantified_pct": None,
@@ -118,6 +120,44 @@ def test_a_percentage_of_something_other_than_money_survives():
     # Before "units" existed the only legal answer was null, which threw the record away.
     assert validate_record(record(quantified_pct=90, quantified_basis="units")) == []
     assert validate_record(record(quantified_pct=90, quantified_basis="other")) == []
+
+
+@pytest.mark.parametrize(
+    "description",
+    [
+        "third-party foundries located in Taiwan",
+        "certain third-party manufacturers",
+        "a limited number of suppliers",
+        "various contract manufacturers",
+        "a single supplier",
+        "unnamed vendors",
+    ],
+)
+def test_a_described_supplier_is_not_a_named_one(description):
+    """Marvell's 10-K says its products are made by "third-party foundries located
+    in Taiwan". True, a real dependency, and no edge — there is nobody at the
+    other end. Verification cannot catch it: the sentence is really in the filing.
+    """
+    errors = validate_record(record(supplier_name_raw=description))
+    assert any("does not name one" in e for e in errors)
+
+
+@pytest.mark.parametrize(
+    "name",
+    [
+        "Taiwan Semiconductor Manufacturing Company Limited",
+        "Siliconware Precision Industries Co., Ltd.",
+        "King Yuan Electronics Company",
+        "Hon Hai Precision Industry Co., Ltd.",
+        "Fabrinet",
+        # Real names that a cruder rule keyed on opening words would have thrown out.
+        "ONE Gas, Inc.",
+        "Principal Financial Group",
+        "Delta Air Lines",
+    ],
+)
+def test_real_company_names_survive_the_guard(name):
+    assert validate_record(record(supplier_name_raw=name)) == []
 
 
 def test_a_buyer_subject_verb_is_rejected():

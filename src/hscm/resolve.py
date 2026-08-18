@@ -113,6 +113,42 @@ class Spine:
     def exact(self, normalized: str) -> SpineEntry | None:
         return self._by_normalized.get(normalized)
 
+    def by_leading_tokens(self, normalized: str, limit: int = 3) -> list[tuple[float, SpineEntry]]:
+        """Spine entries whose name *starts with* the whole query.
+
+        Filings shorten names to their distinctive first word — "Credo", "Amkor",
+        "Marvell" — while the registry carries the full "CREDO TECHNOLOGY GROUP
+        HOLDING". Similarity scoring cannot see these as the same string: five
+        characters against thirty is a low ratio however you measure it, so the
+        fuzzy pass rejects them before comparing and reports no candidate at all,
+        which is the least useful thing it could say to the human reviewing.
+
+        Scores stay below the acceptance threshold on purpose. A leading-token
+        match is strong evidence and not proof — "Delta" opens the name of an
+        airline and an apparel maker — so this fills in the queue's suggestion
+        column and still asks a person.
+        """
+        query = normalized.split()
+        if not query or len(normalized) < 4:
+            return []
+
+        matches = [
+            entry for entry in self.entries
+            if entry.normalized.split()[: len(query)] == query
+            and entry.normalized != normalized  # exact() already handled these
+        ]
+        if not matches:
+            return []
+
+        # Distinct companies, not share classes: GOOG and GOOGL are one answer.
+        by_cik: dict[int, SpineEntry] = {}
+        for entry in matches:
+            by_cik.setdefault(entry.cik, entry)
+        unique = sorted(by_cik.values(), key=lambda e: len(e.normalized))
+
+        score = 0.90 if len(unique) == 1 else 0.85
+        return [(score, entry) for entry in unique[:limit]]
+
     def best_fuzzy(self, normalized: str, limit: int = 3) -> list[tuple[float, SpineEntry]]:
         """Closest spine entries by normalised-name similarity.
 
@@ -313,6 +349,19 @@ class Resolver:
                 )
 
         candidates = self.spine.best_fuzzy(normalized)
+        if not candidates or candidates[0][0] < self.threshold:
+            # Merge in prefix matches, which similarity scoring cannot reach.
+            seen = {entry.cik for _, entry in candidates}
+            candidates = sorted(
+                candidates
+                + [
+                    (score, entry)
+                    for score, entry in self.spine.by_leading_tokens(normalized)
+                    if entry.cik not in seen
+                ],
+                key=lambda pair: pair[0],
+                reverse=True,
+            )[:3]
         if candidates and candidates[0][0] >= self.threshold:
             score, entry = candidates[0]
             return Resolution(

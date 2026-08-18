@@ -132,6 +132,39 @@ def test_empty_name_is_not_resolved(resolver):
     assert resolver.resolve("").status == "review"
 
 
+def test_a_shortened_name_gets_a_candidate_instead_of_nothing(spine):
+    """Filings say "Credo"; the registry says "CREDO TECHNOLOGY GROUP HOLDING LTD".
+
+    Similarity scoring rejects five characters against thirty before it even
+    compares them, so the queue used to tell the reviewer "no candidate" for a
+    name sitting in the spine.
+    """
+    extended = dict(SPINE_PAYLOAD)
+    extended["6"] = {
+        "cik_str": 1807794,
+        "ticker": "CRDO",
+        "title": "Credo Technology Group Holding Ltd",
+    }
+    resolution = Resolver(Spine.from_json(extended), Aliases()).resolve("Credo")
+    assert resolution.status == "review"  # a person still decides
+    assert resolution.candidates[0][2] == 1807794
+
+
+def test_a_prefix_match_is_never_auto_accepted(spine):
+    """"Delta" opens an airline and an apparel maker. Strong is not proof."""
+    extended = dict(SPINE_PAYLOAD)
+    extended["6"] = {"cik_str": 27904, "ticker": "DAL", "title": "DELTA AIR LINES INC"}
+    extended["7"] = {"cik_str": 1101396, "ticker": "DLA", "title": "DELTA APPAREL INC"}
+    resolution = Resolver(Spine.from_json(extended), Aliases()).resolve("Delta")
+    assert resolution.status == "review"
+    assert len(resolution.candidates) == 2
+
+
+def test_an_acronym_the_registry_does_not_use_still_has_no_candidate(spine):
+    """TSMC is not a prefix of "TAIWAN SEMICONDUCTOR...". The alias file is for this."""
+    assert Resolver(spine, Aliases()).resolve("TSMC").candidates == ()
+
+
 # --- alias file round trip --------------------------------------------------
 def test_aliases_round_trip(tmp_path):
     path = tmp_path / "aliases.yaml"
