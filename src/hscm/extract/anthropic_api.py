@@ -61,6 +61,48 @@ class AnthropicExtractor:
         self._model = model
         self._effort = effort
 
+    # --- preflight ----------------------------------------------------------
+    def check(self) -> dict:
+        """One tiny call that exercises the real request shape.
+
+        This code path has never run. The things most likely to be wrong are
+        the ones a smoke test catches for a fraction of a cent: a rejected
+        JSON schema, a parameter this model no longer accepts, or an auth
+        problem. Run it before spending real tokens on a filing.
+        """
+        sample = (
+            "We purchase substantially all of our graphics processing units from "
+            "Example Semiconductor Corporation, and we have no second source."
+        )
+        response = self._client.messages.create(
+            model=self._model,
+            max_tokens=2048,
+            system=SYSTEM_PROMPT,
+            messages=[{"role": "user", "content": USER_PROMPT.format(
+                company="Example Filer Corp", ticker="TEST", form_type="10-K",
+                filing_date="2026-01-01", section_label="smoke test", text=sample)}],
+            output_config={
+                "format": {"type": "json_schema", "schema": RELATIONSHIP_SCHEMA},
+                "effort": self._effort,
+            },
+        )
+        text = next((b.text for b in response.content if b.type == "text"), "")
+        parsed = None
+        if response.stop_reason != "refusal":
+            try:
+                parsed = json.loads(text)
+            except json.JSONDecodeError:
+                parsed = None
+        return {
+            "model": response.model,
+            "stop_reason": response.stop_reason,
+            "input_tokens": response.usage.input_tokens,
+            "output_tokens": response.usage.output_tokens,
+            "schema_accepted": parsed is not None,
+            "relationships": (parsed or {}).get("relationships", []),
+            "raw": text[:400],
+        }
+
     # --- windowing ----------------------------------------------------------
     @staticmethod
     def windows(text: str) -> list[str]:

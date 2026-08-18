@@ -223,6 +223,40 @@ def cmd_diagnose(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_check_api(args: argparse.Namespace) -> int:
+    """One tiny API call, before spending real tokens on a filing."""
+    import os
+
+    if not os.environ.get("ANTHROPIC_API_KEY"):
+        print("ANTHROPIC_API_KEY is not set in this shell.", file=sys.stderr)
+        return 1
+
+    from .extract.anthropic_api import AnthropicExtractor
+
+    try:
+        result = AnthropicExtractor().check()
+    except Exception as exc:
+        print(f"FAILED  {type(exc).__name__}: {exc}", file=sys.stderr)
+        return 1
+
+    print(f"model returned:   {result['model']}")
+    print(f"stop_reason:      {result['stop_reason']}")
+    print(f"schema accepted:  {result['schema_accepted']}")
+    print(f"tokens:           {result['input_tokens']} in, {result['output_tokens']} out")
+    print(f"relationships:    {len(result['relationships'])} from the sample sentence")
+    for record in result["relationships"]:
+        print(f"  {record.get('supplier_name_raw')} -> {record.get('buyer_name_raw')}"
+              f"  [{record.get('relationship_type')}]")
+        print(f"    sentence: {record.get('source_sentence', '')[:120]}")
+    if not result["schema_accepted"]:
+        print(f"\nraw response: {result['raw']}", file=sys.stderr)
+        print("The JSON schema was not honoured — do not run a real extraction yet.",
+              file=sys.stderr)
+        return 1
+    print("\nRequest shape works. Safe to run a real extraction.")
+    return 0
+
+
 # --- M2/M4: extraction ------------------------------------------------------
 def cmd_extract(args: argparse.Namespace) -> int:
     from .extract import ExtractionRequest, get_extractor
@@ -235,9 +269,13 @@ def cmd_extract(args: argparse.Namespace) -> int:
         wanted = {t.upper() for t in args.tickers}
         rows = [r for r in rows if r["ticker"] in wanted]
 
-    extractor = get_extractor(args.extractor)
-    print(f"extractor: {extractor.name}")
+    extractor = None if args.estimate else get_extractor(args.extractor)
+    if extractor is not None:
+        print(f"extractor: {extractor.name}")
+    else:
+        print("estimate only — no API calls will be made")
 
+    total_windows = total_chars = 0
     records: list[dict] = []
     for row in rows:
         path = config.REPO_ROOT / row["cache_path"]
@@ -257,6 +295,7 @@ def cmd_extract(args: argparse.Namespace) -> int:
         targets: list[tuple[str, str, str]] = list(
             extraction_sections(sections, filing.form_type)
         )
+
         # Concentration passages are extracted separately: they live in the
         # financial statement notes rather than a numbered item, and they are
         # where the quantified percentages are.
@@ -267,12 +306,39 @@ def cmd_extract(args: argparse.Namespace) -> int:
                  "\n\n".join(p.text for p in passages))
             )
 
+        # Applied after the concentration pass is appended, so --sections can
+        # select or exclude it like any other section.
+        if args.sections:
+            wanted_sections = {name.lower() for name in args.sections}
+            targets = [t for t in targets if t[0].lower() in wanted_sections]
+
+        if args.estimate:
+            from .extract.anthropic_api import AnthropicExtractor
+
+            for key, label, section_text in targets:
+                count = len(AnthropicExtractor.windows(section_text))
+                total_windows += count
+                total_chars += len(section_text)
+                print(f"  {filing.ticker:<6} {key:<13} {len(section_text):>9,} chars"
+                      f" -> {count} call(s)")
+            continue
+
         for key, label, section_text in targets:
             found = extractor.extract(
                 ExtractionRequest(filing, key, label, section_text)
             )
             records.extend(found)
             print(f"  {filing.ticker:<6} {key:<13} {len(section_text):>9,} chars -> {len(found)} record(s)")
+
+    if args.estimate:
+        # Rough, and deliberately so: the point is the order of magnitude, not
+        # a quote. Filing text is dense, so ~4 chars/token is a fair rule of
+        # thumb, and the prompt adds a fixed overhead per call.
+        prompt_tokens = total_chars / 4 + total_windows * 400
+        print(f"\n{total_windows} API call(s), roughly {prompt_tokens:,.0f} input tokens")
+        print("At claude-sonnet-5 input pricing that is well under a dollar for one filing.")
+        print("Run without --estimate to extract for real.")
+        return 0
 
     out = Path(args.out) if args.out else config.DATA_DIR / "extractions.json"
     out.parent.mkdir(parents=True, exist_ok=True)
@@ -431,7 +497,14 @@ def main(argv: list[str] | None = None) -> int:
     extract.add_argument("--extractor", choices=["fixture", "anthropic"],
                          help=f"override HSCM_EXTRACTOR (currently {config.EXTRACTOR!r})")
     extract.add_argument("--out")
+    extract.add_argument("--sections", nargs="+",
+                         help="limit to these section keys, e.g. --sections item1a")
+    extract.add_argument("--estimate", action="store_true",
+                         help="count the API calls this would make, without making them")
     extract.set_defaults(func=cmd_extract)
+
+    check = sub.add_parser("check-api", help="one tiny API call to validate the request shape")
+    check.set_defaults(func=cmd_check_api)
 
     review = sub.add_parser("review", help="entity resolution review queue")
     review.add_argument("action", choices=["build", "apply"])
