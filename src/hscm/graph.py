@@ -72,6 +72,7 @@ class SupplyEdge:
     supplier_key: str
     buyer_key: str
     evidence: list[dict] = field(default_factory=list)
+    seen_statements: set[tuple] = field(default_factory=set, repr=False, compare=False)
 
     @property
     def edge_id(self) -> str:
@@ -176,7 +177,15 @@ def build_graph(records: list[dict], resolver: Resolver, seed_ciks: set[int]) ->
         key = (supplier.node_key, buyer.node_key)
         edge = graph.edges.setdefault(key, SupplyEdge(supplier.node_key, buyer.node_key))
         evidence = {k: record.get(k) for k in EVIDENCE_FIELDS}
-        if evidence not in edge.evidence:
+
+        # A statement is a sentence in a filing, and the site counts statements to
+        # show corroboration. The same sentence reaches us more than once — the
+        # concentration sweep re-reads text that is also inside Item 1 — and the
+        # model does not word `product_or_service` identically each time. Keeping
+        # both copies would advertise two independent sources where there is one.
+        statement = (record.get("source_url"), record.get("source_sentence"))
+        if statement not in edge.seen_statements:
+            edge.seen_statements.add(statement)
             edge.evidence.append(evidence)
 
     return graph

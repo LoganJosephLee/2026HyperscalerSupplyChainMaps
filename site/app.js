@@ -15,6 +15,17 @@ const EDGE_COLOR_QUANTIFIED = "#7ee0a0";
 
 // Percentages in filings do not share a denominator. The label says which one this
 // number has, so a thick edge is never read as a magnitude comparable to another.
+// Read aloud with the supplier as subject. A bare "supplies" tag next to two
+// company names does not say which name is the subject, and that ambiguity is
+// exactly where a reversed edge hides.
+const TYPE_PHRASE = {
+  supplies: (supplier, buyer) => `${supplier} supplies ${buyer}`,
+  manufactures_for: (supplier, buyer) => `${supplier} manufactures for ${buyer}`,
+  leases_capacity_to: (supplier, buyer) => `${supplier} leases capacity to ${buyer}`,
+  licenses_to: (supplier, buyer) => `${supplier} licenses to ${buyer}`,
+  unclear: (supplier, buyer) => `${supplier} and ${buyer} — direction not stated`,
+};
+
 const BASIS_LABEL = {
   revenue: "of revenue",
   cost: "of cost",
@@ -64,7 +75,11 @@ function renderEvidence(edge, nodesById) {
       `<span class="tag">${escapeHtml(item.form_type)}</span>`,
       `<span class="tag">filed ${escapeHtml(item.filing_date)}</span>`,
       `<span class="tag${item.relationship_type === "unclear" ? " unclear" : ""}">${escapeHtml(
-        item.relationship_type
+        (TYPE_PHRASE[item.relationship_type] ??
+          ((s2, b2) => `${s2} — ${item.relationship_type} — ${b2}`))(
+          supplier?.canonical_name ?? edge.source,
+          buyer?.canonical_name ?? edge.target
+        )
       )}</span>`,
       `<span class="tag">confidence: ${escapeHtml(item.extraction_confidence)}</span>`,
     ];

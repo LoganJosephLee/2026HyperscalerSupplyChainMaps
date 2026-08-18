@@ -375,25 +375,36 @@ def cmd_extract(args: argparse.Namespace) -> int:
         text = document_text(path.read_bytes())
         sections = split_items(text, filing.form_type)
 
+        wanted_sections = {name.lower() for name in args.sections} if args.sections else None
+
         targets: list[tuple[str, str, str]] = list(
             extraction_sections(sections, filing.form_type)
         )
+        if wanted_sections is not None:
+            targets = [t for t in targets if t[0].lower() in wanted_sections]
 
         # Concentration passages are extracted separately: they live in the
         # financial statement notes rather than a numbered item, and they are
         # where the quantified percentages are.
-        passages = find_concentration_passages(text)
-        if passages:
+        #
+        # The concentration sweep searches the whole document, so a passage in
+        # Item 1 is matched even though Item 1 is already being sent. Re-sending
+        # it costs a second call and yields the same sentence twice, worded
+        # slightly differently each time. Only passages outside everything we
+        # are already reading are worth a window of their own.
+        covered = [
+            (sections[key].start, sections[key].end) for key, _, _ in targets if key in sections
+        ]
+        passages = [
+            passage
+            for passage in find_concentration_passages(text)
+            if not any(start <= passage.start < end for start, end in covered)
+        ]
+        if passages and (wanted_sections is None or "concentration" in wanted_sections):
             targets.append(
                 ("concentration", "Customer/supplier concentration passages",
                  "\n\n".join(p.text for p in passages))
             )
-
-        # Applied after the concentration pass is appended, so --sections can
-        # select or exclude it like any other section.
-        if args.sections:
-            wanted_sections = {name.lower() for name in args.sections}
-            targets = [t for t in targets if t[0].lower() in wanted_sections]
 
         if args.estimate:
             from .extract.anthropic_api import AnthropicExtractor

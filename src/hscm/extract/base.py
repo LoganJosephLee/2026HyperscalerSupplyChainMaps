@@ -53,15 +53,20 @@ RELATIONSHIP_SCHEMA: dict = {
                         "type": "string",
                         "enum": [
                             "supplies",
-                            "purchases_from",
                             "manufactures_for",
                             "leases_capacity_to",
+                            "licenses_to",
                             "unclear",
                         ],
                         "description": (
-                            "Use 'unclear' when the filing describes a relationship "
-                            "without saying which direction goods or services flow. "
-                            "'Strategic partnership' is unclear, not supplies."
+                            "The subject of this verb is ALWAYS supplier_name_raw and "
+                            "the object is ALWAYS buyer_name_raw: read it as "
+                            "'<supplier> supplies <buyer>'. A filing written from the "
+                            "buyer's side ('we purchase wafers from TSMC') is still "
+                            "'supplies', with TSMC as the supplier. Use 'unclear' when "
+                            "the filing states a relationship without saying which way "
+                            "goods or services flow; 'strategic partnership' is unclear, "
+                            "not supplies."
                         ),
                     },
                     "product_or_service": {
@@ -156,7 +161,12 @@ Those sentences describe a real dependency but support no edge — skip them.
 4. Prefer `unclear` over a guess. "We have strategic relationships with leading \
 semiconductor providers" states that a relationship exists and nothing about \
 its direction.
-5. Returning an empty list is a correct answer. Most sections of most filings \
+5. `relationship_type` always reads supplier first. Most filings are written \
+from the buyer's side — "we outsource manufacturing to TSMC" — so you will \
+usually be turning the sentence around: TSMC is the supplier, the filer is the \
+buyer, and the type is `supplies`. The roles come from who does what, never \
+from the grammar of the sentence.
+6. Returning an empty list is a correct answer. Most sections of most filings \
 contain no named supply relationship at all.
 """
 

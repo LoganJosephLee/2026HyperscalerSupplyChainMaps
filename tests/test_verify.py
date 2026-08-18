@@ -37,7 +37,7 @@ def record(**overrides) -> dict:
     base = {
         "buyer_name_raw": "Example Buyer Corporation",
         "supplier_name_raw": "Example Supplier Inc.",
-        "relationship_type": "purchases_from",
+        "relationship_type": "supplies",
         "product_or_service": "graphics processing units",
         "quantified_pct": None,
         "quantified_basis": None,
@@ -118,6 +118,13 @@ def test_a_percentage_of_something_other_than_money_survives():
     # Before "units" existed the only legal answer was null, which threw the record away.
     assert validate_record(record(quantified_pct=90, quantified_basis="units")) == []
     assert validate_record(record(quantified_pct=90, quantified_basis="other")) == []
+
+
+def test_a_buyer_subject_verb_is_rejected():
+    # The edge is supplier -> buyer, so every verb has to read in that direction.
+    # "purchases_from" printed as "TSMC purchases_from Broadcom", which is backwards.
+    errors = validate_record(record(relationship_type="purchases_from"))
+    assert any("relationship_type" in e for e in errors)
 
 
 def test_an_invented_basis_is_still_rejected():

@@ -66,6 +66,37 @@ def test_identical_records_are_not_double_counted(resolver):
     assert len(graph.edges[(NVDA_K, MSFT_K)].evidence) == 1
 
 
+def test_one_sentence_read_twice_is_still_one_statement(resolver):
+    """The concentration sweep re-reads text that is also inside Item 1.
+
+    The model does not word product_or_service identically on the second pass, so
+    the two records differ as dicts while citing one sentence. The site counts
+    statements to show corroboration; counting this twice would claim two
+    independent sources for one.
+    """
+    graph = build_graph(
+        [
+            record(product_or_service="packaging for IC products"),
+            record(product_or_service="packaging of IC products"),
+        ],
+        resolver,
+        seed_ciks=set(),
+    )
+    assert len(graph.edges[(NVDA_K, MSFT_K)].evidence) == 1
+
+
+def test_the_same_sentence_in_two_different_filings_is_two_statements(resolver):
+    graph = build_graph(
+        [
+            record(),
+            record(source_url="https://www.sec.gov/Archives/edgar/data/1045810/000/y.htm"),
+        ],
+        resolver,
+        seed_ciks=set(),
+    )
+    assert len(graph.edges[(NVDA_K, MSFT_K)].evidence) == 2
+
+
 def test_unresolved_names_are_counted_not_dropped_silently(resolver):
     graph = build_graph([record(supplier="Unknown Private Vendor")], resolver, seed_ciks=set())
     assert graph.edges == {}

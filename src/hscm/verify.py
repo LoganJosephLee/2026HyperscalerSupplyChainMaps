@@ -40,11 +40,16 @@ from .sections import normalize_text
 
 REQUIRED_FIELDS = ("buyer_name_raw", "supplier_name_raw", "source_sentence", "source_url")
 
+# Every verb here takes the supplier as its subject, so an edge always reads
+# supplier -> buyer in the same direction as the verb. "purchases_from" used to
+# be in this set and was the one verb whose subject was the buyer, which made
+# "TSMC purchases_from Broadcom" the printed form of "Broadcom buys from TSMC".
+# Do not add a buyer-subject verb back.
 VALID_RELATIONSHIP_TYPES = {
     "supplies",
-    "purchases_from",
     "manufactures_for",
     "leases_capacity_to",
+    "licenses_to",
     "unclear",
 }
 VALID_FORM_TYPES = {"10-K", "20-F", "10-Q", "8-K"}
