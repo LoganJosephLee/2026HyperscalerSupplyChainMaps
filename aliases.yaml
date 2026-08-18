@@ -8,29 +8,22 @@
 # Regenerate the queue with `hscm review build`; apply it with `hscm review apply`.
 aliases: {}
 non_filers:
-  OpenAI: Private company. Named in Microsoft's 10-K; files nothing with the SEC, so it is
-    a node with no CIK and nothing it says can corroborate the edge.
-
-  # Foreign-listed, so no SEC filings — but named outright in NVIDIA's 10-K, which
-  # is the test this project applies. They were excluded under the original scope
-  # decision, before non-filer nodes existed; once they did, "cited but files
-  # nothing" was already a category and these belong in it. Keeping them out was
-  # what forced Micron to stand in for the whole memory supply.
-  Samsung Electronics: Korean-listed. Files nothing with the SEC, so nothing it says can
-    corroborate or contradict an edge; it is here only on the word of the US filers
-    that name it.
-  Samsung Electronics Co., Ltd.:
-    canonical: Samsung Electronics
-    note: Full legal name as NVIDIA's 10-K first spells it.
-  Samsung:
-    canonical: Samsung Electronics
-    note: Short form used later in the same filing.
-  SK Hynix: Korean-listed. Files nothing with the SEC, so nothing it says can corroborate
-    or contradict an edge; it is here only on the word of the US filers that name it.
+  OpenAI: Private company. Named in Microsoft's 10-K; files nothing with the SEC, so it is a node with
+    no CIK and nothing it says can corroborate the edge.
+  SK Hynix: Korean-listed. Files nothing with the SEC, so nothing it says can corroborate or contradict
+    an edge; it is here only on the word of the US filers that name it.
   SK Hynix Inc.:
     canonical: SK Hynix
     note: As spelled in NVIDIA's 10-K.
   SK hynix Inc.:
     canonical: SK Hynix
     note: The company's own lower-case styling.
+  Samsung:
+    canonical: Samsung Electronics
+    note: Short form used later in the same filing.
+  Samsung Electronics: Korean-listed. Files nothing with the SEC, so nothing it says can corroborate or
+    contradict an edge; it is here only on the word of the US filers that name it.
+  Samsung Electronics Co., Ltd.:
+    canonical: Samsung Electronics
+    note: Full legal name as NVIDIA's 10-K first spells it.
 excluded: {}
