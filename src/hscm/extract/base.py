@@ -77,10 +77,22 @@ RELATIONSHIP_SCHEMA: dict = {
                     },
                     "quantified_basis": {
                         "anyOf": [
-                            {"type": "string", "enum": ["revenue", "cost"]},
+                            {
+                                "type": "string",
+                                "enum": ["revenue", "cost", "units", "other"],
+                            },
                             {"type": "null"},
                         ],
-                        "description": "What the percentage is a share of. Null if no percentage.",
+                        "description": (
+                            "What the percentage is a share of. 'revenue' for a share "
+                            "of sales, 'cost' for a share of purchases or expense, "
+                            "'units' for a share of a physical quantity such as wafers, "
+                            "chips or capacity, 'other' for any denominator that fits "
+                            "none of those. Null ONLY when quantified_pct is null: a "
+                            "number with no stated denominator is not usable, so if you "
+                            "cannot tell what the percentage is a share of, use 'other' "
+                            "and make sure the sentence you quote contains it."
+                        ),
                     },
                     "source_sentence": {
                         "type": "string",

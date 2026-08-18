@@ -13,6 +13,15 @@ const NON_FILER_COLOR = "#c39bd3";
 const EDGE_COLOR = "#3b4252";
 const EDGE_COLOR_QUANTIFIED = "#7ee0a0";
 
+// Percentages in filings do not share a denominator. The label says which one this
+// number has, so a thick edge is never read as a magnitude comparable to another.
+const BASIS_LABEL = {
+  revenue: "of revenue",
+  cost: "of cost",
+  units: "of units supplied",
+  other: "— see the sentence for what of",
+};
+
 const el = (id) => document.getElementById(id);
 
 function escapeHtml(value) {
@@ -60,8 +69,8 @@ function renderEvidence(edge, nodesById) {
       `<span class="tag">confidence: ${escapeHtml(item.extraction_confidence)}</span>`,
     ];
     if (item.quantified_pct !== null && item.quantified_pct !== undefined) {
-      tags.splice(2, 0, `<span class="tag pct">${escapeHtml(item.quantified_pct)}% of ${escapeHtml(
-        item.quantified_basis ?? "?"
+      tags.splice(2, 0, `<span class="tag pct">${escapeHtml(item.quantified_pct)}% ${escapeHtml(
+        BASIS_LABEL[item.quantified_basis] ?? "— see the sentence for what of"
       )}</span>`);
     }
     if (item.product_or_service) {

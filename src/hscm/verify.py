@@ -48,7 +48,11 @@ VALID_RELATIONSHIP_TYPES = {
     "unclear",
 }
 VALID_FORM_TYPES = {"10-K", "20-F", "10-Q", "8-K"}
-VALID_BASES = {"revenue", "cost", None}
+# A percentage is only meaningful with its denominator. "other" exists so that a
+# real number with an unusual denominator survives instead of being thrown away;
+# the sentence still has to name what it is a share of.
+QUANTIFIED_BASES = {"revenue", "cost", "units", "other"}
+VALID_BASES = QUANTIFIED_BASES | {None}
 VALID_CONFIDENCE = {"high", "medium", "low"}
 
 FUZZY_REPORT_THRESHOLD = 0.80  # below this we do not bother showing a "closest" passage
@@ -110,7 +114,7 @@ def validate_record(record: dict) -> list[str]:
             errors.append("quantified_pct is not a number")
         elif not 0 < pct <= 100:
             errors.append(f"quantified_pct {pct} outside (0, 100]")
-        if basis not in {"revenue", "cost"}:
+        if basis not in QUANTIFIED_BASES:
             errors.append("quantified_pct given without a quantified_basis")
     if basis not in VALID_BASES:
         errors.append(f"quantified_basis {basis!r} not recognised")

@@ -113,6 +113,18 @@ def test_percentage_with_basis_is_valid():
     assert validate_record(record(quantified_pct=19, quantified_basis="revenue")) == []
 
 
+def test_a_percentage_of_something_other_than_money_survives():
+    # A filing saying a foundry makes 90% of a company's wafers is real evidence.
+    # Before "units" existed the only legal answer was null, which threw the record away.
+    assert validate_record(record(quantified_pct=90, quantified_basis="units")) == []
+    assert validate_record(record(quantified_pct=90, quantified_basis="other")) == []
+
+
+def test_an_invented_basis_is_still_rejected():
+    errors = validate_record(record(quantified_pct=19, quantified_basis="market share"))
+    assert any("not recognised" in e for e in errors)
+
+
 def test_unrecognised_relationship_type_is_invalid():
     assert validate_record(record(relationship_type="sells_to"))
 
