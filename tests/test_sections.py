@@ -461,3 +461,46 @@ def test_stub_fallback_does_not_duplicate_an_already_chosen_section():
     }
     keys = [key for key, _, _ in extraction_sections(sections, "20-F")]
     assert keys.count("item8") == 1
+
+
+# --- page furniture ----------------------------------------------------------
+PAGINATED_HTML = """
+<html><body>
+<p>We currently outsource all of our IC manufacturing to</p>
+<p>23</p>
+<p>Table of Contents</p>
+<p>TSMC, with the assembly and testing processes outsourced to other
+subcontractors primarily in Asia.</p>
+</body></html>
+"""
+
+
+def test_page_numbers_do_not_interrupt_a_sentence():
+    """A real extraction was rejected because the filing text read
+    "...manufacturing to 23 TSMC, with...". The 23 is a page number."""
+    text = document_text(PAGINATED_HTML)
+    assert "23" not in text
+    assert "Table of Contents" not in text
+
+
+def test_a_sentence_spanning_a_page_break_verifies():
+    from hscm.verify import verify_sentence
+
+    quoted = (
+        "We currently outsource all of our IC manufacturing to TSMC, with the "
+        "assembly and testing processes outsourced to other subcontractors "
+        "primarily in Asia."
+    )
+    assert verify_sentence(quoted, document_text(PAGINATED_HTML)).supported
+
+
+def test_numbers_inside_a_line_are_kept():
+    """Only a line that is nothing but a number is furniture."""
+    html = "<p>One customer accounted for 23% of total revenue in 2025.</p>"
+    assert "23% of total revenue" in document_text(html)
+
+
+def test_table_rows_of_figures_survive():
+    html = "<table><tr><td>Revenue</td><td>1,234</td><td>5,678</td></tr></table>"
+    text = document_text(html)
+    assert "1,234" in text and "5,678" in text

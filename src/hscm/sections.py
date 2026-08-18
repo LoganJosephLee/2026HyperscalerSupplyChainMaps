@@ -208,6 +208,28 @@ _BLOCK_TAGS = (
 _LINE_BREAK = "\x00"
 _ANY_WS = re.compile(r"\s+")
 
+# Page furniture. A filing is paginated, and a sentence that spans a page break
+# has the page number and the running header dropped into the middle of it:
+#
+#   "We currently outsource all of our IC manufacturing to
+#    23
+#    TSMC, with the assembly and testing processes outsourced..."
+#
+# Left in, that text is not what any reader sees, so a model quoting the
+# sentence verbatim gets marked as a hallucination by the M3 check. Removing
+# these lines is what makes "verbatim" mean the same thing to the model and to
+# the verifier.
+_PAGE_NUMBER_LINE = re.compile(r"^\s*(?:page\s+)?\d{1,4}\s*$", re.IGNORECASE)
+_RUNNING_HEADER_LINE = re.compile(r"^\s*table\s+of\s+contents\s*\d{0,4}\s*$", re.IGNORECASE)
+
+
+def _strip_page_furniture(text: str) -> str:
+    return "\n".join(
+        line
+        for line in text.split("\n")
+        if not _PAGE_NUMBER_LINE.match(line) and not _RUNNING_HEADER_LINE.match(line)
+    )
+
 
 def document_text(html: str | bytes) -> str:
     """Extract readable text from a filing document.
@@ -232,7 +254,7 @@ def document_text(html: str | bytes) -> str:
         tag.insert_after(" ")
 
     text = _ANY_WS.sub(" ", soup.get_text(""))
-    return normalize_text(text.replace(_LINE_BREAK, "\n"))
+    return normalize_text(_strip_page_furniture(text.replace(_LINE_BREAK, "\n")))
 
 
 # --- item splitting ---------------------------------------------------------
