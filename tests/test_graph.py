@@ -173,3 +173,29 @@ def test_cypher_is_parameterised_not_interpolated(resolver):
 def test_cypher_creates_the_uniqueness_constraint_first(resolver):
     statements = cypher_statements(build_graph([record()], resolver, set()))
     assert "CREATE CONSTRAINT" in statements[0][0]
+
+
+# --- direction ---------------------------------------------------------------
+def test_unclear_only_edge_reports_no_stated_direction(resolver):
+    """"A strategic partnership with X" says nothing about which way goods flow."""
+    graph = build_graph(
+        [record(relationship_type="unclear",
+                sentence="Additionally, we have a long-term strategic partnership with them.")],
+        resolver, seed_ciks=set(),
+    )
+    assert graph.edges[(NVDA, MSFT)].direction_stated is False
+
+
+def test_one_directional_statement_is_enough(resolver):
+    records = [
+        record(relationship_type="unclear"),
+        record(relationship_type="supplies", sentence="They supply us with processors."),
+    ]
+    assert build_graph(records, resolver, seed_ciks=set()).edges[(NVDA, MSFT)].direction_stated
+
+
+def test_export_carries_direction_stated(tmp_path, resolver):
+    graph = build_graph([record(relationship_type="unclear")], resolver, seed_ciks=set())
+    export(graph, [], tmp_path)
+    payload = json.loads((tmp_path / "graph.json").read_text())
+    assert payload["edges"][0]["direction_stated"] is False

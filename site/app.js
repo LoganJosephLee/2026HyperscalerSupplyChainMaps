@@ -31,12 +31,17 @@ function renderEvidence(edge, nodesById) {
   const supplier = nodesById.get(edge.source);
   const buyer = nodesById.get(edge.target);
 
+  const undirected = edge.direction_stated === false;
   const header = `
     <p class="pair">
       ${escapeHtml(supplier?.canonical_name ?? edge.source)}
-      <span class="arrow">supplies</span>
+      <span class="arrow">${undirected ? "&harr;" : "supplies"}</span>
       ${escapeHtml(buyer?.canonical_name ?? edge.target)}
     </p>
+    ${undirected ? `<p class="pair-sub" style="color:var(--warn)">
+      No filing states which way goods or services flow. Shown without a
+      direction; the order of the two names carries no meaning.
+    </p>` : ""}
     <p class="pair-sub">
       ${edge.evidence.length} statement${edge.evidence.length === 1 ? "" : "s"} across
       ${new Set(edge.evidence.map((e) => e.source_url)).size} filing${
@@ -145,7 +150,9 @@ async function main() {
     graph.addEdgeWithKey(edge.id, edge.source, edge.target, {
       size: edgeSize(edge.quantified_pct),
       color: edge.quantified_pct == null ? EDGE_COLOR : EDGE_COLOR_QUANTIFIED,
-      type: "arrow",
+      // No arrowhead when no filing stated which way anything flows. The stored
+      // supplier/buyer order is a property of the record shape, not evidence.
+      type: edge.direction_stated === false ? "line" : "arrow",
     });
   });
 

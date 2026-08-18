@@ -88,6 +88,18 @@ class SupplyEdge:
     def relationship_types(self) -> list[str]:
         return sorted({e.get("relationship_type", "unclear") for e in self.evidence})
 
+    @property
+    def direction_stated(self) -> bool:
+        """Did any filing say which way goods or services flow?
+
+        "We have a strategic partnership with X" states that a relationship
+        exists and nothing about its direction. The schema still has to put one
+        name in the buyer field and one in the supplier field, so the stored
+        direction is an artefact of the record shape, not a disclosure. Drawing
+        an arrow for it would assert something no filing said.
+        """
+        return any(e.get("relationship_type") != "unclear" for e in self.evidence)
+
 
 @dataclass
 class Graph:
@@ -186,6 +198,7 @@ def export(graph: Graph, records: list[dict], directory: Path | None = None) -> 
                 "target": f"cik-{edge.buyer_cik:010d}",
                 "quantified_pct": edge.max_quantified_pct,
                 "relationship_types": edge.relationship_types,
+                "direction_stated": edge.direction_stated,
                 "confidence": edge.best_confidence,
                 "latest_filing_date": edge.latest_filing_date,
                 "evidence": edge.evidence,
