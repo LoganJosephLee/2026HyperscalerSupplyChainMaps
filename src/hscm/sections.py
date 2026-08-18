@@ -133,7 +133,7 @@ TWENTY_F_MARKERS: tuple[ItemMarker, ...] = (
     # Risk factors are Item 3.D, and registrants write the sub-item heading on
     # its own line as "D. Risk Factors" rather than repeating the item number.
     _marker("item3d", "Item 3.D. Risk Factors",
-            rf"(?:item\s*3{_SEP})?d{_SEP}risk\s*factors\b"),
+            rf"(?:item\s*3{_SEP})?\bd{_SEP}risk\s*factors\b"),
     _marker("item4", "Item 4. Information on the Company", rf"item\s*4{_SEP}information\s+on\s+the\s+company\b"),
     _marker("item4a", "Item 4A. Unresolved Staff Comments", rf"item\s*4a{_SEP}unresolved\s+staff\s+comments\b"),
     _marker("item5", "Item 5. Operating and Financial Review", rf"item\s*5{_SEP}operating\s+and\s+financial\s+reviews?\b"),
@@ -156,7 +156,10 @@ MARKERS_BY_FORM: dict[str, tuple[ItemMarker, ...]] = {
 EXTRACTION_KEYS: dict[str, tuple[str, ...]] = {
     "10-K": ("item1", "item1a", "item8"),
     "10-Q": ("part1_item1", "part2_item1a"),
-    "20-F": ("item4", "item3d", "item18"),  # item18 falls back to item8
+    # Risk factors are a sub-item of Item 3 Key Information. Reading item3 as
+    # well means a 20-F whose sub-heading we fail to locate still gets its risk
+    # factors read, rather than silently contributing none.
+    "20-F": ("item3", "item3d", "item4", "item18"),  # item18 falls back to item8
     "8-K": ("body",),
 }
 

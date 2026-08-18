@@ -125,13 +125,27 @@ def cmd_sections(args: argparse.Namespace) -> int:
         # A one-event 8-K of a few hundred characters is normal; a 500-character
         # Item 1A is a broken split.
         min_chars = 0 if form.upper() == "8-K" else 2000
+        will_read = {key for key, _, _ in extraction_sections(sections, form)}
         for key in EXTRACTION_KEYS.get(form.upper(), ()):
             if key not in sections:
-                print(f"    !! {key} not located — extraction would read nothing from it")
-                problems += 1
+                if will_read:
+                    print(f"    -- {key} not located; extraction reads "
+                          f"{', '.join(sorted(will_read))} instead")
+                else:
+                    print(f"    !! {key} not located — extraction would read nothing from it")
+                    problems += 1
             elif sections[key].char_count < min_chars:
-                print(f"    !! {key} is only {sections[key].char_count:,} chars — check the split")
-                problems += 1
+                # A stub is a filing convention, not a broken split, when the
+                # content is somewhere else and extraction knows where.
+                fallback = next((k for k in will_read if k != key and k not in
+                                 EXTRACTION_KEYS.get(form.upper(), ())), None)
+                if fallback:
+                    print(f"    -- {key} is a {sections[key].char_count:,}-char "
+                          f"cross-reference; extraction reads {fallback} instead")
+                else:
+                    print(f"    !! {key} is only {sections[key].char_count:,} chars "
+                          f"— check the split")
+                    problems += 1
 
         print(f"    concentration passages: {len(passages)}")
         for passage in passages[: args.show_passages]:
