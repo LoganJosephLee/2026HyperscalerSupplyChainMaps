@@ -16,3 +16,8 @@ __pycache__/
 *.pyc
 .pytest_cache/
 node_modules/
+
+# Terminal captures. Every one of these is the output of a command that can just
+# be run again, and they are large enough to bury a real diff.
+/*.txt
+report*.json
