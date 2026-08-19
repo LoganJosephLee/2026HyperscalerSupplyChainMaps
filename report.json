@@ -1,17 +1,17 @@
 {
-  "total": 33,
-  "checked": 32,
-  "supported": 32,
-  "unsupported": 0,
-  "invalid": 1,
+  "total": 194,
+  "checked": 187,
+  "supported": 186,
+  "unsupported": 1,
+  "invalid": 7,
   "undocumented": 0,
-  "failure_rate": 0.0,
+  "failure_rate": 0.0053475935828877,
   "results": [
     {
       "index": 0,
-      "buyer_name_raw": "Broadcom",
-      "supplier_name_raw": "Taiwan Semiconductor Manufacturing Company Limited",
-      "source_url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016825000121/avgo-20251102.htm",
+      "buyer_name_raw": "OpenAI",
+      "supplier_name_raw": "AMD",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
       "status": "supported",
       "match_level": "exact",
       "ratio": 1.0,
@@ -20,6 +20,490 @@
     },
     {
       "index": 1,
+      "buyer_name_raw": "Sony PlayStation\u00ae 5",
+      "supplier_name_raw": "AMD",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 2,
+      "buyer_name_raw": "Microsoft\u00ae Xbox Series S and X",
+      "supplier_name_raw": "AMD",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 3,
+      "buyer_name_raw": "Valve Steam Machine PC",
+      "supplier_name_raw": "AMD",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 4,
+      "buyer_name_raw": "AMD",
+      "supplier_name_raw": "Taiwan Semiconductor Manufacturing Company Limited (TSMC)",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 5,
+      "buyer_name_raw": "AMD",
+      "supplier_name_raw": "GLOBALFOUNDRIES Inc. (GF)",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 6,
+      "buyer_name_raw": "AMD",
+      "supplier_name_raw": "TSMC",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 7,
+      "buyer_name_raw": "AMD",
+      "supplier_name_raw": "United Microelectronics Corporation (UMC)",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 8,
+      "buyer_name_raw": "AMD",
+      "supplier_name_raw": "Samsung Electronics Co., Ltd.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 9,
+      "buyer_name_raw": "AMD",
+      "supplier_name_raw": "Tongfu Microelectronics Co., Ltd.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 10,
+      "buyer_name_raw": "AMD",
+      "supplier_name_raw": "Siliconware Precision Industries Ltd. (SPIL)",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 11,
+      "buyer_name_raw": "AMD",
+      "supplier_name_raw": "King Yuan Electronics Company (KYEC)",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 12,
+      "buyer_name_raw": "AMD",
+      "supplier_name_raw": "Taiwan Semiconductor Manufacturing Company Limited (TSMC)",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 13,
+      "buyer_name_raw": "AMD",
+      "supplier_name_raw": "GLOBALFOUNDRIES Inc. (GF)",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 14,
+      "buyer_name_raw": "AMD",
+      "supplier_name_raw": "TSMC",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 15,
+      "buyer_name_raw": "AMD",
+      "supplier_name_raw": "United Microelectronics Corporation (UMC)",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 16,
+      "buyer_name_raw": "AMD",
+      "supplier_name_raw": "Samsung Electronics Co., Ltd.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 17,
+      "buyer_name_raw": "Intel",
+      "supplier_name_raw": "Nvidia",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 18,
+      "buyer_name_raw": "AMD",
+      "supplier_name_raw": "Taiwan Semiconductor Manufacturing Company Limited (TSMC)",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 19,
+      "buyer_name_raw": "AMD",
+      "supplier_name_raw": "GLOBALFOUNDRIES Inc. (GF)",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 20,
+      "buyer_name_raw": "AMD",
+      "supplier_name_raw": "TSMC",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 21,
+      "buyer_name_raw": "AMD",
+      "supplier_name_raw": "United Microelectronics Corporation (UMC)",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 22,
+      "buyer_name_raw": "AMD",
+      "supplier_name_raw": "Samsung Electronics Co., Ltd.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 23,
+      "buyer_name_raw": "AMD",
+      "supplier_name_raw": "GF",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 24,
+      "buyer_name_raw": "AMD",
+      "supplier_name_raw": "Tongfu Microelectronics Co., Ltd.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 25,
+      "buyer_name_raw": "AMD",
+      "supplier_name_raw": "TSMC",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 26,
+      "buyer_name_raw": "AMD",
+      "supplier_name_raw": "Microsoft Corporation",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 27,
+      "buyer_name_raw": "AMD",
+      "supplier_name_raw": "Microsoft",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 28,
+      "buyer_name_raw": "AMD",
+      "supplier_name_raw": "Higon Information Technology Co., Ltd.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 29,
+      "buyer_name_raw": "AMD",
+      "supplier_name_raw": "ATMP JVs",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 30,
+      "buyer_name_raw": "THATIC JV",
+      "supplier_name_raw": "AMD",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 31,
+      "buyer_name_raw": "the Company",
+      "supplier_name_raw": "ATMP JV",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 32,
+      "buyer_name_raw": "the Company",
+      "supplier_name_raw": "Sanmina",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 33,
+      "buyer_name_raw": "the Company",
+      "supplier_name_raw": "OpenAI OpCo, LLC",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 34,
+      "buyer_name_raw": "Apple",
+      "supplier_name_raw": "Amkor",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1047127/000104712726000014/amkr-20251231.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 35,
+      "buyer_name_raw": "Qualcomm",
+      "supplier_name_raw": "Amkor",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1047127/000104712726000014/amkr-20251231.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 36,
+      "buyer_name_raw": "Anthropic",
+      "supplier_name_raw": "AWS",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000004/amzn-20251231.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 37,
+      "buyer_name_raw": "Amazon",
+      "supplier_name_raw": "AWS",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000004/amzn-20251231.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 38,
+      "buyer_name_raw": "Arista",
+      "supplier_name_raw": "Jabil Inc.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000013/anet-20251231.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 39,
+      "buyer_name_raw": "Arista",
+      "supplier_name_raw": "Sanmina Corporation",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000013/anet-20251231.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 40,
+      "buyer_name_raw": "Arista",
+      "supplier_name_raw": "Foxconn Hon Hai",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000013/anet-20251231.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 41,
+      "buyer_name_raw": "Arista",
+      "supplier_name_raw": "Broadcom",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000013/anet-20251231.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 42,
+      "buyer_name_raw": "us",
+      "supplier_name_raw": "Broadcom",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000013/anet-20251231.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 43,
+      "buyer_name_raw": "Arista",
+      "supplier_name_raw": "Broadcom",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000013/anet-20251231.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 44,
+      "buyer_name_raw": "Broadcom",
+      "supplier_name_raw": "Taiwan Semiconductor Manufacturing Company Limited (\"TSMC\")",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016825000121/avgo-20251102.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 45,
       "buyer_name_raw": "Broadcom",
       "supplier_name_raw": "TSMC",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016825000121/avgo-20251102.htm",
@@ -30,7 +514,7 @@
       "closest_text_in_filing": null
     },
     {
-      "index": 2,
+      "index": 46,
       "buyer_name_raw": "Broadcom",
       "supplier_name_raw": "Advanced Semiconductor Engineering, Inc.",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016825000121/avgo-20251102.htm",
@@ -41,7 +525,7 @@
       "closest_text_in_filing": null
     },
     {
-      "index": 3,
+      "index": 47,
       "buyer_name_raw": "Broadcom",
       "supplier_name_raw": "Foxconn Technology Group",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016825000121/avgo-20251102.htm",
@@ -52,7 +536,7 @@
       "closest_text_in_filing": null
     },
     {
-      "index": 4,
+      "index": 48,
       "buyer_name_raw": "Broadcom",
       "supplier_name_raw": "Amkor Technology, Inc.",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016825000121/avgo-20251102.htm",
@@ -63,7 +547,7 @@
       "closest_text_in_filing": null
     },
     {
-      "index": 5,
+      "index": 49,
       "buyer_name_raw": "Broadcom",
       "supplier_name_raw": "Siliconware Precision Industries Co., Ltd.",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016825000121/avgo-20251102.htm",
@@ -74,7 +558,7 @@
       "closest_text_in_filing": null
     },
     {
-      "index": 6,
+      "index": 50,
       "buyer_name_raw": "Broadcom",
       "supplier_name_raw": "TSMC",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016825000121/avgo-20251102.htm",
@@ -85,7 +569,161 @@
       "closest_text_in_filing": null
     },
     {
-      "index": 7,
+      "index": 51,
+      "buyer_name_raw": "Cadence",
+      "supplier_name_raw": "NVIDIA",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/813672/000081367226000016/cdns-20251231.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 52,
+      "buyer_name_raw": "IBM",
+      "supplier_name_raw": "Celestica",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1030894/000103089426000011/cls-20251231.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 53,
+      "buyer_name_raw": "Amazon Fulfillment Services, Inc.",
+      "supplier_name_raw": "Celestica",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1030894/000103089426000011/cls-20251231.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 54,
+      "buyer_name_raw": "Meta Platforms, Inc.",
+      "supplier_name_raw": "Celestica",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1030894/000103089426000011/cls-20251231.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 55,
+      "buyer_name_raw": "Google Inc.",
+      "supplier_name_raw": "Celestica",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1030894/000103089426000011/cls-20251231.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 56,
+      "buyer_name_raw": "Ciena Corporation",
+      "supplier_name_raw": "Celestica",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1030894/000103089426000011/cls-20251231.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 57,
+      "buyer_name_raw": "Dell Technologies",
+      "supplier_name_raw": "Celestica",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1030894/000103089426000011/cls-20251231.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 58,
+      "buyer_name_raw": "Hewlett-Packard Enterprise",
+      "supplier_name_raw": "Celestica",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1030894/000103089426000011/cls-20251231.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 59,
+      "buyer_name_raw": "IBM Corporation, Inc.",
+      "supplier_name_raw": "Celestica",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1030894/000103089426000011/cls-20251231.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 60,
+      "buyer_name_raw": "Applied Materials, Inc.",
+      "supplier_name_raw": "Celestica",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1030894/000103089426000011/cls-20251231.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 61,
+      "buyer_name_raw": "LAM Research",
+      "supplier_name_raw": "Celestica",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1030894/000103089426000011/cls-20251231.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 62,
+      "buyer_name_raw": "Honeywell Inc.",
+      "supplier_name_raw": "Celestica",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1030894/000103089426000011/cls-20251231.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 63,
+      "buyer_name_raw": "NVIDIA",
+      "supplier_name_raw": "Coherent",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/820318/000082031826000020/iivi-20260630.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 64,
+      "buyer_name_raw": "Huawei",
+      "supplier_name_raw": "the Company",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/820318/000082031826000020/iivi-20260630.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 65,
       "buyer_name_raw": "Credo",
       "supplier_name_raw": "Taiwan Semiconductor Manufacturing Company Limited (TSMC)",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm",
@@ -96,9 +734,9 @@
       "closest_text_in_filing": null
     },
     {
-      "index": 8,
+      "index": 66,
       "buyer_name_raw": "Credo",
-      "supplier_name_raw": "Amkor Technology Inc.",
+      "supplier_name_raw": "Amkor Technology Inc. (Amkor)",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm",
       "status": "supported",
       "match_level": "exact",
@@ -107,9 +745,9 @@
       "closest_text_in_filing": null
     },
     {
-      "index": 9,
+      "index": 67,
       "buyer_name_raw": "Credo",
-      "supplier_name_raw": "Advanced Semiconductor Engineering, Inc.",
+      "supplier_name_raw": "Advanced Semiconductor Engineering, Inc. (ASE)",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm",
       "status": "supported",
       "match_level": "exact",
@@ -118,9 +756,9 @@
       "closest_text_in_filing": null
     },
     {
-      "index": 10,
+      "index": 68,
       "buyer_name_raw": "Credo",
-      "supplier_name_raw": "King Yuan Electronics Company",
+      "supplier_name_raw": "King Yuan Electronics Company (KYEC)",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm",
       "status": "supported",
       "match_level": "exact",
@@ -129,9 +767,9 @@
       "closest_text_in_filing": null
     },
     {
-      "index": 11,
+      "index": 69,
       "buyer_name_raw": "Credo",
-      "supplier_name_raw": "Sigurd Microelectronics Corp.",
+      "supplier_name_raw": "Sigurd Microelectronics Corp. (Sigurd)",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm",
       "status": "supported",
       "match_level": "exact",
@@ -140,9 +778,9 @@
       "closest_text_in_filing": null
     },
     {
-      "index": 12,
+      "index": 70,
       "buyer_name_raw": "Credo",
-      "supplier_name_raw": "BizLink Technology, Inc.",
+      "supplier_name_raw": "BizLink Technology, Inc. (BizLink)",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm",
       "status": "supported",
       "match_level": "exact",
@@ -151,8 +789,8 @@
       "closest_text_in_filing": null
     },
     {
-      "index": 13,
-      "buyer_name_raw": "Credo",
+      "index": 71,
+      "buyer_name_raw": "Credo Technology Group Holding Ltd",
       "supplier_name_raw": "TSMC",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm",
       "status": "supported",
@@ -162,8 +800,8 @@
       "closest_text_in_filing": null
     },
     {
-      "index": 14,
-      "buyer_name_raw": "Credo",
+      "index": 72,
+      "buyer_name_raw": "Credo Technology Group Holding Ltd",
       "supplier_name_raw": "Amkor",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm",
       "status": "supported",
@@ -173,8 +811,8 @@
       "closest_text_in_filing": null
     },
     {
-      "index": 15,
-      "buyer_name_raw": "Credo",
+      "index": 73,
+      "buyer_name_raw": "Credo Technology Group Holding Ltd",
       "supplier_name_raw": "ASE",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm",
       "status": "supported",
@@ -184,8 +822,8 @@
       "closest_text_in_filing": null
     },
     {
-      "index": 16,
-      "buyer_name_raw": "Credo",
+      "index": 74,
+      "buyer_name_raw": "Credo Technology Group Holding Ltd",
       "supplier_name_raw": "KYEC",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm",
       "status": "supported",
@@ -195,8 +833,8 @@
       "closest_text_in_filing": null
     },
     {
-      "index": 17,
-      "buyer_name_raw": "Credo",
+      "index": 75,
+      "buyer_name_raw": "Credo Technology Group Holding Ltd",
       "supplier_name_raw": "Sigurd",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm",
       "status": "supported",
@@ -206,8 +844,8 @@
       "closest_text_in_filing": null
     },
     {
-      "index": 18,
-      "buyer_name_raw": "Credo",
+      "index": 76,
+      "buyer_name_raw": "Credo Technology Group Holding Ltd",
       "supplier_name_raw": "BizLink",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm",
       "status": "supported",
@@ -217,7 +855,7 @@
       "closest_text_in_filing": null
     },
     {
-      "index": 19,
+      "index": 77,
       "buyer_name_raw": "Credo",
       "supplier_name_raw": "TSMC",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm",
@@ -228,7 +866,7 @@
       "closest_text_in_filing": null
     },
     {
-      "index": 20,
+      "index": 78,
       "buyer_name_raw": "Credo",
       "supplier_name_raw": "BizLink",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm",
@@ -239,7 +877,7 @@
       "closest_text_in_filing": null
     },
     {
-      "index": 21,
+      "index": 79,
       "buyer_name_raw": "Credo",
       "supplier_name_raw": "TSMC",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm",
@@ -250,20 +888,731 @@
       "closest_text_in_filing": null
     },
     {
-      "index": 22,
-      "buyer_name_raw": "Marvell",
-      "supplier_name_raw": "third-party foundries located in Taiwan",
+      "index": 80,
+      "buyer_name_raw": "Credo",
+      "supplier_name_raw": "TSMC",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 81,
+      "buyer_name_raw": "Credo Technology Group Holding Ltd",
+      "supplier_name_raw": "Taiwan Semiconductor Manufacturing Company Limited",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 82,
+      "buyer_name_raw": "CoreWeave",
+      "supplier_name_raw": "NVIDIA",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000104/crwv-20251231.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 83,
+      "buyer_name_raw": "CoreWeave",
+      "supplier_name_raw": "AMD",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000104/crwv-20251231.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 84,
+      "buyer_name_raw": "CoreWeave",
+      "supplier_name_raw": "Intel",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000104/crwv-20251231.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 85,
+      "buyer_name_raw": "CoreWeave",
+      "supplier_name_raw": "NVIDIA",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000104/crwv-20251231.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 86,
+      "buyer_name_raw": "CoreWeave",
+      "supplier_name_raw": "NVIDIA",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000104/crwv-20251231.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 87,
+      "buyer_name_raw": "CoreWeave",
+      "supplier_name_raw": "NVIDIA",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000104/crwv-20251231.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 88,
+      "buyer_name_raw": "NVIDIA",
+      "supplier_name_raw": "Taiwan Semiconductor Manufacturing Company",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000104/crwv-20251231.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 89,
+      "buyer_name_raw": "Microsoft",
+      "supplier_name_raw": "CoreWeave",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000104/crwv-20251231.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 90,
+      "buyer_name_raw": "OpenAI",
+      "supplier_name_raw": "CoreWeave",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000104/crwv-20251231.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 91,
+      "buyer_name_raw": "Meta Platforms, Inc.",
+      "supplier_name_raw": "CoreWeave",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000104/crwv-20251231.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 92,
+      "buyer_name_raw": "CoreWeave",
+      "supplier_name_raw": "NVIDIA",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000104/crwv-20251231.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 93,
+      "buyer_name_raw": "CoreWeave",
+      "supplier_name_raw": "OpenAI",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000104/crwv-20251231.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 94,
+      "buyer_name_raw": "CoreWeave",
+      "supplier_name_raw": "NVIDIA Corporation",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000104/crwv-20251231.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 95,
+      "buyer_name_raw": "our platform",
+      "supplier_name_raw": "Taiwan",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000104/crwv-20251231.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 96,
+      "buyer_name_raw": "MagAI Ventures",
+      "supplier_name_raw": "the Company",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000104/crwv-20251231.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 97,
+      "buyer_name_raw": "Dell Technologies",
+      "supplier_name_raw": "VMware",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1571996/000157199626000008/dell-20260130.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 98,
+      "buyer_name_raw": "Dell Technologies",
+      "supplier_name_raw": "VMware",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1571996/000157199626000008/dell-20260130.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 99,
+      "buyer_name_raw": "VMware",
+      "supplier_name_raw": "Dell Technologies",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1571996/000157199626000008/dell-20260130.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 100,
+      "buyer_name_raw": "Entegris",
+      "supplier_name_raw": "MacDermid Enthone Inc.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1101302/000110130226000012/entg-20251231.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 101,
+      "buyer_name_raw": "Entegris",
+      "supplier_name_raw": "Taiwan Semiconductor Manufacturing Company (TSMC)",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1101302/000110130226000012/entg-20251231.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 102,
+      "buyer_name_raw": "the Company",
+      "supplier_name_raw": "Infineum",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1101302/000110130226000012/entg-20251231.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 103,
+      "buyer_name_raw": "Federal Express",
+      "supplier_name_raw": "various suppliers",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048911/000104891126000105/fdx-20260531.htm",
+      "status": "invalid",
+      "match_level": null,
+      "ratio": 0.0,
+      "errors": [
+        "supplier_name_raw 'various suppliers' describes a kind of company, does not name one"
+      ],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 104,
+      "buyer_name_raw": "FedEx Freight Holding",
+      "supplier_name_raw": "FedEx",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048911/000104891126000105/fdx-20260531.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 105,
+      "buyer_name_raw": "FedEx",
+      "supplier_name_raw": "PACCAR Inc.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048911/000104891126000105/fdx-20260531.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 106,
+      "buyer_name_raw": "FedEx",
+      "supplier_name_raw": "Aurora Innovation, Inc.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048911/000104891126000105/fdx-20260531.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 107,
+      "buyer_name_raw": "FedEx",
+      "supplier_name_raw": "Mercedes-Benz",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048911/000104891126000105/fdx-20260531.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 108,
+      "buyer_name_raw": "FedEx",
+      "supplier_name_raw": "Harbinger Motors",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048911/000104891126000105/fdx-20260531.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 109,
+      "buyer_name_raw": "FedEx",
+      "supplier_name_raw": "Returnity",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048911/000104891126000105/fdx-20260531.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 110,
+      "buyer_name_raw": "Boeing",
+      "supplier_name_raw": "Boeing",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1048911/000104891126000105/fdx-20260531.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 111,
+      "buyer_name_raw": "Ford",
+      "supplier_name_raw": "Flex",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/866374/000086637426000012/flex-20260331.htm",
+      "status": "unsupported",
+      "match_level": "fuzzy",
+      "ratio": 0.9357,
+      "errors": [],
+      "closest_text_in_filing": "recognition from our customers including being named a top performing supplier at ford s annual supplier awards ceremony recognizing our excellence in sustainable manufacturing and our leadership in developing scalable solutions for automotive product level emissions transparency"
+    },
+    {
+      "index": 112,
+      "buyer_name_raw": "Amazon.com, Inc.",
+      "supplier_name_raw": "Flex Ltd.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/866374/000086637426000012/flex-20260331.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 113,
+      "buyer_name_raw": "Husqvarna",
+      "supplier_name_raw": "Flex",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/866374/000086637426000012/flex-20260331.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 114,
+      "buyer_name_raw": "Fabrinet",
+      "supplier_name_raw": "Fabrinet",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1408710/000140871026000028/fn-20260626.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 115,
+      "buyer_name_raw": "Cisco Systems, Inc.",
+      "supplier_name_raw": "Fabrinet",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1408710/000140871026000028/fn-20260626.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 116,
+      "buyer_name_raw": "NVIDIA Corporation",
+      "supplier_name_raw": "Fabrinet",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1408710/000140871026000028/fn-20260626.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 117,
+      "buyer_name_raw": "Nokia Corporation",
+      "supplier_name_raw": "Fabrinet",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1408710/000140871026000028/fn-20260626.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 118,
+      "buyer_name_raw": "Amazon.com, Inc.",
+      "supplier_name_raw": "Fabrinet",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1408710/000140871026000028/fn-20260626.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 119,
+      "buyer_name_raw": "NVIDIA Corporation",
+      "supplier_name_raw": "Fabrinet",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1408710/000140871026000028/fn-20260626.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 120,
+      "buyer_name_raw": "Cisco Systems, Inc.",
+      "supplier_name_raw": "Fabrinet",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1408710/000140871026000028/fn-20260626.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 121,
+      "buyer_name_raw": "Fabrinet",
+      "supplier_name_raw": "our subsidiary in Thailand",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1408710/000140871026000028/fn-20260626.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 122,
+      "buyer_name_raw": "Amazon.com, Inc.",
+      "supplier_name_raw": "Fabrinet",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1408710/000140871026000028/fn-20260626.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 123,
+      "buyer_name_raw": "Cisco Systems, Inc.",
+      "supplier_name_raw": "Fabrinet",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1408710/000140871026000028/fn-20260626.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 124,
+      "buyer_name_raw": "NVIDIA Corporation",
+      "supplier_name_raw": "Fabrinet",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1408710/000140871026000028/fn-20260626.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 125,
+      "buyer_name_raw": "Nokia Corporation",
+      "supplier_name_raw": "Fabrinet",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1408710/000140871026000028/fn-20260626.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 126,
+      "buyer_name_raw": "Amazon.com, Inc.",
+      "supplier_name_raw": "Fabrinet",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1408710/000140871026000028/fn-20260626.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 127,
+      "buyer_name_raw": "GE Vernova",
+      "supplier_name_raw": "GE",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000015/gev-20251231.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 128,
+      "buyer_name_raw": "GE Vernova",
+      "supplier_name_raw": "Hitachi, Ltd.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000015/gev-20251231.htm",
+      "status": "supported",
+      "match_level": "normalized",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 129,
+      "buyer_name_raw": "GE Vernova",
+      "supplier_name_raw": "Aero Alliance",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000015/gev-20251231.htm",
+      "status": "supported",
+      "match_level": "normalized",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 130,
+      "buyer_name_raw": "GE Vernova",
+      "supplier_name_raw": "Prolec GE",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000015/gev-20251231.htm",
+      "status": "supported",
+      "match_level": "normalized",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 131,
+      "buyer_name_raw": "Amazon.com NV Investment Holdings LLC",
+      "supplier_name_raw": "Jabil Inc",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/898293/000162828025045293/jbl-20250831.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 132,
+      "buyer_name_raw": "Amazon",
+      "supplier_name_raw": "Jabil",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/898293/000162828025045293/jbl-20250831.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 133,
+      "buyer_name_raw": "Taiwan Semiconductor Manufacturing Company Limited",
+      "supplier_name_raw": "KLA",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/319201/000031920126000027/klac-20260630.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 134,
+      "buyer_name_raw": "Huawei",
+      "supplier_name_raw": "Lumentum",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1633978/000162828026057358/lite-20260627.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 135,
+      "buyer_name_raw": "Micron Technology, Inc.",
+      "supplier_name_raw": "Lam Research",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/707549/000070754926000037/lrcx-20260628.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 136,
+      "buyer_name_raw": "Samsung Electronics Company, Ltd.",
+      "supplier_name_raw": "Lam Research",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/707549/000070754926000037/lrcx-20260628.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 137,
+      "buyer_name_raw": "SK hynix Inc.",
+      "supplier_name_raw": "Lam Research",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/707549/000070754926000037/lrcx-20260628.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 138,
+      "buyer_name_raw": "Taiwan Semiconductor Manufacturing Company",
+      "supplier_name_raw": "Lam Research",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/707549/000070754926000037/lrcx-20260628.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 139,
+      "buyer_name_raw": "Customer A",
+      "supplier_name_raw": "Marvell",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000011/mrvl-20260131.htm",
       "status": "invalid",
       "match_level": null,
       "ratio": 0.0,
       "errors": [
-        "supplier_name_raw 'third-party foundries located in Taiwan' describes a kind of company, does not name one"
+        "source_sentence shorter than 25 characters"
       ],
       "closest_text_in_filing": null
     },
     {
-      "index": 23,
+      "index": 140,
+      "buyer_name_raw": "Distributor A",
+      "supplier_name_raw": "Marvell",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000011/mrvl-20260131.htm",
+      "status": "invalid",
+      "match_level": null,
+      "ratio": 0.0,
+      "errors": [
+        "buyer_name_raw 'Distributor A' describes a kind of company, does not name one"
+      ],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 141,
+      "buyer_name_raw": "Microsoft",
+      "supplier_name_raw": "OpenAI",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 142,
+      "buyer_name_raw": "OpenAI",
+      "supplier_name_raw": "Microsoft",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 143,
+      "buyer_name_raw": "Microsoft",
+      "supplier_name_raw": "OpenAI",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 144,
+      "buyer_name_raw": "",
+      "supplier_name_raw": "",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm",
+      "status": "invalid",
+      "match_level": null,
+      "ratio": 0.0,
+      "errors": [
+        "missing or empty buyer_name_raw",
+        "missing or empty supplier_name_raw"
+      ],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 145,
       "buyer_name_raw": "NVIDIA",
       "supplier_name_raw": "Taiwan Semiconductor Manufacturing Company Limited",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
@@ -274,7 +1623,7 @@
       "closest_text_in_filing": null
     },
     {
-      "index": 24,
+      "index": 146,
       "buyer_name_raw": "NVIDIA",
       "supplier_name_raw": "Samsung Electronics Co., Ltd.",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
@@ -285,7 +1634,7 @@
       "closest_text_in_filing": null
     },
     {
-      "index": 25,
+      "index": 147,
       "buyer_name_raw": "NVIDIA",
       "supplier_name_raw": "SK Hynix Inc.",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
@@ -296,7 +1645,7 @@
       "closest_text_in_filing": null
     },
     {
-      "index": 26,
+      "index": 148,
       "buyer_name_raw": "NVIDIA",
       "supplier_name_raw": "Micron Technology, Inc.",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
@@ -307,7 +1656,7 @@
       "closest_text_in_filing": null
     },
     {
-      "index": 27,
+      "index": 149,
       "buyer_name_raw": "NVIDIA",
       "supplier_name_raw": "Samsung",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
@@ -318,7 +1667,7 @@
       "closest_text_in_filing": null
     },
     {
-      "index": 28,
+      "index": 150,
       "buyer_name_raw": "NVIDIA",
       "supplier_name_raw": "Hon Hai Precision Industry Co., Ltd.",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
@@ -329,7 +1678,7 @@
       "closest_text_in_filing": null
     },
     {
-      "index": 29,
+      "index": 151,
       "buyer_name_raw": "NVIDIA",
       "supplier_name_raw": "Wistron Corporation",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
@@ -340,7 +1689,7 @@
       "closest_text_in_filing": null
     },
     {
-      "index": 30,
+      "index": 152,
       "buyer_name_raw": "NVIDIA",
       "supplier_name_raw": "Fabrinet",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
@@ -351,7 +1700,7 @@
       "closest_text_in_filing": null
     },
     {
-      "index": 31,
+      "index": 153,
       "buyer_name_raw": "NVIDIA",
       "supplier_name_raw": "Groq, Inc.",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
@@ -362,10 +1711,445 @@
       "closest_text_in_filing": null
     },
     {
-      "index": 32,
+      "index": 154,
       "buyer_name_raw": "NVIDIA",
       "supplier_name_raw": "Groq, Inc.",
       "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 155,
+      "buyer_name_raw": "LUMA Energy, LLC",
+      "supplier_name_raw": "Quanta",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1050915/000105091526000006/pwr-20251231.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 156,
+      "buyer_name_raw": "Supermicro",
+      "supplier_name_raw": "Ablecom Technology, Inc.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1375365/000137536525000027/smci-20250630.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 157,
+      "buyer_name_raw": "Supermicro",
+      "supplier_name_raw": "Ablecom",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1375365/000137536525000027/smci-20250630.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 158,
+      "buyer_name_raw": "Supermicro",
+      "supplier_name_raw": "Compuware Technology, Inc.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1375365/000137536525000027/smci-20250630.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 159,
+      "buyer_name_raw": "we",
+      "supplier_name_raw": "NVIDIA",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1375365/000137536525000027/smci-20250630.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 160,
+      "buyer_name_raw": "our",
+      "supplier_name_raw": "Ablecom",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1375365/000137536525000027/smci-20250630.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 161,
+      "buyer_name_raw": "our",
+      "supplier_name_raw": "Compuware",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1375365/000137536525000027/smci-20250630.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 162,
+      "buyer_name_raw": "we",
+      "supplier_name_raw": "Ablecom",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1375365/000137536525000027/smci-20250630.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 163,
+      "buyer_name_raw": "we",
+      "supplier_name_raw": "Compuware",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1375365/000137536525000027/smci-20250630.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 164,
+      "buyer_name_raw": "we",
+      "supplier_name_raw": "Compuware",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1375365/000137536525000027/smci-20250630.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 165,
+      "buyer_name_raw": "we",
+      "supplier_name_raw": "Ablecom and Compuware",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1375365/000137536525000027/smci-20250630.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 166,
+      "buyer_name_raw": "Compuware",
+      "supplier_name_raw": "we",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1375365/000137536525000027/smci-20250630.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 167,
+      "buyer_name_raw": "us",
+      "supplier_name_raw": "Ablecom",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1375365/000137536525000027/smci-20250630.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 168,
+      "buyer_name_raw": "us",
+      "supplier_name_raw": "Ablecom",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1375365/000137536525000027/smci-20250630.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 169,
+      "buyer_name_raw": "us",
+      "supplier_name_raw": "Compuware",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1375365/000137536525000027/smci-20250630.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 170,
+      "buyer_name_raw": "us",
+      "supplier_name_raw": "two suppliers",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1375365/000137536525000027/smci-20250630.htm",
+      "status": "invalid",
+      "match_level": null,
+      "ratio": 0.0,
+      "errors": [
+        "supplier_name_raw 'two suppliers' describes a kind of company, does not name one"
+      ],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 171,
+      "buyer_name_raw": "us",
+      "supplier_name_raw": "two suppliers",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1375365/000137536525000027/smci-20250630.htm",
+      "status": "invalid",
+      "match_level": null,
+      "ratio": 0.0,
+      "errors": [
+        "supplier_name_raw 'two suppliers' describes a kind of company, does not name one"
+      ],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 172,
+      "buyer_name_raw": "SMCI",
+      "supplier_name_raw": "NVIDIA",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1375365/000137536525000027/smci-20250630.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 173,
+      "buyer_name_raw": "Super Micro Computer, Inc.",
+      "supplier_name_raw": "Ablecom",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1375365/000137536525000027/smci-20250630.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 174,
+      "buyer_name_raw": "Super Micro Computer, Inc.",
+      "supplier_name_raw": "Compuware",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1375365/000137536525000027/smci-20250630.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 175,
+      "buyer_name_raw": "us",
+      "supplier_name_raw": "Ablecom",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1375365/000137536525000027/smci-20250630.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 176,
+      "buyer_name_raw": "us",
+      "supplier_name_raw": "Compuware",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1375365/000137536525000027/smci-20250630.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 177,
+      "buyer_name_raw": "Compuware",
+      "supplier_name_raw": "us",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1375365/000137536525000027/smci-20250630.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 178,
+      "buyer_name_raw": "us",
+      "supplier_name_raw": "Ablecom",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1375365/000137536525000027/smci-20250630.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 179,
+      "buyer_name_raw": "us",
+      "supplier_name_raw": "Ablecom",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1375365/000137536525000027/smci-20250630.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 180,
+      "buyer_name_raw": "Compuware",
+      "supplier_name_raw": "us",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1375365/000137536525000027/smci-20250630.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 181,
+      "buyer_name_raw": "us",
+      "supplier_name_raw": "Compuware",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1375365/000137536525000027/smci-20250630.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 182,
+      "buyer_name_raw": "us",
+      "supplier_name_raw": "Compuware",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1375365/000137536525000027/smci-20250630.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 183,
+      "buyer_name_raw": "us",
+      "supplier_name_raw": "Compuware",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1375365/000137536525000027/smci-20250630.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 184,
+      "buyer_name_raw": "Leadtek",
+      "supplier_name_raw": "us",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1375365/000137536525000027/smci-20250630.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 185,
+      "buyer_name_raw": "Leadtek",
+      "supplier_name_raw": "us",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1375365/000137536525000027/smci-20250630.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 186,
+      "buyer_name_raw": "us",
+      "supplier_name_raw": "Leadtek",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1375365/000137536525000027/smci-20250630.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 187,
+      "buyer_name_raw": "Corporate Venture",
+      "supplier_name_raw": "us",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1375365/000137536525000027/smci-20250630.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 188,
+      "buyer_name_raw": "TSMC",
+      "supplier_name_raw": "Xintec",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1046179/000162828026025362/tsm-20251231.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 189,
+      "buyer_name_raw": "UPS",
+      "supplier_name_raw": "United States Postal Service",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1090727/000162828026008432/ups-20251231.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 190,
+      "buyer_name_raw": "Amazon.com, Inc. and its affiliates",
+      "supplier_name_raw": "UPS",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1090727/000162828026008432/ups-20251231.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 191,
+      "buyer_name_raw": "Amazon.com, Inc.",
+      "supplier_name_raw": "UPS",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1090727/000162828026008432/ups-20251231.htm",
+      "status": "supported",
+      "match_level": "exact",
+      "ratio": 1.0,
+      "errors": [],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 192,
+      "buyer_name_raw": "UPS",
+      "supplier_name_raw": "jet fuel suppliers in Europe",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1090727/000162828026008432/ups-20251231.htm",
+      "status": "invalid",
+      "match_level": null,
+      "ratio": 0.0,
+      "errors": [
+        "supplier_name_raw 'jet fuel suppliers in Europe' describes a kind of company, does not name one"
+      ],
+      "closest_text_in_filing": null
+    },
+    {
+      "index": 193,
+      "buyer_name_raw": "UPS",
+      "supplier_name_raw": "United States Postal Service",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1090727/000162828026008432/ups-20251231.htm",
       "status": "supported",
       "match_level": "exact",
       "ratio": 1.0,
