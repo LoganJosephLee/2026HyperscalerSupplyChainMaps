@@ -128,6 +128,34 @@ FUNCTION_RULES: tuple[tuple[str, str, str], ...] = (
     ),
 )
 
+# Where each job sits in the chain, from raw input to the company that runs the
+# data centre. This is what lets the map be drawn as a flow rather than a cloud:
+# a reader who knows nothing can follow it left to right and see that sand
+# becomes wafers becomes chips becomes servers becomes a cloud.
+#
+# It is an ordering of *jobs*, not a claim about any company. Several jobs
+# genuinely sit at the same depth — memory and packaging both feed the board —
+# and share a tier.
+FUNCTION_TIERS: dict[str, int] = {
+    "materials": 0,
+    "equipment": 0,
+    "fabrication": 1,
+    "packaging": 2,
+    "memory": 2,
+    "silicon": 3,
+    "interconnect": 4,
+    "systems": 5,
+    "construction": 6,
+    "power": 6,
+    "cooling": 6,
+    "logistics": 6,
+    "datacenter": 7,
+    "carrier": 7,
+    "software": 7,
+    "services": 7,
+}
+UNKNOWN_TIER = 8   # nothing said what they do; the buyers mostly land here
+
 # Plain English, for a reader who does not already know how chips get made. The
 # map is useless to them if every category is a term of art, and they are most of
 # the audience: someone who knows what a foundry is did not need the map.

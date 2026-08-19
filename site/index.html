@@ -20,6 +20,20 @@
   </nav>
 </header>
 
+<div class="toolbar">
+  <div class="view-block">
+    <span class="toolbar-label">View</span>
+    <div id="view-switch" class="view-switch" role="group" aria-label="Map arrangement"></div>
+    <select id="focus-picker" class="focus-picker" aria-label="Company to centre on" hidden></select>
+  </div>
+  <div class="search-block">
+    <input id="search" type="search" placeholder="Find a company…" autocomplete="off"
+           spellcheck="false" aria-label="Find a company">
+    <div id="search-results" class="search-results" hidden></div>
+  </div>
+</div>
+<p id="view-note" class="view-note"></p>
+
 <main>
   <div id="graph">
     <div id="empty-state">

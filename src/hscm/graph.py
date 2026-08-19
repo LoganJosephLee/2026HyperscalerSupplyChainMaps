@@ -29,6 +29,8 @@ from . import config
 from .functions import (
     FUNCTION_DESCRIPTIONS,
     FUNCTION_LABELS,
+    FUNCTION_TIERS,
+    UNKNOWN_TIER,
     UNKNOWN,
     UNKNOWN_DESCRIPTION,
     UNKNOWN_LABEL,
@@ -244,6 +246,7 @@ def export(graph: Graph, records: list[dict], directory: Path | None = None) -> 
             ),
             "excluded_companies": graph.excluded,
             "function_labels": {**FUNCTION_LABELS, UNKNOWN: UNKNOWN_LABEL},
+            "function_tiers": {**FUNCTION_TIERS, UNKNOWN: UNKNOWN_TIER},
             "function_descriptions": {
                 **FUNCTION_DESCRIPTIONS,
                 UNKNOWN: UNKNOWN_DESCRIPTION,
