@@ -59,6 +59,16 @@ _ROLE_NOUN = re.compile(
     r"fabricator|assembler|distributor|reseller)s?\b",
     re.IGNORECASE,
 )
+# Filings anonymise counterparties as "Customer A", "Supplier B", "Distributor A"
+# when they must disclose a concentration without naming who it is with. That is
+# a real disclosure and no edge: the letter is there precisely because the name
+# is being withheld. "Distributor A" was already caught by the role nouns above;
+# "Customer A" was not, because no company is called a supplier but plenty are
+# called a customer.
+_ANONYMISED_LABEL = re.compile(
+    r"^(?:customer|client|counterparty|partner|reseller|dealer)\s+[A-Z0-9]{1,2}$",
+    re.IGNORECASE,
+)
 _VAGUE_OPENING = re.compile(
     r"^(?:a\s+|an\s+|the\s+|our\s+|its\s+|their\s+)?"
     r"(?:third[\s-]?part(?:y|ies)|certain|various|several|multiple|numerous|"
@@ -72,7 +82,11 @@ def names_a_company(value: str) -> bool:
     name = (value or "").strip()
     if not name:
         return False
-    return not (_ROLE_NOUN.search(name) or _VAGUE_OPENING.match(name))
+    return not (
+        _ROLE_NOUN.search(name)
+        or _VAGUE_OPENING.match(name)
+        or _ANONYMISED_LABEL.match(name)
+    )
 
 # Every verb here takes the supplier as its subject, so an edge always reads
 # supplier -> buyer in the same direction as the verb. "purchases_from" used to
