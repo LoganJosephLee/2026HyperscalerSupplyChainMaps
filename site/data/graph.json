@@ -1,14 +1,928 @@
 {
   "meta": {
-    "data_as_of": null,
-    "node_count": 0,
-    "edge_count": 0,
-    "evidence_count": 0,
+    "data_as_of": "2026-06-15",
+    "node_count": 17,
+    "edge_count": 19,
+    "evidence_count": 32,
     "unresolved_record_count": 0,
+    "non_filer_node_count": 10,
     "excluded_companies": {},
-    "license": "Source filings are US government works in the public domain.",
-    "note": "Empty because no filing has been extracted and verified yet. Regenerate with `make refresh`."
+    "function_labels": {
+      "fabrication": "Wafer fabrication",
+      "packaging": "Assembly, test & packaging",
+      "memory": "Memory",
+      "systems": "Systems & contract manufacturing",
+      "interconnect": "Interconnect, optics & networking",
+      "silicon": "Chips, IP & design",
+      "unstated": "Not stated in any filing"
+    },
+    "license": "Source filings are US government works in the public domain."
   },
-  "nodes": [],
-  "edges": []
+  "nodes": [
+    {
+      "node_key": "cik-0001047127",
+      "canonical_name": "AMKOR TECHNOLOGY, INC.",
+      "cik": 1047127,
+      "ticker": "AMKR",
+      "is_seed": false,
+      "has_sec_filings": true,
+      "lei": null,
+      "country": null,
+      "sector": null,
+      "function": "packaging",
+      "function_phrases": [
+        "assembly and test operations",
+        "packaging of IC products",
+        "assembly and test operations for IC products"
+      ],
+      "id": "cik-0001047127"
+    },
+    {
+      "node_key": "name-advanced-semiconductor-engineering",
+      "canonical_name": "Advanced Semiconductor Engineering, Inc.",
+      "cik": null,
+      "ticker": null,
+      "is_seed": false,
+      "has_sec_filings": false,
+      "lei": null,
+      "country": null,
+      "sector": null,
+      "function": "packaging",
+      "function_phrases": [
+        "assembly and test operations",
+        "packaging of IC products",
+        "assembly and test operations for IC products"
+      ],
+      "id": "name-advanced-semiconductor-engineering"
+    },
+    {
+      "node_key": "name-bizlink-technology",
+      "canonical_name": "BizLink Technology, Inc.",
+      "cik": null,
+      "ticker": null,
+      "is_seed": false,
+      "has_sec_filings": false,
+      "lei": null,
+      "country": null,
+      "sector": null,
+      "function": "interconnect",
+      "function_phrases": [
+        "manufacturing of AEC products",
+        "assembly and test operations for AEC products",
+        "AEC products"
+      ],
+      "id": "name-bizlink-technology"
+    },
+    {
+      "node_key": "cik-0001730168",
+      "canonical_name": "Broadcom Inc.",
+      "cik": 1730168,
+      "ticker": "AVGO",
+      "is_seed": false,
+      "has_sec_filings": true,
+      "lei": null,
+      "country": null,
+      "sector": null,
+      "function": "unstated",
+      "function_phrases": [],
+      "id": "cik-0001730168"
+    },
+    {
+      "node_key": "cik-0001807794",
+      "canonical_name": "Credo Technology Group Holding Ltd",
+      "cik": 1807794,
+      "ticker": "CRDO",
+      "is_seed": false,
+      "has_sec_filings": true,
+      "lei": null,
+      "country": null,
+      "sector": null,
+      "function": "unstated",
+      "function_phrases": [],
+      "id": "cik-0001807794"
+    },
+    {
+      "node_key": "cik-0001408710",
+      "canonical_name": "Fabrinet",
+      "cik": 1408710,
+      "ticker": "FN",
+      "is_seed": false,
+      "has_sec_filings": true,
+      "lei": null,
+      "country": null,
+      "sector": null,
+      "function": "packaging",
+      "function_phrases": [
+        "assembly, testing and packaging"
+      ],
+      "id": "cik-0001408710"
+    },
+    {
+      "node_key": "name-groq",
+      "canonical_name": "Groq, Inc.",
+      "cik": null,
+      "ticker": null,
+      "is_seed": false,
+      "has_sec_filings": false,
+      "lei": null,
+      "country": null,
+      "sector": null,
+      "function": "silicon",
+      "function_phrases": [
+        "intellectual property/technology license",
+        "language processing unit technology"
+      ],
+      "id": "name-groq"
+    },
+    {
+      "node_key": "name-hon-hai-precision-industry",
+      "canonical_name": "Hon Hai Precision Industry Co., Ltd.",
+      "cik": null,
+      "ticker": null,
+      "is_seed": false,
+      "has_sec_filings": false,
+      "lei": null,
+      "country": null,
+      "sector": null,
+      "function": "packaging",
+      "function_phrases": [
+        "assembly and test operations",
+        "assembly, testing and packaging"
+      ],
+      "id": "name-hon-hai-precision-industry"
+    },
+    {
+      "node_key": "name-king-yuan-electronics",
+      "canonical_name": "King Yuan Electronics Company",
+      "cik": null,
+      "ticker": null,
+      "is_seed": false,
+      "has_sec_filings": false,
+      "lei": null,
+      "country": null,
+      "sector": null,
+      "function": "packaging",
+      "function_phrases": [
+        "testing of IC products",
+        "assembly and test operations for IC products"
+      ],
+      "id": "name-king-yuan-electronics"
+    },
+    {
+      "node_key": "cik-0000723125",
+      "canonical_name": "MICRON TECHNOLOGY INC",
+      "cik": 723125,
+      "ticker": "MU",
+      "is_seed": false,
+      "has_sec_filings": true,
+      "lei": null,
+      "country": null,
+      "sector": null,
+      "function": "memory",
+      "function_phrases": [
+        "memory"
+      ],
+      "id": "cik-0000723125"
+    },
+    {
+      "node_key": "cik-0001045810",
+      "canonical_name": "NVIDIA CORP",
+      "cik": 1045810,
+      "ticker": "NVDA",
+      "is_seed": false,
+      "has_sec_filings": true,
+      "lei": null,
+      "country": null,
+      "sector": null,
+      "function": "unstated",
+      "function_phrases": [],
+      "id": "cik-0001045810"
+    },
+    {
+      "node_key": "name-sk-hynix",
+      "canonical_name": "SK Hynix",
+      "cik": null,
+      "ticker": null,
+      "is_seed": false,
+      "has_sec_filings": false,
+      "lei": null,
+      "country": null,
+      "sector": null,
+      "function": "memory",
+      "function_phrases": [
+        "memory"
+      ],
+      "id": "name-sk-hynix"
+    },
+    {
+      "node_key": "name-samsung-electronics",
+      "canonical_name": "Samsung Electronics",
+      "cik": null,
+      "ticker": null,
+      "is_seed": false,
+      "has_sec_filings": false,
+      "lei": null,
+      "country": null,
+      "sector": null,
+      "function": "fabrication",
+      "function_phrases": [
+        "semiconductor wafers",
+        "memory"
+      ],
+      "id": "name-samsung-electronics"
+    },
+    {
+      "node_key": "name-sigurd-microelectronics",
+      "canonical_name": "Sigurd Microelectronics Corp.",
+      "cik": null,
+      "ticker": null,
+      "is_seed": false,
+      "has_sec_filings": false,
+      "lei": null,
+      "country": null,
+      "sector": null,
+      "function": "packaging",
+      "function_phrases": [
+        "testing of IC products",
+        "assembly and test operations for IC products"
+      ],
+      "id": "name-sigurd-microelectronics"
+    },
+    {
+      "node_key": "name-siliconware-precision-industries",
+      "canonical_name": "Siliconware Precision Industries Co., Ltd.",
+      "cik": null,
+      "ticker": null,
+      "is_seed": false,
+      "has_sec_filings": false,
+      "lei": null,
+      "country": null,
+      "sector": null,
+      "function": "packaging",
+      "function_phrases": [
+        "assembly and test operations"
+      ],
+      "id": "name-siliconware-precision-industries"
+    },
+    {
+      "node_key": "cik-0001046179",
+      "canonical_name": "TAIWAN SEMICONDUCTOR MANUFACTURING CO LTD",
+      "cik": 1046179,
+      "ticker": "TSM",
+      "is_seed": false,
+      "has_sec_filings": true,
+      "lei": null,
+      "country": null,
+      "sector": null,
+      "function": "fabrication",
+      "function_phrases": [
+        "front-end wafer manufacturing",
+        "assembly and test operations",
+        "wafers",
+        "semiconductor wafer production",
+        "IC manufacturing",
+        "wafer foundry/fabrication capacity",
+        "semiconductor foundry services",
+        "semiconductor wafers"
+      ],
+      "id": "cik-0001046179"
+    },
+    {
+      "node_key": "name-wistron",
+      "canonical_name": "Wistron Corporation",
+      "cik": null,
+      "ticker": null,
+      "is_seed": false,
+      "has_sec_filings": false,
+      "lei": null,
+      "country": null,
+      "sector": null,
+      "function": "packaging",
+      "function_phrases": [
+        "assembly, testing and packaging"
+      ],
+      "id": "name-wistron"
+    }
+  ],
+  "edges": [
+    {
+      "id": "cik-0000723125--cik-0001045810",
+      "source": "cik-0000723125",
+      "target": "cik-0001045810",
+      "quantified_pct": null,
+      "relationship_types": [
+        "supplies"
+      ],
+      "direction_stated": true,
+      "confidence": "high",
+      "latest_filing_date": "2026-02-25",
+      "evidence": [
+        {
+          "source_sentence": "We purchase memory from SK Hynix Inc., Micron Technology, Inc., and Samsung.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-02-25",
+          "product_or_service": "memory",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        }
+      ]
+    },
+    {
+      "id": "cik-0001046179--cik-0001045810",
+      "source": "cik-0001046179",
+      "target": "cik-0001045810",
+      "quantified_pct": null,
+      "relationship_types": [
+        "supplies"
+      ],
+      "direction_stated": true,
+      "confidence": "high",
+      "latest_filing_date": "2026-02-25",
+      "evidence": [
+        {
+          "source_sentence": "We utilize foundries, such as Taiwan Semiconductor Manufacturing Company Limited, or TSMC, and Samsung Electronics Co., Ltd., or Samsung, to produce our semiconductor wafers.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-02-25",
+          "product_or_service": "semiconductor wafers",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        }
+      ]
+    },
+    {
+      "id": "cik-0001046179--cik-0001730168",
+      "source": "cik-0001046179",
+      "target": "cik-0001730168",
+      "quantified_pct": 95,
+      "relationship_types": [
+        "supplies"
+      ],
+      "direction_stated": true,
+      "confidence": "high",
+      "latest_filing_date": "2025-12-18",
+      "evidence": [
+        {
+          "source_sentence": "The majority of our front-end wafer manufacturing operations is outsourced to external foundries, including Taiwan Semiconductor Manufacturing Company Limited (\"TSMC\").",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016825000121/avgo-20251102.htm",
+          "form_type": "10-K",
+          "filing_date": "2025-12-18",
+          "product_or_service": "front-end wafer manufacturing",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        },
+        {
+          "source_sentence": "We use third-party CMs for a significant majority of our assembly and test operations, including TSMC, Advanced Semiconductor Engineering, Inc., Foxconn Technology Group, Amkor Technology, Inc. and Siliconware Precision Industries Co., Ltd.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016825000121/avgo-20251102.htm",
+          "form_type": "10-K",
+          "filing_date": "2025-12-18",
+          "product_or_service": "assembly and test operations",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        },
+        {
+          "source_sentence": "During fiscal year 2025, approximately 95% of the wafers manufactured by our CMs were produced by TSMC.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016825000121/avgo-20251102.htm",
+          "form_type": "10-K",
+          "filing_date": "2025-12-18",
+          "product_or_service": "wafers",
+          "quantified_pct": 95,
+          "quantified_basis": "units",
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        }
+      ]
+    },
+    {
+      "id": "cik-0001046179--cik-0001807794",
+      "source": "cik-0001046179",
+      "target": "cik-0001807794",
+      "quantified_pct": null,
+      "relationship_types": [
+        "supplies"
+      ],
+      "direction_stated": true,
+      "confidence": "high",
+      "latest_filing_date": "2026-06-15",
+      "evidence": [
+        {
+          "source_sentence": "In fiscal year 2026, we exclusively used Taiwan Semiconductor Manufacturing Company Limited (TSMC) for semiconductor wafer production.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-06-15",
+          "product_or_service": "semiconductor wafer production",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        },
+        {
+          "source_sentence": "We currently outsource all of our IC manufacturing to\n\nTSMC, with the assembly and testing processes outsourced to other subcontractors primarily in Asia.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-06-15",
+          "product_or_service": "IC manufacturing",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        },
+        {
+          "source_sentence": "Our IC foundry vendor, TSMC, other manufacturers with which we contract and any foundries we may employ in the future may experience manufacturing defects and reduced manufacturing yields from time to time.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-06-15",
+          "product_or_service": "wafer foundry/fabrication capacity",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        },
+        {
+          "source_sentence": "For example, we rely on TSMC in Taiwan as the foundry for all of our semiconductor products.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-06-15",
+          "product_or_service": "semiconductor foundry services",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        }
+      ]
+    },
+    {
+      "id": "cik-0001047127--cik-0001730168",
+      "source": "cik-0001047127",
+      "target": "cik-0001730168",
+      "quantified_pct": null,
+      "relationship_types": [
+        "supplies"
+      ],
+      "direction_stated": true,
+      "confidence": "high",
+      "latest_filing_date": "2025-12-18",
+      "evidence": [
+        {
+          "source_sentence": "We use third-party CMs for a significant majority of our assembly and test operations, including TSMC, Advanced Semiconductor Engineering, Inc., Foxconn Technology Group, Amkor Technology, Inc. and Siliconware Precision Industries Co., Ltd.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016825000121/avgo-20251102.htm",
+          "form_type": "10-K",
+          "filing_date": "2025-12-18",
+          "product_or_service": "assembly and test operations",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        }
+      ]
+    },
+    {
+      "id": "cik-0001047127--cik-0001807794",
+      "source": "cik-0001047127",
+      "target": "cik-0001807794",
+      "quantified_pct": null,
+      "relationship_types": [
+        "supplies"
+      ],
+      "direction_stated": true,
+      "confidence": "high",
+      "latest_filing_date": "2026-06-15",
+      "evidence": [
+        {
+          "source_sentence": "Upon the completion of processing at the foundry, we use third-party contractors for packaging, assembly and testing, including Amkor Technology Inc. (Amkor) and Advanced Semiconductor Engineering, Inc. (ASE) for packaging our IC products, King Yuan Electronics Company (KYEC) and Sigurd Microelectronics Corp. (Sigurd) for testing our IC products and BizLink Technology, Inc. (BizLink) for manufacturing our AEC products.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-06-15",
+          "product_or_service": "packaging of IC products",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        },
+        {
+          "source_sentence": "We also use third-party contract manufacturers for a significant majority of our assembly and test operations, including Amkor, ASE, KYEC and Sigurd for our IC products, and BizLink for our AEC products.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-06-15",
+          "product_or_service": "assembly and test operations for IC products",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        }
+      ]
+    },
+    {
+      "id": "cik-0001408710--cik-0001045810",
+      "source": "cik-0001408710",
+      "target": "cik-0001045810",
+      "quantified_pct": null,
+      "relationship_types": [
+        "manufactures_for"
+      ],
+      "direction_stated": true,
+      "confidence": "high",
+      "latest_filing_date": "2026-02-25",
+      "evidence": [
+        {
+          "source_sentence": "We engage with independent subcontractors and contract manufacturers such as Hon Hai Precision Industry Co., Ltd., Wistron Corporation, and Fabrinet to perform assembly, testing and packaging of our final products.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-02-25",
+          "product_or_service": "assembly, testing and packaging",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "manufactures_for",
+          "extraction_confidence": "high"
+        }
+      ]
+    },
+    {
+      "id": "name-advanced-semiconductor-engineering--cik-0001730168",
+      "source": "name-advanced-semiconductor-engineering",
+      "target": "cik-0001730168",
+      "quantified_pct": null,
+      "relationship_types": [
+        "supplies"
+      ],
+      "direction_stated": true,
+      "confidence": "high",
+      "latest_filing_date": "2025-12-18",
+      "evidence": [
+        {
+          "source_sentence": "We use third-party CMs for a significant majority of our assembly and test operations, including TSMC, Advanced Semiconductor Engineering, Inc., Foxconn Technology Group, Amkor Technology, Inc. and Siliconware Precision Industries Co., Ltd.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016825000121/avgo-20251102.htm",
+          "form_type": "10-K",
+          "filing_date": "2025-12-18",
+          "product_or_service": "assembly and test operations",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        }
+      ]
+    },
+    {
+      "id": "name-advanced-semiconductor-engineering--cik-0001807794",
+      "source": "name-advanced-semiconductor-engineering",
+      "target": "cik-0001807794",
+      "quantified_pct": null,
+      "relationship_types": [
+        "supplies"
+      ],
+      "direction_stated": true,
+      "confidence": "high",
+      "latest_filing_date": "2026-06-15",
+      "evidence": [
+        {
+          "source_sentence": "Upon the completion of processing at the foundry, we use third-party contractors for packaging, assembly and testing, including Amkor Technology Inc. (Amkor) and Advanced Semiconductor Engineering, Inc. (ASE) for packaging our IC products, King Yuan Electronics Company (KYEC) and Sigurd Microelectronics Corp. (Sigurd) for testing our IC products and BizLink Technology, Inc. (BizLink) for manufacturing our AEC products.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-06-15",
+          "product_or_service": "packaging of IC products",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        },
+        {
+          "source_sentence": "We also use third-party contract manufacturers for a significant majority of our assembly and test operations, including Amkor, ASE, KYEC and Sigurd for our IC products, and BizLink for our AEC products.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-06-15",
+          "product_or_service": "assembly and test operations for IC products",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        }
+      ]
+    },
+    {
+      "id": "name-bizlink-technology--cik-0001807794",
+      "source": "name-bizlink-technology",
+      "target": "cik-0001807794",
+      "quantified_pct": null,
+      "relationship_types": [
+        "manufactures_for",
+        "supplies"
+      ],
+      "direction_stated": true,
+      "confidence": "high",
+      "latest_filing_date": "2026-06-15",
+      "evidence": [
+        {
+          "source_sentence": "Upon the completion of processing at the foundry, we use third-party contractors for packaging, assembly and testing, including Amkor Technology Inc. (Amkor) and Advanced Semiconductor Engineering, Inc. (ASE) for packaging our IC products, King Yuan Electronics Company (KYEC) and Sigurd Microelectronics Corp. (Sigurd) for testing our IC products and BizLink Technology, Inc. (BizLink) for manufacturing our AEC products.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-06-15",
+          "product_or_service": "manufacturing of AEC products",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        },
+        {
+          "source_sentence": "We also use third-party contract manufacturers for a significant majority of our assembly and test operations, including Amkor, ASE, KYEC and Sigurd for our IC products, and BizLink for our AEC products.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-06-15",
+          "product_or_service": "assembly and test operations for AEC products",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        },
+        {
+          "source_sentence": "Except for our agreement with BizLink for the manufacture of certain AEC products, we do not maintain long-term supply contracts with TSMC or generally with any of our third-party contract manufacturers or other suppliers.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-06-15",
+          "product_or_service": "AEC products",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "manufactures_for",
+          "extraction_confidence": "high"
+        }
+      ]
+    },
+    {
+      "id": "name-groq--cik-0001045810",
+      "source": "name-groq",
+      "target": "cik-0001045810",
+      "quantified_pct": null,
+      "relationship_types": [
+        "licenses_to"
+      ],
+      "direction_stated": true,
+      "confidence": "high",
+      "latest_filing_date": "2026-02-25",
+      "evidence": [
+        {
+          "source_sentence": "We have entered into an intellectual property license arrangement with Groq, Inc., or Groq, that required significant, nonrefundable payments.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-02-25",
+          "product_or_service": "intellectual property/technology license",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "licenses_to",
+          "extraction_confidence": "high"
+        },
+        {
+          "source_sentence": "In December 2025, we entered into a non\u2010exclusive license agreement with Groq, Inc., or Groq, for its language processing unit technology and hired certain Groq employees.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-02-25",
+          "product_or_service": "language processing unit technology",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "licenses_to",
+          "extraction_confidence": "high"
+        }
+      ]
+    },
+    {
+      "id": "name-hon-hai-precision-industry--cik-0001045810",
+      "source": "name-hon-hai-precision-industry",
+      "target": "cik-0001045810",
+      "quantified_pct": null,
+      "relationship_types": [
+        "manufactures_for"
+      ],
+      "direction_stated": true,
+      "confidence": "high",
+      "latest_filing_date": "2026-02-25",
+      "evidence": [
+        {
+          "source_sentence": "We engage with independent subcontractors and contract manufacturers such as Hon Hai Precision Industry Co., Ltd., Wistron Corporation, and Fabrinet to perform assembly, testing and packaging of our final products.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-02-25",
+          "product_or_service": "assembly, testing and packaging",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "manufactures_for",
+          "extraction_confidence": "high"
+        }
+      ]
+    },
+    {
+      "id": "name-hon-hai-precision-industry--cik-0001730168",
+      "source": "name-hon-hai-precision-industry",
+      "target": "cik-0001730168",
+      "quantified_pct": null,
+      "relationship_types": [
+        "supplies"
+      ],
+      "direction_stated": true,
+      "confidence": "high",
+      "latest_filing_date": "2025-12-18",
+      "evidence": [
+        {
+          "source_sentence": "We use third-party CMs for a significant majority of our assembly and test operations, including TSMC, Advanced Semiconductor Engineering, Inc., Foxconn Technology Group, Amkor Technology, Inc. and Siliconware Precision Industries Co., Ltd.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016825000121/avgo-20251102.htm",
+          "form_type": "10-K",
+          "filing_date": "2025-12-18",
+          "product_or_service": "assembly and test operations",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        }
+      ]
+    },
+    {
+      "id": "name-king-yuan-electronics--cik-0001807794",
+      "source": "name-king-yuan-electronics",
+      "target": "cik-0001807794",
+      "quantified_pct": null,
+      "relationship_types": [
+        "supplies"
+      ],
+      "direction_stated": true,
+      "confidence": "high",
+      "latest_filing_date": "2026-06-15",
+      "evidence": [
+        {
+          "source_sentence": "Upon the completion of processing at the foundry, we use third-party contractors for packaging, assembly and testing, including Amkor Technology Inc. (Amkor) and Advanced Semiconductor Engineering, Inc. (ASE) for packaging our IC products, King Yuan Electronics Company (KYEC) and Sigurd Microelectronics Corp. (Sigurd) for testing our IC products and BizLink Technology, Inc. (BizLink) for manufacturing our AEC products.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-06-15",
+          "product_or_service": "testing of IC products",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        },
+        {
+          "source_sentence": "We also use third-party contract manufacturers for a significant majority of our assembly and test operations, including Amkor, ASE, KYEC and Sigurd for our IC products, and BizLink for our AEC products.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-06-15",
+          "product_or_service": "assembly and test operations for IC products",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        }
+      ]
+    },
+    {
+      "id": "name-samsung-electronics--cik-0001045810",
+      "source": "name-samsung-electronics",
+      "target": "cik-0001045810",
+      "quantified_pct": null,
+      "relationship_types": [
+        "supplies"
+      ],
+      "direction_stated": true,
+      "confidence": "high",
+      "latest_filing_date": "2026-02-25",
+      "evidence": [
+        {
+          "source_sentence": "We utilize foundries, such as Taiwan Semiconductor Manufacturing Company Limited, or TSMC, and Samsung Electronics Co., Ltd., or Samsung, to produce our semiconductor wafers.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-02-25",
+          "product_or_service": "semiconductor wafers",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        },
+        {
+          "source_sentence": "We purchase memory from SK Hynix Inc., Micron Technology, Inc., and Samsung.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-02-25",
+          "product_or_service": "memory",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        }
+      ]
+    },
+    {
+      "id": "name-sigurd-microelectronics--cik-0001807794",
+      "source": "name-sigurd-microelectronics",
+      "target": "cik-0001807794",
+      "quantified_pct": null,
+      "relationship_types": [
+        "supplies"
+      ],
+      "direction_stated": true,
+      "confidence": "high",
+      "latest_filing_date": "2026-06-15",
+      "evidence": [
+        {
+          "source_sentence": "Upon the completion of processing at the foundry, we use third-party contractors for packaging, assembly and testing, including Amkor Technology Inc. (Amkor) and Advanced Semiconductor Engineering, Inc. (ASE) for packaging our IC products, King Yuan Electronics Company (KYEC) and Sigurd Microelectronics Corp. (Sigurd) for testing our IC products and BizLink Technology, Inc. (BizLink) for manufacturing our AEC products.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-06-15",
+          "product_or_service": "testing of IC products",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        },
+        {
+          "source_sentence": "We also use third-party contract manufacturers for a significant majority of our assembly and test operations, including Amkor, ASE, KYEC and Sigurd for our IC products, and BizLink for our AEC products.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-06-15",
+          "product_or_service": "assembly and test operations for IC products",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        }
+      ]
+    },
+    {
+      "id": "name-siliconware-precision-industries--cik-0001730168",
+      "source": "name-siliconware-precision-industries",
+      "target": "cik-0001730168",
+      "quantified_pct": null,
+      "relationship_types": [
+        "supplies"
+      ],
+      "direction_stated": true,
+      "confidence": "high",
+      "latest_filing_date": "2025-12-18",
+      "evidence": [
+        {
+          "source_sentence": "We use third-party CMs for a significant majority of our assembly and test operations, including TSMC, Advanced Semiconductor Engineering, Inc., Foxconn Technology Group, Amkor Technology, Inc. and Siliconware Precision Industries Co., Ltd.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016825000121/avgo-20251102.htm",
+          "form_type": "10-K",
+          "filing_date": "2025-12-18",
+          "product_or_service": "assembly and test operations",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        }
+      ]
+    },
+    {
+      "id": "name-sk-hynix--cik-0001045810",
+      "source": "name-sk-hynix",
+      "target": "cik-0001045810",
+      "quantified_pct": null,
+      "relationship_types": [
+        "supplies"
+      ],
+      "direction_stated": true,
+      "confidence": "high",
+      "latest_filing_date": "2026-02-25",
+      "evidence": [
+        {
+          "source_sentence": "We purchase memory from SK Hynix Inc., Micron Technology, Inc., and Samsung.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-02-25",
+          "product_or_service": "memory",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        }
+      ]
+    },
+    {
+      "id": "name-wistron--cik-0001045810",
+      "source": "name-wistron",
+      "target": "cik-0001045810",
+      "quantified_pct": null,
+      "relationship_types": [
+        "manufactures_for"
+      ],
+      "direction_stated": true,
+      "confidence": "high",
+      "latest_filing_date": "2026-02-25",
+      "evidence": [
+        {
+          "source_sentence": "We engage with independent subcontractors and contract manufacturers such as Hon Hai Precision Industry Co., Ltd., Wistron Corporation, and Fabrinet to perform assembly, testing and packaging of our final products.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-02-25",
+          "product_or_service": "assembly, testing and packaging",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "manufactures_for",
+          "extraction_confidence": "high"
+        }
+      ]
+    }
+  ]
 }
