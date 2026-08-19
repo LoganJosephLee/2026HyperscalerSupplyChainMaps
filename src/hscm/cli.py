@@ -13,6 +13,7 @@ from __future__ import annotations
 
 import argparse
 import json
+from collections import Counter
 import re
 import sys
 from pathlib import Path
@@ -556,6 +557,169 @@ def cmd_extract(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_repair(args: argparse.Namespace) -> int:
+    """Re-apply provenance stamping to records already extracted.
+
+    Extraction costs real money, so a fix to how a record is stamped must not
+    mean paying for the whole run again. Everything stamping does is derived
+    from the filing, which is cached — the model is not consulted and no
+    sentence changes. Today that means resolving a filing's word for itself into
+    the company it means.
+    """
+    from .extract.base import stamp_provenance
+
+    path = Path(args.extractions)
+    records = json.loads(path.read_text(encoding="utf-8"))
+
+    by_url: dict[str, Filing] = {}
+    for row in read_manifest():
+        filing = Filing(
+            cik=row["cik"], ticker=row["ticker"], company_name=row["company_name"],
+            form_type=row["form_type"], filing_date=row["filing_date"],
+            report_date=row["report_date"], accession=row["accession"],
+            primary_document=row["primary_document"],
+        )
+        by_url[filing.document_url] = filing
+
+    repaired: list[dict] = []
+    changed = 0
+    unknown = 0
+    for record in records:
+        filing = by_url.get(str(record.get("source_url", "")))
+        if filing is None:
+            unknown += 1
+            repaired.append(record)
+            continue
+        # Strip the fields stamping owns, so this is a re-stamp and not a merge.
+        bare = {k: v for k, v in record.items() if k != "self_reference_resolved"}
+        fixed = stamp_provenance(bare, filing)
+        if fixed != record:
+            changed += 1
+            for side in fixed.get("self_reference_resolved", []):
+                was = record.get(f"{side}_name_raw")
+                now = fixed.get(f"{side}_name_raw")
+                print(f"  {side:<8} {was!r} -> {now!r}")
+        repaired.append(fixed)
+
+    if unknown:
+        print(f"\n{unknown} record(s) cite a filing that is not in the cache — left alone.",
+              file=sys.stderr)
+        print("  Run `hscm fetch` if they should be there.", file=sys.stderr)
+
+    if args.dry_run:
+        print(f"\n{changed} of {len(records)} record(s) would change. Nothing written.")
+        return 0
+
+    path.write_text(json.dumps(repaired, indent=2) + "\n", encoding="utf-8")
+    print(f"\n{changed} of {len(records)} record(s) changed in {path}")
+    print("Run `hscm verify` before trusting the result.")
+    return 0
+
+
+def cmd_coverage(args: argparse.Namespace) -> int:
+    """What this dataset covers, and what it cannot.
+
+    The honest denominator problem: nobody knows how many suppliers a
+    hyperscaler has, so no percentage of "its supply chain" can be computed. The
+    numbers here are the ones that are actually knowable — how much of what we
+    read produced evidence, how much of that evidence survives to the graph, and
+    where it is being lost — because those are the ones that can be acted on.
+    """
+    from .resolve import Aliases, Resolver, Spine
+    from .verify import validate_record, verify_records
+
+    records = json.loads(Path(args.extractions).read_text(encoding="utf-8"))
+    rows = read_manifest()
+
+    print("=" * 68)
+    print("WHAT WAS READ")
+    print("=" * 68)
+    read_accessions: set[str] = set()
+    progress = Path(args.extractions + ".progress")
+    if progress.exists():
+        read_accessions = {m.split(":")[0] for m in json.loads(
+            progress.read_text(encoding="utf-8"))}
+    print(f"  filings cached                {len(rows):>5}")
+    print(f"  filings extracted             {len(read_accessions):>5}")
+
+    produced = {r["accession"] for r in rows
+                if any(str(rec.get("source_url","")).endswith(r["primary_document"])
+                       for rec in records)}
+    print(f"  filings that yielded evidence {len(produced):>5}"
+          f"   ({len(produced)/max(len(read_accessions),1):.0%} of those read)")
+
+    print()
+    print("=" * 68)
+    print("WHAT SURVIVES")
+    print("=" * 68)
+    valid = [r for r in records if not validate_record(r)]
+    print(f"  records extracted             {len(records):>5}")
+    print(f"  structurally valid            {len(valid):>5}"
+          f"   ({len(valid)/max(len(records),1):.0%})")
+
+    report = verify_records(valid, _document_resolver())
+    supported = report.supported_records(valid)
+    print(f"  sentence found in the filing  {len(supported):>5}"
+          f"   ({len(supported)/max(len(valid),1):.0%})")
+
+    resolver = _resolver()
+    spine = Spine.load()
+    seed_ciks = {e.cik for e in (spine.by_ticker(t) for t in config.SEED_TICKERS) if e}
+    from .graph import build_graph
+
+    graph = build_graph(supported, resolver, seed_ciks)
+    kept = sum(len(e.evidence) for e in graph.edges.values())
+    print(f"  both parties resolved         {kept:>5}"
+          f"   ({kept/max(len(supported),1):.0%})")
+    print(f"  lost to unresolved names      {len(graph.unresolved):>5}"
+          f"   <- recoverable: `hscm review edit`")
+
+    print()
+    print("=" * 68)
+    print("WHERE THE EVIDENCE IS LOST")
+    print("=" * 68)
+    reasons: Counter[str] = Counter()
+    for record in records:
+        for error in validate_record(record):
+            reasons[error.split(":")[0][:58]] += 1
+    unresolved_names: Counter[str] = Counter()
+    for row in graph.unresolved:
+        for side in ("buyer", "supplier"):
+            if row[f"{side}_status"] != "resolved":
+                unresolved_names[row[f"{side}_name_raw"]] += 1
+    for name, count in unresolved_names.most_common(args.limit):
+        print(f"  {count:>4}  {name}")
+    if len(unresolved_names) > args.limit:
+        print(f"        ... and {len(unresolved_names) - args.limit} more names")
+
+    print()
+    print("=" * 68)
+    print("PER SEED COMPANY")
+    print("=" * 68)
+    print("  Disclosed suppliers reaching each buyer this map was built around.")
+    print("  A low number is a fact about disclosure, not about the company.\n")
+    for ticker in config.SEED_TICKERS:
+        entry = spine.by_ticker(ticker)
+        if not entry:
+            continue
+        key = f"cik-{entry.cik:010d}"
+        direct = [e for e in graph.edges.values() if e.buyer_key == key]
+        statements = sum(len(e.evidence) for e in direct)
+        print(f"  {ticker:<7} {len(direct):>3} supplier(s), {statements:>3} statement(s)"
+              f"   {entry.title[:38]}")
+
+    print()
+    print("=" * 68)
+    print("WHAT THIS CANNOT TELL YOU")
+    print("=" * 68)
+    print("  There is no denominator. Nobody publishes how many suppliers a")
+    print("  hyperscaler has, so no percentage of a real supply chain can be")
+    print("  computed here, and any figure claiming otherwise would be invented.")
+    print("  Every number above is a share of what was read or extracted.")
+    print("  The map is a floor on what is disclosed, never a picture of what is.")
+    return 0
+
+
 # --- M5: entity resolution --------------------------------------------------
 def _resolver(threshold: float | None = None):
     from .resolve import Aliases, Resolver, Spine
@@ -904,6 +1068,17 @@ def main(argv: list[str] | None = None) -> int:
                       help="only these relationship types, e.g. --type unclear")
     show.add_argument("--width", type=int, default=88)
     show.set_defaults(func=cmd_show)
+
+    repair = sub.add_parser(
+        "repair", help="re-apply provenance stamping to already-extracted records")
+    repair.add_argument("extractions", nargs="?", default=default_extractions)
+    repair.add_argument("--dry-run", action="store_true", help="report changes without writing")
+    repair.set_defaults(func=cmd_repair)
+
+    coverage = sub.add_parser("coverage", help="what the dataset covers, and what it cannot")
+    coverage.add_argument("extractions", nargs="?", default=default_extractions)
+    coverage.add_argument("--limit", type=int, default=25)
+    coverage.set_defaults(func=cmd_coverage)
 
     check = sub.add_parser("check-api", help="one tiny API call to validate the request shape")
     check.set_defaults(func=cmd_check_api)

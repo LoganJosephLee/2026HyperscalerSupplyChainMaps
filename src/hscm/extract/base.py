@@ -161,12 +161,16 @@ Those sentences describe a real dependency but support no edge — skip them.
 4. Prefer `unclear` over a guess. "We have strategic relationships with leading \
 semiconductor providers" states that a relationship exists and nothing about \
 its direction.
-5. `relationship_type` always reads supplier first. Most filings are written \
+5. Never answer with a word the filing uses for itself. A 10-K says "we \
+outsource manufacturing to TSMC"; the answer is not that the buyer is "we", it \
+is the company filing the document, whose name appears at the top of the text. \
+The same goes for "us", "our", "the Company" and "the Registrant".
+6. `relationship_type` always reads supplier first. Most filings are written \
 from the buyer's side — "we outsource manufacturing to TSMC" — so you will \
 usually be turning the sentence around: TSMC is the supplier, the filer is the \
 buyer, and the type is `supplies`. The roles come from who does what, never \
 from the grammar of the sentence.
-6. Returning an empty list is a correct answer. Most sections of most filings \
+7. Returning an empty list is a correct answer. Most sections of most filings \
 contain no named supply relationship at all.
 """
 
@@ -192,14 +196,50 @@ class ExtractionRequest:
     text: str
 
 
+# A filing writes about itself in the first person, and the model quite
+# reasonably copies that: "we outsource manufacturing to TSMC" comes back with a
+# buyer of "we". Seventeen per cent of the first full run had a pronoun on one
+# end. Resolving it is not a guess — "we" in Broadcom's 10-K is Broadcom, and the
+# filing's identity is a fact we already hold — so it is done here rather than
+# thrown away at entity resolution.
+_FIRST_PERSON = {
+    "we", "us", "our", "ours", "ourselves", "the company", "the registrant",
+    "the group", "company", "registrant", "the corporation", "our company",
+    "the filer", "our platform", "the business",
+}
+
+
+def _resolve_self_reference(name: str, filing: Filing) -> tuple[str, bool]:
+    """Turn a filing's word for itself into the company it means."""
+    if (name or "").strip().lower() in _FIRST_PERSON:
+        return filing.company_name, True
+    return name, False
+
+
 def stamp_provenance(record: dict, filing: Filing) -> dict:
     """Attach the filing's identity to a model-produced relationship."""
-    return {
+    buyer, buyer_was_self = _resolve_self_reference(record.get("buyer_name_raw", ""), filing)
+    supplier, supplier_was_self = _resolve_self_reference(
+        record.get("supplier_name_raw", ""), filing
+    )
+
+    stamped = {
         **record,
+        "buyer_name_raw": buyer,
+        "supplier_name_raw": supplier,
         "source_url": filing.document_url,
         "form_type": filing.form_type,
         "filing_date": filing.filing_date,
     }
+    # Recorded, not silent: the site can say the filing wrote "we" and this is
+    # whose filing it is, which is a different claim from the filing naming them.
+    if buyer_was_self or supplier_was_self:
+        stamped["self_reference_resolved"] = [
+            side
+            for side, changed in (("buyer", buyer_was_self), ("supplier", supplier_was_self))
+            if changed
+        ]
+    return stamped
 
 
 @runtime_checkable
