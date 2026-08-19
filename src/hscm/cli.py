@@ -35,6 +35,10 @@ LIST_LIMIT = 40  # how many review rows to echo before pointing at the file
 # to two thirds of the document. Well under a tenth means the split found
 # something other than the sections it was looking for.
 MIN_COVERAGE_SHARE = 0.10
+
+# Characters per input token in SEC filing text, measured over a 534-window run
+# rather than assumed from the usual figure for English prose.
+CHARS_PER_TOKEN = 3.2
 MIN_DOCUMENT_FOR_COVERAGE_CHECK = 100_000
 
 _ACCESSION_IN_URL = re.compile(r"(\d{10}\d{2}\d{6}|\d{10}-\d{2}-\d{6})")
@@ -469,9 +473,11 @@ def cmd_extract(args: argparse.Namespace) -> int:
             from .extract.anthropic_api import AnthropicExtractor
 
             for key, label, section_text in targets:
-                count = len(AnthropicExtractor.windows(section_text))
-                total_windows += count
-                total_chars += len(section_text)
+                windows = AnthropicExtractor.windows(section_text)
+                total_windows += len(windows)
+                # The windows, not the section: consecutive windows overlap, so
+                # more text is sent than the section contains.
+                total_chars += sum(len(window) for window in windows)
                 print(f"  {filing.ticker:<6} {key:<13} {len(section_text):>9,} chars"
                       f" -> {count} call(s)")
             continue
@@ -506,16 +512,22 @@ def cmd_extract(args: argparse.Namespace) -> int:
             print(f"  {filing.ticker:<6} {key:<13} {len(section_text):>9,} chars -> {len(found)} record(s)")
 
     if args.estimate:
-        # Rough, and deliberately so: the point is the order of magnitude, not
-        # a quote. Filing text is dense, so ~4 chars/token is a fair rule of
-        # thumb, and the prompt adds a fixed overhead per call.
-        prompt_tokens = total_chars / 4 + total_windows * 400
+        # Measured, not assumed. A 43-filing run estimated at 3.37M input tokens
+        # actually used 5.30M — 57% over — because this used the usual English
+        # prose figure of 4 characters per token. Filing text is not usual
+        # English prose: it is thick with numbers, currency, defined terms in
+        # quotes, and section references, all of which tokenise badly. The
+        # observed figure across 534 real windows was 3.2, and the windows
+        # counted above now include their overlap.
+        prompt_tokens = total_chars / CHARS_PER_TOKEN + total_windows * 400
         print(f"\n{total_windows} API call(s), roughly {prompt_tokens:,.0f} input tokens")
         print(
-            f"Order of magnitude at $2-3 per million input tokens: "
+            f"At $2-3 per million input tokens: "
             f"${prompt_tokens / 1_000_000 * 2:.2f}-${prompt_tokens / 1_000_000 * 3:.2f}, "
-            f"plus a little for output. Check current pricing before a large run."
+            f"plus a little for output."
         )
+        print("Token counts are estimated from character counts and will not be exact. "
+              "Check current pricing, and your own console after a large run.")
         print("Narrow it with e.g. --sections item1a, or by naming tickers.")
         print("Run without --estimate to extract for real.")
         return 0
