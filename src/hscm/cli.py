@@ -380,6 +380,29 @@ def cmd_extract(args: argparse.Namespace) -> int:
 
     total_windows = total_chars = 0
     records: list[dict] = []
+    failures: list[tuple[str, str, str]] = []
+
+    out = Path(args.out) if args.out else config.DATA_DIR / "extractions.json"
+    progress_path = out.with_suffix(out.suffix + ".progress")
+
+    def save(current: list[dict], completed: set[str]) -> None:
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_text(json.dumps(current, indent=2) + "\n", encoding="utf-8")
+        progress_path.write_text(
+            json.dumps(sorted(completed), indent=2) + "\n", encoding="utf-8"
+        )
+
+    # Resume: a section already extracted is not paid for twice.
+    done: set[str] = set()
+    if not args.estimate and not args.restart and progress_path.exists() and out.exists():
+        done = set(json.loads(progress_path.read_text(encoding="utf-8")))
+        records = json.loads(out.read_text(encoding="utf-8"))
+        if done:
+            print(f"resuming: {len(done)} section(s) already extracted, "
+                  f"{len(records)} record(s) kept. Use --restart to start over.")
+    elif args.restart and progress_path.exists():
+        progress_path.unlink()
+
     for row in rows:
         path = config.REPO_ROOT / row["cache_path"]
         if not path.exists():
@@ -426,6 +449,22 @@ def cmd_extract(args: argparse.Namespace) -> int:
                  "\n\n".join(p.text for p in passages))
             )
 
+        # A filing whose split found almost nothing is not worth paying to read.
+        # ASML's 20-F located the cross-reference table at the back of the annual
+        # report and nothing else: 2.7% of the document, and the wrong 2.7%.
+        section_chars = sum(len(t) for k, _, t in targets if k != "concentration")
+        share = section_chars / len(text) if text else 0.0
+        if (
+            len(text) > MIN_DOCUMENT_FOR_COVERAGE_CHECK
+            and share < MIN_COVERAGE_SHARE
+            and not args.include_poor_splits
+        ):
+            print(
+                f"  {filing.ticker:<6} {'':13} skipped — the split covers only "
+                f"{share:.0%} of this filing. Fix it or pass --include-poor-splits."
+            )
+            continue
+
         if args.estimate:
             from .extract.anthropic_api import AnthropicExtractor
 
@@ -438,10 +477,32 @@ def cmd_extract(args: argparse.Namespace) -> int:
             continue
 
         for key, label, section_text in targets:
-            found = extractor.extract(
-                ExtractionRequest(filing, key, label, section_text)
-            )
+            marker = f"{filing.accession}:{key}"
+            if marker in done:
+                print(f"  {filing.ticker:<6} {key:<13} {'':>9} -- already done, skipped")
+                continue
+            try:
+                found = extractor.extract(
+                    ExtractionRequest(filing, key, label, section_text)
+                )
+            except KeyboardInterrupt:
+                save(records, done)
+                print(f"\n\nStopped. {len(records)} record(s) kept in {out}.")
+                print(f"Run the same command again to carry on from here.")
+                return 1
+            except Exception as exc:  # one bad section must not cost the whole run
+                failures.append((filing.ticker, key, f"{type(exc).__name__}: {exc}"))
+                print(f"  {filing.ticker:<6} {key:<13} {len(section_text):>9,} chars"
+                      f" -> FAILED {type(exc).__name__}: {exc}", file=sys.stderr)
+                continue
+
             records.extend(found)
+            done.add(marker)
+            # Written after every section, not at the end. Five hundred calls is
+            # long enough that something will interrupt it, and losing the whole
+            # run — and what it cost — to a dropped connection at call 400 is not
+            # a risk worth taking to save a few file writes.
+            save(records, done)
             print(f"  {filing.ticker:<6} {key:<13} {len(section_text):>9,} chars -> {len(found)} record(s)")
 
     if args.estimate:
@@ -471,9 +532,13 @@ def cmd_extract(args: argparse.Namespace) -> int:
         if lost:
             print("  !! Records from lost windows are missing from this run, not empty.")
 
-    out = Path(args.out) if args.out else config.DATA_DIR / "extractions.json"
-    out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(json.dumps(records, indent=2) + "\n", encoding="utf-8")
+    if failures:
+        print(f"\n{len(failures)} section(s) failed and were skipped:", file=sys.stderr)
+        for ticker, key, reason in failures:
+            print(f"  {ticker} {key}: {reason}", file=sys.stderr)
+        print("  Run the same command again to retry only these.", file=sys.stderr)
+
+    save(records, done)
     print(f"\n{len(records)} record(s) written to {out}")
     print("Nothing is trustworthy until `hscm verify` has run over it.")
     return 0
@@ -811,6 +876,10 @@ def main(argv: list[str] | None = None) -> int:
     extract.add_argument("--out")
     extract.add_argument("--sections", nargs="+",
                          help="limit to these section keys, e.g. --sections item1a")
+    extract.add_argument("--restart", action="store_true",
+                         help="ignore any saved progress and extract everything again")
+    extract.add_argument("--include-poor-splits", action="store_true",
+                         help="extract filings whose split covers too little of the document")
     extract.add_argument("--estimate", action="store_true",
                          help="count the API calls this would make, without making them")
     extract.set_defaults(func=cmd_extract)

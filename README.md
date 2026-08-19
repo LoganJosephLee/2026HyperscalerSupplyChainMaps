@@ -64,6 +64,8 @@ uv run hscm fetch                    # M1: cache the latest 10-K for each seed c
 uv run hscm fetch --form 20-F TSM    # any of 10-K / 20-F / 10-Q / 8-K, any ticker
 uv run hscm sections                 # M1: report what the section splitter found
 uv run hscm extract                  # M2/M4: run the configured extractor
+uv run hscm extract --estimate       # what it would cost, before it costs it
+                                     # interrupted? run it again — it resumes
 uv run hscm verify data/extractions.json --out report.json   # M3: the hallucination check
 uv run hscm show --type unclear       # M3: read the records a human still has to judge
 uv run hscm review edit              # M5: decide unresolved names one at a time
