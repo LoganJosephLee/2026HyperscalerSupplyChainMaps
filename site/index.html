@@ -12,6 +12,7 @@
   <h1>AI Hyperscaler Supply Chain Maps <span class="qualifier">(Publicly Disclosed Data)</span></h1>
   <span class="stamp" id="stamp">data as of &mdash;</span>
   <nav>
+    <a href="#" id="how-to-read">How to read this</a>
     <a href="limitations.html">Coverage &amp; limitations</a>
     <a href="data/relationships.csv" download>CSV</a>
     <a href="data/relationships.json" download>JSON</a>
@@ -33,6 +34,7 @@
     <div class="legend">
       <p class="legend-head">What they do &mdash; click to isolate</p>
       <div id="function-legend"></div>
+      <p id="function-note" class="function-note" hidden></p>
       <p class="legend-head">Colour: can their word be checked?</p>
       <div class="row"><span class="dot seed"></span> A buyer &mdash; one of the hyperscalers</div>
       <div class="row"><span class="dot supplier"></span> Files with the SEC, so it can be checked</div>
@@ -46,6 +48,27 @@
   <aside>
     <h2 id="panel-title">Evidence</h2>
     <div id="panel">
+      <details class="primer" id="primer" open>
+        <summary>New to this? Start here</summary>
+        <p>
+          These six companies &mdash; Microsoft, Alphabet, Amazon, Meta, Oracle, CoreWeave
+          &mdash; are building the data centres that run AI. They buy almost nothing
+          directly: chips are designed by one company, printed by another, packaged by a
+          third, fitted with memory from a fourth, bolted into racks by a fifth, and
+          powered, cooled and shipped by others again.
+        </p>
+        <p>
+          This map shows those relationships, but <strong>only where a company said so in
+          a filing to the US financial regulator</strong>. Click any line and you get the
+          exact sentence, the form it came from, and a link to the filing itself. If a
+          relationship isn't here, it usually means nobody had to disclose it &mdash; not
+          that it doesn't exist.
+        </p>
+        <p>
+          Companies are grouped by what they do, and each group has a plain-English
+          explanation &mdash; click one in the legend.
+        </p>
+      </details>
       <p class="hint">
         Click any edge to see the sentence that put it there &mdash; verbatim, with the
         filing it came from and a link to that filing on EDGAR.

@@ -26,7 +26,14 @@ from dataclasses import asdict, dataclass, field
 from pathlib import Path
 
 from . import config
-from .functions import FUNCTION_LABELS, UNKNOWN, UNKNOWN_LABEL, classify_phrases
+from .functions import (
+    FUNCTION_DESCRIPTIONS,
+    FUNCTION_LABELS,
+    UNKNOWN,
+    UNKNOWN_DESCRIPTION,
+    UNKNOWN_LABEL,
+    classify_phrases,
+)
 from .resolve import Resolver
 
 EVIDENCE_FIELDS = (
@@ -237,6 +244,10 @@ def export(graph: Graph, records: list[dict], directory: Path | None = None) -> 
             ),
             "excluded_companies": graph.excluded,
             "function_labels": {**FUNCTION_LABELS, UNKNOWN: UNKNOWN_LABEL},
+            "function_descriptions": {
+                **FUNCTION_DESCRIPTIONS,
+                UNKNOWN: UNKNOWN_DESCRIPTION,
+            },
             "license": "Source filings are US government works in the public domain.",
         },
         "nodes": [

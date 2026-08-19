@@ -225,3 +225,39 @@ th { color: var(--muted); font-weight: 600; font-size: 12px; text-transform: upp
   border-radius: 3px;
 }
 .function-row.active .pin { border-color: var(--supplier); background: var(--supplier); }
+
+/* --- plain-language layer -------------------------------------------------- */
+.function-note {
+  margin: 4px 0 0;
+  font-size: 11px;
+  line-height: 1.45;
+  color: var(--text);
+  max-width: 260px;
+}
+
+.job {
+  margin: 14px 0 18px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.02);
+}
+.job-label { margin: 0; font-weight: 600; font-size: 13px; }
+.job-desc { margin: 6px 0 0; font-size: 12px; line-height: 1.5; color: var(--muted); }
+.job-src { margin: 8px 0 0; font-size: 11px; color: var(--muted); }
+
+.primer {
+  margin: 0 0 16px;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.02);
+}
+.primer summary {
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--text);
+}
+.primer p { margin: 10px 0 0; font-size: 12px; line-height: 1.55; color: var(--muted); }
+.primer strong { color: var(--text); }

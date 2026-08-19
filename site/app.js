@@ -120,6 +120,29 @@ function renderEvidence(edge, nodesById) {
   el("panel").innerHTML = header + blocks.join("");
 }
 
+
+// What this company does, in words, plus the filing phrases that decided it. The
+// phrases matter as much as the category: they are the evidence, and they let a
+// reader disagree with the grouping rather than take it on faith.
+function renderJob(node, graphData) {
+  const meta = graphData.meta || {};
+  const key = node.function || "unstated";
+  const label = (meta.function_labels || {})[key];
+  const description = (meta.function_descriptions || {})[key];
+  if (!label) return "";
+
+  const phrases = (node.function_phrases || []).slice(0, 6);
+  return `
+    <div class="job">
+      <p class="job-label">${escapeHtml(label)}</p>
+      ${description ? `<p class="job-desc">${escapeHtml(description)}</p>` : ""}
+      ${phrases.length
+        ? `<p class="job-src">Filings describe it as:
+             ${phrases.map((p) => `<span class="tag">${escapeHtml(p)}</span>`).join(" ")}</p>`
+        : ""}
+    </div>`;
+}
+
 function renderNode(node, graphData) {
   const asSupplier = graphData.edges.filter((e) => e.source === node.id);
   const asBuyer = graphData.edges.filter((e) => e.target === node.id);
@@ -145,6 +168,7 @@ function renderNode(node, graphData) {
         node.ticker ? " &middot; " + escapeHtml(node.ticker) : ""}
       ${node.is_seed ? " &middot; seed company" : ""}
     </p>
+    ${renderJob(node, graphData)}
     <h2>Supplies</h2>${list(asSupplier, "target")}
     <h2 style="margin-top:20px">Buys from</h2>${list(asBuyer, "source")}`;
 }
@@ -219,7 +243,7 @@ function buildClusterLabels(renderer, graph, present, labels, anchors) {
 }
 
 // --- legend -------------------------------------------------------------------
-function buildLegend(present, labels, graph, renderer) {
+function buildLegend(present, labels, graph, renderer, descriptions) {
   const list = el("function-legend");
   if (!list) return;
 
@@ -228,10 +252,14 @@ function buildLegend(present, labels, graph, renderer) {
     row.type = "button";
     row.className = "row function-row";
     row.dataset.function = key;
+    // The plain-English line is the point of the whole grouping. Someone who
+    // already knows what a foundry is did not need this map.
+    row.title = descriptions?.[key] || "";
     row.innerHTML = `<span class="pin"></span> ${escapeHtml(labels[key] || key)}`;
     list.appendChild(row);
   });
 
+  const row_description = (key) => descriptions?.[key] || "";
   let isolated = null;
   const apply = () => {
     graph.forEachNode((id, attributes) => {
@@ -243,6 +271,11 @@ function buildLegend(present, labels, graph, renderer) {
     list.querySelectorAll(".function-row").forEach((row) => {
       row.classList.toggle("active", row.dataset.function === isolated);
     });
+    const note = el("function-note");
+    if (note) {
+      note.textContent = isolated ? row_description(isolated) : "";
+      note.hidden = !isolated;
+    }
     renderer.refresh();
   };
 
@@ -376,8 +409,20 @@ async function main() {
   // detail.
   renderer.getCamera().setState({ ratio: 1.5 });
 
+  // The primer is the panel's opening state, and the first click on anything
+  // replaces it for good. Someone who needed it once may well need it twice.
+  const primer = el("panel").innerHTML;
+  const howTo = el("how-to-read");
+  if (howTo) {
+    howTo.addEventListener("click", (event) => {
+      event.preventDefault();
+      el("panel-title").textContent = "Evidence";
+      el("panel").innerHTML = primer;
+    });
+  }
+
   buildClusterLabels(renderer, graph, present, labels, anchors);
-  buildLegend(present, labels, graph, renderer);
+  buildLegend(present, labels, graph, renderer, data.meta?.function_descriptions);
 
   window.__graph = { graph, renderer, data }; // handle for tests and console work
 }

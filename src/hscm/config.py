@@ -45,6 +45,34 @@ SUPPLIER_TICKERS: tuple[str, ...] = (
     "CRDO",   # Credo
     "COHR",   # Coherent
     "TSM",    # TSMC — files a 20-F, not a 10-K
+
+    # The rest of the chain. A data centre is a building full of power, cooling
+    # and freight before it is a building full of chips, and none of that shows
+    # up if the only filings we read are semiconductor ones. Reading a company's
+    # filings still asserts nothing about it: an edge needs a sentence.
+    "AMAT",   # Applied Materials — chipmaking equipment
+    "LRCX",   # Lam Research
+    "KLAC",   # KLA
+    "ASML",   # ASML — files a 20-F
+    "ENTG",   # Entegris — materials and chemicals
+    "SNPS",   # Synopsys — chip design software
+    "CDNS",   # Cadence Design Systems
+    "GEV",    # GE Vernova — grid and generation
+    "PWR",    # Quanta Services — electrical construction
+    "JCI",    # Johnson Controls — cooling
+    "TT",     # Trane Technologies — cooling
+    "DLR",    # Digital Realty — data centre space
+    "EQIX",   # Equinix — data centre space
+    "LUMN",   # Lumen — network carrier
+    "FDX",    # FedEx — freight
+    "UPS",    # United Parcel Service
+    "EXPD",   # Expeditors International — freight forwarding
+    "CHRW",   # C.H. Robinson — logistics
+    "FLEX",   # Flex — contract manufacturing
+    "JBL",    # Jabil — contract manufacturing
+    "LITE",   # Lumentum — optics
+    "FN",     # Fabrinet — optical manufacturing
+    "AMKR",   # Amkor — packaging and test
 )
 
 # Everything we fetch by default.
@@ -55,6 +83,7 @@ WATCHLIST: tuple[str, ...] = SEED_TICKERS + SUPPLIER_TICKERS
 # failure rather than the filing-convention difference it actually is.
 DEFAULT_FORM_BY_TICKER: dict[str, str] = {
     "TSM": "20-F",
+    "ASML": "20-F",
 }
 
 # Forms we ingest (Decision 2).
