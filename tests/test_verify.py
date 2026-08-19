@@ -160,6 +160,22 @@ def test_real_company_names_survive_the_guard(name):
     assert validate_record(record(supplier_name_raw=name)) == []
 
 
+@pytest.mark.parametrize("label", ["Customer A", "Customer B", "Client 1", "Partner B"])
+def test_an_anonymised_counterparty_is_not_a_name(label):
+    """Marvell's 10-K discloses a concentration with "Customer A".
+
+    The letter is there precisely because the name is being withheld. It is a
+    real disclosure and no edge — and the role-noun guard misses it, because no
+    company calls itself a supplier but plenty of companies are customers.
+    """
+    errors = validate_record(record(buyer_name_raw=label))
+    assert any("does not name one" in e for e in errors)
+
+
+def test_a_company_whose_name_starts_with_customer_survives():
+    assert validate_record(record(supplier_name_raw="Customer Experience Solutions Inc.")) == []
+
+
 def test_a_buyer_subject_verb_is_rejected():
     # The edge is supplier -> buyer, so every verb has to read in that direction.
     # "purchases_from" printed as "TSMC purchases_from Broadcom", which is backwards.
