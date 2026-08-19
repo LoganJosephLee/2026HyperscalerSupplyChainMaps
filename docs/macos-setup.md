@@ -77,7 +77,6 @@ the Keychain, so it only asks once.
 
 ```bash
 make setup
-uv sync --extra anthropic
 ```
 
 Check it works — this needs no API key and no network:
@@ -170,6 +169,7 @@ than paying for those sections again.
 |---|---|
 | `command not found: uv` | Terminal was not restarted after step 2. `source $HOME/.local/bin/env` |
 | `command not found: make` | Step 1 did not finish. Re-run `xcode-select --install` |
+| `Failed to spawn: pytest` | Extras were installed one at a time. `uv sync --extra X` syncs to *exactly* X and removes the rest — run `make setup`, which passes them all together |
 | `No company spine at …` | Run `uv run hscm fetch` first |
 | `HSCM_EDGAR_CONTACT` complaint | `source ~/.zshrc`, or the line did not get added |
 | `conflict markers` in aliases.yaml | `git checkout --theirs -- aliases.yaml` then `git add aliases.yaml` |

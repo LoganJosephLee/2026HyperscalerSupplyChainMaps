@@ -23,8 +23,7 @@ $7–10), Neo4j has never been started, and GitHub Pages is not enabled. See
 **macOS / Linux**
 
 ```bash
-make setup
-uv sync --extra anthropic                     # only needed for the real extractor
+make setup     # installs everything, including the real extractor
 export HSCM_EDGAR_CONTACT="you@example.com"   # SEC fair-access policy wants a real contact
 ```
 
@@ -65,7 +64,6 @@ To use the real extractor once you have an API key:
 ```bash
 export ANTHROPIC_API_KEY=...
 export HSCM_EXTRACTOR=anthropic
-uv sync --extra anthropic
 make refresh
 ```
 

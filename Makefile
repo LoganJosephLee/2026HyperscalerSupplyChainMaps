@@ -14,8 +14,12 @@ help:
 	@echo "Set HSCM_EDGAR_CONTACT to your email before fetching (SEC fair-access policy)."
 	@echo "Set HSCM_EXTRACTOR=anthropic and ANTHROPIC_API_KEY to use the real extractor."
 
+# Every extra at once. `uv sync --extra X` syncs to exactly X and uninstalls
+# anything not in it, so installing them one line at a time silently removes
+# the previous one — which looks like a broken install of the thing you just
+# added.
 setup:
-	$(UV) sync --extra dev
+	$(UV) sync --extra dev --extra anthropic --extra neo4j
 
 # The one documented command that rebuilds the dataset end to end.
 # Deliberately manual: no scheduled workflow, so nothing changes under you.

@@ -72,12 +72,12 @@ Before fetching:
 To use the real extractor once you have an API key:
     `$env:ANTHROPIC_API_KEY = "sk-ant-..."
     `$env:HSCM_EXTRACTOR = "anthropic"
-    uv sync --extra anthropic
+    uv sync --extra dev --extra anthropic --extra neo4j
 "@
     }
 
     'setup' {
-        & uv sync --extra dev
+        & uv sync --extra dev --extra anthropic --extra neo4j
         if ($LASTEXITCODE -ne 0) { throw "uv sync failed" }
         Write-Host "`nReady. Next: `$env:HSCM_EDGAR_CONTACT = 'you@example.com'; .\run.ps1 fetch" -ForegroundColor Green
     }
