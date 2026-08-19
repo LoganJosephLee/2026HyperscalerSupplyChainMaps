@@ -1,9 +1,15 @@
 # Cached EDGAR documents. Public domain, but derived and large — rebuild with
-# `hscm fetch` rather than committing.
+# `hscm fetch` rather than committing. Fetching is free and takes minutes.
 data/cache/
-data/extractions.json
+
+# Reports and the review CSV are regenerated on demand from things that are
+# tracked, so there is nothing in them worth a merge conflict.
 data/verification-report.json
 data/review/
+
+# data/extractions.json is deliberately NOT ignored. Everything else here can be
+# rebuilt for free; that file costs real money to produce and is the only copy
+# of it. Committing it is also what lets the work move between machines.
 
 .venv/
 __pycache__/

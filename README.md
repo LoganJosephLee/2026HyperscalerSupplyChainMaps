@@ -3,13 +3,20 @@
 A supply chain graph of the AI hyperscalers where every edge is traceable to a
 specific sentence in a specific SEC filing.
 
-**Status: the pipeline runs end to end on real filings; the published dataset is
-still empty.** Twenty filings are cached, and a pilot extraction over four
-supplier 10-Ks produced 56 records, of which 55 were checked against the filing
-text and 55 matched — a 0.0% hallucination rate. That pilot is not the dataset:
-the hand-check of those records found three defects in the extraction schema
-that are now fixed, so the batch has to be re-extracted before it is worth
-publishing. See [Current status](#current-status) before trusting any of it.
+**Status: the pipeline runs end to end on real filings and has produced a real
+dataset.** 43 filings cached across the whole chain — chips, equipment,
+materials, power, cooling, data centre space, a carrier and four freight
+companies. A pilot extraction over four supplier 10-Ks produced 33 records;
+verification matched **32 of 32** checked sentences back into their filings, a
+0.0% hallucination rate, and the one dropped record was a filing describing a
+category of supplier rather than naming one. Entity resolution has been run by
+hand and the decisions are in `aliases.yaml`. The exported graph is 17 companies,
+19 relationships and 32 cited sentences, with nothing dropped to unresolved
+names.
+
+**What is not done:** the full 43-filing extraction (~537 API calls, roughly
+$7–10), Neo4j has never been started, and GitHub Pages is not enabled. See
+[Current status](#current-status).
 
 ## Setup
 
@@ -17,8 +24,13 @@ publishing. See [Current status](#current-status) before trusting any of it.
 
 ```bash
 make setup
+uv sync --extra anthropic                     # only needed for the real extractor
 export HSCM_EDGAR_CONTACT="you@example.com"   # SEC fair-access policy wants a real contact
 ```
+
+Setting up a Mac from nothing — including the shell config that makes the
+environment variables survive a reboot — is written out step by step in
+[docs/macos-setup.md](docs/macos-setup.md).
 
 **Windows (PowerShell)** — there is no `make` on Windows, and PowerShell 5.1
 does not accept `&&`, so use `run.ps1`, one command per line:
@@ -81,50 +93,65 @@ make test
 
 | Milestone | State |
 |---|---|
-| M1 — EDGAR fetcher, cache, section splitter | **Done.** 20 filings cached, including a 20-F. Three splitter bugs that only real filings expose are fixed |
-| M2 — Extraction on the Microsoft 10-K | **Done.** Microsoft's entire risk factors section yields one relationship, and it states no direction — which is the finding, not a failure |
-| M3 — Hallucination check | **Passed.** 55 records checked against filing text, 55 matched, 0.0% failure rate. The one earlier failure was a page number our HTML-to-text left mid-sentence, not a hallucination |
-| M4 — All six seeds | Supplier-side filings read as well, because naming obligations fall on suppliers. Full run not yet made |
-| M5 — Entity resolution + review queue | Written and tested; **never run on real names.** `aliases.yaml` carries the non-filer decisions |
-| M6 — Neo4j load + Cypher | Statements and queries written; **Neo4j never started** (Docker Hub blocked in the build environment) |
-| M7 — JSON export + sigma.js front end | Built, and **verified in a real browser** against a test dataset. No real dataset exported yet |
-| M8 — Limitations page, `make refresh`, date stamp | Built |
+| M1 — fetcher, cache, section splitter | **Done.** 43 filings, 0 failures. Handles 10-K, 20-F, and industries as different as a freight forwarder and a data centre REIT. Known gap: ASML's 20-F (below) |
+| M2 — extraction on a real filing | **Done.** Microsoft's entire risk factors section yields one relationship, stating no direction — the finding, not a failure |
+| M3 — hallucination check | **Passed on real data.** 32 of 32 sentences matched their filings, 0.0% failure |
+| M4 — supplier-side reading | **Done.** Naming obligations fall on suppliers, so their filings are read too. Full 43-filing run not yet made |
+| M5 — entity resolution | **Done for the pilot batch.** 18 names decided by hand; `hscm review edit` asks one at a time |
+| M6 — Neo4j + Cypher | Statements and queries written; **Neo4j has never been started** |
+| M7 — export | **Done.** 17 companies, 19 relationships, 32 statements, 0 dropped |
+| M8 — site | **Done and browser-verified.** Clustered by function, citation panel, limitations page, primer |
 
-### What the first hand-check found
+### Known defects
 
-Verification proves a quoted sentence is really in the filing. It does not prove
-the model drew the right relationship out of it, and reading all 56 records
-turned up three things no automated check would have caught:
+**ASML's 20-F splits wrong.** The document is 1,397,350 characters and the
+splitter finds one 38,307-character section at 97% through it — the 20-F
+cross-reference table at the back of the annual report, not the report. ASML
+presents its annual report in its own structure with a mapping table bolted on,
+a convention nothing else in the set uses. `sections` now measures what share of
+each filing gets read and flags anything under a tenth; `extract` skips those
+filings rather than paying to read the wrong text. Run `hscm diagnose ASML` to
+see every heading candidate before attempting a fix.
 
-1. **`purchases_from` was the wrong shape of verb.** Roles were right — TSMC
+**Lumen loses `item8`.** Its `item7a` runs 231,922 characters, straight through
+the financial statements. Extraction falls back to Business and Risk Factors and
+the concentration sweep covers the whole document, so the cost is small.
+
+### What the hand-checks have found
+
+Verification proves a quoted sentence is really in the filing. It cannot prove
+the model drew the right relationship out of it, and only reading the records
+catches that. Four things no automated check would have found:
+
+1. **`purchases_from` was the wrong shape of verb.** The roles were right — TSMC
    really was the supplier — but the edge printed as "TSMC purchases_from
-   Broadcom", the relationship backwards. Every verb now takes the supplier as
-   its subject.
+   Broadcom", the relationship backwards, on roughly forty of fifty-six records.
+   Every verb now takes the supplier as its subject.
 2. **One sentence was counted as several statements.** The concentration sweep
-   re-read text already inside Item 1, and the model worded
-   `product_or_service` differently each pass, so whole-record deduplication
-   missed it. The site counts statements to show corroboration; this claimed
+   re-read text already inside Item 1 and the model worded `product_or_service`
+   differently each pass, so whole-record deduplication missed it — claiming
    independent sources that did not exist.
 3. **`quantified_basis` was too narrow.** "Approximately 95% of the wafers
    manufactured by our CMs were produced by TSMC" is a share of units, not of
    revenue or cost, and the enum forced the model to answer `null` — which the
-   validator then discarded. That is the most valuable number in the batch.
+   validator then discarded. The most valuable number in the batch.
+4. **An edge with nobody on one end.** "Most of our products are manufactured by
+   third-party foundries located in Taiwan" is true, a real dependency, and not a
+   relationship. Verification can never catch it, because the sentence really is
+   in the filing.
 
-The pilot records predate all three fixes and need re-extracting.
+### Things decided along the way
 
-**What "verified in a real browser" means.** The graph renders, force layout
-runs, clicking an edge opens the citation panel with the verbatim sentence, the
-form type, the filing date and a working EDGAR link, and clicking a node lists
-its disclosed counterparties. That was tested with Playwright against a
-synthetic graph held outside the repo. The interaction works; the data it will
-eventually show has not been checked.
-
-**Why M1 could not run.** The egress policy here answers 403 to `sec.gov`,
-`data.sec.gov`, `efts.sec.gov` and `gleif.org`. The section splitter has
-therefore only met synthetic 10-K/10-Q/8-K documents. Real filing HTML is
-messier than any fixture, and the splitter is the part most likely to be wrong —
-run `make fetch && uv run hscm sections` and read the output before trusting an
-extraction.
+- **Samsung and SK Hynix are in the graph, as non-filers.** They file nothing
+  with the SEC, but NVIDIA's 10-K names them outright and a citable sentence is
+  the test this project applies. Excluding them was what forced Micron to stand
+  in for the entire memory supply.
+- **Colour does not encode what a company does.** A network graph puts any two
+  nodes side by side, so a palette must hold across every pair; no fourth hue
+  tested cleared the colour-blind separation floor. Position and a label carry
+  the job; colour answers only "can this company's word be checked?"
+- **No inferred percentages, and no sources beyond EDGAR.** Both were considered
+  and both would put numbers on the page that no sentence supports.
 
 ## Layout
 
