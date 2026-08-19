@@ -7,11 +7,21 @@
  * form type, the filing date, and a direct link to EDGAR.
  */
 
-const SEED_COLOR = "#f2a541";
-const SUPPLIER_COLOR = "#6aa9ff";
-const NON_FILER_COLOR = "#c39bd3";
+// Three hues, and three is the ceiling. A network graph puts any two nodes side
+// by side, so the palette has to hold up across every pair, not just neighbours
+// in a legend — and no fourth hue tested clears the colour-blind and
+// normal-vision separation floors under that condition. So colour answers one
+// question only: can this company's word be checked? What each company *does* is
+// carried by position and a label instead, which has no such ceiling.
+const SEED_COLOR = "#d95926";       // a buyer: one of the hyperscalers
+const SUPPLIER_COLOR = "#3987e5";   // files with the SEC; its own filings can corroborate
+const NON_FILER_COLOR = "#199e70";  // files nothing; here on someone else's word
 const EDGE_COLOR = "#3b4252";
-const EDGE_COLOR_QUANTIFIED = "#7ee0a0";
+// Deliberately not a hue from the node palette. Green now means "this company
+// files nothing with the SEC", and a green edge next to a green node invites the
+// reader to connect two things that have nothing to do with each other.
+const EDGE_COLOR_QUANTIFIED = "#cfd6e4";
+const DIMMED = "#2a2f3a";
 
 // Percentages in filings do not share a denominator. The label says which one this
 // number has, so a thick edge is never read as a magnitude comparable to another.
@@ -44,8 +54,12 @@ function escapeHtml(value) {
 /* Edge width encodes the disclosed percentage where a filing states one.
    Everything else renders thin, so "we don't know" never looks like "small". */
 function edgeSize(pct) {
-  if (pct === null || pct === undefined) return 1;
-  return 1.5 + Math.sqrt(pct) * 1.1;
+  // Square-rooted and tightly bounded. A 95% edge is worth noticing; at the
+  // previous scaling it was a twelve-pixel beam across the canvas that hid every
+  // undisclosed relationship behind it, which inverts what the map is for — the
+  // quantified ones are the rare, easy case.
+  if (pct === null || pct === undefined) return 0.8;
+  return 1.2 + Math.sqrt(pct) * 0.45;
 }
 
 function renderEvidence(edge, nodesById) {
@@ -135,6 +149,115 @@ function renderNode(node, graphData) {
     <h2 style="margin-top:20px">Buys from</h2>${list(asBuyer, "source")}`;
 }
 
+
+// --- what each cluster is -----------------------------------------------------
+// A heading floating over each group. Without it the clustering is just a
+// pleasing shape; with it, position is a labelled category and colour is free to
+// mean something else entirely.
+function legendBounds() {
+  const legend = document.querySelector("#graph .legend");
+  const host = el("graph");
+  if (!legend || !host) return null;
+  const a = legend.getBoundingClientRect();
+  const b = host.getBoundingClientRect();
+  return { left: a.left - b.left, right: a.right - b.left, top: a.top - b.top, bottom: a.bottom - b.top };
+}
+
+function buildClusterLabels(renderer, graph, present, labels, anchors) {
+  const layer = document.createElement("div");
+  layer.className = "cluster-layer";
+  el("graph").appendChild(layer);
+
+  const headings = new Map();
+  present.forEach((key) => {
+    const heading = document.createElement("div");
+    heading.className = "cluster-label";
+    heading.dataset.function = key;
+    heading.textContent = labels[key] || key;
+    layer.appendChild(heading);
+    headings.set(key, heading);
+  });
+
+  const place = () => {
+    // Measured in viewport pixels, not graph units. Sigma's y axis points the
+    // other way from the screen's, so "the top of the group" computed in graph
+    // space put every heading underneath its own cluster, on top of the company
+    // names it was supposed to sit clear of.
+    const boxes = new Map();
+    graph.forEachNode((_id, attributes) => {
+      const point = renderer.graphToViewport(attributes);
+      const box = boxes.get(attributes.hscmFunction) || {
+        sumX: 0, minY: Infinity, n: 0,
+      };
+      box.sumX += point.x;
+      box.minY = Math.min(box.minY, point.y);
+      box.n += 1;
+      boxes.set(attributes.hscmFunction, box);
+    });
+
+    const blocked = legendBounds();
+    headings.forEach((heading, key) => {
+      const box = boxes.get(key);
+      if (!box) return;
+      const x = box.sumX / box.n;
+      const y = box.minY - 22;
+      heading.style.transform = `translate(-50%, -100%) translate(${x}px, ${y}px)`;
+      // A heading printed over the legend is unreadable and makes the legend
+      // unreadable too. Better to drop it: the cluster is still labelled in the
+      // legend itself, and every node keeps its own name.
+      const hidden =
+        y < 18 ||
+        (blocked &&
+          x > blocked.left - 90 && x < blocked.right + 90 &&
+          y > blocked.top - 30 && y < blocked.bottom + 30);
+      heading.style.opacity = hidden ? "0" : "1";
+    });
+  };
+
+  renderer.on("afterRender", place);
+  place();
+}
+
+// --- legend -------------------------------------------------------------------
+function buildLegend(present, labels, graph, renderer) {
+  const list = el("function-legend");
+  if (!list) return;
+
+  present.forEach((key) => {
+    const row = document.createElement("button");
+    row.type = "button";
+    row.className = "row function-row";
+    row.dataset.function = key;
+    row.innerHTML = `<span class="pin"></span> ${escapeHtml(labels[key] || key)}`;
+    list.appendChild(row);
+  });
+
+  let isolated = null;
+  const apply = () => {
+    graph.forEachNode((id, attributes) => {
+      const dim = isolated !== null && attributes.hscmFunction !== isolated;
+      graph.setNodeAttribute(id, "highlighted", false);
+      graph.setNodeAttribute(id, "hidden", false);
+      graph.setNodeAttribute(id, "color", dim ? DIMMED : attributes.hscmBaseColor);
+    });
+    list.querySelectorAll(".function-row").forEach((row) => {
+      row.classList.toggle("active", row.dataset.function === isolated);
+    });
+    renderer.refresh();
+  };
+
+  graph.forEachNode((id, attributes) => {
+    graph.setNodeAttribute(id, "hscmBaseColor", attributes.color);
+  });
+
+  list.querySelectorAll(".function-row").forEach((row) => {
+    row.addEventListener("click", () => {
+      isolated = isolated === row.dataset.function ? null : row.dataset.function;
+      apply();
+    });
+  });
+}
+
 async function main() {
   let data;
   try {
@@ -160,23 +283,42 @@ async function main() {
   const graph = new graphology.Graph({ type: "directed" });
   const nodesById = new Map(data.nodes.map((n) => [n.id, n]));
 
+  // Group companies by the job their own filings describe. Position is what
+  // carries this: it has no discriminability ceiling the way colour does, and a
+  // labelled cluster answers "what is this company for?" at a glance, which is
+  // the question the map exists to answer.
+  const labels = data.meta?.function_labels || {};
+  const present = Object.keys(labels).filter((key) =>
+    data.nodes.some((node) => (node.function || "unstated") === key)
+  );
+  const anchors = new Map(
+    present.map((key, index) => {
+      const angle = (2 * Math.PI * index) / present.length - Math.PI / 2;
+      return [key, { x: Math.cos(angle) * 100, y: Math.sin(angle) * 100 }];
+    })
+  );
+  const functionOf = (node) => (node.function || "unstated");
+
   data.nodes.forEach((node, index) => {
-    const angle = (2 * Math.PI * index) / data.nodes.length;
+    const anchor = anchors.get(functionOf(node)) || { x: 0, y: 0 };
+    // Deterministic jitter: the same dataset must lay out the same way twice.
+    const spread = 18;
+    const offset = (index * 2.399963); // golden angle, so groups fan out evenly
     graph.addNode(node.id, {
-      // Seeded on a circle so ForceAtlas2 has a deterministic starting point;
-      // a random layout makes the same dataset look different on every load.
-      x: Math.cos(angle) * 10,
-      y: Math.sin(angle) * 10,
+      x: anchor.x + Math.cos(offset) * spread,
+      y: anchor.y + Math.sin(offset) * spread,
       size: node.is_seed ? 14 : 8,
       label: node.canonical_name,
-      // A company named in a filing but filing nothing itself gets its own
-      // colour: it is in the graph on someone else's disclosure, and nothing
-      // it says can ever corroborate or contradict the edge.
+      // Colour answers one question: can this company's word be checked? A
+      // company named in a filing but filing nothing itself is in the graph on
+      // someone else's disclosure, and nothing it says can ever corroborate or
+      // contradict the edge.
       color: node.is_seed
         ? SEED_COLOR
         : node.has_sec_filings === false
           ? NON_FILER_COLOR
           : SUPPLIER_COLOR,
+      hscmFunction: functionOf(node),
     });
   });
 
@@ -192,8 +334,20 @@ async function main() {
   });
 
   forceAtlas2.assign(graph, {
-    iterations: 300,
-    settings: { ...forceAtlas2.inferSettings(graph), gravity: 1.4, scalingRatio: 12 },
+    iterations: 220,
+    settings: { ...forceAtlas2.inferSettings(graph), gravity: 1.1, scalingRatio: 14 },
+  });
+
+  // ForceAtlas2 optimises for edges, not for grouping, so it pulls suppliers in
+  // around whoever buys from them and the clusters dissolve. Blending each node
+  // back toward its group keeps both readings: the cluster tells you the job,
+  // the remaining pull tells you who it trades with.
+  const PULL = 0.55;
+  graph.forEachNode((id, attributes) => {
+    const anchor = anchors.get(attributes.hscmFunction);
+    if (!anchor) return;
+    graph.setNodeAttribute(id, "x", attributes.x * (1 - PULL) + anchor.x * PULL);
+    graph.setNodeAttribute(id, "y", attributes.y * (1 - PULL) + anchor.y * PULL);
   });
 
   const renderer = new Sigma(graph, el("graph"), {
@@ -215,6 +369,15 @@ async function main() {
     const found = nodesById.get(node);
     if (found) renderNode(found, data);
   });
+
+  // Sigma fits the nodes to the canvas; the labels hang off them and get cut at
+  // the edges. Pull the camera back so names on the outermost companies are
+  // readable, which for a map whose whole point is naming companies is not a
+  // detail.
+  renderer.getCamera().setState({ ratio: 1.5 });
+
+  buildClusterLabels(renderer, graph, present, labels, anchors);
+  buildLegend(present, labels, graph, renderer);
 
   window.__graph = { graph, renderer, data }; // handle for tests and console work
 }

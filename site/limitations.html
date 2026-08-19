@@ -62,10 +62,18 @@
 
 <h3>Named in someone else's filing &mdash; these <em>are</em> in the graph</h3>
 <p>
-  Microsoft's 10-K names OpenAI. OpenAI is private and files nothing, so SEC's registry
-  has no identifier for it &mdash; but the sentence is citable, which is the test this
-  project actually applies. It appears as a node with no CIK, drawn in a distinct colour,
-  and its entry says so. Anthropic, xAI, SpaceX and Databricks fall in the same class.
+  Microsoft's 10-K names OpenAI. OpenAI files nothing with the SEC, so SEC's registry has
+  no identifier for it &mdash; but the sentence is citable, which is the test this project
+  actually applies. It appears as a node with no CIK, drawn in a distinct colour, and its
+  entry says so. Any company in that position joins the graph the same way.
+</p>
+<p class="hint">
+  An earlier version of this page listed other companies here as examples of private
+  firms. That list was written from memory rather than from a filing, and at least one of
+  those companies had since gone public &mdash; which is exactly the failure this project
+  is built to avoid, on the page that explains why. Whether a company files with the SEC
+  is now only ever asserted about companies actually in the dataset, where it is a fact we
+  checked rather than something we recalled.
 </p>
 <p>
   So do <strong>Samsung Electronics and SK Hynix</strong>, for a different reason: they are
@@ -153,6 +161,37 @@
     <strong>Which filings are read is a choice, and it shapes the map.</strong> Companies
     whose filings nobody reads here can only appear if someone else names them. The list of
     filers read is in <code>config.py</code> and changes as the project grows.
+  </p>
+</div>
+
+<h2>What each company does</h2>
+<p>
+  Companies are grouped on the map by job &mdash; wafer fabrication, assembly and test,
+  memory, and so on. That grouping is derived only from the words filings use. TSMC sits
+  under wafer fabrication because Broadcom's 10-K says
+  &ldquo;front-end wafer manufacturing&rdquo; and Credo's says &ldquo;semiconductor wafer
+  production&rdquo;, not because it is common knowledge that TSMC is a foundry. A company
+  no filing describes is grouped under <em>not stated</em> rather than given a plausible
+  guess.
+</p>
+<p>
+  Two consequences worth knowing. A company is described <em>as its customers describe
+  it</em>: NVIDIA's 10-K says Hon Hai performs &ldquo;assembly, testing and packaging&rdquo;,
+  so Hon Hai appears under assembly and test, even though it is one of the largest
+  electronics manufacturers in the world and does far more than that. And a company that
+  supplies nobody in this dataset has no described job at all &mdash; which is why the
+  hyperscalers themselves sit under <em>not stated</em>. Nobody's filing here says what
+  they sell.
+</p>
+<div class="callout">
+  <p>
+    <strong>Colour on the map answers one question only: can this company's word be
+    checked?</strong> Blue files with the SEC, so its own filings can corroborate or
+    contradict an edge. Green files nothing, and is present entirely on someone else's
+    account. Orange is one of the buyers the map is built around. Colour is not used for
+    what a company does, because no palette can keep six categories reliably apart for
+    colour-blind readers when any two nodes might sit side by side &mdash; that job is
+    done by position and a label instead.
   </p>
 </div>
 

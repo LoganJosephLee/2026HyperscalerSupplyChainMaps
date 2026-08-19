@@ -293,3 +293,55 @@ def test_cypher_keys_on_node_key_so_null_ciks_do_not_collide():
     assert "node_key IS UNIQUE" in statements[0][0]
     keys = {p["node_key"] for s, p in statements if "MERGE (c:Company" in s}
     assert {"name-openai", "name-xai"} <= keys
+
+
+# --- what a company does ----------------------------------------------------
+def test_function_comes_from_the_phrases_filings_used(resolver):
+    graph = build_graph(
+        [
+            record(product_or_service="front-end wafer manufacturing"),
+            record(product_or_service="semiconductor wafer production",
+                   sentence="A second filing sentence describing the same foundry relationship."),
+        ],
+        resolver,
+        seed_ciks=set(),
+    )
+    company = graph.companies[NVDA_K]
+    assert company.function == "fabrication"
+    assert "front-end wafer manufacturing" in company.function_phrases
+
+
+def test_a_company_nobody_described_stays_unstated(resolver):
+    graph = build_graph([record(product_or_service=None)], resolver, seed_ciks=set())
+    assert graph.companies[NVDA_K].function == "unstated"
+
+
+def test_a_buyer_is_not_given_its_suppliers_function(resolver):
+    """What a company buys says nothing about what it does."""
+    graph = build_graph([record(product_or_service="memory")], resolver, seed_ciks=set())
+    assert graph.companies[NVDA_K].function == "memory"   # the supplier
+    assert graph.companies[MSFT_K].function == "unstated"  # the buyer
+
+
+def test_the_most_common_reading_wins(resolver):
+    """Broadcom lists TSMC among its assembly contractors as well as its foundries.
+
+    One offhand mention should not turn a foundry into a packaging house.
+    """
+    records = [
+        record(product_or_service="wafer fabrication", sentence="Sentence one about wafer work."),
+        record(product_or_service="semiconductor wafers", sentence="Sentence two about wafers."),
+        record(product_or_service="assembly and test", sentence="Sentence three about assembly."),
+    ]
+    graph = build_graph(records, resolver, seed_ciks=set())
+    assert graph.companies[NVDA_K].function == "fabrication"
+
+
+def test_export_carries_function_and_its_labels(tmp_path, resolver):
+    graph = build_graph([record(product_or_service="memory")], resolver, seed_ciks=set())
+    export(graph, [record()], tmp_path)
+    payload = json.loads((tmp_path / "graph.json").read_text(encoding="utf-8"))
+    node = next(n for n in payload["nodes"] if n["id"] == NVDA_K)
+    assert node["function"] == "memory"
+    assert payload["meta"]["function_labels"]["memory"] == "Memory"
+    assert payload["meta"]["function_labels"]["unstated"]

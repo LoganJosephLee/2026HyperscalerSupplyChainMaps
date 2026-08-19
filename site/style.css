@@ -5,9 +5,9 @@
   --line: #2a2f3a;
   --text: #e6e8ec;
   --muted: #9aa3b2;
-  --seed: #f2a541;
-  --supplier: #6aa9ff;
-  --nonfiler: #c39bd3;   /* matches NON_FILER_COLOR in app.js */
+  --seed: #d95926;
+  --supplier: #3987e5;
+  --nonfiler: #199e70;   /* matches NON_FILER_COLOR in app.js */
   --accent: #7ee0a0;
   --warn: #ffb4a2;
   --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
@@ -73,6 +73,10 @@ main { display: grid; grid-template-columns: 1fr 400px; height: calc(100vh - 57p
   position: absolute;
   left: 14px;
   bottom: 14px;
+  /* Sigma lays its own canvases over the whole container, and they swallow every
+     click aimed at anything underneath. Without this the legend renders
+     perfectly and does nothing when clicked. */
+  z-index: 4;
   background: rgba(23, 26, 33, 0.92);
   border: 1px solid var(--line);
   border-radius: 8px;
@@ -166,3 +170,58 @@ blockquote::after { content: "\201D"; color: var(--muted); }
 table { border-collapse: collapse; width: 100%; font-size: 14px; margin: 16px 0; }
 th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
 th { color: var(--muted); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em; }
+
+/* --- function clusters ----------------------------------------------------- */
+.cluster-layer { position: absolute; inset: 0; pointer-events: none; z-index: 2; }
+
+.cluster-label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  white-space: nowrap;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: rgba(15, 17, 21, 0.78);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 3px 10px;
+  transition: opacity 120ms ease;
+}
+
+.legend-head {
+  margin: 12px 0 6px;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.legend-head:first-child { margin-top: 0; }
+
+.function-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 3px 6px;
+  margin-left: -6px;
+  border: 0;
+  border-radius: 6px;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.function-row:hover { background: rgba(255, 255, 255, 0.06); }
+.function-row.active { background: rgba(57, 135, 229, 0.18); color: var(--text); }
+
+.function-row .pin {
+  width: 10px;
+  height: 10px;
+  flex: 0 0 10px;
+  border: 1px solid var(--muted);
+  border-radius: 3px;
+}
+.function-row.active .pin { border-color: var(--supplier); background: var(--supplier); }
