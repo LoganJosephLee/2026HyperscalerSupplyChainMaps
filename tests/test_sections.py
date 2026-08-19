@@ -13,6 +13,7 @@ import pytest
 from hscm.sections import (
     EXTRACTION_KEYS,
     document_text,
+    extraction_sections,
     find_concentration_passages,
     normalize_text,
     split_items,
@@ -504,3 +505,20 @@ def test_table_rows_of_figures_survive():
     html = "<table><tr><td>Revenue</td><td>1,234</td><td>5,678</td></tr></table>"
     text = document_text(html)
     assert "1,234" in text and "5,678" in text
+
+
+def test_a_split_that_misses_the_document_is_measurable():
+    """ASML's 20-F located one 38,000-char section in a 1,400,000-char filing.
+
+    Every per-section check passed: the section it found was a reasonable size
+    and looked like risk factors. What it had actually found was the 20-F
+    cross-reference table at the very end of the annual report. The only signal
+    that anything was wrong is how little of the filing was being read.
+    """
+    body = "Item 1. Business\n" + ("Business prose. " * 200)
+    filler = "Unrelated exhibit prose that no item marker introduces. " * 4000
+    text = normalize_text(body + "\n" + filler)
+
+    sections = split_items(text, "10-K")
+    covered = sum(len(t) for _, _, t in extraction_sections(sections, "10-K"))
+    assert covered / len(text) < 0.10

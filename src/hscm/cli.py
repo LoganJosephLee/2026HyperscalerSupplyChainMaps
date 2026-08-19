@@ -31,6 +31,12 @@ from .verify import verify_records, write_report
 
 LIST_LIMIT = 40  # how many review rows to echo before pointing at the file
 
+# A 10-K's Business, Risk Factors and financial statements are normally a third
+# to two thirds of the document. Well under a tenth means the split found
+# something other than the sections it was looking for.
+MIN_COVERAGE_SHARE = 0.10
+MIN_DOCUMENT_FOR_COVERAGE_CHECK = 100_000
+
 _ACCESSION_IN_URL = re.compile(r"(\d{10}\d{2}\d{6}|\d{10}-\d{2}-\d{6})")
 
 
@@ -148,6 +154,18 @@ def cmd_sections(args: argparse.Namespace) -> int:
                     print(f"    !! {key} is only {sections[key].char_count:,} chars "
                           f"— check the split")
                     problems += 1
+
+        # How much of the filing extraction will actually read. Every per-section
+        # check can pass while the split still misses the document: ASML's 20-F
+        # located one 38,000-character section in a 1,400,000-character filing —
+        # the cross-reference table at the very end rather than the report itself
+        # — and nothing complained, because the section it did find looked fine.
+        covered = sum(len(text_) for _, _, text_ in extraction_sections(sections, form))
+        share = covered / len(text) if text else 0.0
+        print(f"    extraction reads {covered:,} of {len(text):,} chars ({share:.0%})")
+        if len(text) > MIN_DOCUMENT_FOR_COVERAGE_CHECK and share < MIN_COVERAGE_SHARE:
+            print(f"    !! only {share:.0%} of this filing is being read — check the split")
+            problems += 1
 
         print(f"    concentration passages: {len(passages)}")
         for passage in passages[: args.show_passages]:
