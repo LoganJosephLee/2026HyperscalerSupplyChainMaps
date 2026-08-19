@@ -515,10 +515,14 @@ def test_a_split_that_misses_the_document_is_measurable():
     cross-reference table at the very end of the annual report. The only signal
     that anything was wrong is how little of the filing was being read.
     """
-    body = "Item 1. Business\n" + ("Business prose. " * 200)
-    filler = "Unrelated exhibit prose that no item marker introduces. " * 4000
-    text = normalize_text(body + "\n" + filler)
+    # The marker sits near the very end, as ASML's does: everything before it is
+    # a document the splitter has no name for, so what it finds is genuine and
+    # tiny at the same time.
+    filler = "Annual report prose that no item marker introduces. " * 4000
+    tail = "Item 1A. Risk Factors\nRisk prose. " + ("More risk prose. " * 40)
+    text = normalize_text(filler + "\n" + tail)
 
     sections = split_items(text, "10-K")
     covered = sum(len(t) for _, _, t in extraction_sections(sections, "10-K"))
+    assert 0 < covered, "the section really is found — that is what makes this hard to spot"
     assert covered / len(text) < 0.10
