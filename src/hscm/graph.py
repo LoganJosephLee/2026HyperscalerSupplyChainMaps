@@ -26,6 +26,7 @@ from dataclasses import asdict, dataclass, field
 from pathlib import Path
 
 from . import config
+from .functions import FUNCTION_LABELS, UNKNOWN, UNKNOWN_LABEL, classify_phrases
 from .resolve import Resolver
 
 EVIDENCE_FIELDS = (
@@ -61,6 +62,12 @@ class Company:
     lei: str | None = None       # GLEIF enrichment not yet run
     country: str | None = None
     sector: str | None = None
+
+    # What filings say this company supplies. Derived from the product_or_service
+    # phrases on its outgoing edges — never from outside knowledge — so a company
+    # nobody described keeps "unstated" rather than a plausible guess.
+    function: str = UNKNOWN
+    function_phrases: tuple[str, ...] = ()
 
     @property
     def node_id(self) -> str:
@@ -188,7 +195,27 @@ def build_graph(records: list[dict], resolver: Resolver, seed_ciks: set[int]) ->
             edge.seen_statements.add(statement)
             edge.evidence.append(evidence)
 
+    _assign_functions(graph)
     return graph
+
+
+def _assign_functions(graph: Graph) -> None:
+    """Give every supplier the job its own edges describe.
+
+    Only outgoing edges count. What a company buys says nothing about what it
+    does, and a buyer that supplies nobody in this dataset has no described
+    function at all — which is a true statement about our coverage, not a gap
+    to fill in.
+    """
+    phrases: dict[str, list[str | None]] = defaultdict(list)
+    for edge in graph.edges.values():
+        for evidence in edge.evidence:
+            phrases[edge.supplier_key].append(evidence.get("product_or_service"))
+
+    for node_key, company in graph.companies.items():
+        function, kept = classify_phrases(phrases.get(node_key, []))
+        company.function = function
+        company.function_phrases = tuple(dict.fromkeys(kept))
 
 
 # --- export -----------------------------------------------------------------
@@ -209,6 +236,7 @@ def export(graph: Graph, records: list[dict], directory: Path | None = None) -> 
                 1 for c in graph.companies.values() if not c.has_sec_filings
             ),
             "excluded_companies": graph.excluded,
+            "function_labels": {**FUNCTION_LABELS, UNKNOWN: UNKNOWN_LABEL},
             "license": "Source filings are US government works in the public domain.",
         },
         "nodes": [
