@@ -1,0 +1,433 @@
+# Relationships from sources other than the SEC filings the pipeline reads.
+#
+# Rules (README, "Sources"):
+#   * Every claim quotes the source word for word. `hscm verify-web` fetches each
+#     URL and checks the quote is on the page; SEC quotes are also checked
+#     against the cached filings at build time.
+#   * `type` says how strong the source is: sec_filing > company > press.
+#     press = a major news outlet reporting it. `confirmed: false` marks a deal
+#     the companies themselves have not announced.
+#   * `what` is a short plain-English label. It may only restate the quote.
+#   * Direction: `supplier` provides the thing to `buyer`. For `invests_in`
+#     and `finances`, the supplier is the one putting in money.
+#
+# relationship: supplies | manufactures_for | leases_capacity_to | invests_in |
+#               finances | partners_with (no direction stated)
+
+claims:
+
+# --- Power for the hyperscalers -------------------------------------------
+- id: ceg-msft-crane
+  supplier: CEG
+  buyer: MSFT
+  relationship: supplies
+  what: Nuclear power from the restarted Crane Clean Energy Center (Three Mile Island Unit 1), under a 20-year agreement
+  evidence:
+  - quote: Constellation signs its largest-ever power purchase agreement with Microsoft, a deal that will restore TMI Unit 1 to service and keep it online for decades
+    url: https://www.constellationenergy.com/newsroom/2024/Constellation-to-Launch-Crane-Clean-Energy-Center-Restoring-Jobs-and-Carbon-Free-Power-to-The-Grid
+    publisher: Constellation Energy
+    type: company
+    date: 2024-09-20
+  - quote: announced today the signing of a 20-year power purchase agreement with Microsoft that will pave the way for the launch of the Crane Clean Energy Center (CCEC)
+    url: https://www.sec.gov/Archives/edgar/data/1868275/000186827524000058/ceg-202409208kexh991.htm
+    publisher: Constellation Energy 8-K, Exhibit 99.1
+    type: sec_filing
+    date: 2024-09-20
+
+- id: ceg-meta-clinton
+  supplier: CEG
+  buyer: META
+  relationship: supplies
+  what: Clean-energy attributes from the Clinton Clean Energy Center nuclear plant in Illinois, under a 20-year agreement
+  evidence:
+  - quote: Meta is purchasing the plant’s clean energy attributes as part of its commitment to match 100% of its electricity use with clean and renewable energy.
+    url: https://www.constellationenergy.com/newsroom/2025/constellation-meta-sign-20-year-deal-for-clean-reliable-nuclear-energy-in-illinois.html
+    publisher: Constellation Energy
+    type: company
+    date: 2025-06-03
+
+- id: tln-amzn-susquehanna
+  supplier: TLN
+  buyer: AMZN
+  relationship: supplies
+  what: 1,920 MW of power from the Susquehanna nuclear plant for AWS data centers in Pennsylvania
+  amount: 1,920 MW
+  evidence:
+  - quote: Talen Energy has entered into a 1,920-MW power purchase agreement with Amazon Web Services to supply data centers in Pennsylvania from the independent power producer’s majority-owned Susquehanna nuclear power plant, the company said Wednesday.
+    url: https://www.utilitydive.com/news/talen-amazon-aws-susquehanna-nuclear-data-center-t/750440/
+    publisher: Utility Dive
+    type: press
+    date: 2025-06-11
+
+- id: kairos-googl-smr
+  supplier: Kairos Power
+  buyer: GOOGL
+  relationship: supplies
+  what: Power from small modular nuclear reactors Kairos Power is developing, up to 500 MW
+  amount: up to 500 MW
+  evidence:
+  - quote: Today, we’re building on these efforts by signing the world’s first corporate agreement to purchase nuclear energy from multiple small modular reactors (SMRs) to be developed by Kairos Power.
+    url: https://blog.google/outreach-initiatives/sustainability/google-kairos-power-nuclear-energy-agreement/
+    publisher: Google
+    type: company
+    date: 2024-10-14
+  - quote: Overall, this deal will enable up to 500 MW of new 24/7 carbon-free power to U.S. electricity grids and help more communities benefit from clean and affordable nuclear power.
+    url: https://blog.google/company-news/outreach-and-initiatives/sustainability/google-kairos-power-nuclear-energy-agreement/
+    publisher: Google
+    type: company
+    date: 2024-10-14
+
+- id: nee-googl-duane-arnold
+  supplier: NEE
+  buyer: GOOGL
+  relationship: supplies
+  what: Nuclear power from the restarted Duane Arnold plant in Iowa, under a 25-year agreement
+  evidence:
+  - quote: Google's 25-year agreement to purchase carbon-free nuclear energy from the Duane Arnold plant
+    url: https://www.investor.nexteraenergy.com/news-and-events/news-releases/2025/10-27-2025-203948689
+    publisher: NextEra Energy
+    type: company
+    date: 2025-10-27
+  - quote: The power purchase agreement with Google enables the investment to restart the plant
+    url: https://www.investor.nexteraenergy.com/news-and-events/news-releases/2025/10-27-2025-203948689
+    publisher: NextEra Energy
+    type: company
+    date: 2025-10-27
+
+# --- Neoclouds renting GPUs to the hyperscalers ------------------------------
+- id: nbis-msft
+  supplier: NBIS
+  buyer: MSFT
+  relationship: leases_capacity_to
+  what: Dedicated GPU capacity from Nebius's data center in Vineland, New Jersey, in a deal worth $17.4 billion
+  amount: $17.4 billion
+  evidence:
+  - quote: Under this multi-year agreement, Nebius will deliver dedicated capacity to Microsoft from its new data center
+    url: https://nebius.com/newsroom/nebius-announces-multi-billion-dollar-agreement-with-microsoft-for-ai-infrastructure
+    publisher: Nebius
+    type: company
+    date: 2025-09-08
+  - quote: Nebius Group said on Monday it will provide Microsoft with GPU infrastructure capacity, in a deal worth $17.4 billion, over a five-year term
+    url: https://www.denvergazette.com/?p=238093
+    publisher: Reuters (via The Denver Gazette)
+    type: press
+    date: 2025-09-08
+
+- id: nbis-meta
+  supplier: NBIS
+  buyer: META
+  relationship: leases_capacity_to
+  what: AI infrastructure worth about $3 billion over five years
+  amount: about $3 billion
+  evidence:
+  - quote: new agreement to deliver AI infrastructure to Meta valued at approximately $3 billion over 5 years.
+    url: https://www.sec.gov/Archives/edgar/data/1513845/000110465925109806/tm2530882d1_ex99-1.htm
+    publisher: Nebius 6-K, Exhibit 99.1
+    type: sec_filing
+    date: 2025-11-11
+
+- id: iren-msft
+  supplier: IREN
+  buyer: MSFT
+  relationship: leases_capacity_to
+  what: Access to NVIDIA GB300 GPUs over five years, about $9.7 billion
+  amount: about $9.7 billion
+  evidence:
+  - quote: Under the agreement, IREN will provide Microsoft with access to NVIDIA GB300 GPUs over a five-year term, with a total contract value of approximately $9.7 billion, including a 20% prepayment.
+    url: https://irisenergy.gcs-web.com/news-releases/news-release-details/iren-secures-97bn-ai-cloud-contract-microsoft
+    publisher: IREN
+    type: company
+    date: 2025-11-03
+
+- id: dell-iren
+  supplier: DELL
+  buyer: IREN
+  relationship: supplies
+  what: The GPUs and equipment for IREN's Microsoft contract, about $5.8 billion
+  amount: about $5.8 billion
+  evidence:
+  - quote: IREN has also entered into an agreement with Dell Technologies to purchase the GPUs and ancillary equipment for approximately $5.8 billion.
+    url: https://irisenergy.gcs-web.com/news-releases/news-release-details/iren-secures-97bn-ai-cloud-contract-microsoft
+    publisher: IREN
+    type: company
+    date: 2025-11-03
+
+- id: lambda-msft
+  supplier: Lambda
+  buyer: MSFT
+  relationship: leases_capacity_to
+  what: AI infrastructure with tens of thousands of NVIDIA GPUs, in a multibillion-dollar deal
+  evidence:
+  - quote: Lambda, the Superintelligence Cloud, today announced a multibillion-dollar agreement with Microsoft to deploy AI infrastructure powered by tens of thousands of NVIDIA GPUs, including NVIDIA GB300 NVL72 systems.
+    url: https://lambda.ai/blog/lambda-announces-multibillion-dollar-agreement-with-microsoft-to-deploy-ai-infrastructure-powered-by-tens-of-thousands-of-nvidia-gpus
+    publisher: Lambda
+    type: company
+    date: 2025-11-03
+
+- id: crwv-nvda-capacity
+  supplier: CRWV
+  buyer: NVDA
+  relationship: leases_capacity_to
+  what: NVIDIA agreed to buy any CoreWeave capacity left unsold, through April 2032 ($6.3 billion initial value)
+  amount: $6.3 billion initial value
+  evidence:
+  - quote: On September 9, 2025, CoreWeave, Inc. (the “Company”) and NVIDIA Corporation (“NVIDIA”) entered into a new order form (the “Order Form”) under the existing Master Services Agreement (“MSA”) dated as of April 10, 2023
+    url: https://www.sec.gov/Archives/edgar/data/1769628/000176962825000047/crwv-20250909.htm
+    publisher: CoreWeave 8-K
+    type: sec_filing
+    date: 2025-09-15
+  - quote: The latest order, which requires Nvidia to purchase any unsold capacity through April 13, 2032, builds on an April 2023 agreement.
+    url: https://www.thestar.com.my/tech/tech-news/2025/09/15/coreweave-nvidia-sign-new-63-billion-deal-for-cloud-computing-capacity
+    publisher: Reuters (via The Star)
+    type: press
+    date: 2025-09-15
+
+# --- Hyperscalers selling compute to the AI labs ----------------------------
+- id: msft-openai-azure
+  supplier: MSFT
+  buyer: OpenAI
+  relationship: supplies
+  what: An additional $250 billion of Azure cloud services
+  amount: $250 billion (incremental)
+  evidence:
+  - quote: OpenAI has contracted to purchase an incremental $250B of Azure services, and Microsoft will no longer have a right of first refusal to be OpenAI’s compute provider.
+    url: https://blogs.microsoft.com/blog/2025/10/28/the-next-chapter-of-the-microsoft-openai-partnership/
+    publisher: Microsoft
+    type: company
+    date: 2025-10-28
+
+- id: msft-anthropic-azure
+  supplier: MSFT
+  buyer: Anthropic
+  relationship: supplies
+  what: $30 billion of Azure compute capacity
+  amount: $30 billion
+  evidence:
+  - quote: Anthropic has committed to purchase $30 billion of Azure compute capacity and to contract additional compute capacity up to one gigawatt.
+    url: https://blogs.microsoft.com/blog/2025/11/18/microsoft-nvidia-and-anthropic-announce-strategic-partnerships/
+    publisher: Microsoft
+    type: company
+    date: 2025-11-18
+
+- id: nvda-anthropic
+  supplier: NVDA
+  buyer: Anthropic
+  relationship: partners_with
+  what: A technology partnership between NVIDIA and Anthropic
+  evidence:
+  - quote: For the first time, NVIDIA and Anthropic are establishing a deep technology partnership to support Anthropic’s future growth.
+    url: https://blogs.microsoft.com/blog/2025/11/18/microsoft-nvidia-and-anthropic-announce-strategic-partnerships/
+    publisher: Microsoft
+    type: company
+    date: 2025-11-18
+
+- id: googl-anthropic-tpu
+  supplier: GOOGL
+  buyer: Anthropic
+  relationship: supplies
+  what: Google Cloud services including up to one million TPUs
+  evidence:
+  - quote: Today, we are announcing that we plan to expand our use of Google Cloud technologies, including up to one million TPUs, dramatically increasing our compute resources as we continue to push the boundaries of AI research and product development.
+    url: https://www.anthropic.com/news/expanding-our-use-of-google-cloud-tpus-and-services
+    publisher: Anthropic
+    type: company
+    date: 2025-10-23
+
+- id: amzn-anthropic-rainier
+  supplier: AMZN
+  buyer: Anthropic
+  relationship: supplies
+  what: Project Rainier, an AWS cluster of Trainium2 chips; Claude now runs on more than 1 million of them
+  evidence:
+  - quote: Anthropic is actively using Project Rainier to build and deploy its industry-leading AI model, Claude, now on more than 1 million Trainium2 chips.
+    url: https://www.aboutamazon.com/news/aws/aws-project-rainier-ai-trainium-chips-compute-cluster
+    publisher: Amazon
+    type: company
+    date: 2025-10-29
+
+- id: amzn-openai
+  supplier: AMZN
+  buyer: OpenAI
+  relationship: supplies
+  what: AWS infrastructure for OpenAI's AI workloads, in a $38 billion deal
+  amount: $38 billion
+  evidence:
+  - quote: Today, Amazon Web Services (AWS) and OpenAI announced a multi-year, strategic partnership that provides AWS’s world-class infrastructure to run and scale OpenAI’s core artificial intelligence (AI) workloads starting immediately.
+    url: https://openai.com/index/aws-and-openai-partnership/
+    publisher: OpenAI
+    type: company
+    date: 2025-11-03
+  - quote: OpenAI and Amazon have signed a US$38 billion deal that enables the ChatGPT maker to run its artificial intelligence systems on Amazon’s cloud computing services.
+    url: https://www.bnnbloomberg.ca/business/technology/2025/11/03/openai-and-amazon-sign-us38b-deal-for-ai-computing-power/
+    publisher: Associated Press (via BNN Bloomberg)
+    type: press
+    date: 2025-11-03
+
+- id: orcl-openai-stargate
+  supplier: ORCL
+  buyer: OpenAI
+  relationship: supplies
+  what: 4.5 gigawatts of additional Stargate data center capacity in the U.S.
+  amount: 4.5 GW
+  evidence:
+  - quote: Oracle and OpenAI have entered an agreement to develop 4.5 gigawatts of additional Stargate data center capacity in the U.S.
+    url: https://openai.com/index/stargate-advances-with-partnership-with-oracle/
+    publisher: OpenAI
+    type: company
+    date: 2025-07-22
+
+- id: googl-meta-cloud
+  supplier: GOOGL
+  buyer: META
+  relationship: supplies
+  what: Google Cloud servers, storage and networking for Meta, reported at more than $10 billion over six years
+  amount: more than $10 billion (reported)
+  confirmed: false
+  evidence:
+  - quote: Google has struck a six-year cloud computing deal with Meta Platforms worth more than $10 billion, a source familiar with the matter told Reuters on Thursday
+    url: https://www.ksl.com/article/news/business/meta-signs-over-10-billion-cloud-deal-with-google-source-says/51364070
+    publisher: Reuters (via KSL.com)
+    type: press
+    date: 2025-08-21
+
+# --- Chips for the hyperscalers and labs -----------------------------------
+- id: amd-orcl-mi450
+  supplier: AMD
+  buyer: ORCL
+  relationship: supplies
+  what: 50,000 AMD Instinct MI450 GPUs for an OCI supercluster, starting in Q3 2026
+  amount: 50,000 GPUs
+  evidence:
+  - quote: Beginning in calendar Q3 2026, Oracle will be the first hyperscaler to offer a publicly available AI supercluster powered by 50,000 AMD Instinct MI450 Series GPUs
+    url: https://www.oracle.com/news/announcement/ai-world-oracle-and-amd-expand-partnership-to-help-customers-achieve-next-generation-ai-scale-2025-10-14/
+    publisher: Oracle
+    type: company
+    date: 2025-10-14
+
+- id: nvda-openai-10gw
+  supplier: NVDA
+  buyer: OpenAI
+  relationship: supplies
+  what: At least 10 gigawatts of NVIDIA systems (a letter of intent, not a final contract)
+  amount: 10 GW (letter of intent)
+  evidence:
+  - quote: OpenAI and NVIDIA today announced a letter of intent for a landmark strategic partnership to deploy at least 10 gigawatts of NVIDIA systems for OpenAI’s next-generation AI infrastructure
+    url: https://nvidianews.nvidia.com/news/openai-and-nvidia-announce-strategic-partnership-to-deploy-10gw-of-nvidia-systems
+    publisher: NVIDIA
+    type: company
+    date: 2025-09-22
+
+- id: avgo-openai-10gw
+  supplier: AVGO
+  buyer: OpenAI
+  relationship: manufactures_for
+  what: 10 gigawatts of custom AI accelerators that OpenAI designs and Broadcom develops and deploys
+  amount: 10 GW
+  evidence:
+  - quote: OpenAI and Broadcom today announced a collaboration for 10 gigawatts of custom AI accelerators.
+    url: https://openai.com/index/openai-and-broadcom-announce-strategic-collaboration/
+    publisher: OpenAI
+    type: company
+    date: 2025-10-13
+  - quote: OpenAI will design the accelerators and systems, which will be developed and deployed in partnership with Broadcom.
+    url: https://openai.com/index/openai-and-broadcom-announce-strategic-collaboration/
+    publisher: OpenAI
+    type: company
+    date: 2025-10-13
+
+- id: vrt-nvda
+  supplier: VRT
+  buyer: NVDA
+  relationship: partners_with
+  what: Power and cooling designs for NVIDIA's next AI systems
+  evidence:
+  - quote: Our partnership with NVIDIA supports the development of advanced power and thermal infrastructure aligned with next-generation AI and high-performance computing architectures
+    url: https://www.sec.gov/Archives/edgar/data/1674101/000167410126000008/vrt-20251231.htm
+    publisher: Vertiv 10-K
+    type: sec_filing
+    date: 2026-02-13
+
+# --- Buildings and money ----------------------------------------------------
+- id: dlr-orcl
+  supplier: DLR
+  buyer: ORCL
+  relationship: leases_capacity_to
+  what: Data center space; Oracle is Digital Realty's second-largest tenant, 9.0% of its recurring revenue
+  amount: 9.0% of DLR annualized recurring revenue
+  evidence:
+  - quote: Oracle Corporation 424,130 9.0 %
+    context: Digital Realty's table of its 20 largest customers by annualized recurring revenue (dollars in thousands), as of December 31, 2025
+    url: https://www.sec.gov/Archives/edgar/data/1297996/000110465926015365/dlr-20251231x10k.htm
+    publisher: Digital Realty 10-K
+    type: sec_filing
+    date: 2026-02-13
+
+- id: dlr-meta
+  supplier: DLR
+  buyer: META
+  relationship: leases_capacity_to
+  what: Data center space; 1.6% of Digital Realty's recurring revenue
+  amount: 1.6% of DLR annualized recurring revenue
+  evidence:
+  - quote: Meta Platforms, Inc. 73,494 1.6 %
+    context: Digital Realty's table of its 20 largest customers by annualized recurring revenue (dollars in thousands), as of December 31, 2025
+    url: https://www.sec.gov/Archives/edgar/data/1297996/000110465926015365/dlr-20251231x10k.htm
+    publisher: Digital Realty 10-K
+    type: sec_filing
+    date: 2026-02-13
+
+- id: owl-meta-hyperion
+  supplier: OWL
+  buyer: META
+  relationship: finances
+  what: Blue Owl funds co-own and help pay for Meta's Hyperion data center campus in Louisiana (about $27 billion total)
+  amount: about $27 billion total development cost
+  evidence:
+  - quote: On October 21, 2025, Meta and funds managed by Blue Owl Capital entered into a joint venture agreement which will develop and own the Hyperion data center campus.
+    url: https://about.fb.com/news/2025/10/meta-blue-owl-capital-develop-hyperion-data-center/
+    publisher: Meta
+    type: company
+    date: 2025-10-21
+  - quote: The parties have committed to fund their respective pro rata share of the approximately $27 billion in total development costs for the buildings and long-lived power, cooling, and connectivity infrastructure at the campus.
+    url: https://about.fb.com/news/2025/10/meta-blue-owl-capital-develop-hyperion-data-center/
+    publisher: Meta
+    type: company
+    date: 2025-10-21
+
+- id: msft-openai-stake
+  supplier: MSFT
+  buyer: OpenAI
+  relationship: invests_in
+  what: Microsoft's stake in OpenAI, valued at about $135 billion
+  amount: about $135 billion stake
+  evidence:
+  - quote: Following the recapitalization, Microsoft holds an investment in OpenAI Group PBC valued at approximately $135 billion, representing roughly 27 percent on an as-converted diluted basis, inclusive of all owners – employees, investors, and the OpenAI Foundation.
+    url: https://blogs.microsoft.com/blog/2025/10/28/the-next-chapter-of-the-microsoft-openai-partnership/
+    publisher: Microsoft
+    type: company
+    date: 2025-10-28
+
+- id: nvda-openai-invest
+  supplier: NVDA
+  buyer: OpenAI
+  relationship: invests_in
+  what: NVIDIA intends to invest up to $100 billion in OpenAI as the systems are deployed
+  amount: up to $100 billion (intended)
+  evidence:
+  - quote: To support this deployment including datacenter and power capacity, NVIDIA intends to invest up to $100 billion in OpenAI as the new NVIDIA systems are deployed.
+    url: https://openai.com/blog/openai-nvidia-systems-partnership/
+    publisher: OpenAI
+    type: company
+    date: 2025-09-22
+
+- id: amzn-anthropic-invest
+  supplier: AMZN
+  buyer: Anthropic
+  relationship: invests_in
+  what: Amazon's investments in Anthropic, recorded in its 10-K
+  evidence:
+  - quote: We record our available-for-sale convertible debt investments in private companies at fair value, which primarily relate to Anthropic.
+    url: https://www.sec.gov/Archives/edgar/data/1018724/000101872426000004/amzn-20251231.htm
+    publisher: Amazon 10-K
+    type: sec_filing
+    date: 2026-02-06

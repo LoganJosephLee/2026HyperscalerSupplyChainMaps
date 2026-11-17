@@ -1,12 +1,40 @@
 {
   "meta": {
-    "data_as_of": "2026-06-15",
-    "node_count": 17,
-    "edge_count": 19,
-    "evidence_count": 32,
-    "unresolved_record_count": 0,
-    "non_filer_node_count": 10,
-    "excluded_companies": {},
+    "data_as_of": "2026-08-18",
+    "node_count": 59,
+    "edge_count": 81,
+    "evidence_count": 146,
+    "unresolved_record_count": 30,
+    "non_filer_node_count": 15,
+    "excluded_companies": {
+      "Sony PlayStation\u00ae 5": "A product. Game consoles are outside this map.",
+      "Microsoft\u00ae Xbox Series S and X": "A product. Game consoles are outside this map.",
+      "Valve Steam Machine PC": "A product. Game consoles are outside this map.",
+      "Higon Information Technology Co., Ltd.": "AMD's partner in a China licensing joint venture; outside the data centre supply chain.",
+      "ATMP JVs": "AMD's assembly-and-test joint ventures with Tongfu; the records naming Tongfu carry the relationship.",
+      "THATIC JV": "AMD's China joint venture with Higon; licensing, not part of the data centre supply chain.",
+      "ATMP JV": "Same joint venture as 'ATMP JVs'.",
+      "Honeywell Inc.": "Celestica customer outside the data centre supply chain.",
+      "Huawei": "The sentence says shipments stopped; no current relationship.",
+      "our platform": "Not a company.",
+      "Taiwan": "A place, not a company.",
+      "MagAI Ventures": "Investment arrangement, not supply.",
+      "MacDermid Enthone Inc.": "Terminated agreement.",
+      "Infineum": "Sale of a business, not supply.",
+      "Mercedes-Benz": "Truck trials; outside this map.",
+      "Harbinger Motors": "Investment; outside this map.",
+      "Returnity": "Packaging pilot; outside this map.",
+      "Husqvarna": "Outside this map.",
+      "our subsidiary in Thailand": "Intra-company arrangement.",
+      "Aero Alliance": "Aviation joint venture; outside this map.",
+      "Prolec GE": "Transformer joint venture; GE Vernova itself is in the map.",
+      "LUMA Energy, LLC": "Puerto Rico utility services; outside this map.",
+      "Ablecom and Compuware": "Two companies in one phrase; each is resolved on its own.",
+      "Leadtek": "An NVIDIA reseller for graphics cards; outside the data centre supply chain.",
+      "Corporate Venture": "An unnamed joint venture.",
+      "Xintec": "Historical TSMC investment; not a supply statement.",
+      "United States Postal Service": "Postal contract with FedEx; outside the data centre supply chain."
+    },
     "function_labels": {
       "fabrication": "Wafer fabrication",
       "packaging": "Assembly, test & packaging",
@@ -14,11 +42,73 @@
       "systems": "Systems & contract manufacturing",
       "interconnect": "Interconnect, optics & networking",
       "silicon": "Chips, IP & design",
+      "equipment": "Chipmaking equipment",
+      "materials": "Materials & chemicals",
+      "power": "Power & electrical",
+      "cooling": "Cooling & thermal",
+      "construction": "Construction & site works",
+      "datacenter": "Data centre space & capacity",
+      "carrier": "Network carriers & bandwidth",
+      "logistics": "Freight, shipping & logistics",
+      "software": "Software & tooling",
+      "services": "Services & other",
       "unstated": "Not stated in any filing"
+    },
+    "function_descriptions": {
+      "fabrication": "The factories that actually print chips onto silicon wafers. Almost nobody owns one; almost everybody depends on one.",
+      "packaging": "Takes finished wafers, cuts them up, wraps each chip in its casing and tests that it works. The unglamorous step between a wafer and a part you can solder down.",
+      "memory": "The chips that hold data while the machine is working. AI training runs are limited by memory at least as often as by processors.",
+      "systems": "Bolts the parts into finished machines \u2014 servers, racks, the boxes that fill a data centre hall.",
+      "interconnect": "Moves data between chips, between machines, and between halls: cables, optics, switches. At AI scale this is a bottleneck in its own right.",
+      "silicon": "Designs the chips, or owns the designs. A company here may not manufacture anything at all.",
+      "equipment": "Sells the machines that fabs use to make chips. A step further upstream than most people ever look.",
+      "materials": "The physical inputs: blank wafers, gases, chemicals, the substrate a chip is mounted on.",
+      "power": "Gets electricity into the building and keeps it there \u2014 transformers, switchgear, backup generators. Increasingly the thing that decides where a data centre can be built at all.",
+      "cooling": "Removes the heat. An AI hall turns nearly all the power it draws into heat that has to go somewhere.",
+      "construction": "Builds the building.",
+      "datacenter": "Rents out the space, power and cooling rather than the computers \u2014 the landlords of the industry.",
+      "carrier": "Carries the traffic in and out over long distances: fibre routes, bandwidth, subsea cable.",
+      "logistics": "Physically moves the goods \u2014 freight, shipping, customs, warehousing. Every other category on this list depends on it and almost nobody names it in a filing.",
+      "software": "The tools used to design, run or operate the hardware.",
+      "services": "Everything else a filing described: installation, maintenance, consulting.",
+      "unstated": "No filing in this dataset says what this company supplies. That is a gap in what has been disclosed, not a judgement about the company \u2014 the buyers this map is built around mostly sit here, because their suppliers name them and they do not name their suppliers."
     },
     "license": "Source filings are US government works in the public domain."
   },
   "nodes": [
+    {
+      "node_key": "cik-0000002488",
+      "canonical_name": "ADVANCED MICRO DEVICES INC",
+      "cik": 2488,
+      "ticker": "AMD",
+      "is_seed": false,
+      "has_sec_filings": true,
+      "lei": null,
+      "country": null,
+      "sector": null,
+      "function": "silicon",
+      "function_phrases": [
+        "AMD GPUs (AMD Instinct MI450 series products)",
+        "CPUs"
+      ],
+      "id": "cik-0000002488"
+    },
+    {
+      "node_key": "cik-0001018724",
+      "canonical_name": "AMAZON COM INC",
+      "cik": 1018724,
+      "ticker": "AMZN",
+      "is_seed": true,
+      "has_sec_filings": true,
+      "lei": null,
+      "country": null,
+      "sector": null,
+      "function": "silicon",
+      "function_phrases": [
+        "AWS cloud services, including AWS chips"
+      ],
+      "id": "cik-0001018724"
+    },
     {
       "node_key": "cik-0001047127",
       "canonical_name": "AMKOR TECHNOLOGY, INC.",
@@ -31,11 +121,49 @@
       "sector": null,
       "function": "packaging",
       "function_phrases": [
+        "packaging and test services",
         "assembly and test operations",
-        "packaging of IC products",
+        "packaging for IC products",
         "assembly and test operations for IC products"
       ],
       "id": "cik-0001047127"
+    },
+    {
+      "node_key": "cik-0000006951",
+      "canonical_name": "APPLIED MATERIALS INC /DE",
+      "cik": 6951,
+      "ticker": "AMAT",
+      "is_seed": false,
+      "has_sec_filings": true,
+      "lei": null,
+      "country": null,
+      "sector": null,
+      "function": "unstated",
+      "function_phrases": [],
+      "id": "cik-0000006951"
+    },
+    {
+      "node_key": "name-ablecom-technology",
+      "canonical_name": "Ablecom Technology, Inc.",
+      "cik": null,
+      "ticker": null,
+      "is_seed": false,
+      "has_sec_filings": false,
+      "lei": null,
+      "country": null,
+      "sector": null,
+      "function": "systems",
+      "function_phrases": [
+        "chassis and contract manufacturing services",
+        "chassis manufacturing",
+        "contract manufacturing services and inventory warehousing",
+        "contract design and manufacturing coordination support and warehousing",
+        "chassis products contract manufacturing",
+        "contract manufacturing and warehousing services",
+        "chassis",
+        "server chassis manufacturing and design"
+      ],
+      "id": "name-ablecom-technology"
     },
     {
       "node_key": "name-advanced-semiconductor-engineering",
@@ -50,10 +178,82 @@
       "function": "packaging",
       "function_phrases": [
         "assembly and test operations",
-        "packaging of IC products",
+        "packaging for IC products",
         "assembly and test operations for IC products"
       ],
       "id": "name-advanced-semiconductor-engineering"
+    },
+    {
+      "node_key": "cik-0001652044",
+      "canonical_name": "Alphabet Inc.",
+      "cik": 1652044,
+      "ticker": "GOOGL",
+      "is_seed": true,
+      "has_sec_filings": true,
+      "lei": null,
+      "country": null,
+      "sector": null,
+      "function": "unstated",
+      "function_phrases": [],
+      "id": "cik-0001652044"
+    },
+    {
+      "node_key": "name-anthropic",
+      "canonical_name": "Anthropic",
+      "cik": null,
+      "ticker": null,
+      "is_seed": false,
+      "has_sec_filings": false,
+      "lei": null,
+      "country": null,
+      "sector": null,
+      "function": "unstated",
+      "function_phrases": [],
+      "id": "name-anthropic"
+    },
+    {
+      "node_key": "cik-0000320193",
+      "canonical_name": "Apple Inc.",
+      "cik": 320193,
+      "ticker": "AAPL",
+      "is_seed": false,
+      "has_sec_filings": true,
+      "lei": null,
+      "country": null,
+      "sector": null,
+      "function": "unstated",
+      "function_phrases": [],
+      "id": "cik-0000320193"
+    },
+    {
+      "node_key": "cik-0001596532",
+      "canonical_name": "Arista Networks, Inc.",
+      "cik": 1596532,
+      "ticker": "ANET",
+      "is_seed": false,
+      "has_sec_filings": true,
+      "lei": null,
+      "country": null,
+      "sector": null,
+      "function": "unstated",
+      "function_phrases": [],
+      "id": "cik-0001596532"
+    },
+    {
+      "node_key": "cik-0001828108",
+      "canonical_name": "Aurora Innovation, Inc.",
+      "cik": 1828108,
+      "ticker": "AUR",
+      "is_seed": false,
+      "has_sec_filings": true,
+      "lei": null,
+      "country": null,
+      "sector": null,
+      "function": "unstated",
+      "function_phrases": [
+        "autonomous driving technology"
+      ],
+      "id": "cik-0001828108"
     },
     {
       "node_key": "name-bizlink-technology",
@@ -83,9 +283,127 @@
       "lei": null,
       "country": null,
       "sector": null,
+      "function": "interconnect",
+      "function_phrases": [
+        "switching chips (merchant silicon)",
+        "VeloCloud business",
+        "VMware products for resale",
+        "VMware services for resale"
+      ],
+      "id": "cik-0001730168"
+    },
+    {
+      "node_key": "cik-0000813672",
+      "canonical_name": "CADENCE DESIGN SYSTEMS INC",
+      "cik": 813672,
+      "ticker": "CDNS",
+      "is_seed": false,
+      "has_sec_filings": true,
+      "lei": null,
+      "country": null,
+      "sector": null,
       "function": "unstated",
       "function_phrases": [],
-      "id": "cik-0001730168"
+      "id": "cik-0000813672"
+    },
+    {
+      "node_key": "cik-0001030894",
+      "canonical_name": "CELESTICA INC",
+      "cik": 1030894,
+      "ticker": "CLS",
+      "is_seed": false,
+      "has_sec_filings": true,
+      "lei": null,
+      "country": null,
+      "sector": null,
+      "function": "unstated",
+      "function_phrases": [
+        "manufacturing services",
+        "electronics manufacturing services"
+      ],
+      "id": "cik-0001030894"
+    },
+    {
+      "node_key": "cik-0000936395",
+      "canonical_name": "CIENA CORP",
+      "cik": 936395,
+      "ticker": "CIEN",
+      "is_seed": false,
+      "has_sec_filings": true,
+      "lei": null,
+      "country": null,
+      "sector": null,
+      "function": "unstated",
+      "function_phrases": [],
+      "id": "cik-0000936395"
+    },
+    {
+      "node_key": "cik-0000858877",
+      "canonical_name": "CISCO SYSTEMS, INC.",
+      "cik": 858877,
+      "ticker": "CSCO",
+      "is_seed": false,
+      "has_sec_filings": true,
+      "lei": null,
+      "country": null,
+      "sector": null,
+      "function": "unstated",
+      "function_phrases": [],
+      "id": "cik-0000858877"
+    },
+    {
+      "node_key": "cik-0000820318",
+      "canonical_name": "COHERENT CORP.",
+      "cik": 820318,
+      "ticker": "COHR",
+      "is_seed": false,
+      "has_sec_filings": true,
+      "lei": null,
+      "country": null,
+      "sector": null,
+      "function": "interconnect",
+      "function_phrases": [
+        "advanced lasers and optical networking products"
+      ],
+      "id": "cik-0000820318"
+    },
+    {
+      "node_key": "name-compuware-technology",
+      "canonical_name": "Compuware Technology, Inc.",
+      "cik": null,
+      "ticker": null,
+      "is_seed": false,
+      "has_sec_filings": false,
+      "lei": null,
+      "country": null,
+      "sector": null,
+      "function": "systems",
+      "function_phrases": [
+        "product development, production and service agreements",
+        "contract manufacturing services and inventory warehousing",
+        "distribution, contract manufacturing and warehousing",
+        "design activities and manufacturing of subassemblies, particularly power supplies",
+        "contract manufacturing and warehousing services",
+        "manufacturing",
+        "power supplies manufacturing and design",
+        "power supplies",
+        "motherboards, backplanes and other components used on printed circuit boards"
+      ],
+      "id": "name-compuware-technology"
+    },
+    {
+      "node_key": "cik-0001769628",
+      "canonical_name": "CoreWeave, Inc.",
+      "cik": 1769628,
+      "ticker": "CRWV",
+      "is_seed": true,
+      "has_sec_filings": true,
+      "lei": null,
+      "country": null,
+      "sector": null,
+      "function": "unstated",
+      "function_phrases": [],
+      "id": "cik-0001769628"
     },
     {
       "node_key": "cik-0001807794",
@@ -102,6 +420,68 @@
       "id": "cik-0001807794"
     },
     {
+      "node_key": "cik-0001571996",
+      "canonical_name": "Dell Technologies Inc.",
+      "cik": 1571996,
+      "ticker": "DELL",
+      "is_seed": false,
+      "has_sec_filings": true,
+      "lei": null,
+      "country": null,
+      "sector": null,
+      "function": "unstated",
+      "function_phrases": [
+        "products and services sold and leased to VMware"
+      ],
+      "id": "cik-0001571996"
+    },
+    {
+      "node_key": "cik-0001101302",
+      "canonical_name": "ENTEGRIS INC",
+      "cik": 1101302,
+      "ticker": "ENTG",
+      "is_seed": false,
+      "has_sec_filings": true,
+      "lei": null,
+      "country": null,
+      "sector": null,
+      "function": "unstated",
+      "function_phrases": [],
+      "id": "cik-0001101302"
+    },
+    {
+      "node_key": "cik-0001048911",
+      "canonical_name": "FEDEX CORP",
+      "cik": 1048911,
+      "ticker": "FDX",
+      "is_seed": false,
+      "has_sec_filings": true,
+      "lei": null,
+      "country": null,
+      "sector": null,
+      "function": "logistics",
+      "function_phrases": [
+        "use of FedEx Freight and FedEx Custom Critical trademarks"
+      ],
+      "id": "cik-0001048911"
+    },
+    {
+      "node_key": "cik-0000866374",
+      "canonical_name": "FLEX LTD.",
+      "cik": 866374,
+      "ticker": "FLEX",
+      "is_seed": false,
+      "has_sec_filings": true,
+      "lei": null,
+      "country": null,
+      "sector": null,
+      "function": "unstated",
+      "function_phrases": [
+        "products and services"
+      ],
+      "id": "cik-0000866374"
+    },
+    {
       "node_key": "cik-0001408710",
       "canonical_name": "Fabrinet",
       "cik": 1408710,
@@ -111,11 +491,74 @@
       "lei": null,
       "country": null,
       "sector": null,
-      "function": "packaging",
+      "function": "interconnect",
       "function_phrases": [
+        "optical devices and manufacturing services",
         "assembly, testing and packaging"
       ],
       "id": "cik-0001408710"
+    },
+    {
+      "node_key": "cik-0002082247",
+      "canonical_name": "FedEx Freight Holding Company, Inc.",
+      "cik": 2082247,
+      "ticker": "FDXF",
+      "is_seed": false,
+      "has_sec_filings": true,
+      "lei": null,
+      "country": null,
+      "sector": null,
+      "function": "unstated",
+      "function_phrases": [],
+      "id": "cik-0002082247"
+    },
+    {
+      "node_key": "cik-0001996810",
+      "canonical_name": "GE Vernova Inc.",
+      "cik": 1996810,
+      "ticker": "GEV",
+      "is_seed": false,
+      "has_sec_filings": true,
+      "lei": null,
+      "country": null,
+      "sector": null,
+      "function": "unstated",
+      "function_phrases": [],
+      "id": "cik-0001996810"
+    },
+    {
+      "node_key": "cik-0000040545",
+      "canonical_name": "GENERAL ELECTRIC CO",
+      "cik": 40545,
+      "ticker": "GE",
+      "is_seed": false,
+      "has_sec_filings": true,
+      "lei": null,
+      "country": null,
+      "sector": null,
+      "function": "unstated",
+      "function_phrases": [
+        "certain IP from GE, including the GE name and the GE Monogram"
+      ],
+      "id": "cik-0000040545"
+    },
+    {
+      "node_key": "cik-0001709048",
+      "canonical_name": "GLOBALFOUNDRIES Inc.",
+      "cik": 1709048,
+      "ticker": "GFS",
+      "is_seed": false,
+      "has_sec_filings": true,
+      "lei": null,
+      "country": null,
+      "sector": null,
+      "function": "fabrication",
+      "function_phrases": [
+        "wafers for HPC products at 12nm and 14nm nodes",
+        "wafers for microprocessor and GPU products manufactured at process nodes larger than 7 nm",
+        "wafer supply with minimum annual capacity allocation"
+      ],
+      "id": "cik-0001709048"
     },
     {
       "node_key": "name-groq",
@@ -129,10 +572,40 @@
       "sector": null,
       "function": "silicon",
       "function_phrases": [
-        "intellectual property/technology license",
+        "intellectual property/technology",
         "language processing unit technology"
       ],
       "id": "name-groq"
+    },
+    {
+      "node_key": "cik-0000047710",
+      "canonical_name": "HITACHI LTD",
+      "cik": 47710,
+      "ticker": "HTHIY",
+      "is_seed": false,
+      "has_sec_filings": true,
+      "lei": null,
+      "country": null,
+      "sector": null,
+      "function": "silicon",
+      "function_phrases": [
+        "small modular reactors design and development"
+      ],
+      "id": "cik-0000047710"
+    },
+    {
+      "node_key": "cik-0001645590",
+      "canonical_name": "Hewlett Packard Enterprise Co",
+      "cik": 1645590,
+      "ticker": "HPE",
+      "is_seed": false,
+      "has_sec_filings": true,
+      "lei": null,
+      "country": null,
+      "sector": null,
+      "function": "unstated",
+      "function_phrases": [],
+      "id": "cik-0001645590"
     },
     {
       "node_key": "name-hon-hai-precision-industry",
@@ -146,10 +619,75 @@
       "sector": null,
       "function": "packaging",
       "function_phrases": [
+        "contract manufacturing of products",
         "assembly and test operations",
         "assembly, testing and packaging"
       ],
       "id": "name-hon-hai-precision-industry"
+    },
+    {
+      "node_key": "cik-0000050863",
+      "canonical_name": "INTEL CORP",
+      "cik": 50863,
+      "ticker": "INTC",
+      "is_seed": false,
+      "has_sec_filings": true,
+      "lei": null,
+      "country": null,
+      "sector": null,
+      "function": "silicon",
+      "function_phrases": [
+        "chips"
+      ],
+      "id": "cik-0000050863"
+    },
+    {
+      "node_key": "cik-0000051143",
+      "canonical_name": "INTERNATIONAL BUSINESS MACHINES CORP",
+      "cik": 51143,
+      "ticker": "IBM",
+      "is_seed": false,
+      "has_sec_filings": true,
+      "lei": null,
+      "country": null,
+      "sector": null,
+      "function": "unstated",
+      "function_phrases": [],
+      "id": "cik-0000051143"
+    },
+    {
+      "node_key": "cik-0000898293",
+      "canonical_name": "JABIL INC",
+      "cik": 898293,
+      "ticker": "JBL",
+      "is_seed": false,
+      "has_sec_filings": true,
+      "lei": null,
+      "country": null,
+      "sector": null,
+      "function": "systems",
+      "function_phrases": [
+        "contract manufacturing of products",
+        "products and services",
+        "manufacturing services for home security business"
+      ],
+      "id": "cik-0000898293"
+    },
+    {
+      "node_key": "cik-0000319201",
+      "canonical_name": "KLA CORP",
+      "cik": 319201,
+      "ticker": "KLAC",
+      "is_seed": false,
+      "has_sec_filings": true,
+      "lei": null,
+      "country": null,
+      "sector": null,
+      "function": "unstated",
+      "function_phrases": [
+        "process control and process-enabling equipment and services"
+      ],
+      "id": "cik-0000319201"
     },
     {
       "node_key": "name-king-yuan-electronics",
@@ -163,10 +701,27 @@
       "sector": null,
       "function": "packaging",
       "function_phrases": [
-        "testing of IC products",
+        "ATMP services",
+        "testing for IC products",
         "assembly and test operations for IC products"
       ],
       "id": "name-king-yuan-electronics"
+    },
+    {
+      "node_key": "cik-0000707549",
+      "canonical_name": "LAM RESEARCH CORP",
+      "cik": 707549,
+      "ticker": "LRCX",
+      "is_seed": false,
+      "has_sec_filings": true,
+      "lei": null,
+      "country": null,
+      "sector": null,
+      "function": "fabrication",
+      "function_phrases": [
+        "wafer fabrication equipment and services"
+      ],
+      "id": "cik-0000707549"
     },
     {
       "node_key": "cik-0000723125",
@@ -185,6 +740,52 @@
       "id": "cik-0000723125"
     },
     {
+      "node_key": "cik-0000789019",
+      "canonical_name": "MICROSOFT CORP",
+      "cik": 789019,
+      "ticker": "MSFT",
+      "is_seed": true,
+      "has_sec_filings": true,
+      "lei": null,
+      "country": null,
+      "sector": null,
+      "function": "silicon",
+      "function_phrases": [
+        "operating system design and development to support AMD's x86 and graphics products",
+        "operating system design/support for AMD's x86 and graphics products",
+        "commercial arrangements"
+      ],
+      "id": "cik-0000789019"
+    },
+    {
+      "node_key": "cik-0001326801",
+      "canonical_name": "Meta Platforms, Inc.",
+      "cik": 1326801,
+      "ticker": "META",
+      "is_seed": true,
+      "has_sec_filings": true,
+      "lei": null,
+      "country": null,
+      "sector": null,
+      "function": "unstated",
+      "function_phrases": [],
+      "id": "cik-0001326801"
+    },
+    {
+      "node_key": "cik-0000924613",
+      "canonical_name": "NOKIA CORP",
+      "cik": 924613,
+      "ticker": "NOK",
+      "is_seed": false,
+      "has_sec_filings": true,
+      "lei": null,
+      "country": null,
+      "sector": null,
+      "function": "unstated",
+      "function_phrases": [],
+      "id": "cik-0000924613"
+    },
+    {
       "node_key": "cik-0001045810",
       "canonical_name": "NVIDIA CORP",
       "cik": 1045810,
@@ -194,9 +795,81 @@
       "lei": null,
       "country": null,
       "sector": null,
+      "function": "silicon",
+      "function_phrases": [
+        "data center and client platform products",
+        "M2000 supercomputer",
+        "GPU systems (GB200 and GB300 NVL72)",
+        "networking technology (Quantum-X800, Quantum-2 InfiniBand, Spectrum-X)",
+        "GPUs (GB200, GB300, RTX Pro 6000 systems)",
+        "GPUs",
+        "Rubin platform",
+        "integrated circuits (A100 and H100)"
+      ],
+      "id": "cik-0001045810"
+    },
+    {
+      "node_key": "name-openai",
+      "canonical_name": "OpenAI",
+      "cik": null,
+      "ticker": null,
+      "is_seed": false,
+      "has_sec_filings": false,
+      "lei": null,
+      "country": null,
+      "sector": null,
+      "function": "silicon",
+      "function_phrases": [
+        "AMD Instinct GPU purchases"
+      ],
+      "id": "name-openai"
+    },
+    {
+      "node_key": "cik-0000075362",
+      "canonical_name": "PACCAR INC",
+      "cik": 75362,
+      "ticker": "PCAR",
+      "is_seed": false,
+      "has_sec_filings": true,
+      "lei": null,
+      "country": null,
+      "sector": null,
+      "function": "unstated",
+      "function_phrases": [
+        "autonomous vehicle platform-equipped trucks"
+      ],
+      "id": "cik-0000075362"
+    },
+    {
+      "node_key": "cik-0000804328",
+      "canonical_name": "QUALCOMM INC/DE",
+      "cik": 804328,
+      "ticker": "QCOM",
+      "is_seed": false,
+      "has_sec_filings": true,
+      "lei": null,
+      "country": null,
+      "sector": null,
       "function": "unstated",
       "function_phrases": [],
-      "id": "cik-0001045810"
+      "id": "cik-0000804328"
+    },
+    {
+      "node_key": "cik-0000897723",
+      "canonical_name": "SANMINA CORP",
+      "cik": 897723,
+      "ticker": "SANM",
+      "is_seed": false,
+      "has_sec_filings": true,
+      "lei": null,
+      "country": null,
+      "sector": null,
+      "function": "systems",
+      "function_phrases": [
+        "data center infrastructure manufacturing services",
+        "contract manufacturing of products"
+      ],
+      "id": "cik-0000897723"
     },
     {
       "node_key": "name-sk-hynix",
@@ -224,8 +897,10 @@
       "lei": null,
       "country": null,
       "sector": null,
-      "function": "fabrication",
+      "function": "silicon",
       "function_phrases": [
+        "ICs in the form of programmable logic devices",
+        "integrated circuits (IC) in the form of programmable logic devices",
         "semiconductor wafers",
         "memory"
       ],
@@ -243,7 +918,7 @@
       "sector": null,
       "function": "packaging",
       "function_phrases": [
-        "testing of IC products",
+        "testing for IC products",
         "assembly and test operations for IC products"
       ],
       "id": "name-sigurd-microelectronics"
@@ -260,9 +935,28 @@
       "sector": null,
       "function": "packaging",
       "function_phrases": [
+        "ATMP services",
         "assembly and test operations"
       ],
       "id": "name-siliconware-precision-industries"
+    },
+    {
+      "node_key": "cik-0001375365",
+      "canonical_name": "Super Micro Computer, Inc.",
+      "cik": 1375365,
+      "ticker": "SMCI",
+      "is_seed": false,
+      "has_sec_filings": true,
+      "lei": null,
+      "country": null,
+      "sector": null,
+      "function": "unstated",
+      "function_phrases": [
+        "nonexclusive authorized distribution of our products in Taiwan, China and Australia",
+        "products",
+        "products (distributor of our products)"
+      ],
+      "id": "cik-0001375365"
     },
     {
       "node_key": "cik-0001046179",
@@ -276,16 +970,75 @@
       "sector": null,
       "function": "fabrication",
       "function_phrases": [
+        "wafers for HPC, FPGA and adaptive SoC products",
+        "ICs in the form of programmable logic devices",
+        "wafers for microprocessor and GPU products at 7 nanometer (nm) or smaller nodes",
+        "integrated circuits (IC) in the form of programmable logic devices",
+        "wafers for 7nm and lower process microprocessor and GPU products",
         "front-end wafer manufacturing",
         "assembly and test operations",
         "wafers",
         "semiconductor wafer production",
         "IC manufacturing",
-        "wafer foundry/fabrication capacity",
+        "wafer foundry manufacturing",
+        "wafer foundry manufacturing and yields",
         "semiconductor foundry services",
+        "integrated circuit manufacturing",
+        "semiconductor fabrication",
         "semiconductor wafers"
       ],
       "id": "cik-0001046179"
+    },
+    {
+      "node_key": "name-tongfu-microelectronics",
+      "canonical_name": "Tongfu Microelectronics Co., Ltd.",
+      "cik": null,
+      "ticker": null,
+      "is_seed": false,
+      "has_sec_filings": false,
+      "lei": null,
+      "country": null,
+      "sector": null,
+      "function": "packaging",
+      "function_phrases": [
+        "ATMP services",
+        "ATMP (assemble, test, mark and pack) services"
+      ],
+      "id": "name-tongfu-microelectronics"
+    },
+    {
+      "node_key": "cik-0001033767",
+      "canonical_name": "UNITED MICROELECTRONICS CORP",
+      "cik": 1033767,
+      "ticker": "UMC",
+      "is_seed": false,
+      "has_sec_filings": true,
+      "lei": null,
+      "country": null,
+      "sector": null,
+      "function": "silicon",
+      "function_phrases": [
+        "ICs in the form of programmable logic devices",
+        "integrated circuits (IC) in the form of programmable logic devices"
+      ],
+      "id": "cik-0001033767"
+    },
+    {
+      "node_key": "cik-0001090727",
+      "canonical_name": "UNITED PARCEL SERVICE INC",
+      "cik": 1090727,
+      "ticker": "UPS",
+      "is_seed": false,
+      "has_sec_filings": true,
+      "lei": null,
+      "country": null,
+      "sector": null,
+      "function": "packaging",
+      "function_phrases": [
+        "package delivery services",
+        "delivery/shipping services"
+      ],
+      "id": "cik-0001090727"
     },
     {
       "node_key": "name-wistron",
@@ -305,6 +1058,281 @@
     }
   ],
   "edges": [
+    {
+      "id": "cik-0000002488--cik-0001769628",
+      "source": "cik-0000002488",
+      "target": "cik-0001769628",
+      "quantified_pct": null,
+      "relationship_types": [
+        "supplies"
+      ],
+      "direction_stated": true,
+      "confidence": "high",
+      "latest_filing_date": "2026-03-02",
+      "evidence": [
+        {
+          "source_sentence": "CoreWeave clusters also use cutting edge CPUs, including AMD and Intel chips, to power compute-intensive projects and to help our customers get more out of GPU compute.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000104/crwv-20251231.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-03-02",
+          "product_or_service": "CPUs",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        }
+      ]
+    },
+    {
+      "id": "cik-0000002488--name-openai",
+      "source": "cik-0000002488",
+      "target": "name-openai",
+      "quantified_pct": null,
+      "relationship_types": [
+        "supplies"
+      ],
+      "direction_stated": true,
+      "confidence": "high",
+      "latest_filing_date": "2026-02-04",
+      "evidence": [
+        {
+          "source_sentence": "In October 2025, we entered into a product purchase agreement with OpenAI OpCo, LLC, (OpenAI) to deploy 6 gigawatts of AMD GPUs, with the deployment of the first gigawatt of capacity powered by our AMD Instinct MI450 series products.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-02-04",
+          "product_or_service": "AMD GPUs (AMD Instinct MI450 series products)",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        }
+      ]
+    },
+    {
+      "id": "cik-0000040545--cik-0001996810",
+      "source": "cik-0000040545",
+      "target": "cik-0001996810",
+      "quantified_pct": null,
+      "relationship_types": [
+        "licenses_to"
+      ],
+      "direction_stated": true,
+      "confidence": "high",
+      "latest_filing_date": "2026-01-29",
+      "evidence": [
+        {
+          "source_sentence": "In addition to our IP portfolio, we have a license to use certain IP from GE, including the GE name and the GE Monogram.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000015/gev-20251231.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-01-29",
+          "product_or_service": "certain IP from GE, including the GE name and the GE Monogram",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "licenses_to",
+          "extraction_confidence": "high"
+        }
+      ]
+    },
+    {
+      "id": "cik-0000047710--cik-0001996810",
+      "source": "cik-0000047710",
+      "target": "cik-0001996810",
+      "quantified_pct": null,
+      "relationship_types": [
+        "unclear"
+      ],
+      "direction_stated": false,
+      "confidence": "low",
+      "latest_filing_date": "2026-01-29",
+      "evidence": [
+        {
+          "source_sentence": "Nuclear Power - provides nuclear technology solutions for boiling water reactors including reactor design, reactor fuel and support services, and the design and development of small modular reactors through joint ventures with Hitachi, Ltd.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000015/gev-20251231.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-01-29",
+          "product_or_service": "small modular reactors design and development",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "unclear",
+          "extraction_confidence": "low"
+        }
+      ]
+    },
+    {
+      "id": "cik-0000050863--cik-0001769628",
+      "source": "cik-0000050863",
+      "target": "cik-0001769628",
+      "quantified_pct": null,
+      "relationship_types": [
+        "supplies"
+      ],
+      "direction_stated": true,
+      "confidence": "high",
+      "latest_filing_date": "2026-03-02",
+      "evidence": [
+        {
+          "source_sentence": "CoreWeave clusters also use cutting edge CPUs, including AMD and Intel chips, to power compute-intensive projects and to help our customers get more out of GPU compute.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000104/crwv-20251231.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-03-02",
+          "product_or_service": "chips",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        }
+      ]
+    },
+    {
+      "id": "cik-0000075362--cik-0001048911",
+      "source": "cik-0000075362",
+      "target": "cik-0001048911",
+      "quantified_pct": null,
+      "relationship_types": [
+        "unclear"
+      ],
+      "direction_stated": false,
+      "confidence": "low",
+      "latest_filing_date": "2026-07-20",
+      "evidence": [
+        {
+          "source_sentence": "We continued our ongoing pilot program with Aurora Innovation, Inc. (\"Aurora\") and PACCAR Inc. (\"PACCAR\") to test Aurora's autonomous driving technology in PACCAR autonomous vehicle platform-equipped trucks within FedEx linehaul operations.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1048911/000104891126000105/fdx-20260531.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-07-20",
+          "product_or_service": "autonomous vehicle platform-equipped trucks",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "unclear",
+          "extraction_confidence": "low"
+        }
+      ]
+    },
+    {
+      "id": "cik-0000319201--cik-0001046179",
+      "source": "cik-0000319201",
+      "target": "cik-0001046179",
+      "quantified_pct": null,
+      "relationship_types": [
+        "supplies"
+      ],
+      "direction_stated": true,
+      "confidence": "medium",
+      "latest_filing_date": "2026-08-06",
+      "evidence": [
+        {
+          "source_sentence": "Taiwan Semiconductor Manufacturing Company Limited Taiwan Semiconductor Manufacturing Company Limited Taiwan Semiconductor Manufacturing Company Limited",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/319201/000031920126000027/klac-20260630.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-08-06",
+          "product_or_service": "process control and process-enabling equipment and services",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "medium"
+        }
+      ]
+    },
+    {
+      "id": "cik-0000707549--cik-0000723125",
+      "source": "cik-0000707549",
+      "target": "cik-0000723125",
+      "quantified_pct": null,
+      "relationship_types": [
+        "supplies"
+      ],
+      "direction_stated": true,
+      "confidence": "high",
+      "latest_filing_date": "2026-08-07",
+      "evidence": [
+        {
+          "source_sentence": "Our most significant customers during the fiscal years ending June 28, 2026, June 29, 2025, and June 30, 2024 included Micron Technology, Inc., Samsung Electronics Company, Ltd., SK hynix Inc., and Taiwan Semiconductor Manufacturing Company.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/707549/000070754926000037/lrcx-20260628.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-08-07",
+          "product_or_service": "wafer fabrication equipment and services",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        }
+      ]
+    },
+    {
+      "id": "cik-0000707549--cik-0001046179",
+      "source": "cik-0000707549",
+      "target": "cik-0001046179",
+      "quantified_pct": null,
+      "relationship_types": [
+        "supplies"
+      ],
+      "direction_stated": true,
+      "confidence": "high",
+      "latest_filing_date": "2026-08-07",
+      "evidence": [
+        {
+          "source_sentence": "Our most significant customers during the fiscal years ending June 28, 2026, June 29, 2025, and June 30, 2024 included Micron Technology, Inc., Samsung Electronics Company, Ltd., SK hynix Inc., and Taiwan Semiconductor Manufacturing Company.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/707549/000070754926000037/lrcx-20260628.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-08-07",
+          "product_or_service": "wafer fabrication equipment and services",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        }
+      ]
+    },
+    {
+      "id": "cik-0000707549--name-samsung-electronics",
+      "source": "cik-0000707549",
+      "target": "name-samsung-electronics",
+      "quantified_pct": null,
+      "relationship_types": [
+        "supplies"
+      ],
+      "direction_stated": true,
+      "confidence": "high",
+      "latest_filing_date": "2026-08-07",
+      "evidence": [
+        {
+          "source_sentence": "Our most significant customers during the fiscal years ending June 28, 2026, June 29, 2025, and June 30, 2024 included Micron Technology, Inc., Samsung Electronics Company, Ltd., SK hynix Inc., and Taiwan Semiconductor Manufacturing Company.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/707549/000070754926000037/lrcx-20260628.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-08-07",
+          "product_or_service": "wafer fabrication equipment and services",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        }
+      ]
+    },
+    {
+      "id": "cik-0000707549--name-sk-hynix",
+      "source": "cik-0000707549",
+      "target": "name-sk-hynix",
+      "quantified_pct": null,
+      "relationship_types": [
+        "supplies"
+      ],
+      "direction_stated": true,
+      "confidence": "high",
+      "latest_filing_date": "2026-08-07",
+      "evidence": [
+        {
+          "source_sentence": "Our most significant customers during the fiscal years ending June 28, 2026, June 29, 2025, and June 30, 2024 included Micron Technology, Inc., Samsung Electronics Company, Ltd., SK hynix Inc., and Taiwan Semiconductor Manufacturing Company.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/707549/000070754926000037/lrcx-20260628.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-08-07",
+          "product_or_service": "wafer fabrication equipment and services",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        }
+      ]
+    },
     {
       "id": "cik-0000723125--cik-0001045810",
       "source": "cik-0000723125",
@@ -331,6 +1359,752 @@
       ]
     },
     {
+      "id": "cik-0000789019--cik-0000002488",
+      "source": "cik-0000789019",
+      "target": "cik-0000002488",
+      "quantified_pct": null,
+      "relationship_types": [
+        "supplies"
+      ],
+      "direction_stated": true,
+      "confidence": "high",
+      "latest_filing_date": "2026-02-04",
+      "evidence": [
+        {
+          "source_sentence": "If we lose Microsoft Corporation's support for our products or other software vendors do not design and develop software to run on our products, our ability to sell our products could be materially adversely affected.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-02-04",
+          "product_or_service": "operating system design and development to support AMD's x86 and graphics products",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "medium"
+        },
+        {
+          "source_sentence": "Our ability to innovate beyond the x86 instruction set controlled by Intel depends partially on Microsoft designing and developing its operating systems to run on or support our x86-based microprocessor products.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-02-04",
+          "product_or_service": "operating system design/support for AMD's x86 and graphics products",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        }
+      ]
+    },
+    {
+      "id": "cik-0000789019--name-openai",
+      "source": "cik-0000789019",
+      "target": "name-openai",
+      "quantified_pct": null,
+      "relationship_types": [
+        "supplies"
+      ],
+      "direction_stated": true,
+      "confidence": "medium",
+      "latest_filing_date": "2026-07-29",
+      "evidence": [
+        {
+          "source_sentence": "For fiscal year 2026, we recorded revenue from commercial arrangements with OpenAI, inclusive of revenue-sharing payments, of $24.1 billion, and accounts receivable from OpenAI as of June 30, 2026 was $6.0 billion.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-07-29",
+          "product_or_service": "commercial arrangements",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "medium"
+        }
+      ]
+    },
+    {
+      "id": "cik-0000820318--cik-0001045810",
+      "source": "cik-0000820318",
+      "target": "cik-0001045810",
+      "quantified_pct": null,
+      "relationship_types": [
+        "supplies"
+      ],
+      "direction_stated": true,
+      "confidence": "high",
+      "latest_filing_date": "2026-08-14",
+      "evidence": [
+        {
+          "source_sentence": "During fiscal 2026, we announced the expansion of our Sherman, Texas, manufacturing facility, entered into a strategic multi-year supply agreement with NVIDIA for advanced lasers and optical networking products supporting next-generation AI infrastructure, and received a $50 million preliminary memorandum of terms under the CHIPS and Science Act to support the Sherman expansion.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/820318/000082031826000020/iivi-20260630.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-08-14",
+          "product_or_service": "advanced lasers and optical networking products",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        }
+      ]
+    },
+    {
+      "id": "cik-0000866374--cik-0001018724",
+      "source": "cik-0000866374",
+      "target": "cik-0001018724",
+      "quantified_pct": null,
+      "relationship_types": [
+        "supplies"
+      ],
+      "direction_stated": true,
+      "confidence": "medium",
+      "latest_filing_date": "2026-05-20",
+      "evidence": [
+        {
+          "source_sentence": "The Warrant Shares are subject to vesting based on qualifying payments (as defined in the Warrant) for the purchase of all products and services by or on behalf of Parent and its affiliates over the term of the Warrant.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/866374/000086637426000012/flex-20260331.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-05-20",
+          "product_or_service": "products and services",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "medium"
+        }
+      ]
+    },
+    {
+      "id": "cik-0000897723--cik-0000002488",
+      "source": "cik-0000897723",
+      "target": "cik-0000002488",
+      "quantified_pct": null,
+      "relationship_types": [
+        "manufactures_for"
+      ],
+      "direction_stated": true,
+      "confidence": "medium",
+      "latest_filing_date": "2026-02-04",
+      "evidence": [
+        {
+          "source_sentence": "The Company also entered into a Manufacturing Services Agreement with Sanmina with an initial term of five years.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-02-04",
+          "product_or_service": "data center infrastructure manufacturing services",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "manufactures_for",
+          "extraction_confidence": "medium"
+        }
+      ]
+    },
+    {
+      "id": "cik-0000897723--cik-0001596532",
+      "source": "cik-0000897723",
+      "target": "cik-0001596532",
+      "quantified_pct": null,
+      "relationship_types": [
+        "manufactures_for"
+      ],
+      "direction_stated": true,
+      "confidence": "high",
+      "latest_filing_date": "2026-02-17",
+      "evidence": [
+        {
+          "source_sentence": "Our primary manufacturing partners are Jabil Inc., Sanmina Corporation and Foxconn Hon Hai.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000013/anet-20251231.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-02-17",
+          "product_or_service": "contract manufacturing of products",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "manufactures_for",
+          "extraction_confidence": "high"
+        }
+      ]
+    },
+    {
+      "id": "cik-0000898293--cik-0001018724",
+      "source": "cik-0000898293",
+      "target": "cik-0001018724",
+      "quantified_pct": null,
+      "relationship_types": [
+        "manufactures_for",
+        "supplies"
+      ],
+      "direction_stated": true,
+      "confidence": "high",
+      "latest_filing_date": "2025-10-17",
+      "evidence": [
+        {
+          "source_sentence": "The Warrant Shares are subject to vesting for payments for purchased products and services over the seven-year Warrant term, with 59,582 of the Warrant Shares having vested upon issuance.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/898293/000162828025045293/jbl-20250831.htm",
+          "form_type": "10-K",
+          "filing_date": "2025-10-17",
+          "product_or_service": "products and services",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "medium"
+        },
+        {
+          "source_sentence": "During fiscal year 2025, the Company provided manufacturing services to Amazon's home security business.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/898293/000162828025045293/jbl-20250831.htm",
+          "form_type": "10-K",
+          "filing_date": "2025-10-17",
+          "product_or_service": "manufacturing services for home security business",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "manufactures_for",
+          "extraction_confidence": "high"
+        }
+      ]
+    },
+    {
+      "id": "cik-0000898293--cik-0001596532",
+      "source": "cik-0000898293",
+      "target": "cik-0001596532",
+      "quantified_pct": null,
+      "relationship_types": [
+        "manufactures_for"
+      ],
+      "direction_stated": true,
+      "confidence": "high",
+      "latest_filing_date": "2026-02-17",
+      "evidence": [
+        {
+          "source_sentence": "Our primary manufacturing partners are Jabil Inc., Sanmina Corporation and Foxconn Hon Hai.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000013/anet-20251231.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-02-17",
+          "product_or_service": "contract manufacturing of products",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "manufactures_for",
+          "extraction_confidence": "high"
+        }
+      ]
+    },
+    {
+      "id": "cik-0001018724--name-anthropic",
+      "source": "cik-0001018724",
+      "target": "name-anthropic",
+      "quantified_pct": null,
+      "relationship_types": [
+        "supplies"
+      ],
+      "direction_stated": true,
+      "confidence": "medium",
+      "latest_filing_date": "2026-02-06",
+      "evidence": [
+        {
+          "source_sentence": "We also have a commercial arrangement primarily for the provision of AWS cloud services, which includes the use of AWS chips.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000004/amzn-20251231.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-02-06",
+          "product_or_service": "AWS cloud services, including AWS chips",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "medium"
+        }
+      ]
+    },
+    {
+      "id": "cik-0001030894--cik-0000006951",
+      "source": "cik-0001030894",
+      "target": "cik-0000006951",
+      "quantified_pct": null,
+      "relationship_types": [
+        "supplies"
+      ],
+      "direction_stated": true,
+      "confidence": "medium",
+      "latest_filing_date": "2026-02-27",
+      "evidence": [
+        {
+          "source_sentence": "Our ATS segment customers include Applied Materials, Inc., LAM Research and Honeywell Inc.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1030894/000103089426000011/cls-20251231.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-02-27",
+          "product_or_service": "electronics manufacturing services",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "medium"
+        }
+      ]
+    },
+    {
+      "id": "cik-0001030894--cik-0000051143",
+      "source": "cik-0001030894",
+      "target": "cik-0000051143",
+      "quantified_pct": null,
+      "relationship_types": [
+        "manufactures_for",
+        "supplies"
+      ],
+      "direction_stated": true,
+      "confidence": "high",
+      "latest_filing_date": "2026-02-27",
+      "evidence": [
+        {
+          "source_sentence": "Prior to our incorporation, we were an IBM manufacturing unit that provided manufacturing services to IBM for more than 75 years.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1030894/000103089426000011/cls-20251231.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-02-27",
+          "product_or_service": "manufacturing services",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "manufactures_for",
+          "extraction_confidence": "high"
+        },
+        {
+          "source_sentence": "Our CCS segment customers include Amazon Fulfillment Services, Inc., Meta Platforms, Inc., Google Inc., Ciena Corporation, Dell Technologies, Hewlett-Packard Enterprise, and IBM Corporation, Inc.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1030894/000103089426000011/cls-20251231.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-02-27",
+          "product_or_service": "electronics manufacturing services",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "medium"
+        }
+      ]
+    },
+    {
+      "id": "cik-0001030894--cik-0000707549",
+      "source": "cik-0001030894",
+      "target": "cik-0000707549",
+      "quantified_pct": null,
+      "relationship_types": [
+        "supplies"
+      ],
+      "direction_stated": true,
+      "confidence": "medium",
+      "latest_filing_date": "2026-02-27",
+      "evidence": [
+        {
+          "source_sentence": "Our ATS segment customers include Applied Materials, Inc., LAM Research and Honeywell Inc.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1030894/000103089426000011/cls-20251231.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-02-27",
+          "product_or_service": "electronics manufacturing services",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "medium"
+        }
+      ]
+    },
+    {
+      "id": "cik-0001030894--cik-0000936395",
+      "source": "cik-0001030894",
+      "target": "cik-0000936395",
+      "quantified_pct": null,
+      "relationship_types": [
+        "supplies"
+      ],
+      "direction_stated": true,
+      "confidence": "medium",
+      "latest_filing_date": "2026-02-27",
+      "evidence": [
+        {
+          "source_sentence": "Our CCS segment customers include Amazon Fulfillment Services, Inc., Meta Platforms, Inc., Google Inc., Ciena Corporation, Dell Technologies, Hewlett-Packard Enterprise, and IBM Corporation, Inc.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1030894/000103089426000011/cls-20251231.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-02-27",
+          "product_or_service": "electronics manufacturing services",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "medium"
+        }
+      ]
+    },
+    {
+      "id": "cik-0001030894--cik-0001018724",
+      "source": "cik-0001030894",
+      "target": "cik-0001018724",
+      "quantified_pct": null,
+      "relationship_types": [
+        "supplies"
+      ],
+      "direction_stated": true,
+      "confidence": "medium",
+      "latest_filing_date": "2026-02-27",
+      "evidence": [
+        {
+          "source_sentence": "Our CCS segment customers include Amazon Fulfillment Services, Inc., Meta Platforms, Inc., Google Inc., Ciena Corporation, Dell Technologies, Hewlett-Packard Enterprise, and IBM Corporation, Inc.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1030894/000103089426000011/cls-20251231.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-02-27",
+          "product_or_service": "electronics manufacturing services",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "medium"
+        }
+      ]
+    },
+    {
+      "id": "cik-0001030894--cik-0001326801",
+      "source": "cik-0001030894",
+      "target": "cik-0001326801",
+      "quantified_pct": null,
+      "relationship_types": [
+        "supplies"
+      ],
+      "direction_stated": true,
+      "confidence": "medium",
+      "latest_filing_date": "2026-02-27",
+      "evidence": [
+        {
+          "source_sentence": "Our CCS segment customers include Amazon Fulfillment Services, Inc., Meta Platforms, Inc., Google Inc., Ciena Corporation, Dell Technologies, Hewlett-Packard Enterprise, and IBM Corporation, Inc.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1030894/000103089426000011/cls-20251231.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-02-27",
+          "product_or_service": "electronics manufacturing services",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "medium"
+        }
+      ]
+    },
+    {
+      "id": "cik-0001030894--cik-0001571996",
+      "source": "cik-0001030894",
+      "target": "cik-0001571996",
+      "quantified_pct": null,
+      "relationship_types": [
+        "supplies"
+      ],
+      "direction_stated": true,
+      "confidence": "medium",
+      "latest_filing_date": "2026-02-27",
+      "evidence": [
+        {
+          "source_sentence": "Our CCS segment customers include Amazon Fulfillment Services, Inc., Meta Platforms, Inc., Google Inc., Ciena Corporation, Dell Technologies, Hewlett-Packard Enterprise, and IBM Corporation, Inc.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1030894/000103089426000011/cls-20251231.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-02-27",
+          "product_or_service": "electronics manufacturing services",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "medium"
+        }
+      ]
+    },
+    {
+      "id": "cik-0001030894--cik-0001645590",
+      "source": "cik-0001030894",
+      "target": "cik-0001645590",
+      "quantified_pct": null,
+      "relationship_types": [
+        "supplies"
+      ],
+      "direction_stated": true,
+      "confidence": "medium",
+      "latest_filing_date": "2026-02-27",
+      "evidence": [
+        {
+          "source_sentence": "Our CCS segment customers include Amazon Fulfillment Services, Inc., Meta Platforms, Inc., Google Inc., Ciena Corporation, Dell Technologies, Hewlett-Packard Enterprise, and IBM Corporation, Inc.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1030894/000103089426000011/cls-20251231.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-02-27",
+          "product_or_service": "electronics manufacturing services",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "medium"
+        }
+      ]
+    },
+    {
+      "id": "cik-0001030894--cik-0001652044",
+      "source": "cik-0001030894",
+      "target": "cik-0001652044",
+      "quantified_pct": null,
+      "relationship_types": [
+        "supplies"
+      ],
+      "direction_stated": true,
+      "confidence": "medium",
+      "latest_filing_date": "2026-02-27",
+      "evidence": [
+        {
+          "source_sentence": "Our CCS segment customers include Amazon Fulfillment Services, Inc., Meta Platforms, Inc., Google Inc., Ciena Corporation, Dell Technologies, Hewlett-Packard Enterprise, and IBM Corporation, Inc.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1030894/000103089426000011/cls-20251231.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-02-27",
+          "product_or_service": "electronics manufacturing services",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "medium"
+        }
+      ]
+    },
+    {
+      "id": "cik-0001033767--cik-0000002488",
+      "source": "cik-0001033767",
+      "target": "cik-0000002488",
+      "quantified_pct": null,
+      "relationship_types": [
+        "supplies"
+      ],
+      "direction_stated": true,
+      "confidence": "high",
+      "latest_filing_date": "2026-02-04",
+      "evidence": [
+        {
+          "source_sentence": "Additionally, we utilize TSMC, United Microelectronics Corporation (UMC) and Samsung Electronics Co., Ltd. for the production of our ICs in the form of programmable logic devices.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-02-04",
+          "product_or_service": "ICs in the form of programmable logic devices",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        },
+        {
+          "source_sentence": "We also utilize TSMC, United Microelectronics Corporation (UMC) and Samsung Electronics Co., Ltd. for our integrated circuits (IC) in the form of programmable logic devices.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-02-04",
+          "product_or_service": "integrated circuits (IC) in the form of programmable logic devices",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        }
+      ]
+    },
+    {
+      "id": "cik-0001045810--cik-0000050863",
+      "source": "cik-0001045810",
+      "target": "cik-0000050863",
+      "quantified_pct": null,
+      "relationship_types": [
+        "unclear"
+      ],
+      "direction_stated": false,
+      "confidence": "low",
+      "latest_filing_date": "2026-02-04",
+      "evidence": [
+        {
+          "source_sentence": "For example, in September 2025, Nvidia announced a partnership and investment in Intel to partner on new data center and client platform products.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-02-04",
+          "product_or_service": "data center and client platform products",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "unclear",
+          "extraction_confidence": "low"
+        }
+      ]
+    },
+    {
+      "id": "cik-0001045810--cik-0000813672",
+      "source": "cik-0001045810",
+      "target": "cik-0000813672",
+      "quantified_pct": null,
+      "relationship_types": [
+        "unclear"
+      ],
+      "direction_stated": false,
+      "confidence": "medium",
+      "latest_filing_date": "2026-02-19",
+      "evidence": [
+        {
+          "source_sentence": "The M2000 is a specialized, AI-accelerated platform co-developed with NVIDIA to dramatically speed up complex simulations in fields like semiconductor design, aerospace and defense, and drug discovery.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/813672/000081367226000016/cdns-20251231.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-02-19",
+          "product_or_service": "M2000 supercomputer",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "unclear",
+          "extraction_confidence": "medium"
+        }
+      ]
+    },
+    {
+      "id": "cik-0001045810--cik-0001375365",
+      "source": "cik-0001045810",
+      "target": "cik-0001375365",
+      "quantified_pct": null,
+      "relationship_types": [
+        "supplies"
+      ],
+      "direction_stated": true,
+      "confidence": "medium",
+      "latest_filing_date": "2025-08-28",
+      "evidence": [
+        {
+          "source_sentence": "These restrictions impacted certain of our products, including products that contain the NVIDIA A100 and H100 integrated circuits, among others.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1375365/000137536525000027/smci-20250630.htm",
+          "form_type": "10-K",
+          "filing_date": "2025-08-28",
+          "product_or_service": "integrated circuits (A100 and H100)",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "medium"
+        }
+      ]
+    },
+    {
+      "id": "cik-0001045810--cik-0001769628",
+      "source": "cik-0001045810",
+      "target": "cik-0001769628",
+      "quantified_pct": null,
+      "relationship_types": [
+        "supplies",
+        "unclear"
+      ],
+      "direction_stated": true,
+      "confidence": "high",
+      "latest_filing_date": "2026-03-02",
+      "evidence": [
+        {
+          "source_sentence": "Our track record and ability to\n\ndeploy the industry's most advanced hardware and architectures first-including NVIDIA GB200 and GB300 NVL72 systems for mission-critical AI-gives our customers a measurable edge in performance, efficiency, and scale.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000104/crwv-20251231.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-03-02",
+          "product_or_service": "GPU systems (GB200 and GB300 NVL72)",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        },
+        {
+          "source_sentence": "It integrates state-of-the-art networking technology, including NVIDIA Quantum-X800(XDR) enabling 800Gbps of connectivity, NVIDIA Quantum-2 InfiniBand interconnect and NVIDIA Spectrum-X with RoCE or RDMA over Converged Ethernet for ultra-low-latency connectivity between racks of GPUs.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000104/crwv-20251231.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-03-02",
+          "product_or_service": "networking technology (Quantum-X800, Quantum-2 InfiniBand, Spectrum-X)",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        },
+        {
+          "source_sentence": "This approach enables our data centers to support and deploy the latest generation of chips at scale and for us to be among the first to bring them to market at scale-with a track record of bringing NVIDIA GPUs to market first, including GB200, GB300, and RTX Pro 6000 systems.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000104/crwv-20251231.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-03-02",
+          "product_or_service": "GPUs (GB200, GB300, RTX Pro 6000 systems)",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        },
+        {
+          "source_sentence": "For example, as a result of our obligations in our current customer contracts, all of the GPUs used in our infrastructure today are NVIDIA GPUs.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000104/crwv-20251231.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-03-02",
+          "product_or_service": "GPUs",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        },
+        {
+          "source_sentence": "such as our expected deployment of the NVIDIA Rubin platform in the second half of 2026",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000104/crwv-20251231.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-03-02",
+          "product_or_service": "Rubin platform",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "medium"
+        },
+        {
+          "source_sentence": "For example, in January 2026, we announced that we entered into a collaboration framework with NVIDIA Corporation to expand our long-standing complementary relationship to advance AI adoption at global scale.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000104/crwv-20251231.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-03-02",
+          "product_or_service": null,
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "unclear",
+          "extraction_confidence": "low"
+        }
+      ]
+    },
+    {
+      "id": "cik-0001046179--cik-0000002488",
+      "source": "cik-0001046179",
+      "target": "cik-0000002488",
+      "quantified_pct": null,
+      "relationship_types": [
+        "supplies"
+      ],
+      "direction_stated": true,
+      "confidence": "high",
+      "latest_filing_date": "2026-02-04",
+      "evidence": [
+        {
+          "source_sentence": "We utilize Taiwan Semiconductor Manufacturing Company Limited (TSMC) for the production of wafers for our HPC, FPGA and adaptive SoC products and GLOBALFOUNDRIES Inc. (GF), with respect to wafer purchases for our HPC products at the 12 nm and 14 nm technology nodes.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-02-04",
+          "product_or_service": "wafers for HPC, FPGA and adaptive SoC products",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        },
+        {
+          "source_sentence": "Additionally, we utilize TSMC, United Microelectronics Corporation (UMC) and Samsung Electronics Co., Ltd. for the production of our ICs in the form of programmable logic devices.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-02-04",
+          "product_or_service": "ICs in the form of programmable logic devices",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        },
+        {
+          "source_sentence": "We rely on Taiwan Semiconductor Manufacturing Company Limited (TSMC) for the production of all wafers for microprocessor and GPU products at 7 nanometer (nm) or smaller nodes, and we rely primarily on GLOBALFOUNDRIES Inc. (GF) for wafers for microprocessor and GPU products manufactured at process nodes larger than 7 nm.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-02-04",
+          "product_or_service": "wafers for microprocessor and GPU products at 7 nanometer (nm) or smaller nodes",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        },
+        {
+          "source_sentence": "We also utilize TSMC, United Microelectronics Corporation (UMC) and Samsung Electronics Co., Ltd. for our integrated circuits (IC) in the form of programmable logic devices.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-02-04",
+          "product_or_service": "integrated circuits (IC) in the form of programmable logic devices",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        },
+        {
+          "source_sentence": "For example, we are presently focusing our 7 nm and lower product microprocessor and GPU portfolio on TSMC's processes.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-02-04",
+          "product_or_service": "wafers for 7nm and lower process microprocessor and GPU products",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        }
+      ]
+    },
+    {
       "id": "cik-0001046179--cik-0001045810",
       "source": "cik-0001046179",
       "target": "cik-0001045810",
@@ -340,8 +2114,19 @@
       ],
       "direction_stated": true,
       "confidence": "high",
-      "latest_filing_date": "2026-02-25",
+      "latest_filing_date": "2026-03-02",
       "evidence": [
+        {
+          "source_sentence": "For example, NVIDIA relies on suppliers such as Taiwan Semiconductor Manufacturing Company for semiconductor fabrication and other manufacturers for compute and networking components.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000104/crwv-20251231.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-03-02",
+          "product_or_service": "semiconductor fabrication",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        },
         {
           "source_sentence": "We utilize foundries, such as Taiwan Semiconductor Manufacturing Company Limited, or TSMC, and Samsung Electronics Co., Ltd., or Samsung, to produce our semiconductor wafers.",
           "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
@@ -352,6 +2137,31 @@
           "quantified_basis": null,
           "relationship_type": "supplies",
           "extraction_confidence": "high"
+        }
+      ]
+    },
+    {
+      "id": "cik-0001046179--cik-0001101302",
+      "source": "cik-0001046179",
+      "target": "cik-0001101302",
+      "quantified_pct": 16,
+      "relationship_types": [
+        "unclear"
+      ],
+      "direction_stated": false,
+      "confidence": "medium",
+      "latest_filing_date": "2026-02-11",
+      "evidence": [
+        {
+          "source_sentence": "Taiwan Semiconductor Manufacturing Company (TSMC) 16% 16% 11%",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1101302/000110130226000012/entg-20251231.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-02-11",
+          "product_or_service": null,
+          "quantified_pct": 16,
+          "quantified_basis": "revenue",
+          "relationship_type": "unclear",
+          "extraction_confidence": "medium"
         }
       ]
     },
@@ -408,6 +2218,7 @@
       "target": "cik-0001807794",
       "quantified_pct": null,
       "relationship_types": [
+        "manufactures_for",
         "supplies"
       ],
       "direction_stated": true,
@@ -437,11 +2248,22 @@
           "extraction_confidence": "high"
         },
         {
+          "source_sentence": "We generally do not maintain long-term supply contracts with TSMC or other third-party manufacturers or suppliers, and any disruption in our supply of products or materials, including",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-06-15",
+          "product_or_service": "wafer foundry manufacturing",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        },
+        {
           "source_sentence": "Our IC foundry vendor, TSMC, other manufacturers with which we contract and any foundries we may employ in the future may experience manufacturing defects and reduced manufacturing yields from time to time.",
           "source_url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm",
           "form_type": "10-K",
           "filing_date": "2026-06-15",
-          "product_or_service": "wafer foundry/fabrication capacity",
+          "product_or_service": "wafer foundry manufacturing and yields",
           "quantified_pct": null,
           "quantified_basis": null,
           "relationship_type": "supplies",
@@ -455,6 +2277,67 @@
           "product_or_service": "semiconductor foundry services",
           "quantified_pct": null,
           "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        },
+        {
+          "source_sentence": "The Company currently outsources all of its integrated circuit manufacturing to Taiwan Semiconductor Manufacturing Company Limited with the remaining assembly and testing processes",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-06-15",
+          "product_or_service": "integrated circuit manufacturing",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "manufactures_for",
+          "extraction_confidence": "high"
+        }
+      ]
+    },
+    {
+      "id": "cik-0001047127--cik-0000320193",
+      "source": "cik-0001047127",
+      "target": "cik-0000320193",
+      "quantified_pct": 29.8,
+      "relationship_types": [
+        "supplies"
+      ],
+      "direction_stated": true,
+      "confidence": "high",
+      "latest_filing_date": "2026-02-20",
+      "evidence": [
+        {
+          "source_sentence": "Direct sales to Apple and Qualcomm accounted for 29.8% and 11.1% of our net sales, respectively, for the year ended December 31, 2025.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1047127/000104712726000014/amkr-20251231.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-02-20",
+          "product_or_service": "packaging and test services",
+          "quantified_pct": 29.8,
+          "quantified_basis": "revenue",
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        }
+      ]
+    },
+    {
+      "id": "cik-0001047127--cik-0000804328",
+      "source": "cik-0001047127",
+      "target": "cik-0000804328",
+      "quantified_pct": 11.1,
+      "relationship_types": [
+        "supplies"
+      ],
+      "direction_stated": true,
+      "confidence": "high",
+      "latest_filing_date": "2026-02-20",
+      "evidence": [
+        {
+          "source_sentence": "Direct sales to Apple and Qualcomm accounted for 29.8% and 11.1% of our net sales, respectively, for the year ended December 31, 2025.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1047127/000104712726000014/amkr-20251231.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-02-20",
+          "product_or_service": "packaging and test services",
+          "quantified_pct": 11.1,
+          "quantified_basis": "revenue",
           "relationship_type": "supplies",
           "extraction_confidence": "high"
         }
@@ -502,7 +2385,7 @@
           "source_url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm",
           "form_type": "10-K",
           "filing_date": "2026-06-15",
-          "product_or_service": "packaging of IC products",
+          "product_or_service": "packaging for IC products",
           "quantified_pct": null,
           "quantified_basis": null,
           "relationship_type": "supplies",
@@ -522,23 +2405,669 @@
       ]
     },
     {
-      "id": "cik-0001408710--cik-0001045810",
-      "source": "cik-0001408710",
-      "target": "cik-0001045810",
+      "id": "cik-0001048911--cik-0002082247",
+      "source": "cik-0001048911",
+      "target": "cik-0002082247",
       "quantified_pct": null,
       "relationship_types": [
-        "manufactures_for"
+        "licenses_to"
       ],
       "direction_stated": true,
       "confidence": "high",
-      "latest_filing_date": "2026-02-25",
+      "latest_filing_date": "2026-07-20",
       "evidence": [
+        {
+          "source_sentence": "In connection with the Spin-Off, we licensed the use of FedEx Freight and FedEx Custom Critical to FedEx Freight Holding.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1048911/000104891126000105/fdx-20260531.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-07-20",
+          "product_or_service": "use of FedEx Freight and FedEx Custom Critical trademarks",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "licenses_to",
+          "extraction_confidence": "high"
+        }
+      ]
+    },
+    {
+      "id": "cik-0001090727--cik-0001018724",
+      "source": "cik-0001090727",
+      "target": "cik-0001018724",
+      "quantified_pct": 10.6,
+      "relationship_types": [
+        "supplies"
+      ],
+      "direction_stated": true,
+      "confidence": "medium",
+      "latest_filing_date": "2026-02-17",
+      "evidence": [
+        {
+          "source_sentence": "In 2025, one customer, Amazon.com, Inc. and its affiliates, represented approximately 10.6% of our consolidated revenues, substantially all of which was within our U.S. Domestic Package segment.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1090727/000162828026008432/ups-20251231.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-02-17",
+          "product_or_service": "package delivery services",
+          "quantified_pct": 10.6,
+          "quantified_basis": "revenue",
+          "relationship_type": "supplies",
+          "extraction_confidence": "medium"
+        },
+        {
+          "source_sentence": "For 2025, this customer and its affiliates accounted for 10.6% of our consolidated revenues.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1090727/000162828026008432/ups-20251231.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-02-17",
+          "product_or_service": "delivery/shipping services",
+          "quantified_pct": 10.6,
+          "quantified_basis": "revenue",
+          "relationship_type": "supplies",
+          "extraction_confidence": "medium"
+        }
+      ]
+    },
+    {
+      "id": "cik-0001375365--name-compuware-technology",
+      "source": "cik-0001375365",
+      "target": "name-compuware-technology",
+      "quantified_pct": null,
+      "relationship_types": [
+        "supplies",
+        "unclear"
+      ],
+      "direction_stated": true,
+      "confidence": "high",
+      "latest_filing_date": "2025-08-28",
+      "evidence": [
+        {
+          "source_sentence": "In addition, we have appointed Compuware as a nonexclusive authorized distributor of our products in Taiwan, China and Australia, in addition to acting as our sales representative on certain transactions in Asia.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1375365/000137536525000027/smci-20250630.htm",
+          "form_type": "10-K",
+          "filing_date": "2025-08-28",
+          "product_or_service": "nonexclusive authorized distribution of our products in Taiwan, China and Australia",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "unclear",
+          "extraction_confidence": "medium"
+        },
+        {
+          "source_sentence": "Both Ablecom and Compuware are a major contract manufacturer for us and Compuware is also a distributor of our products.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1375365/000137536525000027/smci-20250630.htm",
+          "form_type": "10-K",
+          "filing_date": "2025-08-28",
+          "product_or_service": "products",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        },
+        {
+          "source_sentence": "We appointed Compuware as a non-exclusive authorized distributor of our products in Taiwan, China, and Australia.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1375365/000137536525000027/smci-20250630.htm",
+          "form_type": "10-K",
+          "filing_date": "2025-08-28",
+          "product_or_service": "products (distributor of our products)",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        }
+      ]
+    },
+    {
+      "id": "cik-0001408710--cik-0000858877",
+      "source": "cik-0001408710",
+      "target": "cik-0000858877",
+      "quantified_pct": 19.9,
+      "relationship_types": [
+        "manufactures_for",
+        "supplies"
+      ],
+      "direction_stated": true,
+      "confidence": "high",
+      "latest_filing_date": "2026-08-18",
+      "evidence": [
+        {
+          "source_sentence": "During fiscal year 2026, Cisco Systems, Inc., NVIDIA Corporation, Nokia Corporation and Amazon.com, Inc. contributed 19.9%, 16.3%, 10.7% and 10.5%, respectively, of our revenues.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1408710/000140871026000028/fn-20260626.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-08-18",
+          "product_or_service": "optical devices and manufacturing services",
+          "quantified_pct": 19.9,
+          "quantified_basis": "revenue",
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        },
+        {
+          "source_sentence": "During fiscal year 2025, NVIDIA Corporation and Cisco Systems, Inc. contributed 27.6% and 18.2%, respectively, of our revenues.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1408710/000140871026000028/fn-20260626.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-08-18",
+          "product_or_service": "optical devices and manufacturing services",
+          "quantified_pct": 18.2,
+          "quantified_basis": "revenue",
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        },
+        {
+          "source_sentence": "Cisco Systems, Inc. 19.9 % 18.2 % 13.4 %",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1408710/000140871026000028/fn-20260626.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-08-18",
+          "product_or_service": null,
+          "quantified_pct": 19.9,
+          "quantified_basis": "revenue",
+          "relationship_type": "manufactures_for",
+          "extraction_confidence": "medium"
+        }
+      ]
+    },
+    {
+      "id": "cik-0001408710--cik-0000924613",
+      "source": "cik-0001408710",
+      "target": "cik-0000924613",
+      "quantified_pct": 10.7,
+      "relationship_types": [
+        "manufactures_for",
+        "supplies"
+      ],
+      "direction_stated": true,
+      "confidence": "high",
+      "latest_filing_date": "2026-08-18",
+      "evidence": [
+        {
+          "source_sentence": "During fiscal year 2026, Cisco Systems, Inc., NVIDIA Corporation, Nokia Corporation and Amazon.com, Inc. contributed 19.9%, 16.3%, 10.7% and 10.5%, respectively, of our revenues.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1408710/000140871026000028/fn-20260626.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-08-18",
+          "product_or_service": "optical devices and manufacturing services",
+          "quantified_pct": 10.7,
+          "quantified_basis": "revenue",
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        },
+        {
+          "source_sentence": "Nokia Corporation 10.7 % * *",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1408710/000140871026000028/fn-20260626.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-08-18",
+          "product_or_service": null,
+          "quantified_pct": 10.7,
+          "quantified_basis": "revenue",
+          "relationship_type": "manufactures_for",
+          "extraction_confidence": "medium"
+        }
+      ]
+    },
+    {
+      "id": "cik-0001408710--cik-0001018724",
+      "source": "cik-0001408710",
+      "target": "cik-0001018724",
+      "quantified_pct": 10.5,
+      "relationship_types": [
+        "manufactures_for",
+        "supplies"
+      ],
+      "direction_stated": true,
+      "confidence": "high",
+      "latest_filing_date": "2026-08-18",
+      "evidence": [
+        {
+          "source_sentence": "During fiscal year 2026, Cisco Systems, Inc., NVIDIA Corporation, Nokia Corporation and Amazon.com, Inc. contributed 19.9%, 16.3%, 10.7% and 10.5%, respectively, of our revenues.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1408710/000140871026000028/fn-20260626.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-08-18",
+          "product_or_service": "optical devices and manufacturing services",
+          "quantified_pct": 10.5,
+          "quantified_basis": "revenue",
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        },
+        {
+          "source_sentence": "The remainder of the Warrant Shares are subject to vesting in multiple tranches over the term of the Warrant based on payments to the Company from or on behalf of Amazon.com, Inc. (\"Amazon\") or its affiliates under a commercial agreement or otherwise.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1408710/000140871026000028/fn-20260626.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-08-18",
+          "product_or_service": null,
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "low"
+        },
+        {
+          "source_sentence": "Amazon.com, Inc. 10.5 % * *",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1408710/000140871026000028/fn-20260626.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-08-18",
+          "product_or_service": null,
+          "quantified_pct": 10.5,
+          "quantified_basis": "revenue",
+          "relationship_type": "manufactures_for",
+          "extraction_confidence": "medium"
+        }
+      ]
+    },
+    {
+      "id": "cik-0001408710--cik-0001045810",
+      "source": "cik-0001408710",
+      "target": "cik-0001045810",
+      "quantified_pct": 27.6,
+      "relationship_types": [
+        "manufactures_for",
+        "supplies"
+      ],
+      "direction_stated": true,
+      "confidence": "high",
+      "latest_filing_date": "2026-08-18",
+      "evidence": [
+        {
+          "source_sentence": "During fiscal year 2026, Cisco Systems, Inc., NVIDIA Corporation, Nokia Corporation and Amazon.com, Inc. contributed 19.9%, 16.3%, 10.7% and 10.5%, respectively, of our revenues.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1408710/000140871026000028/fn-20260626.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-08-18",
+          "product_or_service": "optical devices and manufacturing services",
+          "quantified_pct": 16.3,
+          "quantified_basis": "revenue",
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        },
+        {
+          "source_sentence": "During fiscal year 2025, NVIDIA Corporation and Cisco Systems, Inc. contributed 27.6% and 18.2%, respectively, of our revenues.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1408710/000140871026000028/fn-20260626.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-08-18",
+          "product_or_service": "optical devices and manufacturing services",
+          "quantified_pct": 27.6,
+          "quantified_basis": "revenue",
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        },
+        {
+          "source_sentence": "NVIDIA Corporation 16.3 % 27.6 % 35.1 %",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1408710/000140871026000028/fn-20260626.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-08-18",
+          "product_or_service": null,
+          "quantified_pct": 16.3,
+          "quantified_basis": "revenue",
+          "relationship_type": "manufactures_for",
+          "extraction_confidence": "medium"
+        },
         {
           "source_sentence": "We engage with independent subcontractors and contract manufacturers such as Hon Hai Precision Industry Co., Ltd., Wistron Corporation, and Fabrinet to perform assembly, testing and packaging of our final products.",
           "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
           "form_type": "10-K",
           "filing_date": "2026-02-25",
           "product_or_service": "assembly, testing and packaging",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "manufactures_for",
+          "extraction_confidence": "high"
+        }
+      ]
+    },
+    {
+      "id": "cik-0001571996--cik-0001730168",
+      "source": "cik-0001571996",
+      "target": "cik-0001730168",
+      "quantified_pct": null,
+      "relationship_types": [
+        "supplies"
+      ],
+      "direction_stated": true,
+      "confidence": "high",
+      "latest_filing_date": "2026-03-16",
+      "evidence": [
+        {
+          "source_sentence": "Sales and leases of products to VMware Net revenue - products $ 103",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1571996/000157199626000008/dell-20260130.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-03-16",
+          "product_or_service": "products and services sold and leased to VMware",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        }
+      ]
+    },
+    {
+      "id": "cik-0001709048--cik-0000002488",
+      "source": "cik-0001709048",
+      "target": "cik-0000002488",
+      "quantified_pct": null,
+      "relationship_types": [
+        "supplies"
+      ],
+      "direction_stated": true,
+      "confidence": "high",
+      "latest_filing_date": "2026-02-04",
+      "evidence": [
+        {
+          "source_sentence": "We utilize Taiwan Semiconductor Manufacturing Company Limited (TSMC) for the production of wafers for our HPC, FPGA and adaptive SoC products and GLOBALFOUNDRIES Inc. (GF), with respect to wafer purchases for our HPC products at the 12 nm and 14 nm technology nodes.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-02-04",
+          "product_or_service": "wafers for HPC products at 12nm and 14nm nodes",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        },
+        {
+          "source_sentence": "We rely on Taiwan Semiconductor Manufacturing Company Limited (TSMC) for the production of all wafers for microprocessor and GPU products at 7 nanometer (nm) or smaller nodes, and we rely primarily on GLOBALFOUNDRIES Inc. (GF) for wafers for microprocessor and GPU products manufactured at process nodes larger than 7 nm.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-02-04",
+          "product_or_service": "wafers for microprocessor and GPU products manufactured at process nodes larger than 7 nm",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        },
+        {
+          "source_sentence": "We are party to a wafer supply agreement with GF where GF will provide a minimum annual capacity allocation to us and set pricing through 2026.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-02-04",
+          "product_or_service": "wafer supply with minimum annual capacity allocation",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        }
+      ]
+    },
+    {
+      "id": "cik-0001730168--cik-0001571996",
+      "source": "cik-0001730168",
+      "target": "cik-0001571996",
+      "quantified_pct": null,
+      "relationship_types": [
+        "supplies"
+      ],
+      "direction_stated": true,
+      "confidence": "high",
+      "latest_filing_date": "2026-03-16",
+      "evidence": [
+        {
+          "source_sentence": "Purchase of VMware products for resale Cost of net revenue - products $ 1,010",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1571996/000157199626000008/dell-20260130.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-03-16",
+          "product_or_service": "VMware products for resale",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        },
+        {
+          "source_sentence": "Purchase of VMware services for resale Cost of net revenue - services $ 2,810",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1571996/000157199626000008/dell-20260130.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-03-16",
+          "product_or_service": "VMware services for resale",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        }
+      ]
+    },
+    {
+      "id": "cik-0001730168--cik-0001596532",
+      "source": "cik-0001730168",
+      "target": "cik-0001596532",
+      "quantified_pct": null,
+      "relationship_types": [
+        "supplies",
+        "unclear"
+      ],
+      "direction_stated": true,
+      "confidence": "high",
+      "latest_filing_date": "2026-02-17",
+      "evidence": [
+        {
+          "source_sentence": "In particular, we are primarily reliant upon our predominant merchant silicon vendor, Broadcom, for our switching chips.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000013/anet-20251231.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-02-17",
+          "product_or_service": "switching chips (merchant silicon)",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        },
+        {
+          "source_sentence": "On June 30, 2025, we completed the acquisition of the VeloCloud business (\"VeloCloud\") from Broadcom for total cash consideration of $300.0 million.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000013/anet-20251231.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-02-17",
+          "product_or_service": "VeloCloud business",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "unclear",
+          "extraction_confidence": "low"
+        }
+      ]
+    },
+    {
+      "id": "cik-0001769628--cik-0000789019",
+      "source": "cik-0001769628",
+      "target": "cik-0000789019",
+      "quantified_pct": 67,
+      "relationship_types": [
+        "supplies"
+      ],
+      "direction_stated": true,
+      "confidence": "high",
+      "latest_filing_date": "2026-03-02",
+      "evidence": [
+        {
+          "source_sentence": "We recognized an aggregate of approximately 67% of our revenue from our top customer, Microsoft, for the year ended December 31, 2025.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000104/crwv-20251231.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-03-02",
+          "product_or_service": null,
+          "quantified_pct": 67,
+          "quantified_basis": "revenue",
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        }
+      ]
+    },
+    {
+      "id": "cik-0001769628--cik-0001326801",
+      "source": "cik-0001769628",
+      "target": "cik-0001326801",
+      "quantified_pct": null,
+      "relationship_types": [
+        "supplies"
+      ],
+      "direction_stated": true,
+      "confidence": "medium",
+      "latest_filing_date": "2026-03-02",
+      "evidence": [
+        {
+          "source_sentence": "Similarly, in September 2025, we entered into an order form under an existing master services agreement pursuant to which Meta Platforms, Inc. (\"Meta\") initially committed to pay us up to approximately $14.2 billion through December 2031 and, as a result, we also expect Meta to be a significant customer in future periods.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000104/crwv-20251231.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-03-02",
+          "product_or_service": null,
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "medium"
+        }
+      ]
+    },
+    {
+      "id": "cik-0001769628--name-openai",
+      "source": "cik-0001769628",
+      "target": "name-openai",
+      "quantified_pct": null,
+      "relationship_types": [
+        "supplies"
+      ],
+      "direction_stated": true,
+      "confidence": "medium",
+      "latest_filing_date": "2026-03-02",
+      "evidence": [
+        {
+          "source_sentence": "In May 2025, we entered into a master services agreement with OpenAI OpCo, LLC (\"OpenAI\") and in September 2025, we entered into an order form under this master services agreement pursuant to which OpenAI has committed to pay us up to approximately $6.5 billion through May 31, 2031 and, as a result, we expect OpenAI to be a significant customer in future periods.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000104/crwv-20251231.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-03-02",
+          "product_or_service": null,
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "medium"
+        }
+      ]
+    },
+    {
+      "id": "cik-0001828108--cik-0001048911",
+      "source": "cik-0001828108",
+      "target": "cik-0001048911",
+      "quantified_pct": null,
+      "relationship_types": [
+        "unclear"
+      ],
+      "direction_stated": false,
+      "confidence": "low",
+      "latest_filing_date": "2026-07-20",
+      "evidence": [
+        {
+          "source_sentence": "We continued our ongoing pilot program with Aurora Innovation, Inc. (\"Aurora\") and PACCAR Inc. (\"PACCAR\") to test Aurora's autonomous driving technology in PACCAR autonomous vehicle platform-equipped trucks within FedEx linehaul operations.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1048911/000104891126000105/fdx-20260531.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-07-20",
+          "product_or_service": "autonomous driving technology",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "unclear",
+          "extraction_confidence": "low"
+        }
+      ]
+    },
+    {
+      "id": "name-ablecom-technology--cik-0001375365",
+      "source": "name-ablecom-technology",
+      "target": "cik-0001375365",
+      "quantified_pct": 95.4,
+      "relationship_types": [
+        "manufactures_for",
+        "supplies"
+      ],
+      "direction_stated": true,
+      "confidence": "high",
+      "latest_filing_date": "2025-08-28",
+      "evidence": [
+        {
+          "source_sentence": "We use Ablecom Technology, Inc. (\"Ablecom\") and its affiliate Compuware Technology, Inc. (\"Compuware\"), both of which are related parties, for contract design and manufacturing coordination support.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1375365/000137536525000027/smci-20250630.htm",
+          "form_type": "10-K",
+          "filing_date": "2025-08-28",
+          "product_or_service": "chassis and contract manufacturing services",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "manufactures_for",
+          "extraction_confidence": "high"
+        },
+        {
+          "source_sentence": "Ablecom also coordinates the manufacturing of chassis for us.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1375365/000137536525000027/smci-20250630.htm",
+          "form_type": "10-K",
+          "filing_date": "2025-08-28",
+          "product_or_service": "chassis manufacturing",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "manufactures_for",
+          "extraction_confidence": "high"
+        },
+        {
+          "source_sentence": "Our reliance on Ablecom and Compuware could be subject to risks associated with our reliance on a limited source of contract manufacturing services and inventory warehousing;",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1375365/000137536525000027/smci-20250630.htm",
+          "form_type": "10-K",
+          "filing_date": "2025-08-28",
+          "product_or_service": "contract manufacturing services and inventory warehousing",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "manufactures_for",
+          "extraction_confidence": "medium"
+        },
+        {
+          "source_sentence": "We use Ablecom, a related party, for contract design and manufacturing coordination support and warehousing, and Compuware, also a related party and an affiliate of Ablecom, for distribution, contract manufacturing and warehousing.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1375365/000137536525000027/smci-20250630.htm",
+          "form_type": "10-K",
+          "filing_date": "2025-08-28",
+          "product_or_service": "contract design and manufacturing coordination support and warehousing",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        },
+        {
+          "source_sentence": "Currently, we purchase contract manufacturing services primarily for our chassis products from Ablecom.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1375365/000137536525000027/smci-20250630.htm",
+          "form_type": "10-K",
+          "filing_date": "2025-08-28",
+          "product_or_service": "chassis products contract manufacturing",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        },
+        {
+          "source_sentence": "We plan to continue to maintain our manufacturing relationship with Ablecom and Compuware in Asia.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1375365/000137536525000027/smci-20250630.htm",
+          "form_type": "10-K",
+          "filing_date": "2025-08-28",
+          "product_or_service": "contract manufacturing and warehousing services",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        },
+        {
+          "source_sentence": "Purchases from Ablecom and Compuware, our related parties, as shown in Note 10, \"Related Party Transactions\" in the notes to the consolidated financial statements, accounted for a combined 3.3%, 4.3%, and 6.6% of cost of sales on our consolidated statements of operations for the fiscal years ended June 30, 2025, 2024, and 2023, respectively.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1375365/000137536525000027/smci-20250630.htm",
+          "form_type": "10-K",
+          "filing_date": "2025-08-28",
+          "product_or_service": null,
+          "quantified_pct": 3.3,
+          "quantified_basis": "cost",
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        },
+        {
+          "source_sentence": "Both Ablecom and Compuware are a major contract manufacturer for us and Compuware is also a distributor of our products.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1375365/000137536525000027/smci-20250630.htm",
+          "form_type": "10-K",
+          "filing_date": "2025-08-28",
+          "product_or_service": "chassis manufacturing",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "manufactures_for",
+          "extraction_confidence": "high"
+        },
+        {
+          "source_sentence": "Ablecom manufactured approximately 95.4%, 93.6%, and 91.9% of the chassis purchased by us during fiscal years 2025, 2024, and 2023, respectively.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1375365/000137536525000027/smci-20250630.htm",
+          "form_type": "10-K",
+          "filing_date": "2025-08-28",
+          "product_or_service": "chassis",
+          "quantified_pct": 95.4,
+          "quantified_basis": "units",
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        },
+        {
+          "source_sentence": "Under these agreements, we outsource to Ablecom a portion of its design activities and a significant part of its server chassis manufacturing as well as an immaterial portion of other components.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1375365/000137536525000027/smci-20250630.htm",
+          "form_type": "10-K",
+          "filing_date": "2025-08-28",
+          "product_or_service": "server chassis manufacturing and design",
           "quantified_pct": null,
           "quantified_basis": null,
           "relationship_type": "manufactures_for",
@@ -588,7 +3117,7 @@
           "source_url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm",
           "form_type": "10-K",
           "filing_date": "2026-06-15",
-          "product_or_service": "packaging of IC products",
+          "product_or_service": "packaging for IC products",
           "quantified_pct": null,
           "quantified_basis": null,
           "relationship_type": "supplies",
@@ -656,6 +3185,131 @@
       ]
     },
     {
+      "id": "name-compuware-technology--cik-0001375365",
+      "source": "name-compuware-technology",
+      "target": "cik-0001375365",
+      "quantified_pct": 3.3,
+      "relationship_types": [
+        "manufactures_for",
+        "supplies"
+      ],
+      "direction_stated": true,
+      "confidence": "high",
+      "latest_filing_date": "2025-08-28",
+      "evidence": [
+        {
+          "source_sentence": "We also have a series of agreements with Compuware, including multiple product development, production and service agreements, as well as product manufacturing agreements and lease agreements for office space.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1375365/000137536525000027/smci-20250630.htm",
+          "form_type": "10-K",
+          "filing_date": "2025-08-28",
+          "product_or_service": "product development, production and service agreements",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "manufactures_for",
+          "extraction_confidence": "high"
+        },
+        {
+          "source_sentence": "Our reliance on Ablecom and Compuware could be subject to risks associated with our reliance on a limited source of contract manufacturing services and inventory warehousing;",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1375365/000137536525000027/smci-20250630.htm",
+          "form_type": "10-K",
+          "filing_date": "2025-08-28",
+          "product_or_service": "contract manufacturing services and inventory warehousing",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "manufactures_for",
+          "extraction_confidence": "medium"
+        },
+        {
+          "source_sentence": "We use Ablecom, a related party, for contract design and manufacturing coordination support and warehousing, and Compuware, also a related party and an affiliate of Ablecom, for distribution, contract manufacturing and warehousing.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1375365/000137536525000027/smci-20250630.htm",
+          "form_type": "10-K",
+          "filing_date": "2025-08-28",
+          "product_or_service": "distribution, contract manufacturing and warehousing",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        },
+        {
+          "source_sentence": "We outsource to Compuware a portion of our design activities and a significant part of our manufacturing of subassemblies, particularly power supplies.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1375365/000137536525000027/smci-20250630.htm",
+          "form_type": "10-K",
+          "filing_date": "2025-08-28",
+          "product_or_service": "design activities and manufacturing of subassemblies, particularly power supplies",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "manufactures_for",
+          "extraction_confidence": "high"
+        },
+        {
+          "source_sentence": "We plan to continue to maintain our manufacturing relationship with Ablecom and Compuware in Asia.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1375365/000137536525000027/smci-20250630.htm",
+          "form_type": "10-K",
+          "filing_date": "2025-08-28",
+          "product_or_service": "contract manufacturing and warehousing services",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        },
+        {
+          "source_sentence": "Purchases from Ablecom and Compuware, our related parties, as shown in Note 10, \"Related Party Transactions\" in the notes to the consolidated financial statements, accounted for a combined 3.3%, 4.3%, and 6.6% of cost of sales on our consolidated statements of operations for the fiscal years ended June 30, 2025, 2024, and 2023, respectively.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1375365/000137536525000027/smci-20250630.htm",
+          "form_type": "10-K",
+          "filing_date": "2025-08-28",
+          "product_or_service": null,
+          "quantified_pct": 3.3,
+          "quantified_basis": "cost",
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        },
+        {
+          "source_sentence": "Both Ablecom and Compuware are a major contract manufacturer for us and Compuware is also a distributor of our products.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1375365/000137536525000027/smci-20250630.htm",
+          "form_type": "10-K",
+          "filing_date": "2025-08-28",
+          "product_or_service": "manufacturing",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "manufactures_for",
+          "extraction_confidence": "high"
+        },
+        {
+          "source_sentence": "Under these agreements, we outsource to Compuware a portion of its design activities and a significant part of its power supplies manufacturing as well as an immaterial portion of other components.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1375365/000137536525000027/smci-20250630.htm",
+          "form_type": "10-K",
+          "filing_date": "2025-08-28",
+          "product_or_service": "power supplies manufacturing and design",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "manufactures_for",
+          "extraction_confidence": "high"
+        },
+        {
+          "source_sentence": "With respect to the manufacturing aspects of the relationship, Compuware purchases most of the materials needed to manufacture the power supplies from outside markets and uses these materials to manufacture the products and then sell those products to us.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1375365/000137536525000027/smci-20250630.htm",
+          "form_type": "10-K",
+          "filing_date": "2025-08-28",
+          "product_or_service": "power supplies",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        },
+        {
+          "source_sentence": "Compuware also manufactures motherboards, backplanes and other components used on printed circuit boards for us.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1375365/000137536525000027/smci-20250630.htm",
+          "form_type": "10-K",
+          "filing_date": "2025-08-28",
+          "product_or_service": "motherboards, backplanes and other components used on printed circuit boards",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        }
+      ]
+    },
+    {
       "id": "name-groq--cik-0001045810",
       "source": "name-groq",
       "target": "cik-0001045810",
@@ -672,11 +3326,11 @@
           "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
           "form_type": "10-K",
           "filing_date": "2026-02-25",
-          "product_or_service": "intellectual property/technology license",
+          "product_or_service": "intellectual property/technology",
           "quantified_pct": null,
           "quantified_basis": null,
           "relationship_type": "licenses_to",
-          "extraction_confidence": "high"
+          "extraction_confidence": "medium"
         },
         {
           "source_sentence": "In December 2025, we entered into a non\u2010exclusive license agreement with Groq, Inc., or Groq, for its language processing unit technology and hired certain Groq employees.",
@@ -717,6 +3371,31 @@
       ]
     },
     {
+      "id": "name-hon-hai-precision-industry--cik-0001596532",
+      "source": "name-hon-hai-precision-industry",
+      "target": "cik-0001596532",
+      "quantified_pct": null,
+      "relationship_types": [
+        "manufactures_for"
+      ],
+      "direction_stated": true,
+      "confidence": "high",
+      "latest_filing_date": "2026-02-17",
+      "evidence": [
+        {
+          "source_sentence": "Our primary manufacturing partners are Jabil Inc., Sanmina Corporation and Foxconn Hon Hai.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000013/anet-20251231.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-02-17",
+          "product_or_service": "contract manufacturing of products",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "manufactures_for",
+          "extraction_confidence": "high"
+        }
+      ]
+    },
+    {
       "id": "name-hon-hai-precision-industry--cik-0001730168",
       "source": "name-hon-hai-precision-industry",
       "target": "cik-0001730168",
@@ -742,6 +3421,31 @@
       ]
     },
     {
+      "id": "name-king-yuan-electronics--cik-0000002488",
+      "source": "name-king-yuan-electronics",
+      "target": "cik-0000002488",
+      "quantified_pct": null,
+      "relationship_types": [
+        "supplies"
+      ],
+      "direction_stated": true,
+      "confidence": "high",
+      "latest_filing_date": "2026-02-04",
+      "evidence": [
+        {
+          "source_sentence": "The ATMP JVs, Siliconware Precision Industries Ltd. (SPIL) and King Yuan Electronics Company (KYEC) provide ATMP services for our products.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-02-04",
+          "product_or_service": "ATMP services",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        }
+      ]
+    },
+    {
       "id": "name-king-yuan-electronics--cik-0001807794",
       "source": "name-king-yuan-electronics",
       "target": "cik-0001807794",
@@ -758,7 +3462,7 @@
           "source_url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm",
           "form_type": "10-K",
           "filing_date": "2026-06-15",
-          "product_or_service": "testing of IC products",
+          "product_or_service": "testing for IC products",
           "quantified_pct": null,
           "quantified_basis": null,
           "relationship_type": "supplies",
@@ -770,6 +3474,128 @@
           "form_type": "10-K",
           "filing_date": "2026-06-15",
           "product_or_service": "assembly and test operations for IC products",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        }
+      ]
+    },
+    {
+      "id": "name-openai--cik-0000002488",
+      "source": "name-openai",
+      "target": "cik-0000002488",
+      "quantified_pct": null,
+      "relationship_types": [
+        "unclear"
+      ],
+      "direction_stated": false,
+      "confidence": "low",
+      "latest_filing_date": "2026-02-04",
+      "evidence": [
+        {
+          "source_sentence": "The warrant shares will vest in tranches based on AMD Instinct GPU purchase milestones by the Warrantholder, or its affiliates, or indirectly through third parties, and achievement of specified Company stock price targets and stock performance.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-02-04",
+          "product_or_service": "AMD Instinct GPU purchases",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "unclear",
+          "extraction_confidence": "low"
+        }
+      ]
+    },
+    {
+      "id": "name-openai--cik-0000789019",
+      "source": "name-openai",
+      "target": "cik-0000789019",
+      "quantified_pct": null,
+      "relationship_types": [
+        "unclear"
+      ],
+      "direction_stated": false,
+      "confidence": "low",
+      "latest_filing_date": "2026-07-29",
+      "evidence": [
+        {
+          "source_sentence": "Additionally, we have a long-term strategic partnership with OpenAI.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-07-29",
+          "product_or_service": null,
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "unclear",
+          "extraction_confidence": "low"
+        },
+        {
+          "source_sentence": "We have a long-term strategic partnership with OpenAI.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-07-29",
+          "product_or_service": null,
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "unclear",
+          "extraction_confidence": "low"
+        }
+      ]
+    },
+    {
+      "id": "name-openai--cik-0001769628",
+      "source": "name-openai",
+      "target": "cik-0001769628",
+      "quantified_pct": null,
+      "relationship_types": [
+        "unclear"
+      ],
+      "direction_stated": false,
+      "confidence": "low",
+      "latest_filing_date": "2026-03-02",
+      "evidence": [
+        {
+          "source_sentence": "For example, in March 2025, we entered into a master services agreement with OpenAI, a private company, pursuant to which OpenAI has committed to pay us up to approximately $11.9 billion through October 2030.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000104/crwv-20251231.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-03-02",
+          "product_or_service": null,
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "unclear",
+          "extraction_confidence": "low"
+        }
+      ]
+    },
+    {
+      "id": "name-samsung-electronics--cik-0000002488",
+      "source": "name-samsung-electronics",
+      "target": "cik-0000002488",
+      "quantified_pct": null,
+      "relationship_types": [
+        "supplies"
+      ],
+      "direction_stated": true,
+      "confidence": "high",
+      "latest_filing_date": "2026-02-04",
+      "evidence": [
+        {
+          "source_sentence": "Additionally, we utilize TSMC, United Microelectronics Corporation (UMC) and Samsung Electronics Co., Ltd. for the production of our ICs in the form of programmable logic devices.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-02-04",
+          "product_or_service": "ICs in the form of programmable logic devices",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        },
+        {
+          "source_sentence": "We also utilize TSMC, United Microelectronics Corporation (UMC) and Samsung Electronics Co., Ltd. for our integrated circuits (IC) in the form of programmable logic devices.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-02-04",
+          "product_or_service": "integrated circuits (IC) in the form of programmable logic devices",
           "quantified_pct": null,
           "quantified_basis": null,
           "relationship_type": "supplies",
@@ -830,7 +3656,7 @@
           "source_url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm",
           "form_type": "10-K",
           "filing_date": "2026-06-15",
-          "product_or_service": "testing of IC products",
+          "product_or_service": "testing for IC products",
           "quantified_pct": null,
           "quantified_basis": null,
           "relationship_type": "supplies",
@@ -842,6 +3668,31 @@
           "form_type": "10-K",
           "filing_date": "2026-06-15",
           "product_or_service": "assembly and test operations for IC products",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        }
+      ]
+    },
+    {
+      "id": "name-siliconware-precision-industries--cik-0000002488",
+      "source": "name-siliconware-precision-industries",
+      "target": "cik-0000002488",
+      "quantified_pct": null,
+      "relationship_types": [
+        "supplies"
+      ],
+      "direction_stated": true,
+      "confidence": "high",
+      "latest_filing_date": "2026-02-04",
+      "evidence": [
+        {
+          "source_sentence": "The ATMP JVs, Siliconware Precision Industries Ltd. (SPIL) and King Yuan Electronics Company (KYEC) provide ATMP services for our products.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-02-04",
+          "product_or_service": "ATMP services",
           "quantified_pct": null,
           "quantified_basis": null,
           "relationship_type": "supplies",
@@ -892,6 +3743,42 @@
           "form_type": "10-K",
           "filing_date": "2026-02-25",
           "product_or_service": "memory",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        }
+      ]
+    },
+    {
+      "id": "name-tongfu-microelectronics--cik-0000002488",
+      "source": "name-tongfu-microelectronics",
+      "target": "cik-0000002488",
+      "quantified_pct": null,
+      "relationship_types": [
+        "supplies"
+      ],
+      "direction_stated": true,
+      "confidence": "high",
+      "latest_filing_date": "2026-02-04",
+      "evidence": [
+        {
+          "source_sentence": "We are party to two ATMP joint ventures (collectively, the ATMP JVs) with Tongfu Microelectronics Co., Ltd.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-02-04",
+          "product_or_service": "ATMP services",
+          "quantified_pct": null,
+          "quantified_basis": null,
+          "relationship_type": "supplies",
+          "extraction_confidence": "high"
+        },
+        {
+          "source_sentence": "We are party to two ATMP joint ventures (collectively, the ATMP JVs) with affiliates of Tongfu Microelectronics Co., Ltd.",
+          "source_url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+          "form_type": "10-K",
+          "filing_date": "2026-02-04",
+          "product_or_service": "ATMP (assemble, test, mark and pack) services",
           "quantified_pct": null,
           "quantified_basis": null,
           "relationship_type": "supplies",

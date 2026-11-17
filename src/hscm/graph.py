@@ -151,8 +151,9 @@ def build_graph(records: list[dict], resolver: Resolver, seed_ciks: set[int]) ->
     graph = Graph()
 
     for record in records:
-        buyer = resolver.resolve(record.get("buyer_name_raw", ""))
-        supplier = resolver.resolve(record.get("supplier_name_raw", ""))
+        url = record.get("source_url")
+        buyer = resolver.resolve_in(record.get("buyer_name_raw", ""), url)
+        supplier = resolver.resolve_in(record.get("supplier_name_raw", ""), url)
 
         for resolution in (buyer, supplier):
             if resolution.status == "excluded":

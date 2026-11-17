@@ -11,30 +11,108 @@
 # comments you add by hand between them do not. Put the reasoning for a
 # decision in that entry's note, where it is data and will be kept.
 aliases:
+  AWS:
+    cik: 1018724
+    note: Amazon Web Services is a segment of Amazon.com, Inc. Kept on the Amazon node; the map does not
+      split subsidiaries.
+  Amazon:
+    cik: 1018724
+    note: Short form of Amazon.com, Inc.
+  Amazon Fulfillment Services, Inc.:
+    cik: 1018724
+    note: Amazon subsidiary. Folded onto Amazon.com, Inc.
+  Amazon.com NV Investment Holdings LLC:
+    cik: 1018724
+    note: Amazon subsidiary that holds the warrant. Folded onto Amazon.com, Inc.
+  Amazon.com, Inc. and its affiliates:
+    cik: 1018724
+    note: Amazon.com, Inc., as UPS names its largest customer.
   Amkor:
     cik: 1047127
     note: Short form of Amkor Technology, Inc., which the same filing spells in full.
+  Amkor Technology Inc. (Amkor):
+    cik: 1047127
+    note: Amkor with the abbreviation the filing defines.
+  Applied Materials, Inc.:
+    cik: 6951
+    note: Applied Materials.
+  Arista:
+    cik: 1596532
+    note: Short form of Arista Networks, Inc.
+  Cadence:
+    cik: 813672
+    note: Short form of Cadence Design Systems, Inc.
   Credo:
     cik: 1807794
     note: Short form of Credo Technology Group Holding Ltd.
+  GF:
+    cik: 1709048
+    note: GlobalFoundries, as AMD's 10-K abbreviates it. On SEC's registry the ticker GF belongs to New
+      Germany Fund, a closed-end fund, which the bare-ticker match picked up; GlobalFoundries trades as
+      GFS.
+  GLOBALFOUNDRIES Inc. (GF):
+    cik: 1709048
+    note: GlobalFoundries with the abbreviation the filing defines.
+  Google Inc.:
+    cik: 1652044
+    note: Google's former legal name; Google is now a subsidiary of Alphabet Inc.
   Marvell:
     cik: 1835632
     note: Short form of Marvell Technology, Inc.
+  Qualcomm:
+    cik: 804328
+    note: Short form of QUALCOMM Incorporated.
+  Quanta:
+    cik: 1050915
+    note: Short form of Quanta Services, Inc.
+  Supermicro:
+    cik: 1375365
+    note: Trading name of Super Micro Computer, Inc.
   TSMC:
     cik: 1046179
     note: Acronym for Taiwan Semiconductor Manufacturing Company Limited. Not a prefix of the registered
       name, so no amount of string matching finds it.
+  UMC:
+    cik: 1033767
+    note: Short form of United Microelectronics Corporation.
+  United Microelectronics Corporation (UMC):
+    cik: 1033767
+    note: UMC, Taiwan-listed foundry that files a 20-F.
+  VMware:
+    cik: 1730168
+    note: VMware has been part of Broadcom since Broadcom completed the acquisition in November 2023;
+      Dell resells VMware products, so the counterparty is Broadcom.
 non_filers:
   ASE:
     canonical: Advanced Semiconductor Engineering, Inc.
     note: Short form the filing defines and then uses.
+  Ablecom:
+    canonical: Ablecom Technology, Inc.
+    note: Short form the filing defines and then uses.
+  Ablecom Technology, Inc.: Taiwan-based private company; Supermicro's 10-K names it as a related-party
+    supplier that makes its chassis. Files nothing with the SEC.
   Advanced Semiconductor Engineering, Inc.: Taiwan-listed. Files nothing with the SEC, so nothing it says
     can corroborate or contradict an edge.
+  Advanced Semiconductor Engineering, Inc. (ASE):
+    canonical: Advanced Semiconductor Engineering, Inc.
+    note: With the abbreviation the filing defines.
+  Anthropic: Private company. Named in Amazon filings; files nothing with the SEC.
   BizLink:
     canonical: BizLink Technology, Inc.
     note: Short form the filing defines and then uses.
   BizLink Technology, Inc.: Taiwan-listed. Files nothing with the SEC, so nothing it says can corroborate
     or contradict an edge.
+  BizLink Technology, Inc. (BizLink):
+    canonical: BizLink Technology, Inc.
+    note: With the abbreviation the filing defines.
+  Compuware:
+    canonical: Compuware Technology, Inc.
+    note: Short form the filing defines and then uses.
+  Compuware Technology, Inc.: Ablecom's affiliate, named in Supermicro's 10-K as a related-party supplier.
+    Files nothing with the SEC.
+  Foxconn Hon Hai:
+    canonical: Hon Hai Precision Industry Co., Ltd.
+    note: Arista's spelling of Hon Hai / Foxconn.
   Foxconn Technology Group:
     canonical: Hon Hai Precision Industry Co., Ltd.
     note: Foxconn is the trading name of Hon Hai. Broadcom's 10-K says Foxconn and NVIDIA's says Hon Hai;
@@ -47,8 +125,14 @@ non_filers:
     note: Short form the filing defines and then uses.
   King Yuan Electronics Company: Taiwan-listed. Files nothing with the SEC, so nothing it says can corroborate
     or contradict an edge.
+  King Yuan Electronics Company (KYEC):
+    canonical: King Yuan Electronics Company
+    note: With the abbreviation the filing defines.
   OpenAI: Private company. Named in Microsoft's 10-K; files nothing with the SEC, so it is a node with
     no CIK and nothing it says can corroborate the edge.
+  OpenAI OpCo, LLC:
+    canonical: OpenAI
+    note: OpenAI operating entity named in AMD filings.
   SK Hynix: Korean-listed, so it files nothing with the SEC — but NVIDIA's 10-K names it outright, and
     a citable sentence is the test this project applies. Excluded under the original scope decision, before
     non-filer nodes existed; once they did, "cited but files nothing" was already a category and this
@@ -68,13 +152,53 @@ non_filers:
   Samsung Electronics Co., Ltd.:
     canonical: Samsung Electronics
     note: Full legal name as NVIDIA's 10-K first spells it.
+  Samsung Electronics Company, Ltd.:
+    canonical: Samsung Electronics
+    note: As spelled in Lam Research's 10-K.
   Sigurd:
     canonical: Sigurd Microelectronics Corp.
     note: Short form the filing defines and then uses.
   Sigurd Microelectronics Corp.: Taiwan-listed. Files nothing with the SEC, so nothing it says can corroborate
     or contradict an edge.
+  Sigurd Microelectronics Corp. (Sigurd):
+    canonical: Sigurd Microelectronics Corp.
+    note: With the abbreviation the filing defines.
   Siliconware Precision Industries Co., Ltd.: Taiwan-listed. Files nothing with the SEC, so nothing it
     says can corroborate or contradict an edge.
+  Siliconware Precision Industries Ltd. (SPIL):
+    canonical: Siliconware Precision Industries Co., Ltd.
+    note: With the abbreviation the filing defines.
+  Tongfu Microelectronics Co., Ltd.: China-listed. AMD's partner in its assembly-and-test joint ventures.
+    Files nothing with the SEC.
   Wistron Corporation: Taiwan-listed. Files nothing with the SEC, so nothing it says can corroborate or
     contradict an edge.
-excluded: {}
+excluded:
+  ATMP JV: Same joint venture as 'ATMP JVs'.
+  ATMP JVs: AMD's assembly-and-test joint ventures with Tongfu; the records naming Tongfu carry the relationship.
+  Ablecom and Compuware: Two companies in one phrase; each is resolved on its own.
+  Aero Alliance: Aviation joint venture; outside this map.
+  Corporate Venture: An unnamed joint venture.
+  Ford: Automotive customer; outside this map.
+  Harbinger Motors: Investment; outside this map.
+  Higon Information Technology Co., Ltd.: AMD's partner in a China licensing joint venture; outside the
+    data centre supply chain.
+  Honeywell Inc.: Celestica customer outside the data centre supply chain.
+  Huawei: The sentence says shipments stopped; no current relationship.
+  Husqvarna: Outside this map.
+  Infineum: Sale of a business, not supply.
+  LUMA Energy, LLC: Puerto Rico utility services; outside this map.
+  Leadtek: An NVIDIA reseller for graphics cards; outside the data centre supply chain.
+  MacDermid Enthone Inc.: Terminated agreement.
+  MagAI Ventures: Investment arrangement, not supply.
+  Mercedes-Benz: Truck trials; outside this map.
+  Microsoft® Xbox Series S and X: A product. Game consoles are outside this map.
+  Prolec GE: Transformer joint venture; GE Vernova itself is in the map.
+  Returnity: Packaging pilot; outside this map.
+  Sony PlayStation® 5: A product. Game consoles are outside this map.
+  THATIC JV: AMD's China joint venture with Higon; licensing, not part of the data centre supply chain.
+  Taiwan: A place, not a company.
+  United States Postal Service: Postal contract with FedEx; outside the data centre supply chain.
+  Valve Steam Machine PC: A product. Game consoles are outside this map.
+  Xintec: Historical TSMC investment; not a supply statement.
+  our platform: Not a company.
+  our subsidiary in Thailand: Intra-company arrangement.

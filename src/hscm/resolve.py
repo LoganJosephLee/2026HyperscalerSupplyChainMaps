@@ -277,6 +277,29 @@ class Aliases:
         return raw_name in self.excluded or raw_name.strip() in self.excluded
 
 
+# --- self-references --------------------------------------------------------
+# A filing calls its own company "we", "us" or "the Company". The extractor
+# copies the name exactly as written, so these arrive as counterparty names.
+# They are not anonymous: the filer is known from the filing's own URL, and
+# "our predominant merchant silicon vendor, Broadcom" in Arista's 10-K is a
+# relationship with Arista. Resolving them to the filer recovers those edges.
+SELF_REFERENCES = {
+    "we", "us", "our", "ours", "the company", "company", "our company",
+    "the registrant", "registrant",
+}
+_FILER_CIK = re.compile(r"/edgar/data/(\d+)/")
+
+
+def is_self_reference(raw_name: str | None) -> bool:
+    return (raw_name or "").strip().lower() in SELF_REFERENCES
+
+
+def filer_cik(source_url: str | None) -> int | None:
+    """The CIK of the company that filed the document at `source_url`."""
+    match = _FILER_CIK.search(source_url or "")
+    return int(match.group(1)) if match else None
+
+
 # --- resolution -------------------------------------------------------------
 def name_key(name: str) -> str:
     """Stable node key for a company with no CIK."""
@@ -313,6 +336,23 @@ class Resolver:
         self.spine = spine
         self.aliases = aliases or Aliases.load()
         self.threshold = threshold if threshold is not None else config.MATCH_ACCEPT_THRESHOLD
+
+    def resolve_filer(self, raw_name: str, source_url: str | None) -> Resolution | None:
+        """Resolve "we" / "us" / "the Company" to the company that filed."""
+        if not is_self_reference(raw_name):
+            return None
+        cik = filer_cik(source_url)
+        entry = self.spine.by_cik(cik) if cik is not None else None
+        if entry is None:
+            return None
+        return Resolution(
+            raw_name=raw_name.strip(), status="resolved", cik=entry.cik,
+            canonical_name=entry.title, ticker=entry.ticker, score=1.0, method="self",
+        )
+
+    def resolve_in(self, raw_name: str, source_url: str | None) -> Resolution:
+        """Resolve a name in the context of the filing it was read from."""
+        return self.resolve_filer(raw_name, source_url) or self.resolve(raw_name)
 
     def resolve(self, raw_name: str) -> Resolution:
         name = (raw_name or "").strip()
@@ -435,6 +475,8 @@ def build_review_queue(
         for key in ("buyer_name_raw", "supplier_name_raw"):
             name = (record.get(key) or "").strip()
             if not name:
+                continue
+            if resolver.resolve_filer(name, record.get("source_url")) is not None:
                 continue
             counts[name] += 1
             examples.setdefault(name, record)

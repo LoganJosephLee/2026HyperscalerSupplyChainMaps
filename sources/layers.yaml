@@ -1,0 +1,217 @@
+# What the site teaches with: the layers of the stack, guided tours, and a
+# glossary. Layer and glossary text is general background, written for someone
+# new to the industry. Claims about specific companies do not belong here; they
+# belong in claims.yaml or companies.yaml, with a quote. Tour steps may only walk
+# along relationships that are cited, and the build checks that they do.
+
+layers:
+# Ordered top to bottom as the page shows them: the buyers first, then
+# everything they depend on. Goods and services flow upward.
+- key: ailab
+  label: AI labs
+  blurb: The companies building AI models. They are now some of the largest buyers of computing power in the world.
+- key: hyperscaler
+  label: Hyperscalers
+  blurb: The giant cloud companies this map is about. They build data centers at enormous scale and rent out the computing inside them.
+- key: neocloud
+  label: AI clouds
+  blurb: Newer cloud companies, sometimes called neoclouds, that specialise in renting out GPUs. Several of their biggest customers are the hyperscalers themselves.
+- key: buildings
+  label: Buildings and money
+  blurb: The landlords, builders and investors behind the data center buildings, and the electrical construction that connects them.
+- key: power
+  label: Power
+  blurb: Power plants, and the electrical equipment that gets their power into a data center and keeps it running.
+- key: cooling
+  label: Cooling
+  blurb: AI chips turn almost all the electricity they use into heat. These companies make the systems that carry it away.
+- key: servers
+  label: Servers and assembly
+  blurb: The companies that put chips, memory and networking together into servers and racks, often as contract manufacturers for someone else's design.
+- key: networking
+  label: Networking and optics
+  blurb: Switches, cables and lasers that move data between chips, between servers and between buildings.
+- key: packaging
+  label: Packaging and testing
+  blurb: After a chip is made, it is cut from its wafer, sealed in a package and tested. Advanced packaging is what joins an AI chip to its memory.
+- key: memory
+  label: Memory
+  blurb: Chips that hold data while processors work on it. AI chips sit next to stacks of high-bandwidth memory (HBM).
+- key: chips
+  label: Chip designers
+  blurb: The companies that design processors (GPUs, CPUs and custom accelerators). Most do not own factories; they pay a foundry to make their designs.
+- key: foundry
+  label: Chip factories
+  blurb: Foundries manufacture chips that other companies design.
+- key: tools
+  label: Chipmaking tools
+  blurb: The machines that print, etch and inspect chips inside a factory, and the software engineers use to design them.
+- key: materials
+  label: Materials
+  blurb: "The physical inputs a chip factory uses up: ultra-pure chemicals, gases and filters."
+- key: logistics
+  label: Freight and logistics
+  side: true
+  blurb: Moving parts and finished equipment around the world.
+- key: carrier
+  label: Network carriers
+  side: true
+  blurb: Long-distance fiber networks that link data centers to each other and to users.
+- key: other
+  label: Other customers
+  side: true
+  blurb: Companies that appear in these filings as customers, outside the AI data center chain itself.
+
+tours:
+- id: chip-to-cloud
+  title: Follow an AI chip to the cloud
+  intro: Where a GPU comes from, and where its computing power ends up.
+  steps:
+  - from: TSM
+    to: NVDA
+    text: NVIDIA designs its GPUs but does not make them. Its 10-K says it uses foundries such as TSMC to produce its wafers.
+  - from: SK Hynix
+    to: NVDA
+    text: Each AI chip needs memory beside it. NVIDIA's 10-K says it buys memory from SK hynix, Micron and Samsung.
+  - from: Hon Hai Precision Industry Co., Ltd.
+    to: NVDA
+    text: Contract manufacturers such as Foxconn (Hon Hai) and Wistron assemble, test and package NVIDIA's finished products.
+  - from: FN
+    to: NVDA
+    text: Fabrinet builds optical parts and assembles some NVIDIA products. NVIDIA was 16.3% of Fabrinet's fiscal 2026 revenue, and 27.6% the year before.
+  - from: NVDA
+    to: CRWV
+    text: The finished systems go to clouds. CoreWeave's 10-K says it deploys NVIDIA GB200 and GB300 NVL72 systems.
+  - from: CRWV
+    to: MSFT
+    text: CoreWeave rents that capacity out. About 67% of its 2025 revenue came from one customer, Microsoft.
+  - from: MSFT
+    to: OpenAI
+    text: Microsoft sells cloud computing to OpenAI, which in October 2025 contracted to buy an additional $250 billion of Azure services.
+
+- id: power
+  title: Where the electricity comes from
+  intro: The hyperscalers have started signing long contracts directly with power plants, including nuclear ones.
+  steps:
+  - from: CEG
+    to: MSFT
+    text: Microsoft signed a 20-year agreement that lets Constellation restart Three Mile Island Unit 1, now called the Crane Clean Energy Center.
+  - from: CEG
+    to: META
+    text: Meta signed a 20-year agreement with Constellation for the clean-energy attributes of the Clinton nuclear plant in Illinois.
+  - from: TLN
+    to: AMZN
+    text: Talen agreed to supply 1,920 MW from the Susquehanna nuclear plant to AWS data centers in Pennsylvania.
+  - from: NEE
+    to: GOOGL
+    text: Google signed a 25-year agreement for power from the Duane Arnold nuclear plant in Iowa, which NextEra plans to restart.
+  - from: Kairos Power
+    to: GOOGL
+    text: Google also agreed to buy power from small modular reactors that Kairos Power is still developing, up to 500 MW.
+  - from: VRT
+    to: NVDA
+    text: Inside the building, Vertiv says its partnership with NVIDIA covers power and thermal infrastructure for next-generation AI systems.
+
+- id: neoclouds
+  title: Renting GPUs to the giants
+  intro: Hyperscalers build their own data centers, and they also rent extra capacity from smaller AI clouds.
+  steps:
+  - from: CRWV
+    to: MSFT
+    text: Microsoft was CoreWeave's top customer, about 67% of CoreWeave's 2025 revenue.
+  - from: NBIS
+    to: MSFT
+    text: Nebius agreed to deliver dedicated GPU capacity to Microsoft from a new data center in New Jersey, a deal Reuters reported at $17.4 billion.
+  - from: IREN
+    to: MSFT
+    text: IREN signed a five-year contract, about $9.7 billion, to give Microsoft access to NVIDIA GB300 GPUs.
+  - from: DELL
+    to: IREN
+    text: To deliver it, IREN agreed to buy the GPUs and equipment from Dell for about $5.8 billion.
+  - from: Lambda
+    to: MSFT
+    text: Lambda announced a multibillion-dollar agreement to deploy tens of thousands of NVIDIA GPUs for Microsoft.
+  - from: NBIS
+    to: META
+    text: Meta is a neocloud customer too. Nebius announced a deal worth about $3 billion over five years.
+
+- id: circular
+  title: Money that goes around
+  intro: Some companies on this map are each other's supplier, customer and investor at the same time.
+  steps:
+  - from: NVDA
+    to: OpenAI
+    text: NVIDIA signed a letter of intent to supply OpenAI with at least 10 gigawatts of systems, and said it intends to invest up to $100 billion in OpenAI as they are deployed.
+  - from: NVDA
+    to: CRWV
+    text: NVIDIA also supplies GPU systems to CoreWeave.
+  - from: CRWV
+    to: NVDA
+    text: And NVIDIA buys from CoreWeave. Under a September 2025 order, NVIDIA agreed to purchase any CoreWeave capacity left unsold, through April 2032.
+  - from: CRWV
+    to: OpenAI
+    text: CoreWeave in turn sells computing to OpenAI under a master services agreement signed in 2025.
+  - from: AMD
+    to: OpenAI
+    text: AMD's 10-K describes an October 2025 agreement with OpenAI to deploy 6 gigawatts of AMD GPUs.
+  - from: MSFT
+    to: OpenAI
+    text: Microsoft is both OpenAI's cloud supplier and a major shareholder, with a stake it values at about $135 billion.
+
+- id: before-the-chip
+  title: Before the chip
+  intro: The machines and materials a chip factory needs, and the packaging that comes after.
+  steps:
+  - from: LRCX
+    to: TSM
+    text: Lam Research makes wafer fabrication equipment. It names TSMC, Samsung, SK hynix and Micron among its most significant customers.
+  - from: KLAC
+    to: TSM
+    text: KLA's equipment inspects chips as they are made. TSMC accounted for more than 10% of KLA's revenue in each of the last three fiscal years.
+  - from: ENTG
+    to: TSM
+    text: Entegris supplies materials and filters. TSMC was 16% of its 2025 net sales.
+  - from: TSM
+    to: AVGO
+    text: Broadcom outsources most of its chip manufacturing. About 95% of the wafers its contract manufacturers made were produced by TSMC.
+  - from: AMKR
+    to: AVGO
+    text: After manufacturing, chips are packaged and tested. Broadcom names Amkor, ASE and Foxconn among the companies that do this for it.
+
+glossary:
+- term: Hyperscaler
+  definition: A company that runs cloud data centers at the largest scale, such as Microsoft, Google, Amazon, Meta and Oracle.
+- term: Neocloud
+  definition: A newer cloud company that specialises in renting out GPUs for AI, such as CoreWeave or Nebius.
+- term: GPU
+  definition: Graphics processing unit. A chip that does many calculations in parallel, which makes it well suited to training and running AI models.
+- term: TPU
+  definition: Tensor processing unit. Google's own AI chip, designed in-house.
+- term: Accelerator
+  definition: Any chip built to speed up a specific kind of work, such as AI. GPUs and TPUs are both accelerators.
+- term: HBM
+  definition: High-bandwidth memory. Stacks of memory chips placed right beside an AI chip so data can reach it fast.
+- term: Foundry
+  definition: A factory that manufactures chips designed by other companies.
+- term: Fabless
+  definition: A chip company that designs chips but owns no factory to make them.
+- term: Wafer
+  definition: A thin disc of silicon on which hundreds of chips are made at once.
+- term: OSAT
+  definition: Outsourced semiconductor assembly and test. Companies that package and test chips for others.
+- term: Contract manufacturer
+  definition: A company that builds products to another company's design, under that company's brand.
+- term: Power purchase agreement
+  definition: A long-term contract to buy electricity from a specific power plant, often signed before the plant is built or restarted.
+- term: Gigawatt
+  definition: A billion watts. AI deals are now often sized by the electricity the computers will use rather than by chip count.
+- term: Small modular reactor
+  definition: A nuclear reactor smaller than a conventional plant, designed to be built in a factory and installed in units.
+- term: 10-K
+  definition: The annual report a US-listed company files with the SEC. It is where most of the relationships on this map were found.
+- term: 20-F and 6-K
+  definition: The annual report and interim report foreign companies listed in the US file with the SEC.
+- term: 8-K
+  definition: A report a US-listed company files with the SEC when something material happens, such as signing a major contract.
+- term: Letter of intent
+  definition: A statement that two companies plan to make a deal. It is not yet a final, binding contract.

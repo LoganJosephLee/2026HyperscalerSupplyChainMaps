@@ -12,7 +12,8 @@
   <h1>Coverage &amp; limitations</h1>
   <span class="stamp" id="stamp">data as of &mdash;</span>
   <nav>
-    <a href="index.html">Graph</a>
+    <a href="index.html">Learning map</a>
+    <a href="network.html">SEC network</a>
     <a href="data/relationships.csv" download>CSV</a>
     <a href="data/relationships.json" download>JSON</a>
   </nav>
@@ -21,10 +22,13 @@
 <div class="page">
 
 <p>
-  This map is built from one source: filings on SEC EDGAR. Every edge is backed by a
-  sentence in a filing, and the sentence is shown to you when you click the edge. That
-  rule is what the project is for &mdash; and it produces specific, knowable gaps. They
-  are listed here rather than buried, because the way this map fails is somebody treating
+  Most of this map comes from filings on SEC EDGAR, read by an automated pipeline that
+  keeps only sentences it can find word for word in the filing. Since November 2026 the
+  learning map also includes relationships from company announcements and major news
+  reports, each quoted exactly and labelled with its source type. The figures and notes
+  below describe the SEC part of the data, which is also what the
+  <a href="network.html">raw SEC network</a> draws. The gaps it leaves are specific and
+  knowable, and they are listed here because the way this map fails is somebody treating
   it as complete.
 </p>
 
@@ -37,7 +41,7 @@
   </p>
 </div>
 
-<h2 id="coverage">What is currently in the dataset</h2>
+<h2 id="coverage">What is currently in the SEC dataset</h2>
 <table id="coverage-table">
   <tbody>
     <tr><th>Companies</th><td id="stat-nodes">&mdash;</td></tr>

@@ -1,0 +1,302 @@
+[
+  {
+    "key": "2639bdef230025b0",
+    "url": "https://about.fb.com/news/2025/10/meta-blue-owl-capital-develop-hyperion-data-center/",
+    "quote": "On October 21, 2025, Meta and funds managed by Blue Owl Capital entered into a joint venture agreement which will develop and own the Hyperion data center campus.",
+    "status": "found",
+    "method": "Fetched the page and matched the quote word for word",
+    "checked": "2026-11-17"
+  },
+  {
+    "key": "3f50d3f05029bce1",
+    "url": "https://about.fb.com/news/2025/10/meta-blue-owl-capital-develop-hyperion-data-center/",
+    "quote": "The parties have committed to fund their respective pro rata share of the approximately $27 billion in total development costs for the buildings and long-lived power, cooling, and connectivity infrastructure at the campus.",
+    "status": "found",
+    "method": "Fetched the page and matched the quote word for word",
+    "checked": "2026-11-17"
+  },
+  {
+    "key": "e1f7a89785e9de0b",
+    "url": "https://blog.google/company-news/outreach-and-initiatives/sustainability/google-kairos-power-nuclear-energy-agreement/",
+    "quote": "Overall, this deal will enable up to 500 MW of new 24/7 carbon-free power to U.S. electricity grids and help more communities benefit from clean and affordable nuclear power.",
+    "status": "found",
+    "method": "Fetched the page and matched the quote word for word",
+    "checked": "2026-11-17"
+  },
+  {
+    "key": "f7d43eac17708cd9",
+    "url": "https://blog.google/outreach-initiatives/sustainability/google-kairos-power-nuclear-energy-agreement/",
+    "quote": "Today, we’re building on these efforts by signing the world’s first corporate agreement to purchase nuclear energy from multiple small modular reactors (SMRs) to be developed by Kairos Power.",
+    "status": "found",
+    "method": "Fetched the page and matched the quote word for word",
+    "checked": "2026-11-17"
+  },
+  {
+    "key": "6e0489f341b72be8",
+    "url": "https://blogs.microsoft.com/blog/2025/10/28/the-next-chapter-of-the-microsoft-openai-partnership/",
+    "quote": "OpenAI has contracted to purchase an incremental $250B of Azure services, and Microsoft will no longer have a right of first refusal to be OpenAI’s compute provider.",
+    "status": "found",
+    "method": "Fetched the page and matched the quote word for word",
+    "checked": "2026-11-17"
+  },
+  {
+    "key": "6fcb7dcddf3fdff1",
+    "url": "https://blogs.microsoft.com/blog/2025/10/28/the-next-chapter-of-the-microsoft-openai-partnership/",
+    "quote": "Following the recapitalization, Microsoft holds an investment in OpenAI Group PBC valued at approximately $135 billion, representing roughly 27 percent on an as-converted diluted basis, inclusive of all owners – employees, investors, and the OpenAI Foundation.",
+    "status": "found",
+    "method": "Fetched the page and matched the quote word for word",
+    "checked": "2026-11-17"
+  },
+  {
+    "key": "2391bda1b6786cda",
+    "url": "https://blogs.microsoft.com/blog/2025/11/18/microsoft-nvidia-and-anthropic-announce-strategic-partnerships/",
+    "quote": "For the first time, NVIDIA and Anthropic are establishing a deep technology partnership to support Anthropic’s future growth.",
+    "status": "found",
+    "method": "Fetched the page and matched the quote word for word",
+    "checked": "2026-11-17"
+  },
+  {
+    "key": "bc76b2546f43f71f",
+    "url": "https://blogs.microsoft.com/blog/2025/11/18/microsoft-nvidia-and-anthropic-announce-strategic-partnerships/",
+    "quote": "Anthropic has committed to purchase $30 billion of Azure compute capacity and to contract additional compute capacity up to one gigawatt.",
+    "status": "found",
+    "method": "Fetched the page and matched the quote word for word",
+    "checked": "2026-11-17"
+  },
+  {
+    "key": "7f27f97d81bbd81b",
+    "url": "https://irisenergy.gcs-web.com/news-releases/news-release-details/iren-secures-97bn-ai-cloud-contract-microsoft",
+    "quote": "Under the agreement, IREN will provide Microsoft with access to NVIDIA GB300 GPUs over a five-year term, with a total contract value of approximately $9.7 billion, including a 20% prepayment.",
+    "status": "found",
+    "method": "Fetched the page and matched the quote word for word",
+    "checked": "2026-11-17"
+  },
+  {
+    "key": "a4791323c74f0c7c",
+    "url": "https://irisenergy.gcs-web.com/news-releases/news-release-details/iren-secures-97bn-ai-cloud-contract-microsoft",
+    "quote": "IREN is a leading AI Cloud Service Provider, delivering large-scale GPU clusters for AI training and inference.",
+    "status": "found",
+    "method": "Fetched the page and matched the quote word for word",
+    "checked": "2026-11-17"
+  },
+  {
+    "key": "a4af02178ce87dc0",
+    "url": "https://irisenergy.gcs-web.com/news-releases/news-release-details/iren-secures-97bn-ai-cloud-contract-microsoft",
+    "quote": "IREN has also entered into an agreement with Dell Technologies to purchase the GPUs and ancillary equipment for approximately $5.8 billion.",
+    "status": "found",
+    "method": "Fetched the page and matched the quote word for word",
+    "checked": "2026-11-17"
+  },
+  {
+    "key": "72feacfab60c9a40",
+    "url": "https://lambda.ai/blog/lambda-announces-multibillion-dollar-agreement-with-microsoft-to-deploy-ai-infrastructure-powered-by-tens-of-thousands-of-nvidia-gpus",
+    "quote": "Lambda, the Superintelligence Cloud, today announced a multibillion-dollar agreement with Microsoft to deploy AI infrastructure powered by tens of thousands of NVIDIA GPUs, including NVIDIA GB300 NVL72 systems.",
+    "status": "found",
+    "method": "Fetched the page and matched the quote word for word",
+    "checked": "2026-11-17"
+  },
+  {
+    "key": "8a35d850ac1a32b6",
+    "url": "https://nebius.com/newsroom/nebius-announces-multi-billion-dollar-agreement-with-microsoft-for-ai-infrastructure",
+    "quote": "Nebius is a technology company building full-stack infrastructure to service the high-growth global AI industry.",
+    "status": "found",
+    "method": "Fetched the page and matched the quote word for word",
+    "checked": "2026-11-17"
+  },
+  {
+    "key": "b5241b2d68fb7f1c",
+    "url": "https://nebius.com/newsroom/nebius-announces-multi-billion-dollar-agreement-with-microsoft-for-ai-infrastructure",
+    "quote": "Under this multi-year agreement, Nebius will deliver dedicated capacity to Microsoft from its new data center",
+    "status": "found",
+    "method": "Fetched the page and matched the quote word for word",
+    "checked": "2026-11-17"
+  },
+  {
+    "key": "79aa731cfe02d6d3",
+    "url": "https://nvidianews.nvidia.com/news/openai-and-nvidia-announce-strategic-partnership-to-deploy-10gw-of-nvidia-systems",
+    "quote": "OpenAI and NVIDIA today announced a letter of intent for a landmark strategic partnership to deploy at least 10 gigawatts of NVIDIA systems for OpenAI’s next-generation AI infrastructure",
+    "status": "found",
+    "method": "Fetched the page and matched the quote word for word",
+    "checked": "2026-11-17"
+  },
+  {
+    "key": "52c3bd5eb91aaf1f",
+    "url": "https://openai.com/blog/openai-nvidia-systems-partnership/",
+    "quote": "To support this deployment including datacenter and power capacity, NVIDIA intends to invest up to $100 billion in OpenAI as the new NVIDIA systems are deployed.",
+    "status": "found",
+    "method": "Fetched the page and matched the quote word for word",
+    "checked": "2026-11-17"
+  },
+  {
+    "key": "f5b64dcecc389b2e",
+    "url": "https://openai.com/index/aws-and-openai-partnership/",
+    "quote": "Today, Amazon Web Services (AWS) and OpenAI announced a multi-year, strategic partnership that provides AWS’s world-class infrastructure to run and scale OpenAI’s core artificial intelligence (AI) workloads starting immediately.",
+    "status": "found",
+    "method": "Fetched the page and matched the quote word for word",
+    "checked": "2026-11-17"
+  },
+  {
+    "key": "836bfe024ec5312a",
+    "url": "https://openai.com/index/openai-and-broadcom-announce-strategic-collaboration/",
+    "quote": "OpenAI will design the accelerators and systems, which will be developed and deployed in partnership with Broadcom.",
+    "status": "found",
+    "method": "Fetched the page and matched the quote word for word",
+    "checked": "2026-11-17"
+  },
+  {
+    "key": "d13b42a1594298eb",
+    "url": "https://openai.com/index/openai-and-broadcom-announce-strategic-collaboration/",
+    "quote": "OpenAI and Broadcom today announced a collaboration for 10 gigawatts of custom AI accelerators.",
+    "status": "found",
+    "method": "Fetched the page and matched the quote word for word",
+    "checked": "2026-11-17"
+  },
+  {
+    "key": "0d9d9ef612eaad98",
+    "url": "https://openai.com/index/stargate-advances-with-partnership-with-oracle/",
+    "quote": "Oracle and OpenAI have entered an agreement to develop 4.5 gigawatts of additional Stargate data center capacity in the U.S.",
+    "status": "found",
+    "method": "Fetched the page and matched the quote word for word",
+    "checked": "2026-11-17"
+  },
+  {
+    "key": "a0ac3e47b18da85c",
+    "url": "https://www.aboutamazon.com/news/aws/aws-project-rainier-ai-trainium-chips-compute-cluster",
+    "quote": "Anthropic is actively using Project Rainier to build and deploy its industry-leading AI model, Claude.",
+    "status": "not_found",
+    "method": "Fetched the page and matched the quote word for word",
+    "checked": "2026-11-17"
+  },
+  {
+    "key": "cf72f0c94dcd7cf7",
+    "url": "https://www.aboutamazon.com/news/aws/aws-project-rainier-ai-trainium-chips-compute-cluster",
+    "quote": "Anthropic is actively using Project Rainier to build and deploy its industry-leading AI model, Claude, now on more than 1 million Trainium2 chips.",
+    "status": "found",
+    "method": "Fetched the page and matched the quote word for word",
+    "checked": "2026-11-17"
+  },
+  {
+    "key": "ad51b5921dfbd4a0",
+    "url": "https://www.anthropic.com/news/expanding-our-use-of-google-cloud-tpus-and-services",
+    "quote": "Today, we are announcing that we plan to expand our use of Google Cloud technologies, including up to one million TPUs, dramatically increasing our compute resources as we continue to push the boundaries of AI research and product development.",
+    "status": "found",
+    "method": "Fetched the page and matched the quote word for word",
+    "checked": "2026-11-17"
+  },
+  {
+    "key": "a85f4aac4dfd4bc6",
+    "url": "https://www.bnnbloomberg.ca/business/technology/2025/11/03/openai-and-amazon-sign-us38b-deal-for-ai-computing-power/",
+    "quote": "OpenAI and Amazon have signed a US$38 billion deal that enables the ChatGPT maker to run its artificial intelligence systems on Amazon’s cloud computing services.",
+    "status": "found",
+    "method": "Fetched the page and matched the quote word for word",
+    "checked": "2026-11-17"
+  },
+  {
+    "key": "4420031c0b1e8e1e",
+    "url": "https://www.constellationenergy.com/newsroom/2024/Constellation-to-Launch-Crane-Clean-Energy-Center-Restoring-Jobs-and-Carbon-Free-Power-to-The-Grid",
+    "quote": "Constellation signs its largest-ever power purchase agreement with Microsoft, a deal that will restore TMI Unit 1 to service and keep it online for decades",
+    "status": "found",
+    "method": "Fetched the page and matched the quote word for word",
+    "checked": "2026-11-17"
+  },
+  {
+    "key": "6d058100f9630b98",
+    "url": "https://www.constellationenergy.com/newsroom/2024/Constellation-to-Launch-Crane-Clean-Energy-Center-Restoring-Jobs-and-Carbon-Free-Power-to-The-Grid",
+    "quote": "Constellation Energy Corporation (Nasdaq: CEG), a Fortune 200 company headquartered in Baltimore, is the largest private-sector power producer in the world and the nation's largest producer of clean and reliable energy.",
+    "status": "found",
+    "method": "Fetched the page and matched the quote word for word",
+    "checked": "2026-11-17"
+  },
+  {
+    "key": "7f49f5c70960e576",
+    "url": "https://www.constellationenergy.com/newsroom/2025/constellation-meta-sign-20-year-deal-for-clean-reliable-nuclear-energy-in-illinois.html",
+    "quote": "Meta is purchasing the plant’s clean energy attributes as part of its commitment to match 100% of its electricity use with clean and renewable energy.",
+    "status": "found",
+    "method": "Fetched the page and matched the quote word for word",
+    "checked": "2026-11-17"
+  },
+  {
+    "key": "0d60507f60dfa621",
+    "url": "https://www.denvergazette.com/?p=238093",
+    "quote": "Nebius Group said on Monday it will provide Microsoft with GPU infrastructure capacity, in a deal worth $17.4 billion, over a five-year term",
+    "status": "found",
+    "method": "Found word for word in the page text returned by web search",
+    "checked": "2026-11-17",
+    "last_attempt": {
+      "status": "unreachable",
+      "date": "2026-11-17"
+    }
+  },
+  {
+    "key": "c21816e9030e41e1",
+    "url": "https://www.investor.nexteraenergy.com/news-and-events/news-releases/2025/10-27-2025-203948689",
+    "quote": "The power purchase agreement with Google enables the investment to restart the plant",
+    "status": "found",
+    "method": "Fetched the page and matched the quote word for word",
+    "checked": "2026-11-17"
+  },
+  {
+    "key": "da17aae4947e11d5",
+    "url": "https://www.investor.nexteraenergy.com/news-and-events/news-releases/2025/10-27-2025-203948689",
+    "quote": "Google's 25-year agreement to purchase carbon-free nuclear energy from the Duane Arnold plant",
+    "status": "found",
+    "method": "Fetched the page and matched the quote word for word",
+    "checked": "2026-11-17"
+  },
+  {
+    "key": "d0379c09263bb150",
+    "url": "https://www.ksl.com/article/news/business/meta-signs-over-10-billion-cloud-deal-with-google-source-says/51364070",
+    "quote": "Google has struck a six-year cloud computing deal with Meta Platforms worth more than $10 billion, a source familiar with the matter told Reuters on Thursday",
+    "status": "found",
+    "method": "Fetched the page and matched the quote word for word",
+    "checked": "2026-11-17"
+  },
+  {
+    "key": "4d9335c2d2e8c709",
+    "url": "https://www.oracle.com/news/announcement/ai-world-oracle-and-amd-expand-partnership-to-help-customers-achieve-next-generation-ai-scale-2025-10-14/",
+    "quote": "Beginning in calendar Q3 2026, Oracle will be the first hyperscaler to offer a publicly available AI supercluster powered by 50,000 AMD Instinct MI450 Series GPUs",
+    "status": "found",
+    "method": "Fetched the page and matched the quote word for word",
+    "checked": "2026-11-17"
+  },
+  {
+    "key": "40d1e5c28f2ca5a8",
+    "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465925109806/tm2530882d1_ex99-1.htm",
+    "quote": "new agreement to deliver AI infrastructure to Meta valued at approximately $3 billion over 5 years.",
+    "status": "found",
+    "method": "Fetched the page and matched the quote word for word",
+    "checked": "2026-11-17"
+  },
+  {
+    "key": "f205517c79d2b9c0",
+    "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962825000047/crwv-20250909.htm",
+    "quote": "On September 9, 2025, CoreWeave, Inc. (the “Company”) and NVIDIA Corporation (“NVIDIA”) entered into a new order form (the “Order Form”) under the existing Master Services Agreement (“MSA”) dated as of April 10, 2023",
+    "status": "found",
+    "method": "Fetched the page and matched the quote word for word",
+    "checked": "2026-11-17"
+  },
+  {
+    "key": "28d3167cf4e6cef4",
+    "url": "https://www.sec.gov/Archives/edgar/data/1868275/000186827524000058/ceg-202409208kexh991.htm",
+    "quote": "announced today the signing of a 20-year power purchase agreement with Microsoft that will pave the way for the launch of the Crane Clean Energy Center (CCEC)",
+    "status": "found",
+    "method": "Fetched the page and matched the quote word for word",
+    "checked": "2026-11-17"
+  },
+  {
+    "key": "5da313b76bb62e4c",
+    "url": "https://www.thestar.com.my/tech/tech-news/2025/09/15/coreweave-nvidia-sign-new-63-billion-deal-for-cloud-computing-capacity",
+    "quote": "The latest order, which requires Nvidia to purchase any unsold capacity through April 13, 2032, builds on an April 2023 agreement.",
+    "status": "found",
+    "method": "Fetched the page and matched the quote word for word",
+    "checked": "2026-11-17"
+  },
+  {
+    "key": "92d40649b6b7323f",
+    "url": "https://www.utilitydive.com/news/talen-amazon-aws-susquehanna-nuclear-data-center-t/750440/",
+    "quote": "Talen Energy has entered into a 1,920-MW power purchase agreement with Amazon Web Services to supply data centers in Pennsylvania from the independent power producer’s majority-owned Susquehanna nuclear power plant, the company said Wednesday.",
+    "status": "found",
+    "method": "Fetched the page and matched the quote word for word",
+    "checked": "2026-11-17"
+  }
+]

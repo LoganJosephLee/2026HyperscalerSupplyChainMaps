@@ -1,11 +1,13 @@
-.PHONY: help setup refresh fetch extract verify build review serve test neo4j-up neo4j-load clean
+.PHONY: help setup refresh fetch extract verify build learn verify-web review serve test neo4j-up neo4j-load clean
 
 UV ?= uv
 EXTRACTIONS ?= data/extractions.json
 
 help:
 	@echo "make setup     install dependencies"
-	@echo "make refresh   rebuild the dataset end to end (fetch -> extract -> verify -> build)"
+	@echo "make refresh   rebuild the dataset end to end (fetch -> extract -> verify -> build -> learn)"
+	@echo "make learn     rebuild only the learning map from sources/ (no API calls)"
+	@echo "make verify-web  re-check every non-SEC quote against its live page"
 	@echo "make review    build the entity resolution queue for a human"
 	@echo "make serve     serve the site locally at http://localhost:8000"
 	@echo "make test      run the test suite"
@@ -23,7 +25,7 @@ setup:
 
 # The one documented command that rebuilds the dataset end to end.
 # Deliberately manual: no scheduled workflow, so nothing changes under you.
-refresh: fetch extract verify build
+refresh: fetch extract verify build learn
 	@echo ""
 	@echo "Dataset rebuilt. Every page carries the newest filing date in the data."
 
@@ -39,6 +41,14 @@ verify:
 
 build:
 	$(UV) run hscm build --extractions $(EXTRACTIONS)
+
+# Merge the SEC graph with the curated sources in sources/ into site/data/map.json.
+learn:
+	$(UV) run hscm learn
+
+# Fetch every cited web page and confirm its quote is still there.
+verify-web:
+	$(UV) run hscm verify-web
 
 review:
 	$(UV) run hscm review build --extractions $(EXTRACTIONS)

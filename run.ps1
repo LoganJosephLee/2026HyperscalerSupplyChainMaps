@@ -19,7 +19,7 @@
 param(
     [Parameter(Position = 0)]
     [ValidateSet('help', 'setup', 'refresh', 'fetch', 'sections', 'extract', 'verify',
-                 'build', 'review', 'serve', 'test', 'neo4j-load', 'clean')]
+                 'build', 'learn', 'verify-web', 'review', 'serve', 'test', 'neo4j-load', 'clean')]
     [string]$Task = 'help',
 
     # Extra arguments are passed through, e.g. .\run.ps1 fetch MSFT
@@ -59,7 +59,9 @@ Usage: .\run.ps1 <task>
   extract     run the configured extractor over the cached filings
   verify      string-match every claimed sentence back into its filing
   build       verify, resolve, and export the graph for the site
-  refresh     the whole pipeline: fetch -> extract -> verify -> build
+  learn       rebuild the learning map from sources/ (no API calls)
+  verify-web  re-check every non-SEC quote against its live page
+  refresh     the whole pipeline: fetch -> extract -> verify -> build -> learn
   review      build the entity resolution queue for a human to work through
   serve       serve the site at http://localhost:8000
   test        run the test suite
@@ -87,6 +89,8 @@ To use the real extractor once you have an API key:
     'extract'  { Invoke-Hscm (@('extract', '--out', $Extractions) + $Rest) }
     'verify'   { Invoke-Hscm @('verify', $Extractions, '--out', 'data/verification-report.json') }
     'build'    { Invoke-Hscm @('build', '--extractions', $Extractions) }
+    'learn'    { Invoke-Hscm @('learn') }
+    'verify-web' { Invoke-Hscm @('verify-web') }
 
     'refresh' {
         Assert-Contact
@@ -94,6 +98,7 @@ To use the real extractor once you have an API key:
         Invoke-Hscm @('extract', '--out', $Extractions)
         Invoke-Hscm @('verify', $Extractions, '--out', 'data/verification-report.json')
         Invoke-Hscm @('build', '--extractions', $Extractions)
+        Invoke-Hscm @('learn')
         Write-Host "`nDataset rebuilt. Every page carries the newest filing date in the data." -ForegroundColor Green
     }
 

@@ -1,0 +1,1030 @@
+# Every company on the map: which layer it sits in, a one-line plain-English
+# summary, and a cited sentence that backs the summary up. The summary must
+# not say more than its `about` quote (or the company's cited relationships) supports.
+# `about: FROM_CLAIMS` means the company's own cited relationships are the evidence.
+# `hidden` keeps real, cited SEC records off the learning map because they are
+# outside the AI data center supply chain. They stay in the raw exports.
+companies:
+- ref: MSFT
+  id: cik-0000789019
+  name: Microsoft
+  layer: hyperscaler
+  summary: Runs Azure, Microsoft's cloud, and is OpenAI's longtime partner and investor.
+  cik: 789019
+  about:
+    quote: Azure is a comprehensive set of cloud services that offer developers, IT professionals, and enterprises
+      freedom to build, deploy, and manage applications on any platform or device.
+    url: https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm
+    publisher: Microsoft 10-K
+    type: sec_filing
+    date: '2026-07-29'
+- ref: GOOGL
+  id: cik-0001652044
+  name: Alphabet (Google)
+  layer: hyperscaler
+  summary: Google Cloud rents out computing, including Google's own TPU chips.
+  cik: 1652044
+  about:
+    quote: Our technical infrastructure allows us to use and offer our customers a range of AI accelerator options,
+      including specialized Graphics Processing Units (GPUs) and our own custom-built Tensor Processing Units (TPUs),
+      such as Ironwood, our seventh-generation TPU.
+    url: https://www.sec.gov/Archives/edgar/data/1652044/000165204426000018/goog-20251231.htm
+    publisher: Alphabet (Google) 10-K
+    type: sec_filing
+    date: '2026-02-05'
+- ref: AMZN
+  id: cik-0001018724
+  name: Amazon (AWS)
+  layer: hyperscaler
+  summary: Amazon Web Services is the cloud business of Amazon.
+  cik: 1018724
+  about:
+    quote: We serve developers and enterprises of all sizes through AWS, which offers a broad set of on-demand technology
+      services, including compute, storage, database, analytics, artificial intelligence and machine learning, and
+      other services.
+    url: https://www.sec.gov/Archives/edgar/data/1018724/000101872426000004/amzn-20251231.htm
+    publisher: Amazon (AWS) 10-K
+    type: sec_filing
+    date: '2026-02-06'
+- ref: META
+  id: cik-0001326801
+  name: Meta
+  layer: hyperscaler
+  summary: Designs and builds its own data centers, and relies on other companies for part of its infrastructure.
+  cik: 1326801
+  about:
+    quote: We have designed and built our own data centers and key portions of our technical infrastructure, and
+      a substantial portion of our technical infrastructure is also provided by third parties.
+    url: https://www.sec.gov/Archives/edgar/data/1326801/000162828026003942/meta-20251231.htm
+    publisher: Meta 10-K
+    type: sec_filing
+    date: '2026-01-29'
+- ref: ORCL
+  id: cik-0001341439
+  name: Oracle
+  layer: hyperscaler
+  summary: Oracle Cloud Infrastructure (OCI) rents out compute, storage and AI infrastructure.
+  cik: 1341439
+  about:
+    quote: OCI offerings are designed to deliver our infrastructure technologies, including compute, storage, networking,
+      and cloud-native services, along with new and innovative solutions such as AI Infrastructure, generative AI
+      and agentic AI.
+    url: https://www.sec.gov/Archives/edgar/data/1341439/000119312526277521/orcl-20260531.htm
+    publisher: Oracle 10-K
+    type: sec_filing
+    date: '2026-06-22'
+- ref: CRWV
+  id: cik-0001769628
+  name: CoreWeave
+  layer: neocloud
+  summary: A cloud built for AI that rents GPU capacity. One of this map's six starting companies, and a supplier
+    to Microsoft.
+  cik: 1769628
+  about:
+    quote: CoreWeave Cloud combines proprietary software and orchestration, advanced infrastructure, and managed
+      cloud services within a highly secure environment to deliver best-in-class high-performance computing, enabling
+      our customers to develop, deploy, and operate advanced AI models and applications at scale.
+    url: https://www.sec.gov/Archives/edgar/data/1769628/000176962826000104/crwv-20251231.htm
+    publisher: CoreWeave 10-K
+    type: sec_filing
+    date: '2026-03-02'
+- ref: NBIS
+  id: cik-0001513845
+  name: Nebius
+  layer: neocloud
+  summary: An AI infrastructure and cloud company.
+  cik: 1513845
+  about:
+    quote: Nebius is a technology company building full-stack infrastructure to service the high-growth global AI
+      industry.
+    url: https://nebius.com/newsroom/nebius-announces-multi-billion-dollar-agreement-with-microsoft-for-ai-infrastructure
+    publisher: Nebius
+    type: company
+    date: '2025-09-08'
+- ref: IREN
+  id: cik-0001878848
+  name: IREN
+  layer: neocloud
+  summary: An AI cloud provider that rents out large GPU clusters.
+  cik: 1878848
+  about:
+    quote: IREN is a leading AI Cloud Service Provider, delivering large-scale GPU clusters for AI training and
+      inference.
+    url: https://irisenergy.gcs-web.com/news-releases/news-release-details/iren-secures-97bn-ai-cloud-contract-microsoft
+    publisher: IREN
+    type: company
+    date: '2025-11-03'
+- ref: Lambda
+  id: name-lambda
+  name: Lambda
+  layer: neocloud
+  summary: A cloud company that rents out large numbers of NVIDIA GPUs.
+  about:
+    quote: Lambda, the Superintelligence Cloud, today announced a multibillion-dollar agreement with Microsoft to
+      deploy AI infrastructure powered by tens of thousands of NVIDIA GPUs, including NVIDIA GB300 NVL72 systems.
+    url: https://lambda.ai/blog/lambda-announces-multibillion-dollar-agreement-with-microsoft-to-deploy-ai-infrastructure-powered-by-tens-of-thousands-of-nvidia-gpus
+    publisher: Lambda
+    type: company
+    date: '2025-11-03'
+- ref: OpenAI
+  id: name-openai
+  name: OpenAI
+  layer: ailab
+  summary: Maker of ChatGPT. Private, so it files nothing with the SEC; its deals show up in its partners' filings
+    and announcements.
+  about:
+    quote: In October 2025, we entered into a product purchase agreement with OpenAI OpCo, LLC, (OpenAI) to deploy
+      6 gigawatts of AMD GPUs, with the deployment of the first gigawatt of capacity powered by our AMD Instinct
+      MI450 series products.
+    url: https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm
+    publisher: SEC filing
+    type: sec_filing
+    date: '2026-02-04'
+    note: The filing sentence that put this company on the map.
+- ref: Anthropic
+  id: name-anthropic
+  name: Anthropic
+  layer: ailab
+  summary: Maker of Claude. It files nothing with the SEC; its compute deals are announced by its cloud partners.
+  about:
+    quote: We also have a commercial arrangement primarily for the provision of AWS cloud services, which includes
+      the use of AWS chips.
+    url: https://www.sec.gov/Archives/edgar/data/1018724/000101872426000004/amzn-20251231.htm
+    publisher: SEC filing
+    type: sec_filing
+    date: '2026-02-06'
+    note: The filing sentence that put this company on the map.
+- ref: NVDA
+  id: cik-0001045810
+  name: NVIDIA
+  layer: chips
+  summary: Designs GPUs and the data center systems built around them. It uses foundries such as TSMC to make its
+    chips.
+  cik: 1045810
+  about:
+    quote: NVIDIA is now a data center scale AI infrastructure company reshaping all industries.
+    url: https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm
+    publisher: NVIDIA 10-K
+    type: sec_filing
+    date: '2026-02-25'
+- ref: AMD
+  id: cik-0000002488
+  name: AMD
+  layer: chips
+  summary: Designs CPUs and GPUs (the Instinct line) and relies on foundries to make them.
+  cik: 2488
+  about:
+    quote: AMD is uniquely positioned to deliver across this stack, combining industry-leading CPUs, GPUs and adaptive
+      SoCs with networking, software and system integration expertise.
+    url: https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm
+    publisher: AMD 10-K
+    type: sec_filing
+    date: '2026-02-04'
+- ref: AVGO
+  id: cik-0001730168
+  name: Broadcom
+  layer: chips
+  summary: Designs chips, including Arista's switching chips and OpenAI's custom accelerators, and sells infrastructure
+    software.
+  cik: 1730168
+  about:
+    quote: We are a global technology leader that designs, develops and supplies a broad range of semiconductor
+      and semiconductor-based solutions and infrastructure software solutions.
+    url: https://www.sec.gov/Archives/edgar/data/1730168/000173016825000121/avgo-20251102.htm
+    publisher: Broadcom 10-K
+    type: sec_filing
+    date: '2025-12-18'
+- ref: MRVL
+  id: cik-0001835632
+  name: Marvell
+  layer: chips
+  summary: Designs data-infrastructure chips; fabless, meaning others manufacture them.
+  cik: 1835632
+  about:
+    quote: We are a fabless supplier of high-performance semiconductor products with core strengths in developing
+      and scaling complex System-on-a-Chip architectures, integrating analog, mixed-signal and digital signal processing
+      functionality.
+    url: https://www.sec.gov/Archives/edgar/data/1835632/000183563226000011/mrvl-20260131.htm
+    publisher: Marvell 10-K
+    type: sec_filing
+    date: '2026-03-11'
+- ref: INTC
+  id: cik-0000050863
+  name: Intel
+  layer: chips
+  summary: Makes CPUs. CoreWeave's 10-K names Intel chips in its clusters.
+  cik: 50863
+  about:
+    quote: CoreWeave clusters also use cutting edge CPUs, including AMD and Intel chips, to power compute-intensive
+      projects and to help our customers get more out of GPU compute.
+    url: https://www.sec.gov/Archives/edgar/data/1769628/000176962826000104/crwv-20251231.htm
+    publisher: SEC filing
+    type: sec_filing
+    date: '2026-03-02'
+    note: The filing sentence that put this company on the map.
+- ref: QCOM
+  id: cik-0000804328
+  name: Qualcomm
+  layer: chips
+  summary: Chip designer; here as a customer of Amkor's packaging.
+  cik: 804328
+  about:
+    quote: Direct sales to Apple and Qualcomm accounted for 29.8% and 11.1% of our net sales, respectively, for
+      the year ended December 31, 2025.
+    url: https://www.sec.gov/Archives/edgar/data/1047127/000104712726000014/amkr-20251231.htm
+    publisher: SEC filing
+    type: sec_filing
+    date: '2026-02-20'
+    note: The filing sentence that put this company on the map.
+- ref: Groq, Inc.
+  id: name-groq
+  name: Groq
+  layer: chips
+  summary: NVIDIA's 10-K describes licensing intellectual property from Groq.
+  about:
+    quote: We have entered into an intellectual property license arrangement with Groq, Inc., or Groq, that required
+      significant, nonrefundable payments.
+    url: https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm
+    publisher: SEC filing
+    type: sec_filing
+    date: '2026-02-25'
+    note: The filing sentence that put this company on the map.
+- ref: MU
+  id: cik-0000723125
+  name: Micron
+  layer: memory
+  summary: Makes DRAM, NAND and NOR memory and storage chips. NVIDIA names it as a memory supplier.
+  cik: 723125
+  about:
+    quote: Micron delivers a rich portfolio of high-performance DRAM, NAND, and NOR memory and storage products
+      through our Micron® and Crucial® brands.
+    url: https://www.sec.gov/Archives/edgar/data/723125/000072312525000028/mu-20250828.htm
+    publisher: Micron 10-K
+    type: sec_filing
+    date: '2025-10-03'
+- ref: SK Hynix
+  id: name-sk-hynix
+  name: SK hynix
+  layer: memory
+  summary: Korean memory maker. Files nothing with the SEC; NVIDIA's 10-K names it as a memory supplier.
+  about:
+    quote: Our most significant customers during the fiscal years ending June 28, 2026, June 29, 2025, and June
+      30, 2024 included Micron Technology, Inc., Samsung Electronics Company, Ltd., SK hynix Inc., and Taiwan Semiconductor
+      Manufacturing Company.
+    url: https://www.sec.gov/Archives/edgar/data/707549/000070754926000037/lrcx-20260628.htm
+    publisher: SEC filing
+    type: sec_filing
+    date: '2026-08-07'
+    note: The filing sentence that put this company on the map.
+- ref: TSM
+  id: cik-0001046179
+  name: TSMC
+  layer: foundry
+  summary: 'A dedicated foundry: it manufactures chips that other companies design. NVIDIA, AMD, Broadcom and Credo
+    all name it in their filings.'
+  cik: 1046179
+  about:
+    quote: Since our establishment, we have built a strong position in manufacturing capacity as a dedicated foundry.
+    url: https://www.sec.gov/Archives/edgar/data/1046179/000162828026025362/tsm-20251231.htm
+    publisher: TSMC 20-F
+    type: sec_filing
+    date: '2026-04-16'
+- ref: Samsung Electronics
+  id: name-samsung-electronics
+  name: Samsung Electronics
+  layer: foundry
+  summary: Korean company that runs chip factories and makes memory. Files nothing with the SEC; named in NVIDIA's
+    and AMD's 10-Ks.
+  about:
+    quote: Our most significant customers during the fiscal years ending June 28, 2026, June 29, 2025, and June
+      30, 2024 included Micron Technology, Inc., Samsung Electronics Company, Ltd., SK hynix Inc., and Taiwan Semiconductor
+      Manufacturing Company.
+    url: https://www.sec.gov/Archives/edgar/data/707549/000070754926000037/lrcx-20260628.htm
+    publisher: SEC filing
+    type: sec_filing
+    date: '2026-08-07'
+    note: The filing sentence that put this company on the map.
+- ref: GFS
+  id: cik-0001709048
+  name: GlobalFoundries
+  layer: foundry
+  summary: A contract chipmaker. AMD's 10-K describes a wafer supply agreement with it.
+  cik: 1709048
+  about:
+    quote: We utilize Taiwan Semiconductor Manufacturing Company Limited (TSMC) for the production of wafers for
+      our HPC, FPGA and adaptive SoC products and GLOBALFOUNDRIES Inc. (GF), with respect to wafer purchases for
+      our HPC products at the 12 nm and 14 nm technology nodes.
+    url: https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm
+    publisher: SEC filing
+    type: sec_filing
+    date: '2026-02-04'
+    note: The filing sentence that put this company on the map.
+- ref: UMC
+  id: cik-0001033767
+  name: UMC
+  layer: foundry
+  summary: Taiwan contract chipmaker; named in AMD's 10-K.
+  cik: 1033767
+  about:
+    quote: Additionally, we utilize TSMC, United Microelectronics Corporation (UMC) and Samsung Electronics Co.,
+      Ltd. for the production of our ICs in the form of programmable logic devices.
+    url: https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm
+    publisher: SEC filing
+    type: sec_filing
+    date: '2026-02-04'
+    note: The filing sentence that put this company on the map.
+- ref: AMAT
+  id: cik-0000006951
+  name: Applied Materials
+  layer: tools
+  summary: Makes the machines chip factories use to build chips.
+  cik: 6951
+  about:
+    quote: We are experts in the design, development, production, and servicing of the critical wafer fabrication
+      tools our customers need to manufacture semiconductors.
+    url: https://www.sec.gov/Archives/edgar/data/6951/000162828025056742/amat-20251026.htm
+    publisher: Applied Materials 10-K
+    type: sec_filing
+    date: '2025-12-12'
+- ref: LRCX
+  id: cik-0000707549
+  name: Lam Research
+  layer: tools
+  summary: Makes wafer fabrication equipment; its biggest customers are the chip and memory makers.
+  cik: 707549
+  about:
+    quote: We are a global supplier of innovative wafer fabrication equipment and services to the semiconductor
+      industry.
+    url: https://www.sec.gov/Archives/edgar/data/707549/000070754926000037/lrcx-20260628.htm
+    publisher: Lam Research 10-K
+    type: sec_filing
+    date: '2026-08-07'
+- ref: KLAC
+  id: cik-0000319201
+  name: KLA
+  layer: tools
+  summary: Makes equipment that inspects and measures chips during manufacturing.
+  cik: 319201
+  about:
+    quote: We provide advanced process control and process-enabling solutions for manufacturing wafers, reticles/masks,
+      chemicals/materials, integrated circuits ("ICs" or "chips"), packaged ICs and printed circuit boards ("PCBs"),
+      as well as comprehensive support and services across our installed base.
+    url: https://www.sec.gov/Archives/edgar/data/319201/000031920126000027/klac-20260630.htm
+    publisher: KLA 10-K
+    type: sec_filing
+    date: '2026-08-06'
+- ref: ASML
+  id: cik-0000937966
+  name: ASML
+  layer: tools
+  summary: Makes lithography systems, the machines that print chip patterns onto wafers.
+  cik: 937966
+  about:
+    quote: Our holistic lithography solutions, software and services help chipmakers achieve their highest yields
+      and best performance.
+    url: https://www.sec.gov/Archives/edgar/data/937966/000162828026011378/asml-20251231.htm
+    publisher: ASML 20-F
+    type: sec_filing
+    date: '2026-02-25'
+- ref: CDNS
+  id: cik-0000813672
+  name: Cadence
+  layer: tools
+  summary: Software engineers use to design chips.
+  cik: 813672
+  about:
+    quote: As customers tackle the challenges of designing increasingly intricate systems, they rely on our advanced
+      AI-driven computational software, hardware, IP, and services to manage this complexity without proportional
+      cost increases.
+    url: https://www.sec.gov/Archives/edgar/data/813672/000081367226000016/cdns-20251231.htm
+    publisher: Cadence 10-K
+    type: sec_filing
+    date: '2026-02-19'
+- ref: SNPS
+  id: cik-0000883241
+  name: Synopsys
+  layer: tools
+  summary: Chip-design software and reusable chip building blocks (IP).
+  cik: 883241
+  about:
+    quote: We deliver trusted and comprehensive solutions spanning silicon design, silicon intellectual property
+      (IP), simulation and analysis (S&A) as well as design services.
+    url: https://www.sec.gov/Archives/edgar/data/883241/000088324125000028/snps-20251031.htm
+    publisher: Synopsys 10-K
+    type: sec_filing
+    date: '2025-12-22'
+- ref: ENTG
+  id: cik-0001101302
+  name: Entegris
+  layer: materials
+  summary: Supplies the ultra-pure materials and filters chip factories need. TSMC is a major customer.
+  cik: 1101302
+  about:
+    quote: Entegris, Inc. ("Entegris", "the Company", "us", "we", or "our") is a leading supplier of critical advanced
+      materials and process solutions for the semiconductor and other high-technology industries.
+    url: https://www.sec.gov/Archives/edgar/data/1101302/000110130226000012/entg-20251231.htm
+    publisher: Entegris 10-K
+    type: sec_filing
+    date: '2026-02-11'
+- ref: AMKR
+  id: cik-0001047127
+  name: Amkor
+  layer: packaging
+  summary: The largest US-headquartered company that packages and tests chips for others.
+  cik: 1047127
+  about:
+    quote: Amkor is the world's largest U.S. headquartered outsourced semiconductor assembly and test service provider
+      ("OSAT") and is a global leader in outsourced semiconductor packaging and test services.
+    url: https://www.sec.gov/Archives/edgar/data/1047127/000104712726000014/amkr-20251231.htm
+    publisher: Amkor 10-K
+    type: sec_filing
+    date: '2026-02-20'
+- ref: Advanced Semiconductor Engineering, Inc.
+  id: name-advanced-semiconductor-engineering
+  name: ASE
+  layer: packaging
+  summary: Packages and tests chips; named by Broadcom and Credo. Files nothing with the SEC.
+  about:
+    quote: We use third-party CMs for a significant majority of our assembly and test operations, including TSMC,
+      Advanced Semiconductor Engineering, Inc., Foxconn Technology Group, Amkor Technology, Inc. and Siliconware
+      Precision Industries Co., Ltd.
+    url: https://www.sec.gov/Archives/edgar/data/1730168/000173016825000121/avgo-20251102.htm
+    publisher: SEC filing
+    type: sec_filing
+    date: '2025-12-18'
+    note: The filing sentence that put this company on the map.
+- ref: Siliconware Precision Industries Co., Ltd.
+  id: name-siliconware-precision-industries
+  name: SPIL
+  layer: packaging
+  summary: Packages and tests chips; named by Broadcom and AMD. Files nothing with the SEC.
+  about:
+    quote: The ATMP JVs, Siliconware Precision Industries Ltd. (SPIL) and King Yuan Electronics Company (KYEC) provide
+      ATMP services for our products.
+    url: https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm
+    publisher: SEC filing
+    type: sec_filing
+    date: '2026-02-04'
+    note: The filing sentence that put this company on the map.
+- ref: King Yuan Electronics Company
+  id: name-king-yuan-electronics
+  name: KYEC
+  layer: packaging
+  summary: Tests chips; named by AMD and Credo. Files nothing with the SEC.
+  about:
+    quote: The ATMP JVs, Siliconware Precision Industries Ltd. (SPIL) and King Yuan Electronics Company (KYEC) provide
+      ATMP services for our products.
+    url: https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm
+    publisher: SEC filing
+    type: sec_filing
+    date: '2026-02-04'
+    note: The filing sentence that put this company on the map.
+- ref: Sigurd Microelectronics Corp.
+  id: name-sigurd-microelectronics
+  name: Sigurd
+  layer: packaging
+  summary: Tests chips; named by Credo. Files nothing with the SEC.
+  about:
+    quote: Upon the completion of processing at the foundry, we use third-party contractors for packaging, assembly
+      and testing, including Amkor Technology Inc. (Amkor) and Advanced Semiconductor Engineering, Inc. (ASE) for
+      packaging our IC products, King Yuan Electronics Company (KYEC) and Sigurd Microelectronics Corp. (Sigurd)
+      for testing our IC products and BizLink Technology, Inc. (BizLink) for manufacturing our AEC products.
+    url: https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm
+    publisher: SEC filing
+    type: sec_filing
+    date: '2026-06-15'
+    note: The filing sentence that put this company on the map.
+- ref: Tongfu Microelectronics Co., Ltd.
+  id: name-tongfu-microelectronics
+  name: Tongfu
+  layer: packaging
+  summary: AMD's partner in its assembly-and-test joint ventures. Files nothing with the SEC.
+  about:
+    quote: We are party to two ATMP joint ventures (collectively, the ATMP JVs) with Tongfu Microelectronics Co.,
+      Ltd.
+    url: https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm
+    publisher: SEC filing
+    type: sec_filing
+    date: '2026-02-04'
+    note: The filing sentence that put this company on the map.
+- ref: ANET
+  id: cik-0001596532
+  name: Arista
+  layer: networking
+  summary: Makes the network switches inside data centers; Broadcom supplies its switching chips.
+  cik: 1596532
+  about:
+    quote: 'Our "Centers of Data" strategy is a fundamental pivot from legacy networking approaches that create
+      incongruent silos to a unified, data-driven approach in which the network is a service that interconnects
+      four primary domains: AI Centers, Data Centers, Campus Centers, and WAN Centers.'
+    url: https://www.sec.gov/Archives/edgar/data/1596532/000159653226000013/anet-20251231.htm
+    publisher: Arista 10-K
+    type: sec_filing
+    date: '2026-02-17'
+- ref: CRDO
+  id: cik-0001807794
+  name: Credo
+  layer: networking
+  summary: Makes high-speed copper and optical connections between AI servers.
+  cik: 1807794
+  about:
+    quote: The Company's highspeed copper and optical interconnect products deliver industry-leading power and performance
+      at up to 1.6T to meet the ever-expanding data infrastructure demands of AI.
+    url: https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm
+    publisher: Credo 10-K
+    type: sec_filing
+    date: '2026-06-15'
+- ref: COHR
+  id: cik-0000820318
+  name: Coherent
+  layer: networking
+  summary: Makes lasers and optical transceivers that carry data over fiber.
+  cik: 820318
+  about:
+    quote: Coherent Corp. ("Coherent," the "Company," "we," "us," or "our"), is a vertically integrated manufacturing
+      company that develops, manufactures, and markets lasers, transceivers, and other optical and optoelectronic
+      devices, modules, and systems, as well as engineered materials, for use in the data center, communications
+      and industrial markets.
+    url: https://www.sec.gov/Archives/edgar/data/820318/000082031826000020/iivi-20260630.htm
+    publisher: Coherent 10-K
+    type: sec_filing
+    date: '2026-08-14'
+- ref: LITE
+  id: cik-0001633978
+  name: Lumentum
+  layer: networking
+  summary: Makes optical and photonic parts for cloud and AI networks.
+  cik: 1633978
+  about:
+    quote: Our products are essential to a range of cloud, artificial intelligence and machine learning ("AI/ML"),
+      telecommunications, consumer, and industrial end-market applications.
+    url: https://www.sec.gov/Archives/edgar/data/1633978/000162828026057358/lite-20260627.htm
+    publisher: Lumentum 10-K
+    type: sec_filing
+    date: '2026-08-17'
+- ref: FN
+  id: cik-0001408710
+  name: Fabrinet
+  layer: networking
+  summary: Builds optical components and assembles products for other companies. Its two largest customers in fiscal
+    2026 were Cisco and NVIDIA.
+  cik: 1408710
+  about:
+    quote: We provide advanced optical packaging and precision optical, electro-mechanical and electronic manufacturing
+      services to original equipment manufacturers ("OEMs") of complex products such as optical communication components,
+      modules and sub-systems, industrial lasers, automotive components, medical devices and sensors.
+    url: https://www.sec.gov/Archives/edgar/data/1408710/000140871026000028/fn-20260626.htm
+    publisher: Fabrinet 10-K
+    type: sec_filing
+    date: '2026-08-18'
+- ref: BizLink Technology, Inc.
+  id: name-bizlink-technology
+  name: BizLink
+  layer: networking
+  summary: Manufactures Credo's active electrical cables. Files nothing with the SEC.
+  about:
+    quote: Upon the completion of processing at the foundry, we use third-party contractors for packaging, assembly
+      and testing, including Amkor Technology Inc. (Amkor) and Advanced Semiconductor Engineering, Inc. (ASE) for
+      packaging our IC products, King Yuan Electronics Company (KYEC) and Sigurd Microelectronics Corp. (Sigurd)
+      for testing our IC products and BizLink Technology, Inc. (BizLink) for manufacturing our AEC products.
+    url: https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm
+    publisher: SEC filing
+    type: sec_filing
+    date: '2026-06-15'
+    note: The filing sentence that put this company on the map.
+- ref: CSCO
+  id: cik-0000858877
+  name: Cisco
+  layer: networking
+  summary: Networking equipment; here as Fabrinet's largest customer.
+  cik: 858877
+  about:
+    quote: During fiscal year 2026, Cisco Systems, Inc., NVIDIA Corporation, Nokia Corporation and Amazon.com, Inc.
+      contributed 19.9%, 16.3%, 10.7% and 10.5%, respectively, of our revenues.
+    url: https://www.sec.gov/Archives/edgar/data/1408710/000140871026000028/fn-20260626.htm
+    publisher: SEC filing
+    type: sec_filing
+    date: '2026-08-18'
+    note: The filing sentence that put this company on the map.
+- ref: NOK
+  id: cik-0000924613
+  name: Nokia
+  layer: networking
+  summary: Network equipment; here as a Fabrinet customer.
+  cik: 924613
+  about:
+    quote: During fiscal year 2026, Cisco Systems, Inc., NVIDIA Corporation, Nokia Corporation and Amazon.com, Inc.
+      contributed 19.9%, 16.3%, 10.7% and 10.5%, respectively, of our revenues.
+    url: https://www.sec.gov/Archives/edgar/data/1408710/000140871026000028/fn-20260626.htm
+    publisher: SEC filing
+    type: sec_filing
+    date: '2026-08-18'
+    note: The filing sentence that put this company on the map.
+- ref: CIEN
+  id: cik-0000936395
+  name: Ciena
+  layer: networking
+  summary: Optical networking equipment; a Celestica customer.
+  cik: 936395
+  about:
+    quote: Our CCS segment customers include Amazon Fulfillment Services, Inc., Meta Platforms, Inc., Google Inc.,
+      Ciena Corporation, Dell Technologies, Hewlett-Packard Enterprise, and IBM Corporation, Inc.
+    url: https://www.sec.gov/Archives/edgar/data/1030894/000103089426000011/cls-20251231.htm
+    publisher: SEC filing
+    type: sec_filing
+    date: '2026-02-27'
+    note: The filing sentence that put this company on the map.
+- ref: SMCI
+  id: cik-0001375365
+  name: Supermicro
+  layer: servers
+  summary: Builds servers and full racks for AI and cloud data centers.
+  cik: 1375365
+  about:
+    quote: We deliver rack-scale solutions optimized for various workloads, including artificial intelligence ("AI")
+      and high-performance computing ("HPC"), where acceleration is critical.
+    url: https://www.sec.gov/Archives/edgar/data/1375365/000137536525000027/smci-20250630.htm
+    publisher: Supermicro 10-K
+    type: sec_filing
+    date: '2025-08-28'
+- ref: DELL
+  id: cik-0001571996
+  name: Dell
+  layer: servers
+  summary: Sells servers, storage and networking, including AI servers.
+  cik: 1571996
+  about:
+    quote: These solutions range from client devices and peripherals to infrastructure solutions across servers,
+      networking, and storage to meet the evolving needs of our customers and drive better business outcomes.
+    url: https://www.sec.gov/Archives/edgar/data/1571996/000157199626000008/dell-20260130.htm
+    publisher: Dell 10-K
+    type: sec_filing
+    date: '2026-03-16'
+- ref: HPE
+  id: cik-0001645590
+  name: Hewlett Packard Enterprise
+  layer: servers
+  summary: Server and networking maker; a Celestica customer.
+  cik: 1645590
+  about:
+    quote: Our CCS segment customers include Amazon Fulfillment Services, Inc., Meta Platforms, Inc., Google Inc.,
+      Ciena Corporation, Dell Technologies, Hewlett-Packard Enterprise, and IBM Corporation, Inc.
+    url: https://www.sec.gov/Archives/edgar/data/1030894/000103089426000011/cls-20251231.htm
+    publisher: SEC filing
+    type: sec_filing
+    date: '2026-02-27'
+    note: The filing sentence that put this company on the map.
+- ref: CLS
+  id: cik-0001030894
+  name: Celestica
+  layer: servers
+  summary: Contract manufacturer whose 10-K names Amazon, Meta and Google as customers.
+  cik: 1030894
+  about:
+    quote: We deliver both customized and jointly-designed products, and complete platform solutions in technologies
+      including storage, servers, and networking.
+    url: https://www.sec.gov/Archives/edgar/data/1030894/000103089426000011/cls-20251231.htm
+    publisher: Celestica 10-K
+    type: sec_filing
+    date: '2026-02-27'
+- ref: FLEX
+  id: cik-0000866374
+  name: Flex
+  layer: servers
+  summary: Contract manufacturer that also sells power and cooling products.
+  cik: 866374
+  about:
+    quote: The Company's full suite of specialized capabilities includes design and engineering, supply chain, manufacturing,
+      and integrated services, plus a portfolio of power and cooling products.
+    url: https://www.sec.gov/Archives/edgar/data/866374/000086637426000012/flex-20260331.htm
+    publisher: Flex 10-K
+    type: sec_filing
+    date: '2026-05-20'
+- ref: JBL
+  id: cik-0000898293
+  name: Jabil
+  layer: servers
+  summary: Contract manufacturer; Arista names it as a manufacturing partner.
+  cik: 898293
+  about:
+    quote: Jabil is one of the leading providers of engineering, manufacturing, and supply chain solutions.
+    url: https://www.sec.gov/Archives/edgar/data/898293/000162828025045293/jbl-20250831.htm
+    publisher: Jabil 10-K
+    type: sec_filing
+    date: '2025-10-17'
+- ref: SANM
+  id: cik-0000897723
+  name: Sanmina
+  layer: servers
+  summary: Contract manufacturer; named by Arista and AMD.
+  cik: 897723
+  about:
+    quote: The Company also entered into a Manufacturing Services Agreement with Sanmina with an initial term of
+      five years.
+    url: https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm
+    publisher: SEC filing
+    type: sec_filing
+    date: '2026-02-04'
+    note: The filing sentence that put this company on the map.
+- ref: Hon Hai Precision Industry Co., Ltd.
+  id: name-hon-hai-precision-industry
+  name: Foxconn (Hon Hai)
+  layer: servers
+  summary: A contract manufacturer, also known as Foxconn. Files nothing with the SEC; named by NVIDIA, Broadcom
+    and Arista.
+  about:
+    quote: We engage with independent subcontractors and contract manufacturers such as Hon Hai Precision Industry
+      Co., Ltd., Wistron Corporation, and Fabrinet to perform assembly, testing and packaging of our final products.
+    url: https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm
+    publisher: SEC filing
+    type: sec_filing
+    date: '2026-02-25'
+    note: The filing sentence that put this company on the map.
+- ref: Wistron Corporation
+  id: name-wistron
+  name: Wistron
+  layer: servers
+  summary: A contract manufacturer; NVIDIA names it in its 10-K. Files nothing with the SEC.
+  about:
+    quote: We engage with independent subcontractors and contract manufacturers such as Hon Hai Precision Industry
+      Co., Ltd., Wistron Corporation, and Fabrinet to perform assembly, testing and packaging of our final products.
+    url: https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm
+    publisher: SEC filing
+    type: sec_filing
+    date: '2026-02-25'
+    note: The filing sentence that put this company on the map.
+- ref: Ablecom Technology, Inc.
+  id: name-ablecom-technology
+  name: Ablecom
+  layer: servers
+  summary: Makes Supermicro's chassis; Supermicro's 10-K describes it as a related party. Files nothing with the
+    SEC.
+  about:
+    quote: We use Ablecom Technology, Inc. ("Ablecom") and its affiliate Compuware Technology, Inc. ("Compuware"),
+      both of which are related parties, for contract design and manufacturing coordination support.
+    url: https://www.sec.gov/Archives/edgar/data/1375365/000137536525000027/smci-20250630.htm
+    publisher: SEC filing
+    type: sec_filing
+    date: '2025-08-28'
+    note: The filing sentence that put this company on the map.
+- ref: Compuware Technology, Inc.
+  id: name-compuware-technology
+  name: Compuware
+  layer: servers
+  summary: Ablecom's affiliate; manufactures for Supermicro and distributes its products. Files nothing with the
+    SEC.
+  about:
+    quote: In addition, we have appointed Compuware as a nonexclusive authorized distributor of our products in
+      Taiwan, China and Australia, in addition to acting as our sales representative on certain transactions in
+      Asia.
+    url: https://www.sec.gov/Archives/edgar/data/1375365/000137536525000027/smci-20250630.htm
+    publisher: SEC filing
+    type: sec_filing
+    date: '2025-08-28'
+    note: The filing sentence that put this company on the map.
+- ref: IBM
+  id: cik-0000051143
+  name: IBM
+  layer: other
+  summary: Computer and services company; a Celestica customer.
+  cik: 51143
+  about:
+    quote: Prior to our incorporation, we were an IBM manufacturing unit that provided manufacturing services to
+      IBM for more than 75 years.
+    url: https://www.sec.gov/Archives/edgar/data/1030894/000103089426000011/cls-20251231.htm
+    publisher: SEC filing
+    type: sec_filing
+    date: '2026-02-27'
+    note: The filing sentence that put this company on the map.
+- ref: GEV
+  id: cik-0001996810
+  name: GE Vernova
+  layer: power
+  summary: Makes products that generate, move, convert and store electricity.
+  cik: 1996810
+  about:
+    quote: GE Vernova Inc. (the Company, GE Vernova, our, we, or us) is a global leader in the electric power industry,
+      with products and services that generate, transfer, orchestrate, convert, and store electricity.
+    url: https://www.sec.gov/Archives/edgar/data/1996810/000199681026000015/gev-20251231.htm
+    publisher: GE Vernova 10-K
+    type: sec_filing
+    date: '2026-01-29'
+- ref: ETN
+  id: cik-0001551182
+  name: Eaton
+  layer: power
+  summary: A power management company whose products go into data centers, among other markets.
+  cik: 1551182
+  about:
+    quote: Eaton Corporation plc (Eaton or the Company) is an intelligent power management company dedicated to
+      protecting the environment and improving the quality of life for people everywhere. We make products for the
+      data center, utility, industrial, commercial, machine building, residential, aerospace and mobility markets.
+    url: https://www.sec.gov/Archives/edgar/data/1551182/000155118226000007/etn-20251231.htm
+    publisher: Eaton 10-K
+    type: sec_filing
+    date: '2026-02-26'
+- ref: CEG
+  id: cik-0001868275
+  name: Constellation Energy
+  layer: power
+  summary: Says it is the largest private-sector power producer in the world. Has 20-year nuclear power agreements
+    with Microsoft and Meta.
+  cik: 1868275
+  about:
+    quote: 'Constellation Energy Corporation (Nasdaq: CEG), a Fortune 200 company headquartered in Baltimore, is
+      the largest private-sector power producer in the world and the nation''s largest producer of clean and reliable
+      energy.'
+    url: https://www.constellationenergy.com/newsroom/2024/Constellation-to-Launch-Crane-Clean-Energy-Center-Restoring-Jobs-and-Carbon-Free-Power-to-The-Grid
+    publisher: Constellation Energy
+    type: company
+    date: '2024-09-20'
+- ref: NEE
+  id: cik-0000753308
+  name: NextEra Energy
+  layer: power
+  summary: A US power company. Its agreement with Google enables the restart of the Duane Arnold nuclear plant.
+  cik: 753308
+  about: FROM_CLAIMS
+- ref: TLN
+  id: cik-0001622536
+  name: Talen Energy
+  layer: power
+  summary: Owns most of the Susquehanna nuclear plant, which sells power to Amazon.
+  cik: 1622536
+  about: FROM_CLAIMS
+- ref: Kairos Power
+  id: name-kairos-power
+  name: Kairos Power
+  layer: power
+  summary: Developing small modular nuclear reactors (SMRs).
+  about: FROM_CLAIMS
+- ref: VRT
+  id: cik-0001674101
+  name: Vertiv
+  layer: cooling
+  summary: Power and cooling equipment for data centers.
+  cik: 1674101
+  about:
+    quote: Vertiv is a global leader in critical digital infrastructure for applications in data centers, communication
+      networks, and commercial and industrial environments.
+    url: https://www.sec.gov/Archives/edgar/data/1674101/000167410126000008/vrt-20251231.htm
+    publisher: Vertiv 10-K
+    type: sec_filing
+    date: '2026-02-13'
+- ref: TT
+  id: cik-0001466258
+  name: Trane Technologies
+  layer: cooling
+  summary: Heating and cooling systems, including for data centers.
+  cik: 1466258
+  about:
+    quote: Trane Technologies plc is a global climate innovator.
+    url: https://www.sec.gov/Archives/edgar/data/1466258/000162828026005731/tt-20251231.htm
+    publisher: Trane Technologies 10-K
+    type: sec_filing
+    date: '2026-02-05'
+- ref: JCI
+  id: cik-0000833444
+  name: Johnson Controls
+  layer: cooling
+  summary: Building systems, including data center cooling.
+  cik: 833444
+  about:
+    quote: In addition, the increased maturity and adoption of AI and high-performance computing is currently impacting
+      the microchip and data center industry and driving technology innovation, which has led to increased demand
+      for hyperscale and data center cooling solutions that deliver heat management and energy efficiency.
+    url: https://www.sec.gov/Archives/edgar/data/833444/000083344425000097/jci-20250930.htm
+    publisher: Johnson Controls 10-K
+    type: sec_filing
+    date: '2025-11-14'
+- ref: PWR
+  id: cik-0001050915
+  name: Quanta Services
+  layer: buildings
+  summary: Builds electrical and grid infrastructure, including for data centers.
+  cik: 1050915
+  about:
+    quote: In addition, the investment of capital into the build out of data centers by technology customers in
+      order to, among other things, expand cloud-based services and develop artificial intelligence (AI) training
+      and inference, increases demand for our solutions offerings.
+    url: https://www.sec.gov/Archives/edgar/data/1050915/000105091526000006/pwr-20251231.htm
+    publisher: Quanta Services 10-K
+    type: sec_filing
+    date: '2026-02-19'
+- ref: DLR
+  id: cik-0001297996
+  name: Digital Realty
+  layer: buildings
+  summary: A landlord that owns and leases data centers. Oracle is its second-largest tenant.
+  cik: 1297996
+  about:
+    quote: Digital Realty Trust, Inc., through its controlling interest in Digital Realty Trust, L.P. and the subsidiaries
+      of the Operating Partnership, is a leading global provider of data center, colocation and interconnection
+      solutions for customers across a variety of industry verticals.
+    url: https://www.sec.gov/Archives/edgar/data/1297996/000110465926015365/dlr-20251231x10k.htm
+    publisher: Digital Realty 10-K
+    type: sec_filing
+    date: '2026-02-13'
+- ref: EQIX
+  id: cik-0001101239
+  name: Equinix
+  layer: buildings
+  summary: Runs data centers that many companies share, plus xScale sites for hyperscalers.
+  cik: 1101239
+  about:
+    quote: xScale Data Centers are designed to serve the unique core workload deployment needs of a targeted group
+      of hyperscale companies, which include the world's largest cloud service providers.
+    url: https://www.sec.gov/Archives/edgar/data/1101239/000110123926000032/eqix-20251231.htm
+    publisher: Equinix 10-K
+    type: sec_filing
+    date: '2026-02-11'
+- ref: OWL
+  id: cik-0001823945
+  name: Blue Owl Capital
+  layer: buildings
+  summary: An investment firm whose funds co-own Meta's Hyperion data center campus.
+  cik: 1823945
+  about: FROM_CLAIMS
+- ref: LUMN
+  id: cik-0000018926
+  name: Lumen
+  layer: carrier
+  summary: Runs a large communications network; its 10-K calls it one of the world's most interconnected.
+  cik: 18926
+  about:
+    quote: We operate one of the world's most interconnected communications networks.
+    url: https://www.sec.gov/Archives/edgar/data/18926/000001892626000014/lumn-20251231.htm
+    publisher: Lumen 10-K
+    type: sec_filing
+    date: '2026-02-20'
+- ref: UPS
+  id: cik-0001090727
+  name: UPS
+  layer: logistics
+  summary: Package delivery and logistics. Amazon was 10.6% of its 2025 revenue.
+  cik: 1090727
+  about:
+    quote: UPS, founded in 1907, is a global package delivery and logistics provider.
+    url: https://www.sec.gov/Archives/edgar/data/1090727/000162828026008432/ups-20251231.htm
+    publisher: UPS 10-K
+    type: sec_filing
+    date: '2026-02-17'
+- ref: FDX
+  id: cik-0001048911
+  name: FedEx
+  layer: logistics
+  summary: Package and freight delivery.
+  cik: 1048911
+  about:
+    quote: FedEx provides customers and businesses worldwide with a broad portfolio of transportation, e-commerce,
+      and business services, offering integrated business solutions utilizing its flexible, efficient, and intelligent
+      global network.
+    url: https://www.sec.gov/Archives/edgar/data/1048911/000104891126000105/fdx-20260531.htm
+    publisher: FedEx 10-K
+    type: sec_filing
+    date: '2026-07-20'
+- ref: CHRW
+  id: cik-0001043277
+  name: C.H. Robinson
+  layer: logistics
+  summary: Freight logistics broker.
+  cik: 1043277
+  about:
+    quote: We deliver tailored solutions across the world via truckload, less-than-truckload, ocean, air, and more.
+    url: https://www.sec.gov/Archives/edgar/data/1043277/000104327726000009/chrw-20251231.htm
+    publisher: C.H. Robinson 10-K
+    type: sec_filing
+    date: '2026-02-13'
+- ref: EXPD
+  id: cik-0000746515
+  name: Expeditors
+  layer: logistics
+  summary: Buys cargo space from airlines and shipping lines and resells it.
+  cik: 746515
+  about:
+    quote: As a third-party logistics provider, we purchase cargo space from carriers (such as airlines, ocean shipping
+      lines, and trucking lines) on a volume basis and resell that space to our customers.
+    url: https://www.sec.gov/Archives/edgar/data/746515/000119312526071569/expd-20251231.htm
+    publisher: Expeditors 10-K
+    type: sec_filing
+    date: '2026-02-25'
+- ref: AAPL
+  id: cik-0000320193
+  name: Apple
+  layer: other
+  summary: Consumer devices; here only as Amkor's largest customer.
+  cik: 320193
+  about:
+    quote: Direct sales to Apple and Qualcomm accounted for 29.8% and 11.1% of our net sales, respectively, for
+      the year ended December 31, 2025.
+    url: https://www.sec.gov/Archives/edgar/data/1047127/000104712726000014/amkr-20251231.htm
+    publisher: SEC filing
+    type: sec_filing
+    date: '2026-02-20'
+    note: The filing sentence that put this company on the map.
+hidden:
+  GE: Licenses its name to GE Vernova; not a supply relationship.
+  HTHIY: Nuclear joint venture partner of GE Vernova; outside the AI data center chain.
+  PCAR: Autonomous-truck pilot with FedEx; outside the AI data center chain.
+  AUR: Autonomous-truck pilot with FedEx; outside the AI data center chain.
+  FDXF: FedEx spin-off trademark licence; outside the AI data center chain.

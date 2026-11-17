@@ -1,0 +1,24 @@
+# Hand fixes to records the SEC pipeline extracted. Each one matches a record
+# by its filing URL and the start of its sentence, and says why it was wrong.
+# A correction that stops matching anything fails the build, so a re-extraction
+# cannot silently undo a fix.
+#
+# action: flip (swap supplier and buyer) | drop (remove the record)
+# context_quote: a verbatim lead-in from the same filing, shown above a quote
+#   that is only a table row. It is checked against the filing like any quote.
+
+corrections:
+- match:
+    url_contains: entg-20251231
+    sentence_starts: Taiwan Semiconductor Manufacturing Company (TSMC) 16%
+  action: flip
+  relationship: supplies
+  quantified_basis: revenue
+  context_quote: The following table shows the percentage of our net sales to top customers
+  reason: The row is from Entegris's table of its top customers, so TSMC is the buyer and Entegris the supplier. The extractor had the direction backwards and no direction at all.
+
+- match:
+    url_contains: klac-20260630
+    sentence_starts: Taiwan Semiconductor Manufacturing Company Limited Taiwan Semiconductor
+  context_quote: the following customers each accounted for more than 10% of total revenues, primarily in the Semiconductor Process Control segment
+  reason: The quoted text is a table row naming TSMC once per year. The sentence above the table says what the row means.

@@ -834,6 +834,57 @@ def cmd_neo4j_load(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_learn(args: argparse.Namespace) -> int:
+    """Merge the SEC graph with the curated sources into the learning map."""
+    from .learn import LearnError, build_map, write_map
+
+    graph_path = config.REPO_ROOT / "site" / "data" / "graph.json"
+    if not graph_path.exists():
+        print("No site/data/graph.json yet. Run `hscm build` first.")
+        return 1
+    try:
+        payload, report = build_map(json.loads(graph_path.read_text(encoding="utf-8")), strict=args.strict)
+    except LearnError as exc:
+        print(f"learning map not built:\n{exc}")
+        return 1
+    path = write_map(payload)
+    meta = payload["meta"]
+    print(report.summary())
+    print(f"companies: {meta['company_count']}  relationships: {meta['relationship_count']}  "
+          f"citations: {meta['citation_count']} {meta['citations_by_type']}")
+    print(f"  wrote {path.relative_to(config.REPO_ROOT)} (+ map.js)")
+    return 0
+
+
+def cmd_verify_web(args: argparse.Namespace) -> int:
+    """Fetch every non-SEC citation and check its quote is still on the page."""
+    import requests
+
+    from .learn import verify_web
+
+    headers = {"User-Agent": "Mozilla/5.0 (compatible; hscm citation checker)"}
+
+    def fetch(url: str) -> str:
+        response = requests.get(url, headers=headers, timeout=30)
+        response.raise_for_status()
+        return response.text
+
+    checks = verify_web(fetch)
+    bad = [c for c in checks.values() if c["status"] != "found"]
+    kept = [c for c in checks.values() if c["status"] == "found" and c.get("last_attempt")]
+    print(f"checked {len(checks)} web quotes; {len(bad)} not confirmed")
+    for row in bad:
+        print(f"  {row['status']}: {row['url']}\n    {row['quote'][:100]}")
+    for row in kept:
+        print(f"  could not read today ({row['last_attempt']['status']}), earlier check kept: {row['url']}")
+    print("Results saved to sources/web_checks.json.")
+    print("  not_found   the article loaded but the words differ: fix the quote or the URL.")
+    print("  unreadable  the site sent a bot check or a JavaScript shell, not the article.")
+    print("  unreachable the request failed.")
+    print("The HTML the script received for each of these is in data/web_debug/.")
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     import logging
 
@@ -921,6 +972,13 @@ def main(argv: list[str] | None = None) -> int:
     build = sub.add_parser("build", help="verify, resolve, and export the graph")
     build.add_argument("--extractions", default=default_extractions)
     build.set_defaults(func=cmd_build)
+
+    learn = sub.add_parser("learn", help="merge SEC graph and curated sources into the learning map")
+    learn.add_argument("--strict", action="store_true", help="fail if any web quote lacks a passing check")
+    learn.set_defaults(func=cmd_learn)
+
+    vweb = sub.add_parser("verify-web", help="fetch each cited web page and check the quote is on it")
+    vweb.set_defaults(func=cmd_verify_web)
 
     neo = sub.add_parser("neo4j-load", help="load the graph into Neo4j")
     neo.add_argument("--extractions", default=default_extractions)
