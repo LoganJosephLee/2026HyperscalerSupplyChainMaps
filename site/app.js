@@ -53,6 +53,14 @@ function escapeHtml(value) {
 
 /* Edge width encodes the disclosed percentage where a filing states one.
    Everything else renders thin, so "we don't know" never looks like "small". */
+function nodeSize(node, statements) {
+  // Square-rooted: a company with twenty statements behind it is not twenty
+  // times more important than one with a single sentence, and drawn that way it
+  // would swallow the map.
+  const base = node.is_seed ? 12 : 5;
+  return base + Math.sqrt(statements) * 1.7;
+}
+
 function edgeSize(pct) {
   // Square-rooted and tightly bounded. A 95% edge is worth noticing; at the
   // previous scaling it was a twelve-pixel beam across the canvas that hid every
@@ -240,6 +248,11 @@ function buildClusterLabels(renderer, graph, present, labels, anchors) {
 
   renderer.on("afterRender", place);
   place();
+  return {
+    // Group headings only mean something in the cluster arrangement. Over the
+    // chain they would sit above columns they do not describe.
+    setVisible(visible) { layer.style.display = visible ? "" : "none"; },
+  };
 }
 
 // --- legend -------------------------------------------------------------------
@@ -279,16 +292,327 @@ function buildLegend(present, labels, graph, renderer, descriptions) {
     renderer.refresh();
   };
 
-  graph.forEachNode((id, attributes) => {
-    graph.setNodeAttribute(id, "hscmBaseColor", attributes.color);
-  });
-
   list.querySelectorAll(".function-row").forEach((row) => {
     row.addEventListener("click", () => {
       isolated = isolated === row.dataset.function ? null : row.dataset.function;
       apply();
     });
   });
+}
+
+// --- layouts ------------------------------------------------------------------
+// Three ways of standing in the same room. The graph never changes; where the
+// nodes sit does, and each arrangement answers a different question.
+//
+//   chain     what order does the world happen in?   (tiers, left to right)
+//   clusters  who does the same job as who?          (force layout, grouped)
+//   focus     what does one buyer depend on?         (rings by hop distance)
+//
+// Each returns {id: {x, y}} in graph coordinates and touches no renderer, so
+// changing view is only ever a matter of moving points.
+
+const LAYOUT_SPAN = 260;
+
+function chainLayout(graph, data) {
+  const tiers = data.meta?.function_tiers || {};
+  const lastTier = Math.max(8, ...Object.values(tiers));
+  const columns = new Map();
+
+  graph.forEachNode((id, attributes) => {
+    // A buyer belongs at the end of the chain whatever its filings say it does,
+    // because the chain is drawn towards the companies it was built around.
+    const tier = attributes.hscmSeed ? lastTier : (tiers[attributes.hscmFunction] ?? lastTier);
+    if (!columns.has(tier)) columns.set(tier, []);
+    columns.get(tier).push(id);
+  });
+
+  const positions = {};
+  const used = [...columns.keys()].sort((a, b) => a - b);
+  used.forEach((tier, index) => {
+    const members = columns.get(tier);
+    // Busiest companies to the middle of the column, where the eye lands and
+    // where their edges have the least distance to travel.
+    members.sort((a, b) => graph.degree(b) - graph.degree(a));
+    const x = -LAYOUT_SPAN + (index / Math.max(used.length - 1, 1)) * LAYOUT_SPAN * 2;
+    // Company names are long and drawn horizontally, so rows need real space
+    // between them or the labels collide and sigma starts hiding them — on a map
+    // whose whole point is naming companies, a hidden name is a failure. Rows
+    // are spaced generously and nudged sideways in alternation, which breaks up
+    // the label collisions a single straight column guarantees.
+    const step = Math.max(30, (LAYOUT_SPAN * 1.5) / Math.max(members.length, 1));
+    // Half a row of vertical offset on alternate columns. Without it the busiest
+    // company in every column sits on the same centre line, and their labels —
+    // the longest ones, because the busiest companies have the longest names —
+    // all collide along it.
+    const stagger = index % 2 ? step / 2 : 0;
+    members.forEach((id, row) => {
+      const offset = Math.ceil(row / 2) * (row % 2 ? -1 : 1);
+      positions[id] = { x: x + (row % 2 ? 16 : -16), y: offset * step + stagger };
+    });
+  });
+  return positions;
+}
+
+// Computed once, from ForceAtlas2, then remembered. The force layout is what
+// carries "these two trade with each other", it is not cheap, and recomputing
+// it would move companies that had no reason to move.
+function computeClusterPositions(graph, anchors) {
+  const counts = new Map();
+  graph.forEachNode((id, attributes) => {
+    const key = attributes.hscmFunction;
+    const anchor = anchors.get(key) || { x: 0, y: 0 };
+    const index = counts.get(key) || 0;
+    counts.set(key, index + 1);
+    // Phyllotactic spiral for the starting point: even spacing, nothing
+    // stacked, and the same dataset lands the same way every time.
+    const radius = 9 * Math.sqrt(index);
+    const angle = index * 2.399963;
+    graph.setNodeAttribute(id, "x", anchor.x + Math.cos(angle) * radius);
+    graph.setNodeAttribute(id, "y", anchor.y + Math.sin(angle) * radius);
+  });
+
+  forceAtlas2.assign(graph, {
+    iterations: 220,
+    settings: { ...forceAtlas2.inferSettings(graph), gravity: 1.1, scalingRatio: 14 },
+  });
+
+  // ForceAtlas2 optimises for edges, not for grouping, so it pulls suppliers in
+  // around whoever buys from them and the clusters dissolve. Blending each node
+  // back toward its group keeps both readings: the cluster tells you the job,
+  // the remaining pull tells you who it trades with.
+  const PULL = 0.55;
+  const positions = {};
+  graph.forEachNode((id, attributes) => {
+    const anchor = anchors.get(attributes.hscmFunction) || { x: 0, y: 0 };
+    positions[id] = {
+      x: attributes.x * (1 - PULL) + anchor.x * PULL,
+      y: attributes.y * (1 - PULL) + anchor.y * PULL,
+    };
+  });
+  return positions;
+}
+
+function focusLayout(graph, rootId) {
+  // Breadth-first from one company, ignoring edge direction: the question is
+  // "how far from this company is that one", and a supplier's supplier is two
+  // steps away whichever way the goods flow.
+  const depth = new Map([[rootId, 0]]);
+  let frontier = [rootId];
+  while (frontier.length) {
+    const next = [];
+    frontier.forEach((id) => {
+      graph.forEachNeighbor(id, (other) => {
+        if (!depth.has(other)) {
+          depth.set(other, depth.get(id) + 1);
+          next.push(other);
+        }
+      });
+    });
+    frontier = next;
+  }
+
+  const rings = new Map();
+  graph.forEachNode((id) => {
+    // Anything unreachable gets an outer ring of its own rather than being
+    // hidden. Not connected to this buyer is a finding, not an absence.
+    const ring = depth.has(id) ? depth.get(id) : Infinity;
+    if (!rings.has(ring)) rings.set(ring, []);
+    rings.get(ring).push(id);
+  });
+
+  const positions = {};
+  const finite = [...rings.keys()].filter(Number.isFinite).sort((a, b) => a - b);
+  const order = [...finite, ...(rings.has(Infinity) ? [Infinity] : [])];
+  order.forEach((ring, index) => {
+    const members = rings.get(ring);
+    const radius = ring === 0 ? 0 : (index / Math.max(order.length - 1, 1)) * LAYOUT_SPAN;
+    members.sort((a, b) => graph.degree(b) - graph.degree(a));
+    members.forEach((id, position) => {
+      const angle = (2 * Math.PI * position) / members.length - Math.PI / 2;
+      positions[id] = { x: Math.cos(angle) * radius, y: Math.sin(angle) * radius };
+    });
+  });
+  return positions;
+}
+
+// --- movement -----------------------------------------------------------------
+// Nodes travel to their new places rather than teleporting. Watching a company
+// move from one arrangement to another is how a reader learns that both
+// pictures are the same graph; a cut makes them look like two different maps.
+function glideTo(graph, positions, done) {
+  const from = new Map();
+  graph.forEachNode((id, attributes) => from.set(id, { x: attributes.x, y: attributes.y }));
+
+  const start = performance.now();
+  const DURATION = 750;
+  const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+
+  function step(now) {
+    const t = Math.min((now - start) / DURATION, 1);
+    const eased = ease(t);
+    graph.forEachNode((id) => {
+      const a = from.get(id);
+      const b = positions[id];
+      if (!a || !b) return;
+      graph.setNodeAttribute(id, "x", a.x + (b.x - a.x) * eased);
+      graph.setNodeAttribute(id, "y", a.y + (b.y - a.y) * eased);
+    });
+    if (t < 1) requestAnimationFrame(step);
+    else if (done) done();
+  }
+  requestAnimationFrame(step);
+}
+
+// --- views --------------------------------------------------------------------
+function buildViews(context) {
+  const { graph, renderer, data, clusterPositions, clusterLabels } = context;
+  const bar = el("view-switch");
+  const note = el("view-note");
+  const picker = el("focus-picker");
+  if (!bar) return null;
+
+  const seeds = data.nodes.filter((node) => node.is_seed);
+  let focusId = (seeds[0] || data.nodes[0] || {}).id;
+  let current = null;
+  let moving = false;
+
+  const VIEWS = {
+    chain: {
+      label: "Chain",
+      note: "Left to right in the order the world happens: raw materials, the machines "
+          + "that shape them, the chips, the boxes, and the companies that run them.",
+      positions: () => chainLayout(graph, data),
+    },
+    clusters: {
+      label: "Clusters",
+      note: "Grouped by job, with companies pulled together by who they trade with. "
+          + "Shows which jobs have many disclosed suppliers and which have almost none.",
+      positions: () => clusterPositions,
+    },
+    focus: {
+      label: "One buyer",
+      note: "One company at the centre, everything else placed by how many steps away it "
+          + "is. The outer ring is everything with no disclosed path to it at all.",
+      positions: () => focusLayout(graph, focusId),
+    },
+  };
+
+  const apply = (name) => {
+    if (moving || !VIEWS[name] || name === current) return;
+    current = name;
+    moving = true;
+    bar.querySelectorAll("button").forEach((button) => {
+      const on = button.dataset.view === name;
+      button.classList.toggle("active", on);
+      button.setAttribute("aria-pressed", String(on));
+    });
+    if (note) note.textContent = VIEWS[name].note;
+    clusterLabels.setVisible(name === "clusters");
+    if (picker) picker.hidden = name !== "focus";
+    glideTo(graph, VIEWS[name].positions(), () => { moving = false; });
+    // Sigma normalises coordinates to the graph's bounding box on every frame,
+    // so ratio 1 is "fitted" whatever the arrangement's own scale is. A layout
+    // twice as wide as the last one would otherwise arrive off the edge of the
+    // canvas, and a fixed ratio tuned for one view strands every other.
+    renderer.getCamera().animate({ x: 0.5, y: 0.5, ratio: 1.3 }, { duration: 750 });
+  };
+
+  Object.entries(VIEWS).forEach(([name, view]) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.dataset.view = name;
+    button.textContent = view.label;
+    button.addEventListener("click", () => apply(name));
+    bar.appendChild(button);
+  });
+
+  if (picker && seeds.length) {
+    seeds.forEach((seed) => {
+      const option = document.createElement("option");
+      option.value = seed.id;
+      option.textContent = seed.canonical_name;
+      picker.appendChild(option);
+    });
+    picker.value = focusId;
+    picker.addEventListener("change", () => {
+      focusId = picker.value;
+      glideTo(graph, focusLayout(graph, focusId));
+    });
+  }
+
+  apply("chain");
+  return { apply, get current() { return current; } };
+}
+
+// --- search -------------------------------------------------------------------
+function buildSearch(context) {
+  const { graph, renderer, data, nodesById } = context;
+  const input = el("search");
+  const results = el("search-results");
+  if (!input || !results) return;
+
+  const nodes = data.nodes.slice()
+    .sort((a, b) => a.canonical_name.localeCompare(b.canonical_name));
+  const clear = () => { results.innerHTML = ""; results.hidden = true; };
+
+  input.addEventListener("input", () => {
+    const query = input.value.trim().toLowerCase();
+    if (query.length < 2) return clear();
+    const hits = nodes.filter((node) =>
+      node.canonical_name.toLowerCase().includes(query)
+      || (node.ticker || "").toLowerCase().includes(query)).slice(0, 8);
+    results.innerHTML = hits.length
+      ? hits.map((node) => `<button type="button" data-id="${escapeHtml(node.id)}">`
+          + `${escapeHtml(node.canonical_name)}`
+          + `<span class="tk">${escapeHtml(node.ticker || "")}</span></button>`).join("")
+      : `<p class="hint">Nothing by that name. Every company here had to be named in a
+           filing, so one you expect may simply never have been.</p>`;
+    results.hidden = false;
+  });
+
+  results.addEventListener("click", (event) => {
+    const button = event.target.closest("button[data-id]");
+    if (!button) return;
+    // Camera coordinates are normalised rather than graph units, so ask the
+    // renderer where the node is instead of doing the arithmetic here.
+    const position = renderer.getNodeDisplayData(button.dataset.id);
+    if (position) {
+      renderer.getCamera().animate(
+        { x: position.x, y: position.y, ratio: 0.45 }, { duration: 500 });
+    }
+    const node = nodesById.get(button.dataset.id);
+    if (node) renderNode(node, data);
+    input.value = "";
+    clear();
+  });
+
+  input.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") { input.value = ""; clear(); input.blur(); }
+  });
+}
+
+// --- hover --------------------------------------------------------------------
+// Hovering a company lights the ones it trades with and dims the rest. On a
+// graph this size that is the difference between a hairball and a readable
+// answer to "who does this one actually deal with".
+function buildHover(context) {
+  const { graph, renderer } = context;
+  let hovered = null;
+
+  const paint = () => {
+    graph.forEachNode((id, attributes) => {
+      const near = hovered === null || id === hovered || graph.areNeighbors(id, hovered);
+      graph.setNodeAttribute(id, "color", near ? attributes.hscmBaseColor : DIMMED);
+    });
+    graph.forEachEdge((edge, attributes, source, target) => {
+      const near = hovered === null || source === hovered || target === hovered;
+      graph.setEdgeAttribute(edge, "color", near ? attributes.hscmBaseColor : DIMMED);
+    });
+    renderer.refresh();
+  };
+
+  renderer.on("enterNode", ({ node }) => { hovered = node; paint(); });
+  renderer.on("leaveNode", () => { hovered = null; paint(); });
 }
 
 async function main() {
@@ -316,72 +640,63 @@ async function main() {
   const graph = new graphology.Graph({ type: "directed" });
   const nodesById = new Map(data.nodes.map((n) => [n.id, n]));
 
-  // Group companies by the job their own filings describe. Position is what
-  // carries this: it has no discriminability ceiling the way colour does, and a
-  // labelled cluster answers "what is this company for?" at a glance, which is
-  // the question the map exists to answer.
+  // Group companies by the job their own filings describe. Position carries
+  // this: it has no discriminability ceiling the way colour does, and a
+  // labelled group answers "what is this company for?" at a glance.
   const labels = data.meta?.function_labels || {};
   const present = Object.keys(labels).filter((key) =>
-    data.nodes.some((node) => (node.function || "unstated") === key)
-  );
-  const anchors = new Map(
-    present.map((key, index) => {
-      const angle = (2 * Math.PI * index) / present.length - Math.PI / 2;
-      return [key, { x: Math.cos(angle) * 100, y: Math.sin(angle) * 100 }];
-    })
-  );
+    data.nodes.some((node) => (node.function || "unstated") === key));
+  const anchors = new Map(present.map((key, index) => {
+    const angle = (2 * Math.PI * index) / present.length - Math.PI / 2;
+    return [key, { x: Math.cos(angle) * 100, y: Math.sin(angle) * 100 }];
+  }));
   const functionOf = (node) => (node.function || "unstated");
 
-  data.nodes.forEach((node, index) => {
-    const anchor = anchors.get(functionOf(node)) || { x: 0, y: 0 };
-    // Deterministic jitter: the same dataset must lay out the same way twice.
-    const spread = 18;
-    const offset = (index * 2.399963); // golden angle, so groups fan out evenly
+  // How much a company is talked about. Size carries it, because a reader
+  // scanning the map should meet the heavily-disclosed companies first — and
+  // because it is a fact about the evidence, not a claim about the company.
+  const statements = new Map();
+  data.edges.forEach((edge) => {
+    const weight = edge.evidence?.length || 1;
+    [edge.source, edge.target].forEach((id) =>
+      statements.set(id, (statements.get(id) || 0) + weight));
+  });
+
+  data.nodes.forEach((node) => {
+    // Colour answers one question: can this company's word be checked? A
+    // company named in a filing but filing nothing itself is in the graph on
+    // someone else's disclosure, and nothing it says can corroborate the edge.
+    const color = node.is_seed
+      ? SEED_COLOR
+      : node.has_sec_filings === false
+        ? NON_FILER_COLOR
+        : SUPPLIER_COLOR;
     graph.addNode(node.id, {
-      x: anchor.x + Math.cos(offset) * spread,
-      y: anchor.y + Math.sin(offset) * spread,
-      size: node.is_seed ? 14 : 8,
+      x: 0,
+      y: 0,
+      size: nodeSize(node, statements.get(node.id) || 0),
       label: node.canonical_name,
-      // Colour answers one question: can this company's word be checked? A
-      // company named in a filing but filing nothing itself is in the graph on
-      // someone else's disclosure, and nothing it says can ever corroborate or
-      // contradict the edge.
-      color: node.is_seed
-        ? SEED_COLOR
-        : node.has_sec_filings === false
-          ? NON_FILER_COLOR
-          : SUPPLIER_COLOR,
+      color,
+      hscmBaseColor: color,
       hscmFunction: functionOf(node),
+      hscmSeed: Boolean(node.is_seed),
     });
   });
 
   data.edges.forEach((edge) => {
     if (!graph.hasNode(edge.source) || !graph.hasNode(edge.target)) return;
+    const color = edge.quantified_pct == null ? EDGE_COLOR : EDGE_COLOR_QUANTIFIED;
     graph.addEdgeWithKey(edge.id, edge.source, edge.target, {
       size: edgeSize(edge.quantified_pct),
-      color: edge.quantified_pct == null ? EDGE_COLOR : EDGE_COLOR_QUANTIFIED,
+      color,
+      hscmBaseColor: color,
       // No arrowhead when no filing stated which way anything flows. The stored
       // supplier/buyer order is a property of the record shape, not evidence.
       type: edge.direction_stated === false ? "line" : "arrow",
     });
   });
 
-  forceAtlas2.assign(graph, {
-    iterations: 220,
-    settings: { ...forceAtlas2.inferSettings(graph), gravity: 1.1, scalingRatio: 14 },
-  });
-
-  // ForceAtlas2 optimises for edges, not for grouping, so it pulls suppliers in
-  // around whoever buys from them and the clusters dissolve. Blending each node
-  // back toward its group keeps both readings: the cluster tells you the job,
-  // the remaining pull tells you who it trades with.
-  const PULL = 0.55;
-  graph.forEachNode((id, attributes) => {
-    const anchor = anchors.get(attributes.hscmFunction);
-    if (!anchor) return;
-    graph.setNodeAttribute(id, "x", attributes.x * (1 - PULL) + anchor.x * PULL);
-    graph.setNodeAttribute(id, "y", attributes.y * (1 - PULL) + anchor.y * PULL);
-  });
+  const clusterPositions = computeClusterPositions(graph, anchors);
 
   const renderer = new Sigma(graph, el("graph"), {
     enableEdgeEvents: true, // sigma v3 does not emit edge clicks without this
@@ -389,7 +704,7 @@ async function main() {
     labelColor: { color: "#e6e8ec" },
     labelSize: 12,
     defaultEdgeType: "arrow",
-    minCameraRatio: 0.1,
+    minCameraRatio: 0.08,
     maxCameraRatio: 6,
   });
 
@@ -403,12 +718,6 @@ async function main() {
     if (found) renderNode(found, data);
   });
 
-  // Sigma fits the nodes to the canvas; the labels hang off them and get cut at
-  // the edges. Pull the camera back so names on the outermost companies are
-  // readable, which for a map whose whole point is naming companies is not a
-  // detail.
-  renderer.getCamera().setState({ ratio: 1.5 });
-
   // The primer is the panel's opening state, and the first click on anything
   // replaces it for good. Someone who needed it once may well need it twice.
   const primer = el("panel").innerHTML;
@@ -421,10 +730,15 @@ async function main() {
     });
   }
 
-  buildClusterLabels(renderer, graph, present, labels, anchors);
+  const clusterLabels = buildClusterLabels(renderer, graph, present, labels, anchors);
   buildLegend(present, labels, graph, renderer, data.meta?.function_descriptions);
 
-  window.__graph = { graph, renderer, data }; // handle for tests and console work
+  const context = { graph, renderer, data, nodesById, clusterPositions, clusterLabels };
+  const views = buildViews(context);
+  buildSearch(context);
+  buildHover(context);
+
+  window.__graph = { graph, renderer, data, views }; // handle for tests and console
 }
 
 main();
