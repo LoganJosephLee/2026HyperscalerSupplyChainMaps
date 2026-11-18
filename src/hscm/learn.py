@@ -618,7 +618,12 @@ def verify_web(fetch, today: str | None = None, debug_dir: Path | None = None) -
     checks = load_web_checks()
     pages: dict[str, tuple[str, str] | None] = {}
     raw_html: dict[str, str] = {}
-    for cite in web_citations():
+    citations = web_citations()
+    # A quote that was edited or removed leaves its old check behind; drop it so
+    # the report only ever describes quotes the site actually shows.
+    current = {quote_key(c["url"], c["quote"]) for c in citations}
+    checks = {k: v for k, v in checks.items() if k in current}
+    for cite in citations:
         url = cite["url"]
         if url not in pages:
             try:

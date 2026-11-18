@@ -126,3 +126,16 @@ def test_match_form_closes_gaps_left_by_html_tags():
     assert learn.match_form("Google's deal with Kairos Power.") in learn.match_form(page)
     # Wording still has to match.
     assert learn.match_form("Google's deal with Kairos.") not in learn.match_form(page)
+
+
+def test_checks_for_quotes_no_longer_cited_are_dropped(tmp_path, monkeypatch):
+    monkeypatch.setattr(learn, "WEB_CHECKS_PATH", tmp_path / "web_checks.json")
+    stale = learn.quote_key("https://a.example/", "An old quote.")
+    learn.save_web_checks({stale: {"key": stale, "url": "https://a.example/", "quote": "An old quote.",
+                                   "status": "not_found", "method": "", "checked": "2025-01-01"}})
+    monkeypatch.setattr(learn, "web_citations", lambda: [
+        {"url": "https://a.example/", "quote": "A new quote here.", "where": "t"}])
+    checks = learn.verify_web(lambda url: "<p>A new quote here.</p>", today="2026-01-01",
+                              debug_dir=tmp_path / "debug")
+    assert stale not in checks
+    assert [c["status"] for c in checks.values()] == ["found"]
