@@ -16,10 +16,11 @@ source it came from:
 - **News report**: a major news organisation. Deals the companies have not
   confirmed themselves are marked as reported, not confirmed.
 
-**Status (November 2026):** 77 companies, 100 connections and 178 quoted sources
-(148 from SEC filings, 25 from company announcements, 5 from news reports). Every
-SEC quote is matched against a cached copy of its filing at each build; all 37
-web quotes were found on their pages when last checked. See
+**Status (November 2026):** 93 companies, 143 connections and 237 quoted sources
+(158 from SEC filings, 68 from company announcements, 11 from news reports). Every
+SEC quote is matched against a cached copy of its filing at each build; 79 of the 86
+web quotes were found on their pages when last checked, and the 7 newest are
+waiting for `hscm verify-web`. See
 [Current status](#current-status).
 
 ## Setup
@@ -99,8 +100,8 @@ make test
 | Part | State |
 |---|---|
 | SEC pipeline (M1–M5, M7) | **Done.** 43 filings cached; full extraction run, 194 records; 186 of 187 checked sentences matched their filings (0.5% failure). Entity review queue cleared in November 2026: 0 names left |
-| Curated sources | **Started.** 29 relationships from company announcements, news reports and SEC filings the pipeline does not read, in `sources/claims.yaml` |
-| Learning map site | **Done and browser-checked.** Layered stack, company panels with every quote, five guided tours, glossary, sourcing page. `site/index.html` |
+| Curated sources | **Growing.** 75 relationships from company announcements, news reports and SEC filings the pipeline does not read, in `sources/claims.yaml` |
+| Learning map site | **Done and browser-checked.** Layered stack, company panels with every quote, eight guided tours, glossary, sourcing page. `site/index.html` |
 | Raw SEC network | Kept at `site/network.html` |
 | Neo4j (M6) | Statements and queries written; never started |
 | Hosting | GitHub Pages not yet enabled |

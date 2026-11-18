@@ -56,11 +56,12 @@ RELATIONSHIPS = {
     "invests_in": "invests in",
     "finances": "helps finance",
     "partners_with": "partners with",
+    "acquires": "agreed to buy",
     "unclear": "has a relationship with",
 }
 # Relationship types whose arrow is not a flow of goods or services. The site
 # draws them differently so "invests in" never reads as "supplies".
-MONEY_TYPES = {"invests_in", "finances"}
+MONEY_TYPES = {"invests_in", "finances", "acquires"}
 UNDIRECTED_TYPES = {"partners_with", "unclear"}
 
 _ACCESSION = re.compile(r"/edgar/data/\d+/(\d{18})/")

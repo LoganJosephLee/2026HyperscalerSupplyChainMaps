@@ -12,7 +12,7 @@
 #     and `finances`, the supplier is the one putting in money.
 #
 # relationship: supplies | manufactures_for | leases_capacity_to | invests_in |
-#               finances | partners_with (no direction stated)
+#               finances | partners_with (no direction stated) | acquires
 
 claims:
 
@@ -431,3 +431,650 @@ claims:
     publisher: Amazon 10-K
     type: sec_filing
     date: 2026-02-06
+
+# --- GPUs and accelerators bought by the clouds ----------------------------
+- id: nvda-msft-gb300
+  supplier: NVDA
+  buyer: MSFT
+  relationship: supplies
+  what: NVIDIA GB300 NVL72 systems for an Azure cluster built for OpenAI workloads, more than 4,600 of them
+  evidence:
+  - quote: Microsoft delivers the first at-scale production cluster with more than 4,600 NVIDIA GB300 NVL72, featuring
+      NVIDIA Blackwell Ultra GPUs connected through the next-generation NVIDIA InfiniBand network.
+    url: https://azure.microsoft.com/en-us/blog/microsoft-azure-delivers-the-first-large-scale-cluster-with-nvidia-gb300-nvl72-for-openai-workloads/
+    publisher: Microsoft Azure
+    type: company
+- id: nvda-meta-clusters
+  supplier: NVDA
+  buyer: META
+  relationship: supplies
+  what: NVIDIA GPUs for Meta's AI training clusters
+  evidence:
+  - quote: While we’ve had a long history of building AI infrastructure, we first shared details on our AI Research
+      SuperCluster (RSC), featuring 16,000 NVIDIA A100 GPUs, in 2022.
+    url: https://engineering.fb.com/2024/03/12/data-center-engineering/building-metas-genai-infrastructure/
+    publisher: Meta Engineering
+    type: company
+    date: '2024-03-12'
+  - quote: Today, we’re sharing details on two versions of our 24,576-GPU data center scale cluster at Meta.
+    url: https://engineering.fb.com/2024/03/12/data-center-engineering/building-metas-genai-infrastructure/
+    publisher: Meta Engineering
+    type: company
+    date: '2024-03-12'
+- id: nvda-amzn-gb200
+  supplier: NVDA
+  buyer: AMZN
+  relationship: supplies
+  what: NVIDIA Grace Blackwell systems behind AWS P6e-GB200 UltraServers
+  evidence:
+  - quote: To accelerate innovation across emerging generative AI developments such as reasoning models and agentic
+      AI systems, we’re excited to announce general availability of P6e-GB200 UltraServers, accelerated by NVIDIA
+      Grace Blackwell Superchips.
+    url: https://aws.amazon.com/blogs/machine-learning/aws-ai-infrastructure-with-nvidia-blackwell-two-powerful-compute-solutions-for-the-next-frontier-of-ai
+    publisher: Amazon Web Services
+    type: company
+- id: nvda-googl-gb200
+  supplier: NVDA
+  buyer: GOOGL
+  relationship: supplies
+  what: NVIDIA GB200 NVL72 systems behind Google Cloud A4X virtual machines
+  evidence:
+  - quote: Today, we're excited to announce the preview of A4X VMs, powered by NVIDIA GB200 NVL72, a system consisting
+      of 72 NVIDIA Blackwell GPUs and 36 Arm-based NVIDIA Grace CPUs connected via fifth-generation NVIDIA NVLink.
+    url: https://cloud.google.com/blog/products/compute/new-a4x-vms-powered-by-nvidia-gb200-gpus
+    publisher: Google Cloud
+    type: company
+    date: '2025-02-20'
+- id: googl-openai-gpus
+  supplier: GOOGL
+  buyer: OpenAI
+  relationship: supplies
+  what: Google Cloud capacity with NVIDIA GB200 and GB300 systems for OpenAI inference
+  evidence:
+  - quote: OpenAI is running large‑scale inference on NVIDIA GB300 (A4X Max VMs) and GB200 NVL72 systems
+    url: https://blogs.nvidia.com/blog/google-cloud-agentic-physical-ai-factories/
+    publisher: NVIDIA
+    type: company
+- id: nvda-orcl-zettascale10
+  supplier: NVDA
+  buyer: ORCL
+  relationship: supplies
+  what: NVIDIA GPUs for OCI Zettascale10, the cluster design behind the Stargate site in Abilene, Texas
+  evidence:
+  - quote: OCI Zettascale10 connects hundreds of thousands of NVIDIA GPUs across multiple data centers to form multi-gigawatt
+      clusters that deliver up to an unprecedented 16 zettaFLOPS of peak performance.
+    url: https://www.oracle.com/news/announcement/ai-world-oracle-unveils-next-generation-oci-zettascale10-cluster-for-ai-2025-10-14/
+    publisher: Oracle
+    type: company
+    date: '2025-10-14'
+- id: amd-meta-mi300x
+  supplier: AMD
+  buyer: META
+  relationship: supplies
+  what: AMD EPYC CPUs and Instinct accelerators; MI300X served all live traffic on Meta's Llama 405B
+  evidence:
+  - quote: Meta detailed how AMD EPYC CPUs and AMD Instinct accelerators power its compute infrastructure across
+      AI deployments and services, with MI300X serving all live traffic on Llama 405B.
+    url: https://ir.amd.com/news-events/press-releases/detail/1218/amd-unveils-leadership-ai-solutions-at-advancing-ai-2024
+    publisher: AMD
+    type: company
+    date: '2024-10-10'
+- id: amd-msft-mi300x
+  supplier: AMD
+  buyer: MSFT
+  relationship: supplies
+  what: AMD Instinct MI300X GPUs running AI models in production on Azure
+  evidence:
+  - quote: Microsoft announced AMD Instinct MI300X is now powering both proprietary and open-source models in production
+      on Azure.
+    url: https://newsroom.amd.com/news/amd-unveils-vision-for-an-open-ai-ecosystem-detai.html
+    publisher: AMD
+    type: company
+    date: '2025-06-12'
+
+# --- Custom chips and who manufactures them --------------------------------
+- id: tsm-msft-maia
+  supplier: TSM
+  buyer: MSFT
+  relationship: manufactures_for
+  what: Microsoft's Maia 100 AI accelerator, made on a 5nm process with TSMC packaging
+  evidence:
+  - quote: Maia 100 is one of the largest processors made on 5nm node using advanced packaging technology from TSMC.
+    url: https://azure.microsoft.com/en-us/blog/azure-maia-for-the-era-of-ai-from-silicon-to-software-to-systems/
+    publisher: Microsoft Azure
+    type: company
+- id: tsm-meta-mtia
+  supplier: TSM
+  buyer: META
+  relationship: manufactures_for
+  what: Meta's first in-house AI chip (MTIA v1), made on TSMC's 7nm process
+  evidence:
+  - quote: The accelerator is fabricated in TSMC 7nm process and runs at 800 MHz, providing 102.4 TOPS at INT8 precision
+      and 51.2 TFLOPS at FP16 precision.
+    url: https://ai.meta.com/blog/meta-training-inference-accelerator-AI-MTIA/
+    publisher: Meta AI
+    type: company
+    date: '2023-05-18'
+- id: mrvl-amzn
+  supplier: MRVL
+  buyer: AMZN
+  relationship: supplies
+  what: Data center chips including custom AI products, under a five-year agreement
+  evidence:
+  - quote: announced today the expansion of their strategic relationship with Amazon Web Services (AWS) through
+      a five-year, multi-generational agreement that includes collaboration across multiple AWS products and the
+      use of AWS cloud infrastructure
+    url: https://www.marvell.com/company/newsroom/marvell-expands-strategic-collaboration-aws-enable-accelerated-infrastructure-ai-cloud.html
+    publisher: Marvell
+    type: company
+    date: '2024-12-02'
+  - quote: This agreement covers a broad range of data center semiconductors from Marvell, including the supply
+      of custom AI products, optical digital signal processors (DSPs), active electrical cable (AEC) DSPs, PCIe
+      retimers
+    url: https://www.marvell.com/company/newsroom/marvell-expands-strategic-collaboration-aws-enable-accelerated-infrastructure-ai-cloud.html
+    publisher: Marvell
+    type: company
+    date: '2024-12-02'
+- id: intc-msft-18a
+  supplier: INTC
+  buyer: MSFT
+  relationship: manufactures_for
+  what: A Microsoft-designed chip Microsoft plans to have made on Intel 18A
+  evidence:
+  - quote: Microsoft Design on Intel 18A Headlines Customer Momentum
+    url: https://www.businesswire.com/news/home/20240221189319/en
+    publisher: Intel (via Business Wire)
+    type: company
+    date: '2024-02-21'
+  - quote: Microsoft CEO Satya Nadella shares that Microsoft has chosen a chip design it plans to produce on the
+      Intel 18A process.
+    url: https://newsroom.intel.com/intel-foundry/foundry-news-roadmaps-updates
+    publisher: Intel
+    type: company
+    date: '2024-02-21'
+- id: intc-amzn-18a
+  supplier: INTC
+  buyer: AMZN
+  relationship: manufactures_for
+  what: A custom AI fabric chip on Intel 18A and a custom Xeon 6 chip on Intel 3 for AWS
+  evidence:
+  - quote: As part of the expanded collaboration, Intel will produce an AI fabric chip for AWS on Intel 18A, the
+      company’s most advanced process node.
+    url: https://www.intel.com/content/www/us/en/newsroom/news/intel-strategic-collaboration.html
+    publisher: Intel
+    type: company
+    date: '2024-09-16'
+  - quote: Intel will also produce a custom Xeon 6 chip on Intel 3, building on the existing partnership under which
+      Intel produces Xeon Scalable processors for AWS.
+    url: https://www.intel.com/content/www/us/en/newsroom/news/intel-strategic-collaboration.html
+    publisher: Intel
+    type: company
+    date: '2024-09-16'
+- id: nvda-intc-invest
+  supplier: NVDA
+  buyer: INTC
+  relationship: invests_in
+  what: $5 billion of Intel common stock
+  amount: $5 billion
+  evidence:
+  - quote: Nvidia said it will spend $5 billion to buy Intel common stock at $23.28 a share.
+    url: https://abc30.com/amp/post/nvidia-invest-5-billion-intel-companies-will-work-together-ai-infrastructure-pcs/17841300/
+    publisher: Associated Press (via ABC30)
+    type: press
+    date: '2025-09-18'
+  - quote: including gains from our previously announced investment in Intel's common stock
+    url: https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm
+    publisher: NVIDIA 10-K
+    type: sec_filing
+    date: '2026-02-25'
+- id: intc-nvda-cpus
+  supplier: INTC
+  buyer: NVDA
+  relationship: supplies
+  what: Custom x86 data center CPUs for NVIDIA AI platforms (announced September 2025)
+  evidence:
+  - quote: For data centers, Intel will make custom chips that Nvidia will use in its AI infrastructure platforms.
+    url: https://abc30.com/amp/post/nvidia-invest-5-billion-intel-companies-will-work-together-ai-infrastructure-pcs/17841300/
+    publisher: Associated Press (via ABC30)
+    type: press
+    date: '2025-09-18'
+
+# --- Investments and partnerships found in SEC filings ---------------------
+- id: nvda-cohr-invest
+  supplier: NVDA
+  buyer: COHR
+  relationship: invests_in
+  what: $2 billion of Coherent stock, alongside a multi-year optics supply agreement
+  amount: $2 billion
+  evidence:
+  - quote: Separately, on March 2, 2026, NVIDIA made a $2 billion investment in the Company, through the purchase
+      of shares of the Company's Common Stock in a private placement.
+    url: https://www.sec.gov/Archives/edgar/data/820318/000082031826000020/iivi-20260630.htm
+    publisher: Coherent 10-K
+    type: sec_filing
+    date: '2026-08-14'
+- id: cohr-nvda-supply
+  supplier: COHR
+  buyer: NVDA
+  relationship: supplies
+  what: Lasers and optical networking products under a multi-year agreement with a multi-billion-dollar purchase
+    commitment
+  evidence:
+  - quote: The non-exclusive agreement includes a multi-billion-dollar purchase commitment with NVIDIA, as well
+      as future access and capacity rights for advanced laser and optical networking products.
+    url: https://www.sec.gov/Archives/edgar/data/820318/000082031826000020/iivi-20260630.htm
+    publisher: Coherent 10-K
+    type: sec_filing
+    date: '2026-08-14'
+- id: nvda-lite-invest
+  supplier: NVDA
+  buyer: LITE
+  relationship: invests_in
+  what: Convertible preferred stock in Lumentum, bought in March 2026
+  evidence:
+  - quote: On March 2, 2026, we completed the issuance and sale of approximately 2.9 million shares of our Series
+      A Convertible Preferred Stock, par value $0.001 per share (the "Preferred Stock") to NVIDIA Corporation ("NVIDIA"),
+      in a private placement pursuant to a Securities Purchase Agreement.
+    url: https://www.sec.gov/Archives/edgar/data/1633978/000162828026057358/lite-20260627.htm
+    publisher: Lumentum 10-K
+    type: sec_filing
+    date: '2026-08-17'
+- id: nvda-crwv-invest
+  supplier: NVDA
+  buyer: CRWV
+  relationship: invests_in
+  what: $2 billion of CoreWeave Class A stock, in January 2026
+  amount: $2 billion
+  evidence:
+  - quote: In January 2026, NVIDIA Corporation invested $2 billion in the Company's Class A common stock at a purchase
+      price of $87.20 per share.
+    url: https://www.sec.gov/Archives/edgar/data/1769628/000176962826000104/crwv-20251231.htm
+    publisher: CoreWeave 10-K
+    type: sec_filing
+    date: '2026-03-02'
+- id: crdo-orcl-zeroflap
+  supplier: CRDO
+  buyer: ORCL
+  relationship: partners_with
+  what: Co-developed ZeroFlap Optics for AI data centers
+  evidence:
+  - quote: We partnered with Oracle to develop our ZeroFlap Optics that helps address the reliability issues known
+      as Link Flap which plague commodity options in AI data centers enabling faster AI cluster turn on and time
+      to first revenue.
+    url: https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm
+    publisher: Credo 10-K
+    type: sec_filing
+    date: '2026-06-15'
+- id: crdo-amzn-warrant
+  supplier: CRDO
+  buyer: AMZN
+  relationship: supplies
+  what: Credo's products; Amazon earns Credo shares as it pays Credo, through a 'customer warrant'
+  evidence:
+  - quote: During fiscal year 2022, the Company issued a warrant to Amazon.com NV Investment Holdings LLC (Holder)
+      to purchase an aggregate of up to 4.1 million of our ordinary shares at an exercise price of $10.74 per share
+      (the Customer Warrant).
+    url: https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm
+    publisher: Credo 10-K
+    type: sec_filing
+    date: '2026-06-15'
+  - quote: The shares issuable vest in tranches over the contract term based on the amount of global payments by
+      Holder and its affiliates to the Company, up to $201.0 million in aggregate payments.
+    url: https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm
+    publisher: Credo 10-K
+    type: sec_filing
+    date: '2026-06-15'
+- id: vrt-oklo
+  supplier: VRT
+  buyer: OKLO
+  relationship: partners_with
+  what: Exploring nuclear power for future data centers
+  evidence:
+  - quote: our collaboration with Oklo reflects exploration of alternative energy solutions that could support future
+      data center power requirements
+    url: https://www.sec.gov/Archives/edgar/data/1674101/000167410126000008/vrt-20251231.htm
+    publisher: Vertiv 10-K
+    type: sec_filing
+    date: '2026-02-13'
+- id: googl-intersect
+  supplier: GOOGL
+  buyer: Intersect
+  relationship: acquires
+  what: Agreed to buy Intersect, a data center and energy infrastructure developer, for $4.8 billion plus debt
+  amount: $4.8 billion
+  evidence:
+  - quote: In 2025, we entered into definitive agreements to acquire Wiz, a leading cloud security platform, for
+      $32.0 billion, and Intersect, a provider of data center and energy infrastructure solutions, for $4.8 billion
+      in cash plus the assumption of debt.
+    url: https://www.sec.gov/Archives/edgar/data/1652044/000165204426000018/goog-20251231.htm
+    publisher: Alphabet 10-K
+    type: sec_filing
+    date: '2026-02-05'
+
+# --- Memory, packaging, chipmaking tools and servers -----------------------
+- id: samsung-openai-loi
+  supplier: Samsung Electronics
+  buyer: OpenAI
+  relationship: supplies
+  what: Memory chips for Stargate data centers (a letter of intent, not a final contract)
+  evidence:
+  - quote: Samsung Electronics (005930.KS) and SK Hynix (000660.KS) have signed letters of intent to supply memory
+      chips for OpenAI's data centres, as South Korean chipmakers join forces with the ChatGPT maker to meet rising
+      demand from its Stargate project.
+    url: https://tribune.com.pk/story/2570028/openais-stargate-project-taps-samsung-sk-hynix-for-chip-supply?amp=1
+    publisher: Reuters (via The Express Tribune)
+    type: press
+    date: '2025-10-01'
+- id: skhynix-openai-loi
+  supplier: SK Hynix
+  buyer: OpenAI
+  relationship: supplies
+  what: Memory chips for Stargate data centers (a letter of intent, not a final contract)
+  evidence:
+  - quote: Samsung Electronics (005930.KS) and SK Hynix (000660.KS) have signed letters of intent to supply memory
+      chips for OpenAI's data centres, as South Korean chipmakers join forces with the ChatGPT maker to meet rising
+      demand from its Stargate project.
+    url: https://tribune.com.pk/story/2570028/openais-stargate-project-taps-samsung-sk-hynix-for-chip-supply?amp=1
+    publisher: Reuters (via The Express Tribune)
+    type: press
+    date: '2025-10-01'
+- id: mu-amd-hbm
+  supplier: MU
+  buyer: AMD
+  relationship: supplies
+  what: HBM3E high-bandwidth memory for AMD Instinct MI350 GPUs
+  evidence:
+  - quote: Micron HBM3E 36GB 12-high solution brings industry-leading memory technology to AMD Instinct™ MI350 Series
+      GPU platforms, providing outstanding bandwidth and lower power consumption.
+    url: https://www.nasdaq.com/press-release/micron-hbm-designed-leading-amd-ai-platform-2025-06-12
+    publisher: Micron (press release via Nasdaq)
+    type: company
+    date: '2025-06-12'
+- id: amkr-tsm-arizona
+  supplier: AMKR
+  buyer: TSM
+  relationship: supplies
+  what: Advanced packaging and test services in Arizona for chips from TSMC's Phoenix fabs
+  evidence:
+  - quote: 'Amkor Technology, Inc. (Nasdaq: AMKR) and TSMC (TWSE: 2330, NYSE: TSM) announced today that the two
+      companies have signed a memorandum of understanding to collaborate and bring advanced packaging and test capabilities
+      to Arizona, further expanding the region’s semiconductor ecosystem.'
+    url: https://www.businesswire.com/news/home/20241003738370/en
+    publisher: Amkor and TSMC (via Business Wire)
+    type: company
+    date: '2024-10-03'
+  - quote: Under the agreement, TSMC will contract turnkey advanced packaging and test services from Amkor in their
+      planned facility in Peoria, Arizona.
+    url: https://www.businesswire.com/news/home/20241003738370/en
+    publisher: Amkor and TSMC (via Business Wire)
+    type: company
+    date: '2024-10-03'
+- id: asml-intc-highna
+  supplier: ASML
+  buyer: INTC
+  relationship: supplies
+  what: The first High NA EUV lithography system
+  evidence:
+  - quote: Intel Foundry has received and assembled the industry’s first High Numerical Aperture (High NA) Extreme
+      Ultraviolet (EUV) lithography system.
+    url: https://www.intel.com/content/www/us/en/newsroom/resources/intel-high-na-euv.html
+    publisher: Intel
+    type: company
+  - quote: High NA EUV is the next-generation lithography system developed by ASML following decades of collaboration
+      with Intel.
+    url: https://www.intel.com/content/www/us/en/newsroom/resources/intel-high-na-euv.html
+    publisher: Intel
+    type: company
+- id: dell-crwv-gb300
+  supplier: DELL
+  buyer: CRWV
+  relationship: supplies
+  what: The first NVIDIA GB300 NVL72 racks, built by Dell
+  evidence:
+  - quote: Today we reached another milestone in advancing enterprise AI by becoming the first to ship NVIDIA GB300
+      NVL72.
+    url: https://www.dell.com/en-us/blog/dell-delivers-market-s-first-nvidia-gb300-nvl72-to-coreweave/
+    publisher: Dell Technologies
+    type: company
+    date: '2025-07-03'
+  - quote: CoreWeave’s adoption of Dell Integrated Racks with NVIDIA GB300 NVL72 pushes the boundaries of scalability
+      for cloud services.
+    url: https://www.dell.com/en-us/blog/dell-delivers-market-s-first-nvidia-gb300-nvl72-to-coreweave/
+    publisher: Dell Technologies
+    type: company
+    date: '2025-07-03'
+
+# --- New power for data centers --------------------------------------------
+- id: bep-msft-framework
+  supplier: BEP
+  buyer: MSFT
+  relationship: supplies
+  what: New renewable power capacity under a five-year framework agreement, over 10.5 GW planned
+  evidence:
+  - quote: The five-year agreement outlines plans for the development of over 10.5 gigawatts of new renewable energy
+      capacity
+    url: https://bep.brookfield.com/press-releases/bep/brookfield-and-microsoft-collaborating-deliver-over-105-gw-new-renewable-power
+    publisher: Brookfield Renewable
+    type: company
+    date: '2024-05-01'
+- id: be-orcl-fuelcells
+  supplier: BE
+  buyer: ORCL
+  relationship: supplies
+  what: Fuel cells for on-site power at some Oracle Cloud data centers in the U.S.
+  evidence:
+  - quote: 'Bloom Energy (NYSE: BE), a global leader in power solutions, today announced that it will deploy its
+      fuel cell technology at select Oracle Cloud Infrastructure (OCI) data centers in the U.S.'
+    url: https://www.businesswire.com/news/home/20250723479385/en/Oracle-and-Bloom-Energy-Collaborate-to-Deliver-Power-to-Data-Centers-at-the-Speed-of-AI
+    publisher: Bloom Energy (via Business Wire)
+    type: company
+    date: '2025-07-24'
+- id: etr-meta-hyperion
+  supplier: ETR
+  buyer: META
+  relationship: supplies
+  what: Power from three new natural gas plants for Meta's Hyperion data center in Louisiana
+  evidence:
+  - quote: Louisiana regulators approved Entergy Corp.’s plan to build three natural gas plants to power Meta Platform
+      Inc.’s biggest data center.
+    url: https://amp.insurancejournal.com/news/southcentral/2025/08/21/836573.htm
+    publisher: Bloomberg (via Insurance Journal)
+    type: press
+    date: '2025-08-21'
+  - quote: Meta Chief Executive Officer Mark Zuckerberg has said the facility, dubbed Hyperion, will near the size
+      of Manhattan.
+    url: https://amp.insurancejournal.com/news/southcentral/2025/08/21/836573.htm
+    publisher: Bloomberg (via Insurance Journal)
+    type: press
+    date: '2025-08-21'
+- id: amzn-xenergy
+  supplier: AMZN
+  buyer: X-energy
+  relationship: invests_in
+  what: An investment in X-energy; the two aim to bring more than 5 GW of small nuclear reactors online by 2039
+  evidence:
+  - quote: Amazon Invests in X-energy to Support Advanced Small Modular Nuclear Reactors and Expand Carbon-Free
+      Power
+    url: https://www.businesswire.com/news/home/20241016547140/en
+    publisher: X-energy (via Business Wire)
+    type: company
+    date: '2024-10-16'
+  - quote: Amazon and X-energy are also collaborating to bring more than 5 gigawatts of new power projects online
+      across the United States by 2039, representing the largest commercial deployment target of SMRs to date.
+    url: https://www.businesswire.com/news/home/20241016547140/en
+    publisher: X-energy (via Business Wire)
+    type: company
+    date: '2024-10-16'
+- id: cfs-googl-offtake
+  supplier: CFS
+  buyer: GOOGL
+  relationship: supplies
+  what: 200 MW from a fusion power plant that Commonwealth Fusion Systems plans to build in Virginia (not yet built)
+  evidence:
+  - quote: we will offtake 200 megawatts (MW) of carbon free energy from their first commercial plant, to be developed
+      in Chesterfield, Virginia.
+    url: https://blog.google/outreach-initiatives/sustainability/our-latest-bet-on-a-fusion-powered-future/
+    publisher: Google
+    type: company
+    date: '2025-06-30'
+- id: googl-cfs-invest
+  supplier: GOOGL
+  buyer: CFS
+  relationship: invests_in
+  what: A second capital investment in Commonwealth Fusion Systems
+  evidence:
+  - quote: We're also making our second capital investment in CFS to help them build on promising scientific and
+      engineering breakthroughs and continue moving their technology toward commercialization.
+    url: https://blog.google/outreach-initiatives/sustainability/our-latest-bet-on-a-fusion-powered-future/
+    publisher: Google
+    type: company
+    date: '2025-06-30'
+- id: vst-meta-nuclear
+  supplier: VST
+  buyer: META
+  relationship: supplies
+  what: More than 2,600 MW from three Vistra nuclear plants under 20-year agreements
+  evidence:
+  - quote: today announced it has entered into 20-year PPAs to provide more than 2,600 megawatts of zero-carbon
+      energy from a combination of three different Vistra nuclear plants
+    url: https://investor.vistracorp.com/2026-01-09-Vistra-and-Meta-Announce-Agreements-to-Support-Nuclear-Plants-in-PJM-and-Add-New-Nuclear-Generation-to-the-Grid
+    publisher: Vistra
+    type: company
+    date: '2026-01-09'
+
+# --- Data center landlords, AI clouds and AI-lab funding -------------------
+- id: anthropic-fluidstack
+  supplier: Fluidstack
+  buyer: Anthropic
+  relationship: partners_with
+  what: Building Anthropic's own data centers in Texas and New York, part of a $50 billion plan
+  evidence:
+  - quote: Today, we are announcing a $50 billion investment in American computing infrastructure, building data
+      centers with Fluidstack in Texas and New York, with more sites to come.
+    url: https://www.anthropic.com/news/anthropic-invests-50-billion-in-american-ai-infrastructure
+    publisher: Anthropic
+    type: company
+    date: '2025-11-12'
+  - quote: We selected Fluidstack as our partner for its ability to move with exceptional agility, enabling rapid
+      delivery of gigawatts of power.
+    url: https://www.anthropic.com/news/anthropic-invests-50-billion-in-american-ai-infrastructure
+    publisher: Anthropic
+    type: company
+    date: '2025-11-12'
+- id: apld-crwv-lease
+  supplier: APLD
+  buyer: CRWV
+  relationship: leases_capacity_to
+  what: Data center space at the Polaris Forge 1 campus in North Dakota, under long-term leases
+  evidence:
+  - quote: 'Applied Digital (NASDAQ: APLD) announced today that it has finalized a new lease agreement with CoreWeave,
+      the AI Hyperscaler™, for an additional 150MW at its Polaris Forge 1 Campus in Ellendale, North Dakota.'
+    url: https://seekingalpha.com/pr/20215809-applied-digital-finalizes-additional-150mw-lease-with-coreweave-in-north-dakota
+    publisher: Applied Digital (press release)
+    type: company
+    date: '2025-08-29'
+  - quote: high-performance computing (HPC) initiatives of its hyperscale tenant at Polaris Forge 1, CoreWeave.
+    url: https://ir.applieddigital.com/news-events/press-releases/detail/133/applied-digital-achieves-ready-for-service-for-phase-1-at
+    publisher: Applied Digital
+    type: company
+    date: '2025-10-27'
+- id: cifr-amzn-lease
+  supplier: CIFR
+  buyer: AMZN
+  relationship: leases_capacity_to
+  what: Space and power for AI workloads under a 15-year lease worth about $5.5 billion
+  amount: about $5.5 billion
+  evidence:
+  - quote: Cipher today announced an approximately $5.5 billion, 15-year lease agreement with Amazon Web Services
+      to provide turnkey space and power for AI workloads.
+    url: https://seekingalpha.com/pr/20289377
+    publisher: Cipher Mining (press release)
+    type: company
+    date: '2025-11-03'
+- id: cifr-fluidstack
+  supplier: CIFR
+  buyer: Fluidstack
+  relationship: leases_capacity_to
+  what: AI hosting under a 10-year agreement that also involves Google
+  evidence:
+  - quote: Executed 10-Year AI Hosting Agreement with Fluidstack and Google
+    url: https://seekingalpha.com/pr/20289377
+    publisher: Cipher Mining (press release)
+    type: company
+    date: '2025-11-03'
+- id: wulf-fluidstack
+  supplier: WULF
+  buyer: Fluidstack
+  relationship: leases_capacity_to
+  what: Data center capacity at TeraWulf's Lake Mariner campus in New York
+  evidence:
+  - quote: today announced that Fluidstack, a premier AI cloud platform, has exercised its option to expand at the
+      Company’s Lake Mariner data center campus in Western New York.
+    url: https://www.barchart.com/story/news/34218778/terawulf-announces-fluidstack-expansion-with-160-mw-cb-5-lease-at-lake-mariner
+    publisher: TeraWulf (press release via Barchart)
+    type: company
+    date: '2025-08-18'
+- id: googl-wulf-backstop
+  supplier: GOOGL
+  buyer: WULF
+  relationship: finances
+  what: A backstop supporting the debt for TeraWulf's Fluidstack project, in exchange for warrants on TeraWulf shares
+  evidence:
+  - quote: In connection with the new CB-5 lease, Google will provide an incremental backstop of $1.4 billion in
+      support of project-related debt financing and will receive warrants to acquire 32.5 million shares of TeraWulf
+      common stock.
+    url: https://www.barchart.com/story/news/34218778/terawulf-announces-fluidstack-expansion-with-160-mw-cb-5-lease-at-lake-mariner
+    publisher: TeraWulf (press release via Barchart)
+    type: company
+    date: '2025-08-18'
+- id: glxy-crwv-helios
+  supplier: GLXY
+  buyer: CRWV
+  relationship: leases_capacity_to
+  what: Power and data center capacity at the Helios campus in West Texas, under a 15-year lease
+  evidence:
+  - quote: Galaxy today announced that it has completed delivery of the first phase of power at its Helios data
+      center campus (“Helios”) in West Texas, delivering approximately 200 megawatts (“MW”) of gross power — 133
+      MW of critical IT load — to CoreWeave under the Company’s 15-year lease agreement.
+    url: https://www.galaxy.com/newsroom/galaxy-completes-phase-i-of-its-helios-data-center-campus
+    publisher: Galaxy
+    type: company
+    date: '2026-07-06'
+- id: corz-crwv
+  supplier: CORZ
+  buyer: CRWV
+  relationship: leases_capacity_to
+  what: About 590 MW of data center capacity across six Core Scientific sites
+  evidence:
+  - quote: The agreement increases CoreWeave’s total contracted HPC infrastructure with Core Scientific to approximately
+      590 MW across six sites.
+    url: https://investors.corescientific.com/news-events/press-releases/detail/110/core-scientific-and-coreweave-expand-partnership-with-new-70-mw-contract
+    publisher: Core Scientific
+    type: company
+    date: '2025-02-26'
+- id: nscale-msft
+  supplier: Nscale
+  buyer: MSFT
+  relationship: supplies
+  what: About 200,000 NVIDIA GB300 GPUs of AI infrastructure across Europe and the U.S.
+  evidence:
+  - quote: Nscale today announced it has signed an expanded deal with Microsoft to approximately 200,000 NVIDIA
+      GB300 GPUs of hyperscale NVIDIA AI infrastructure across Europe and the U.S.
+    url: https://www.nscale.com/press-releases/nscale-microsoft-2025
+    publisher: Nscale
+    type: company
+    date: '2025-10-15'
+- id: softbank-openai
+  supplier: SoftBank
+  buyer: OpenAI
+  relationship: invests_in
+  what: $7.5 billion in April 2025 and $22.5 billion more at a second closing, through Vision Fund 2
+  amount: $30 billion
+  evidence:
+  - quote: The Company completed the first closing in April 2025, investing $7.5 billion through SoftBank Vision
+      Fund 2 (“SVF2”), and has now completed an additional investment of $22.5 billion at the second closing, also
+      through SVF2.
+    url: https://group.softbank/en/news/press/20251231
+    publisher: SoftBank Group
+    type: company
+    date: '2025-12-31'

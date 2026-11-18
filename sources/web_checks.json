@@ -1,11 +1,27 @@
 [
   {
+    "key": "aa26eb231f99f9e6",
+    "url": "https://abc30.com/amp/post/nvidia-invest-5-billion-intel-companies-will-work-together-ai-infrastructure-pcs/17841300/",
+    "quote": "Nvidia said it will spend $5 billion to buy Intel common stock at $23.28 a share.",
+    "status": "found",
+    "method": "Fetched the page and matched the quote word for word",
+    "checked": "2026-11-19"
+  },
+  {
+    "key": "f81636dbb5dcad44",
+    "url": "https://abc30.com/amp/post/nvidia-invest-5-billion-intel-companies-will-work-together-ai-infrastructure-pcs/17841300/",
+    "quote": "For data centers, Intel will make custom chips that Nvidia will use in its AI infrastructure platforms.",
+    "status": "found",
+    "method": "Fetched the page and matched the quote word for word",
+    "checked": "2026-11-19"
+  },
+  {
     "key": "2639bdef230025b0",
     "url": "https://about.fb.com/news/2025/10/meta-blue-owl-capital-develop-hyperion-data-center/",
     "quote": "On October 21, 2025, Meta and funds managed by Blue Owl Capital entered into a joint venture agreement which will develop and own the Hyperion data center campus.",
     "status": "found",
     "method": "Fetched the page and matched the quote word for word",
-    "checked": "2026-11-17"
+    "checked": "2026-11-19"
   },
   {
     "key": "3f50d3f05029bce1",
@@ -13,7 +29,67 @@
     "quote": "The parties have committed to fund their respective pro rata share of the approximately $27 billion in total development costs for the buildings and long-lived power, cooling, and connectivity infrastructure at the campus.",
     "status": "found",
     "method": "Fetched the page and matched the quote word for word",
-    "checked": "2026-11-17"
+    "checked": "2026-11-19"
+  },
+  {
+    "key": "87e70de49bbd076e",
+    "url": "https://ai.meta.com/blog/meta-training-inference-accelerator-AI-MTIA/",
+    "quote": "The accelerator is fabricated in TSMC 7nm process and runs at 800 MHz, providing 102.4 TOPS at INT8 precision and 51.2 TFLOPS at FP16 precision.",
+    "status": "found",
+    "method": "Fetched the page and matched the quote word for word",
+    "checked": "2026-11-19"
+  },
+  {
+    "key": "731711b74e0a7634",
+    "url": "https://amp.insurancejournal.com/news/southcentral/2025/08/21/836573.htm",
+    "quote": "Louisiana regulators approved Entergy Corp.’s plan to build three natural gas plants to power Meta Platform Inc.’s biggest data center.",
+    "status": "found",
+    "method": "Fetched the page and matched the quote word for word",
+    "checked": "2026-11-19"
+  },
+  {
+    "key": "8105fe17e0e2ec41",
+    "url": "https://amp.insurancejournal.com/news/southcentral/2025/08/21/836573.htm",
+    "quote": "Meta Chief Executive Officer Mark Zuckerberg has said the facility, dubbed Hyperion, will near the size of Manhattan.",
+    "status": "found",
+    "method": "Fetched the page and matched the quote word for word",
+    "checked": "2026-11-19"
+  },
+  {
+    "key": "b4600a32a8fff8cc",
+    "url": "https://aws.amazon.com/blogs/machine-learning/aws-ai-infrastructure-with-nvidia-blackwell-two-powerful-compute-solutions-for-the-next-frontier-of-ai",
+    "quote": "To accelerate innovation across emerging generative AI developments such as reasoning models and agentic AI systems, we’re excited to announce general availability of P6e-GB200 UltraServers, accelerated by NVIDIA Grace Blackwell Superchips.",
+    "status": "found",
+    "method": "Fetched the page and matched the quote word for word",
+    "checked": "2026-11-19"
+  },
+  {
+    "key": "d95c1bb4d1f460a7",
+    "url": "https://azure.microsoft.com/en-us/blog/azure-maia-for-the-era-of-ai-from-silicon-to-software-to-systems/",
+    "quote": "Maia 100 is one of the largest processors made on 5nm node using advanced packaging technology from TSMC.",
+    "status": "found",
+    "method": "Fetched the page and matched the quote word for word",
+    "checked": "2026-11-19"
+  },
+  {
+    "key": "3103c68cb1cac82c",
+    "url": "https://azure.microsoft.com/en-us/blog/microsoft-azure-delivers-the-first-large-scale-cluster-with-nvidia-gb300-nvl72-for-openai-workloads/",
+    "quote": "Microsoft delivers the first at-scale production cluster with more than 4,600 NVIDIA GB300 NVL72, featuring NVIDIA Blackwell Ultra GPUs connected through the next-generation NVIDIA InfiniBand network.",
+    "status": "found",
+    "method": "Fetched the page and matched the quote word for word",
+    "checked": "2026-11-19"
+  },
+  {
+    "key": "18f4d91c611e1969",
+    "url": "https://bep.brookfield.com/press-releases/bep/brookfield-and-microsoft-collaborating-deliver-over-105-gw-new-renewable-power",
+    "quote": "The five-year agreement outlines plans for the development of over 10.5 gigawatts of new renewable energy capacity",
+    "status": "found",
+    "method": "Found word for word in the page text returned by web search",
+    "checked": "2026-11-19",
+    "last_attempt": {
+      "status": "unreadable",
+      "date": "2026-11-19"
+    }
   },
   {
     "key": "e1f7a89785e9de0b",
@@ -21,7 +97,7 @@
     "quote": "Overall, this deal will enable up to 500 MW of new 24/7 carbon-free power to U.S. electricity grids and help more communities benefit from clean and affordable nuclear power.",
     "status": "found",
     "method": "Fetched the page and matched the quote word for word",
-    "checked": "2026-11-17"
+    "checked": "2026-11-19"
   },
   {
     "key": "f7d43eac17708cd9",
@@ -29,7 +105,23 @@
     "quote": "Today, we’re building on these efforts by signing the world’s first corporate agreement to purchase nuclear energy from multiple small modular reactors (SMRs) to be developed by Kairos Power.",
     "status": "found",
     "method": "Fetched the page and matched the quote word for word",
-    "checked": "2026-11-17"
+    "checked": "2026-11-19"
+  },
+  {
+    "key": "0a31287a09f72ad2",
+    "url": "https://blog.google/outreach-initiatives/sustainability/our-latest-bet-on-a-fusion-powered-future/",
+    "quote": "we will offtake 200 megawatts (MW) of carbon free energy from their first commercial plant, to be developed in Chesterfield, Virginia.",
+    "status": "found",
+    "method": "Fetched the page and matched the quote word for word",
+    "checked": "2026-11-19"
+  },
+  {
+    "key": "b933d93aafca21d5",
+    "url": "https://blog.google/outreach-initiatives/sustainability/our-latest-bet-on-a-fusion-powered-future/",
+    "quote": "We're also making our second capital investment in CFS to help them build on promising scientific and engineering breakthroughs and continue moving their technology toward commercialization.",
+    "status": "found",
+    "method": "Fetched the page and matched the quote word for word",
+    "checked": "2026-11-19"
   },
   {
     "key": "6e0489f341b72be8",
@@ -37,7 +129,7 @@
     "quote": "OpenAI has contracted to purchase an incremental $250B of Azure services, and Microsoft will no longer have a right of first refusal to be OpenAI’s compute provider.",
     "status": "found",
     "method": "Fetched the page and matched the quote word for word",
-    "checked": "2026-11-17"
+    "checked": "2026-11-19"
   },
   {
     "key": "6fcb7dcddf3fdff1",
@@ -45,7 +137,7 @@
     "quote": "Following the recapitalization, Microsoft holds an investment in OpenAI Group PBC valued at approximately $135 billion, representing roughly 27 percent on an as-converted diluted basis, inclusive of all owners – employees, investors, and the OpenAI Foundation.",
     "status": "found",
     "method": "Fetched the page and matched the quote word for word",
-    "checked": "2026-11-17"
+    "checked": "2026-11-19"
   },
   {
     "key": "2391bda1b6786cda",
@@ -53,7 +145,7 @@
     "quote": "For the first time, NVIDIA and Anthropic are establishing a deep technology partnership to support Anthropic’s future growth.",
     "status": "found",
     "method": "Fetched the page and matched the quote word for word",
-    "checked": "2026-11-17"
+    "checked": "2026-11-19"
   },
   {
     "key": "bc76b2546f43f71f",
@@ -61,7 +153,79 @@
     "quote": "Anthropic has committed to purchase $30 billion of Azure compute capacity and to contract additional compute capacity up to one gigawatt.",
     "status": "found",
     "method": "Fetched the page and matched the quote word for word",
-    "checked": "2026-11-17"
+    "checked": "2026-11-19"
+  },
+  {
+    "key": "134d7f97e859410d",
+    "url": "https://blogs.nvidia.com/blog/google-cloud-agentic-physical-ai-factories/",
+    "quote": "OpenAI is running large‑scale inference on NVIDIA GB300 (A4X Max VMs) and GB200 NVL72 systems",
+    "status": "found",
+    "method": "Fetched the page and matched the quote word for word",
+    "checked": "2026-11-19"
+  },
+  {
+    "key": "f7a69be3a122a032",
+    "url": "https://cloud.google.com/blog/products/compute/new-a4x-vms-powered-by-nvidia-gb200-gpus",
+    "quote": "Today, we're excited to announce the preview of A4X VMs, powered by NVIDIA GB200 NVL72, a system consisting of 72 NVIDIA Blackwell GPUs and 36 Arm-based NVIDIA Grace CPUs connected via fifth-generation NVIDIA NVLink.",
+    "status": "found",
+    "method": "Fetched the page and matched the quote word for word",
+    "checked": "2026-11-19"
+  },
+  {
+    "key": "d317a58fd7df7fba",
+    "url": "https://engineering.fb.com/2024/03/12/data-center-engineering/building-metas-genai-infrastructure/",
+    "quote": "While we’ve had a long history of building AI infrastructure, we first shared details on our AI Research SuperCluster (RSC), featuring 16,000 NVIDIA A100 GPUs, in 2022.",
+    "status": "found",
+    "method": "Fetched the page and matched the quote word for word",
+    "checked": "2026-11-19"
+  },
+  {
+    "key": "d52bbb50c8a31537",
+    "url": "https://engineering.fb.com/2024/03/12/data-center-engineering/building-metas-genai-infrastructure/",
+    "quote": "Today, we’re sharing details on two versions of our 24,576-GPU data center scale cluster at Meta.",
+    "status": "found",
+    "method": "Fetched the page and matched the quote word for word",
+    "checked": "2026-11-19"
+  },
+  {
+    "key": "e44c202399ebae7e",
+    "url": "https://group.softbank/en/news/press/20251231",
+    "quote": "The Company completed the first closing in April 2025, investing $7.5 billion through SoftBank Vision Fund 2 (“SVF2”), and has now completed an additional investment of $22.5 billion at the second closing, also through SVF2.",
+    "status": "found",
+    "method": "Fetched the page and matched the quote word for word",
+    "checked": "2026-11-19"
+  },
+  {
+    "key": "b85376cc22321585",
+    "url": "https://investor.vistracorp.com/2026-01-09-Vistra-and-Meta-Announce-Agreements-to-Support-Nuclear-Plants-in-PJM-and-Add-New-Nuclear-Generation-to-the-Grid",
+    "quote": "today announced it has entered into 20-year PPAs to provide more than 2,600 megawatts of zero-carbon energy from a combination of three different Vistra nuclear plants",
+    "status": "found",
+    "method": "Fetched the page and matched the quote word for word",
+    "checked": "2026-11-19"
+  },
+  {
+    "key": "4497eb07cba448fa",
+    "url": "https://investors.corescientific.com/news-events/press-releases/detail/110/core-scientific-and-coreweave-expand-partnership-with-new-70-mw-contract",
+    "quote": "The agreement increases CoreWeave’s total contracted HPC infrastructure with Core Scientific to approximately 590 MW across six sites.",
+    "status": "found",
+    "method": "Fetched the page and matched the quote word for word",
+    "checked": "2026-11-19"
+  },
+  {
+    "key": "dcb0d0119cdcb78f",
+    "url": "https://ir.amd.com/news-events/press-releases/detail/1218/amd-unveils-leadership-ai-solutions-at-advancing-ai-2024",
+    "quote": "Meta detailed how AMD EPYC CPUs and AMD Instinct accelerators power its compute infrastructure across AI deployments and services, with MI300X serving all live traffic on Llama 405B.",
+    "status": "found",
+    "method": "Fetched the page and matched the quote word for word",
+    "checked": "2026-11-19"
+  },
+  {
+    "key": "a8295bef074633e0",
+    "url": "https://ir.applieddigital.com/news-events/press-releases/detail/133/applied-digital-achieves-ready-for-service-for-phase-1-at",
+    "quote": "high-performance computing (HPC) initiatives of its hyperscale tenant at Polaris Forge 1, CoreWeave.",
+    "status": "found",
+    "method": "Fetched the page and matched the quote word for word",
+    "checked": "2026-11-19"
   },
   {
     "key": "7f27f97d81bbd81b",
@@ -69,7 +233,7 @@
     "quote": "Under the agreement, IREN will provide Microsoft with access to NVIDIA GB300 GPUs over a five-year term, with a total contract value of approximately $9.7 billion, including a 20% prepayment.",
     "status": "found",
     "method": "Fetched the page and matched the quote word for word",
-    "checked": "2026-11-17"
+    "checked": "2026-11-19"
   },
   {
     "key": "a4791323c74f0c7c",
@@ -77,7 +241,7 @@
     "quote": "IREN is a leading AI Cloud Service Provider, delivering large-scale GPU clusters for AI training and inference.",
     "status": "found",
     "method": "Fetched the page and matched the quote word for word",
-    "checked": "2026-11-17"
+    "checked": "2026-11-19"
   },
   {
     "key": "a4af02178ce87dc0",
@@ -85,7 +249,7 @@
     "quote": "IREN has also entered into an agreement with Dell Technologies to purchase the GPUs and ancillary equipment for approximately $5.8 billion.",
     "status": "found",
     "method": "Fetched the page and matched the quote word for word",
-    "checked": "2026-11-17"
+    "checked": "2026-11-19"
   },
   {
     "key": "72feacfab60c9a40",
@@ -93,7 +257,7 @@
     "quote": "Lambda, the Superintelligence Cloud, today announced a multibillion-dollar agreement with Microsoft to deploy AI infrastructure powered by tens of thousands of NVIDIA GPUs, including NVIDIA GB300 NVL72 systems.",
     "status": "found",
     "method": "Fetched the page and matched the quote word for word",
-    "checked": "2026-11-17"
+    "checked": "2026-11-19"
   },
   {
     "key": "8a35d850ac1a32b6",
@@ -101,7 +265,7 @@
     "quote": "Nebius is a technology company building full-stack infrastructure to service the high-growth global AI industry.",
     "status": "found",
     "method": "Fetched the page and matched the quote word for word",
-    "checked": "2026-11-17"
+    "checked": "2026-11-19"
   },
   {
     "key": "b5241b2d68fb7f1c",
@@ -109,7 +273,23 @@
     "quote": "Under this multi-year agreement, Nebius will deliver dedicated capacity to Microsoft from its new data center",
     "status": "found",
     "method": "Fetched the page and matched the quote word for word",
-    "checked": "2026-11-17"
+    "checked": "2026-11-19"
+  },
+  {
+    "key": "37679db60c0219b6",
+    "url": "https://newsroom.amd.com/news/amd-unveils-vision-for-an-open-ai-ecosystem-detai.html",
+    "quote": "Microsoft announced AMD Instinct MI300X is now powering both proprietary and open-source models in production on Azure.",
+    "status": "found",
+    "method": "Fetched the page and matched the quote word for word",
+    "checked": "2026-11-19"
+  },
+  {
+    "key": "a9d0677eeb475432",
+    "url": "https://newsroom.intel.com/intel-foundry/foundry-news-roadmaps-updates",
+    "quote": "Microsoft CEO Satya Nadella shares that Microsoft has chosen a chip design it plans to produce on the Intel 18A process.",
+    "status": "unreachable",
+    "method": "Fetched the page and matched the quote word for word",
+    "checked": "2026-11-19"
   },
   {
     "key": "79aa731cfe02d6d3",
@@ -117,7 +297,7 @@
     "quote": "OpenAI and NVIDIA today announced a letter of intent for a landmark strategic partnership to deploy at least 10 gigawatts of NVIDIA systems for OpenAI’s next-generation AI infrastructure",
     "status": "found",
     "method": "Fetched the page and matched the quote word for word",
-    "checked": "2026-11-17"
+    "checked": "2026-11-19"
   },
   {
     "key": "52c3bd5eb91aaf1f",
@@ -125,7 +305,7 @@
     "quote": "To support this deployment including datacenter and power capacity, NVIDIA intends to invest up to $100 billion in OpenAI as the new NVIDIA systems are deployed.",
     "status": "found",
     "method": "Fetched the page and matched the quote word for word",
-    "checked": "2026-11-17"
+    "checked": "2026-11-19"
   },
   {
     "key": "f5b64dcecc389b2e",
@@ -133,7 +313,7 @@
     "quote": "Today, Amazon Web Services (AWS) and OpenAI announced a multi-year, strategic partnership that provides AWS’s world-class infrastructure to run and scale OpenAI’s core artificial intelligence (AI) workloads starting immediately.",
     "status": "found",
     "method": "Fetched the page and matched the quote word for word",
-    "checked": "2026-11-17"
+    "checked": "2026-11-19"
   },
   {
     "key": "836bfe024ec5312a",
@@ -141,7 +321,7 @@
     "quote": "OpenAI will design the accelerators and systems, which will be developed and deployed in partnership with Broadcom.",
     "status": "found",
     "method": "Fetched the page and matched the quote word for word",
-    "checked": "2026-11-17"
+    "checked": "2026-11-19"
   },
   {
     "key": "d13b42a1594298eb",
@@ -149,7 +329,7 @@
     "quote": "OpenAI and Broadcom today announced a collaboration for 10 gigawatts of custom AI accelerators.",
     "status": "found",
     "method": "Fetched the page and matched the quote word for word",
-    "checked": "2026-11-17"
+    "checked": "2026-11-19"
   },
   {
     "key": "0d9d9ef612eaad98",
@@ -157,15 +337,51 @@
     "quote": "Oracle and OpenAI have entered an agreement to develop 4.5 gigawatts of additional Stargate data center capacity in the U.S.",
     "status": "found",
     "method": "Fetched the page and matched the quote word for word",
-    "checked": "2026-11-17"
+    "checked": "2026-11-19"
   },
   {
-    "key": "a0ac3e47b18da85c",
-    "url": "https://www.aboutamazon.com/news/aws/aws-project-rainier-ai-trainium-chips-compute-cluster",
-    "quote": "Anthropic is actively using Project Rainier to build and deploy its industry-leading AI model, Claude.",
-    "status": "not_found",
+    "key": "5555d090d70d0383",
+    "url": "https://seekingalpha.com/pr/20215809-applied-digital-finalizes-additional-150mw-lease-with-coreweave-in-north-dakota",
+    "quote": "Applied Digital (NASDAQ: APLD) announced today that it has finalized a new lease agreement with CoreWeave, the AI Hyperscaler™, for an additional 150MW at its Polaris Forge 1 Campus in Ellendale, North Dakota.",
+    "status": "found",
+    "method": "Found word for word in the page text returned by web search",
+    "checked": "2026-11-19",
+    "last_attempt": {
+      "status": "unreachable",
+      "date": "2026-11-19"
+    }
+  },
+  {
+    "key": "e03a074b25cc53d6",
+    "url": "https://seekingalpha.com/pr/20289377",
+    "quote": "Cipher today announced an approximately $5.5 billion, 15-year lease agreement with Amazon Web Services to provide turnkey space and power for AI workloads.",
+    "status": "found",
+    "method": "Found word for word in the page text returned by web search",
+    "checked": "2026-11-19",
+    "last_attempt": {
+      "status": "unreachable",
+      "date": "2026-11-19"
+    }
+  },
+  {
+    "key": "ec2e2fe04a02e0a9",
+    "url": "https://seekingalpha.com/pr/20289377",
+    "quote": "Executed 10-Year AI Hosting Agreement with Fluidstack and Google",
+    "status": "found",
+    "method": "Found word for word in the page text returned by web search",
+    "checked": "2026-11-19",
+    "last_attempt": {
+      "status": "unreachable",
+      "date": "2026-11-19"
+    }
+  },
+  {
+    "key": "5f5161bbb0ffbf7f",
+    "url": "https://tribune.com.pk/story/2570028/openais-stargate-project-taps-samsung-sk-hynix-for-chip-supply?amp=1",
+    "quote": "Samsung Electronics (005930.KS) and SK Hynix (000660.KS) have signed letters of intent to supply memory chips for OpenAI's data centres, as South Korean chipmakers join forces with the ChatGPT maker to meet rising demand from its Stargate project.",
+    "status": "found",
     "method": "Fetched the page and matched the quote word for word",
-    "checked": "2026-11-17"
+    "checked": "2026-11-19"
   },
   {
     "key": "cf72f0c94dcd7cf7",
@@ -173,7 +389,23 @@
     "quote": "Anthropic is actively using Project Rainier to build and deploy its industry-leading AI model, Claude, now on more than 1 million Trainium2 chips.",
     "status": "found",
     "method": "Fetched the page and matched the quote word for word",
-    "checked": "2026-11-17"
+    "checked": "2026-11-19"
+  },
+  {
+    "key": "2aa2f80a1008137b",
+    "url": "https://www.anthropic.com/news/anthropic-invests-50-billion-in-american-ai-infrastructure",
+    "quote": "We selected Fluidstack as our partner for its ability to move with exceptional agility, enabling rapid delivery of gigawatts of power.",
+    "status": "found",
+    "method": "Fetched the page and matched the quote word for word",
+    "checked": "2026-11-19"
+  },
+  {
+    "key": "b28a00b64ee9abc3",
+    "url": "https://www.anthropic.com/news/anthropic-invests-50-billion-in-american-ai-infrastructure",
+    "quote": "Today, we are announcing a $50 billion investment in American computing infrastructure, building data centers with Fluidstack in Texas and New York, with more sites to come.",
+    "status": "found",
+    "method": "Fetched the page and matched the quote word for word",
+    "checked": "2026-11-19"
   },
   {
     "key": "ad51b5921dfbd4a0",
@@ -181,7 +413,31 @@
     "quote": "Today, we are announcing that we plan to expand our use of Google Cloud technologies, including up to one million TPUs, dramatically increasing our compute resources as we continue to push the boundaries of AI research and product development.",
     "status": "found",
     "method": "Fetched the page and matched the quote word for word",
-    "checked": "2026-11-17"
+    "checked": "2026-11-19"
+  },
+  {
+    "key": "79de7ed0e8817466",
+    "url": "https://www.barchart.com/story/news/34218778/terawulf-announces-fluidstack-expansion-with-160-mw-cb-5-lease-at-lake-mariner",
+    "quote": "In connection with the new CB-5 lease, Google will provide an incremental backstop of $1.4 billion in support of project-related debt financing and will receive warrants to acquire 32.5 million shares of TeraWulf common stock.",
+    "status": "found",
+    "method": "Found word for word in the page text returned by web search",
+    "checked": "2026-11-19",
+    "last_attempt": {
+      "status": "unreadable",
+      "date": "2026-11-19"
+    }
+  },
+  {
+    "key": "fb7df5b4c4bada7d",
+    "url": "https://www.barchart.com/story/news/34218778/terawulf-announces-fluidstack-expansion-with-160-mw-cb-5-lease-at-lake-mariner",
+    "quote": "today announced that Fluidstack, a premier AI cloud platform, has exercised its option to expand at the Company’s Lake Mariner data center campus in Western New York.",
+    "status": "found",
+    "method": "Found word for word in the page text returned by web search",
+    "checked": "2026-11-19",
+    "last_attempt": {
+      "status": "unreadable",
+      "date": "2026-11-19"
+    }
   },
   {
     "key": "a85f4aac4dfd4bc6",
@@ -189,7 +445,75 @@
     "quote": "OpenAI and Amazon have signed a US$38 billion deal that enables the ChatGPT maker to run its artificial intelligence systems on Amazon’s cloud computing services.",
     "status": "found",
     "method": "Fetched the page and matched the quote word for word",
-    "checked": "2026-11-17"
+    "checked": "2026-11-19"
+  },
+  {
+    "key": "508828952bfed1f9",
+    "url": "https://www.businesswire.com/news/home/20240221189319/en",
+    "quote": "Microsoft Design on Intel 18A Headlines Customer Momentum",
+    "status": "found",
+    "method": "Found word for word in the page text returned by web search",
+    "checked": "2026-11-19",
+    "last_attempt": {
+      "status": "unreachable",
+      "date": "2026-11-19"
+    }
+  },
+  {
+    "key": "300433d88486e395",
+    "url": "https://www.businesswire.com/news/home/20241003738370/en",
+    "quote": "Under the agreement, TSMC will contract turnkey advanced packaging and test services from Amkor in their planned facility in Peoria, Arizona.",
+    "status": "unreachable",
+    "method": "Fetched the page and matched the quote word for word",
+    "checked": "2026-11-19"
+  },
+  {
+    "key": "d6ae37ab6a18f82a",
+    "url": "https://www.businesswire.com/news/home/20241003738370/en",
+    "quote": "Amkor Technology, Inc. (Nasdaq: AMKR) and TSMC (TWSE: 2330, NYSE: TSM) announced today that the two companies have signed a memorandum of understanding to collaborate and bring advanced packaging and test capabilities to Arizona, further expanding the region’s semiconductor ecosystem.",
+    "status": "found",
+    "method": "Found word for word in the page text returned by web search",
+    "checked": "2026-11-19",
+    "last_attempt": {
+      "status": "unreachable",
+      "date": "2026-11-19"
+    }
+  },
+  {
+    "key": "5d19a9745fca944b",
+    "url": "https://www.businesswire.com/news/home/20241016547140/en",
+    "quote": "Amazon Invests in X-energy to Support Advanced Small Modular Nuclear Reactors and Expand Carbon-Free Power",
+    "status": "found",
+    "method": "Found word for word in the page text returned by web search",
+    "checked": "2026-11-19",
+    "last_attempt": {
+      "status": "unreachable",
+      "date": "2026-11-19"
+    }
+  },
+  {
+    "key": "9f9f48a7b9c3bf0c",
+    "url": "https://www.businesswire.com/news/home/20241016547140/en",
+    "quote": "Amazon and X-energy are also collaborating to bring more than 5 gigawatts of new power projects online across the United States by 2039, representing the largest commercial deployment target of SMRs to date.",
+    "status": "found",
+    "method": "Found word for word in the page text returned by web search",
+    "checked": "2026-11-19",
+    "last_attempt": {
+      "status": "unreachable",
+      "date": "2026-11-19"
+    }
+  },
+  {
+    "key": "9b4ac8ada39305d1",
+    "url": "https://www.businesswire.com/news/home/20250723479385/en/Oracle-and-Bloom-Energy-Collaborate-to-Deliver-Power-to-Data-Centers-at-the-Speed-of-AI",
+    "quote": "Bloom Energy (NYSE: BE), a global leader in power solutions, today announced that it will deploy its fuel cell technology at select Oracle Cloud Infrastructure (OCI) data centers in the U.S.",
+    "status": "found",
+    "method": "Found word for word in the page text returned by web search",
+    "checked": "2026-11-19",
+    "last_attempt": {
+      "status": "unreachable",
+      "date": "2026-11-19"
+    }
   },
   {
     "key": "4420031c0b1e8e1e",
@@ -197,7 +521,7 @@
     "quote": "Constellation signs its largest-ever power purchase agreement with Microsoft, a deal that will restore TMI Unit 1 to service and keep it online for decades",
     "status": "found",
     "method": "Fetched the page and matched the quote word for word",
-    "checked": "2026-11-17"
+    "checked": "2026-11-19"
   },
   {
     "key": "6d058100f9630b98",
@@ -205,7 +529,7 @@
     "quote": "Constellation Energy Corporation (Nasdaq: CEG), a Fortune 200 company headquartered in Baltimore, is the largest private-sector power producer in the world and the nation's largest producer of clean and reliable energy.",
     "status": "found",
     "method": "Fetched the page and matched the quote word for word",
-    "checked": "2026-11-17"
+    "checked": "2026-11-19"
   },
   {
     "key": "7f49f5c70960e576",
@@ -213,7 +537,23 @@
     "quote": "Meta is purchasing the plant’s clean energy attributes as part of its commitment to match 100% of its electricity use with clean and renewable energy.",
     "status": "found",
     "method": "Fetched the page and matched the quote word for word",
-    "checked": "2026-11-17"
+    "checked": "2026-11-19"
+  },
+  {
+    "key": "92d42f037a61cc10",
+    "url": "https://www.dell.com/en-us/blog/dell-delivers-market-s-first-nvidia-gb300-nvl72-to-coreweave/",
+    "quote": "CoreWeave’s adoption of Dell Integrated Racks with NVIDIA GB300 NVL72 pushes the boundaries of scalability for cloud services.",
+    "status": "found",
+    "method": "Fetched the page and matched the quote word for word",
+    "checked": "2026-11-19"
+  },
+  {
+    "key": "983bb7baa6f114a9",
+    "url": "https://www.dell.com/en-us/blog/dell-delivers-market-s-first-nvidia-gb300-nvl72-to-coreweave/",
+    "quote": "Today we reached another milestone in advancing enterprise AI by becoming the first to ship NVIDIA GB300 NVL72.",
+    "status": "found",
+    "method": "Fetched the page and matched the quote word for word",
+    "checked": "2026-11-19"
   },
   {
     "key": "0d60507f60dfa621",
@@ -224,8 +564,56 @@
     "checked": "2026-11-17",
     "last_attempt": {
       "status": "unreachable",
-      "date": "2026-11-17"
+      "date": "2026-11-19"
     }
+  },
+  {
+    "key": "6461bf5467df215f",
+    "url": "https://www.galaxy.com/newsroom/galaxy-completes-phase-i-of-its-helios-data-center-campus",
+    "quote": "Galaxy today announced that it has completed delivery of the first phase of power at its Helios data center campus (“Helios”) in West Texas, delivering approximately 200 megawatts (“MW”) of gross power — 133 MW of critical IT load — to CoreWeave under the Company’s 15-year lease agreement.",
+    "status": "not_found",
+    "method": "Fetched the page and matched the quote word for word",
+    "checked": "2026-11-19"
+  },
+  {
+    "key": "3686866eacf3d665",
+    "url": "https://www.intel.com/content/www/us/en/newsroom/news/intel-strategic-collaboration.html",
+    "quote": "As part of the expanded collaboration, Intel will produce an AI fabric chip for AWS on Intel 18A, the company’s most advanced process node.",
+    "status": "found",
+    "method": "Found word for word in the page text returned by web search",
+    "checked": "2026-11-19",
+    "last_attempt": {
+      "status": "unreachable",
+      "date": "2026-11-19"
+    }
+  },
+  {
+    "key": "46c50b9572c6741e",
+    "url": "https://www.intel.com/content/www/us/en/newsroom/news/intel-strategic-collaboration.html",
+    "quote": "Intel will also produce a custom Xeon 6 chip on Intel 3, building on the existing partnership under which Intel produces Xeon Scalable processors for AWS.",
+    "status": "found",
+    "method": "Found word for word in the page text returned by web search",
+    "checked": "2026-11-19",
+    "last_attempt": {
+      "status": "unreachable",
+      "date": "2026-11-19"
+    }
+  },
+  {
+    "key": "12c3eeb2a8c333bd",
+    "url": "https://www.intel.com/content/www/us/en/newsroom/resources/intel-high-na-euv.html",
+    "quote": "Intel Foundry has received and assembled the industry’s first High Numerical Aperture (High NA) Extreme Ultraviolet (EUV) lithography system.",
+    "status": "unreachable",
+    "method": "Fetched the page and matched the quote word for word",
+    "checked": "2026-11-19"
+  },
+  {
+    "key": "7390eb67a18c7eb3",
+    "url": "https://www.intel.com/content/www/us/en/newsroom/resources/intel-high-na-euv.html",
+    "quote": "High NA EUV is the next-generation lithography system developed by ASML following decades of collaboration with Intel.",
+    "status": "unreachable",
+    "method": "Fetched the page and matched the quote word for word",
+    "checked": "2026-11-19"
   },
   {
     "key": "c21816e9030e41e1",
@@ -233,7 +621,7 @@
     "quote": "The power purchase agreement with Google enables the investment to restart the plant",
     "status": "found",
     "method": "Fetched the page and matched the quote word for word",
-    "checked": "2026-11-17"
+    "checked": "2026-11-19"
   },
   {
     "key": "da17aae4947e11d5",
@@ -241,7 +629,7 @@
     "quote": "Google's 25-year agreement to purchase carbon-free nuclear energy from the Duane Arnold plant",
     "status": "found",
     "method": "Fetched the page and matched the quote word for word",
-    "checked": "2026-11-17"
+    "checked": "2026-11-19"
   },
   {
     "key": "d0379c09263bb150",
@@ -249,7 +637,43 @@
     "quote": "Google has struck a six-year cloud computing deal with Meta Platforms worth more than $10 billion, a source familiar with the matter told Reuters on Thursday",
     "status": "found",
     "method": "Fetched the page and matched the quote word for word",
-    "checked": "2026-11-17"
+    "checked": "2026-11-19"
+  },
+  {
+    "key": "1d2041a909bbfdba",
+    "url": "https://www.marvell.com/company/newsroom/marvell-expands-strategic-collaboration-aws-enable-accelerated-infrastructure-ai-cloud.html",
+    "quote": "This agreement covers a broad range of data center semiconductors from Marvell, including the supply of custom AI products, optical digital signal processors (DSPs), active electrical cable (AEC) DSPs, PCIe retimers",
+    "status": "unreachable",
+    "method": "Fetched the page and matched the quote word for word",
+    "checked": "2026-11-19"
+  },
+  {
+    "key": "4c2ad8b140609355",
+    "url": "https://www.marvell.com/company/newsroom/marvell-expands-strategic-collaboration-aws-enable-accelerated-infrastructure-ai-cloud.html",
+    "quote": "announced today the expansion of their strategic relationship with Amazon Web Services (AWS) through a five-year, multi-generational agreement that includes collaboration across multiple AWS products and the use of AWS cloud infrastructure",
+    "status": "found",
+    "method": "Found word for word in the page text returned by web search",
+    "checked": "2026-11-19",
+    "last_attempt": {
+      "status": "unreachable",
+      "date": "2026-11-19"
+    }
+  },
+  {
+    "key": "b36be9f869681cb9",
+    "url": "https://www.nasdaq.com/press-release/micron-hbm-designed-leading-amd-ai-platform-2025-06-12",
+    "quote": "Micron HBM3E 36GB 12-high solution brings industry-leading memory technology to AMD Instinct™ MI350 Series GPU platforms, providing outstanding bandwidth and lower power consumption.",
+    "status": "found",
+    "method": "Fetched the page and matched the quote word for word",
+    "checked": "2026-11-19"
+  },
+  {
+    "key": "32f69722eda14f73",
+    "url": "https://www.nscale.com/press-releases/nscale-microsoft-2025",
+    "quote": "Nscale today announced it has signed an expanded deal with Microsoft to approximately 200,000 NVIDIA GB300 GPUs of hyperscale NVIDIA AI infrastructure across Europe and the U.S.",
+    "status": "found",
+    "method": "Fetched the page and matched the quote word for word",
+    "checked": "2026-11-19"
   },
   {
     "key": "4d9335c2d2e8c709",
@@ -257,7 +681,15 @@
     "quote": "Beginning in calendar Q3 2026, Oracle will be the first hyperscaler to offer a publicly available AI supercluster powered by 50,000 AMD Instinct MI450 Series GPUs",
     "status": "found",
     "method": "Fetched the page and matched the quote word for word",
-    "checked": "2026-11-17"
+    "checked": "2026-11-19"
+  },
+  {
+    "key": "9a1504c956e3a77b",
+    "url": "https://www.oracle.com/news/announcement/ai-world-oracle-unveils-next-generation-oci-zettascale10-cluster-for-ai-2025-10-14/",
+    "quote": "OCI Zettascale10 connects hundreds of thousands of NVIDIA GPUs across multiple data centers to form multi-gigawatt clusters that deliver up to an unprecedented 16 zettaFLOPS of peak performance.",
+    "status": "found",
+    "method": "Fetched the page and matched the quote word for word",
+    "checked": "2026-11-19"
   },
   {
     "key": "40d1e5c28f2ca5a8",
@@ -265,7 +697,7 @@
     "quote": "new agreement to deliver AI infrastructure to Meta valued at approximately $3 billion over 5 years.",
     "status": "found",
     "method": "Fetched the page and matched the quote word for word",
-    "checked": "2026-11-17"
+    "checked": "2026-11-19"
   },
   {
     "key": "f205517c79d2b9c0",
@@ -273,7 +705,7 @@
     "quote": "On September 9, 2025, CoreWeave, Inc. (the “Company”) and NVIDIA Corporation (“NVIDIA”) entered into a new order form (the “Order Form”) under the existing Master Services Agreement (“MSA”) dated as of April 10, 2023",
     "status": "found",
     "method": "Fetched the page and matched the quote word for word",
-    "checked": "2026-11-17"
+    "checked": "2026-11-19"
   },
   {
     "key": "28d3167cf4e6cef4",
@@ -281,7 +713,7 @@
     "quote": "announced today the signing of a 20-year power purchase agreement with Microsoft that will pave the way for the launch of the Crane Clean Energy Center (CCEC)",
     "status": "found",
     "method": "Fetched the page and matched the quote word for word",
-    "checked": "2026-11-17"
+    "checked": "2026-11-19"
   },
   {
     "key": "5da313b76bb62e4c",
@@ -289,7 +721,7 @@
     "quote": "The latest order, which requires Nvidia to purchase any unsold capacity through April 13, 2032, builds on an April 2023 agreement.",
     "status": "found",
     "method": "Fetched the page and matched the quote word for word",
-    "checked": "2026-11-17"
+    "checked": "2026-11-19"
   },
   {
     "key": "92d40649b6b7323f",
@@ -297,6 +729,6 @@
     "quote": "Talen Energy has entered into a 1,920-MW power purchase agreement with Amazon Web Services to supply data centers in Pennsylvania from the independent power producer’s majority-owned Susquehanna nuclear power plant, the company said Wednesday.",
     "status": "found",
     "method": "Fetched the page and matched the quote word for word",
-    "checked": "2026-11-17"
+    "checked": "2026-11-19"
   }
 ]

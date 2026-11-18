@@ -108,6 +108,9 @@ tours:
   - from: Kairos Power
     to: GOOGL
     text: Google also agreed to buy power from small modular reactors that Kairos Power is still developing, up to 500 MW.
+  - from: VST
+    to: META
+    text: Meta also signed 20-year agreements with Vistra for more than 2,600 MW from three existing nuclear plants.
   - from: VRT
     to: NVDA
     text: Inside the building, Vertiv says its partnership with NVIDIA covers power and thermal infrastructure for next-generation AI systems.
@@ -144,7 +147,7 @@ tours:
     text: NVIDIA signed a letter of intent to supply OpenAI with at least 10 gigawatts of systems, and said it intends to invest up to $100 billion in OpenAI as they are deployed.
   - from: NVDA
     to: CRWV
-    text: NVIDIA also supplies GPU systems to CoreWeave.
+    text: NVIDIA also supplies GPU systems to CoreWeave, and in January 2026 it invested $2 billion in CoreWeave stock.
   - from: CRWV
     to: NVDA
     text: And NVIDIA buys from CoreWeave. Under a September 2025 order, NVIDIA agreed to purchase any CoreWeave capacity left unsold, through April 2032.
@@ -177,6 +180,78 @@ tours:
   - from: AMKR
     to: AVGO
     text: After manufacturing, chips are packaged and tested. Broadcom names Amkor, ASE and Foxconn among the companies that do this for it.
+
+- id: new-power
+  title: Building new power plants
+  intro: Beyond buying from plants that already run, the cloud companies are paying for new ones, from gas turbines to fusion.
+  steps:
+  - from: ETR
+    to: META
+    text: Louisiana regulators approved Entergy's plan to build three natural gas plants to power Meta's Hyperion data center.
+  - from: BEP
+    to: MSFT
+    text: Brookfield and Microsoft agreed a five-year framework for over 10.5 GW of new renewable capacity.
+  - from: BE
+    to: ORCL
+    text: Bloom Energy is deploying fuel cells that make power on site at some Oracle Cloud data centers.
+  - from: AMZN
+    to: X-energy
+    text: Amazon invested in X-energy, and the two aim to bring more than 5 GW of small modular nuclear reactors online by 2039.
+  - from: CFS
+    to: GOOGL
+    text: Google agreed to buy 200 MW from Commonwealth Fusion Systems' first fusion power plant, which is still to be built in Virginia.
+
+- id: custom-chips
+  title: Chips the clouds design themselves
+  intro: Besides buying NVIDIA GPUs, the big clouds design chips of their own and pay other companies to make them.
+  steps:
+  - from: TSM
+    to: MSFT
+    text: Microsoft's first in-house AI accelerator, Maia 100, is made on a 5nm process with TSMC's advanced packaging.
+  - from: TSM
+    to: META
+    text: Meta's first in-house AI chip, MTIA v1, is made on TSMC's 7nm process.
+  - from: MRVL
+    to: AMZN
+    text: Marvell signed a five-year agreement with AWS that includes supplying custom AI products, along with optical and connectivity chips.
+  - from: INTC
+    to: AMZN
+    text: Intel will make a custom AI fabric chip for AWS on Intel 18A, its most advanced process, and a custom Xeon 6 chip on Intel 3.
+  - from: INTC
+    to: MSFT
+    text: Microsoft has also chosen a chip design that it plans to produce on Intel 18A.
+  - from: ASML
+    to: INTC
+    text: To make chips that small, Intel received the industry's first High NA EUV lithography system, developed by ASML.
+  - from: NVDA
+    to: INTC
+    text: NVIDIA is now an Intel shareholder too. It agreed to buy $5 billion of Intel stock, and Intel will make custom data center CPUs for NVIDIA.
+
+- id: landlords
+  title: Who owns the buildings
+  intro: Many AI clouds don't own their data centers. They lease the building and its power from developers.
+  steps:
+  - from: APLD
+    to: CRWV
+    text: Applied Digital leases capacity to CoreWeave at its Polaris Forge 1 campus in North Dakota, including another 150 MW finalized in August 2025.
+  - from: GLXY
+    to: CRWV
+    text: Galaxy delivered the first phase of its Helios campus in West Texas to CoreWeave, about 133 MW of critical IT load under a 15-year lease.
+  - from: CORZ
+    to: CRWV
+    text: Core Scientific hosts about 590 MW of CoreWeave's infrastructure across six sites.
+  - from: CIFR
+    to: AMZN
+    text: Hyperscalers lease this way too. Cipher signed a 15-year lease with Amazon Web Services worth about $5.5 billion.
+  - from: WULF
+    to: Fluidstack
+    text: TeraWulf leases capacity at its Lake Mariner campus in New York to Fluidstack, an AI cloud platform.
+  - from: GOOGL
+    to: WULF
+    text: Google stands behind part of that deal, with an added $1.4 billion backstop for the project's debt, in exchange for warrants on TeraWulf shares.
+  - from: Fluidstack
+    to: Anthropic
+    text: Fluidstack is also building Anthropic's own data centers in Texas and New York, part of a $50 billion plan.
 
 glossary:
 - term: Hyperscaler
@@ -215,3 +290,15 @@ glossary:
   definition: A report a US-listed company files with the SEC when something material happens, such as signing a major contract.
 - term: Letter of intent
   definition: A statement that two companies plan to make a deal. It is not yet a final, binding contract.
+- term: Letter of intent
+  definition: A signed statement that two companies plan to make a deal. It comes before, and is weaker than, a final contract.
+- term: Lease
+  definition: Here, an agreement to rent space and power in a data center building for years at a time, often 10 to 15.
+- term: Backstop
+  definition: A promise to cover someone else's payments if they can't, which makes lenders more willing to fund a project.
+- term: Small modular reactor (SMR)
+  definition: A nuclear reactor smaller than a traditional plant, designed to be built in a factory and installed in units.
+- term: Fusion
+  definition: Making energy by fusing light atoms together, as the sun does. No fusion plant sells power to the grid yet.
+- term: EUV lithography
+  definition: Printing the smallest chip features with extreme ultraviolet light. ASML is the only maker of these machines.

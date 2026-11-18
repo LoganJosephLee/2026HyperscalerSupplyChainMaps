@@ -1,15 +1,15 @@
 {
  "meta": {
-  "built": "2026-11-18",
+  "built": "2026-11-19",
   "newest_source_date": "2026-08-18",
   "sec_data_as_of": "2026-08-18",
-  "company_count": 77,
-  "relationship_count": 100,
-  "citation_count": 178,
+  "company_count": 93,
+  "relationship_count": 143,
+  "citation_count": 237,
   "citations_by_type": {
-   "sec_filing": 148,
-   "company": 25,
-   "press": 5
+   "sec_filing": 158,
+   "company": 68,
+   "press": 11
   },
   "source_types": {
    "sec_filing": "SEC filing",
@@ -24,9 +24,10 @@
    "invests_in": "invests in",
    "finances": "helps finance",
    "partners_with": "partners with",
+   "acquires": "agreed to buy",
    "unclear": "has a relationship with"
   },
-  "unverified_web_quotes": 0
+  "unverified_web_quotes": 6
  },
  "layers": [
   {
@@ -169,7 +170,7 @@
     }
    },
    "is_seed": true,
-   "degree": 5
+   "degree": 11
   },
   {
    "id": "cik-0001018724",
@@ -195,7 +196,7 @@
     }
    },
    "is_seed": true,
-   "degree": 8
+   "degree": 14
   },
   {
    "id": "cik-0000002488",
@@ -221,7 +222,7 @@
     }
    },
    "is_seed": false,
-   "degree": 13
+   "degree": 16
   },
   {
    "id": "cik-0001047127",
@@ -247,7 +248,7 @@
     }
    },
    "is_seed": false,
-   "degree": 4
+   "degree": 5
   },
   {
    "id": "name-anthropic",
@@ -273,7 +274,7 @@
     }
    },
    "is_seed": false,
-   "degree": 4
+   "degree": 5
   },
   {
    "id": "cik-0000320193",
@@ -298,6 +299,20 @@
      "status": "found"
     }
    },
+   "is_seed": false,
+   "degree": 1
+  },
+  {
+   "id": "cik-0001144879",
+   "ref": "APLD",
+   "name": "Applied Digital",
+   "legal_name": null,
+   "ticker": "APLD",
+   "cik": 1144879,
+   "files_with_sec": true,
+   "layer": "buildings",
+   "summary": "Builds and leases AI data centers in North Dakota; CoreWeave is the tenant at its Polaris Forge 1 campus.",
+   "about": null,
    "is_seed": false,
    "degree": 1
   },
@@ -403,7 +418,7 @@
     }
    },
    "is_seed": false,
-   "degree": 0
+   "degree": 1
   },
   {
    "id": "name-bizlink-technology",
@@ -428,6 +443,20 @@
      "status": "found"
     }
    },
+   "is_seed": false,
+   "degree": 1
+  },
+  {
+   "id": "cik-0001664703",
+   "ref": "BE",
+   "name": "Bloom Energy",
+   "legal_name": null,
+   "ticker": "BE",
+   "cik": 1664703,
+   "files_with_sec": true,
+   "layer": "power",
+   "summary": "Makes fuel cells that generate power on site; it is deploying them at some Oracle Cloud data centers.",
+   "about": null,
    "is_seed": false,
    "degree": 1
   },
@@ -470,6 +499,20 @@
    },
    "is_seed": false,
    "degree": 9
+  },
+  {
+   "id": "cik-0001533232",
+   "ref": "BEP",
+   "name": "Brookfield Renewable",
+   "legal_name": null,
+   "ticker": "BEP",
+   "cik": 1533232,
+   "files_with_sec": true,
+   "layer": "power",
+   "summary": "A renewable power company with a framework to develop over 10.5 GW of new capacity for Microsoft.",
+   "about": null,
+   "is_seed": false,
+   "degree": 1
   },
   {
    "id": "cik-0001043277",
@@ -576,6 +619,20 @@
    "degree": 1
   },
   {
+   "id": "cik-0001819989",
+   "ref": "CIFR",
+   "name": "Cipher Digital",
+   "legal_name": null,
+   "ticker": "CIFR",
+   "cik": 1819989,
+   "files_with_sec": true,
+   "layer": "buildings",
+   "summary": "Formerly Cipher Mining. Leases data center space and power for AI, to Amazon Web Services and to Fluidstack.",
+   "about": null,
+   "is_seed": false,
+   "degree": 2
+  },
+  {
    "id": "cik-0000858877",
    "ref": "CSCO",
    "name": "Cisco",
@@ -625,7 +682,21 @@
     }
    },
    "is_seed": false,
-   "degree": 1
+   "degree": 2
+  },
+  {
+   "id": "name-commonwealth-fusion-systems",
+   "ref": "CFS",
+   "name": "Commonwealth Fusion Systems",
+   "legal_name": null,
+   "ticker": null,
+   "cik": null,
+   "files_with_sec": false,
+   "layer": "power",
+   "summary": "A fusion energy company. Google has invested in it and agreed to buy power from its first planned plant.",
+   "about": null,
+   "is_seed": false,
+   "degree": 2
   },
   {
    "id": "name-compuware-technology",
@@ -674,11 +745,25 @@
     "verified": {
      "method": "Fetched the page and matched the quote word for word",
      "status": "found",
-     "checked": "2026-11-17"
+     "checked": "2026-11-19"
     }
    },
    "is_seed": false,
    "degree": 2
+  },
+  {
+   "id": "cik-0001839341",
+   "ref": "CORZ",
+   "name": "Core Scientific",
+   "legal_name": null,
+   "ticker": "CORZ",
+   "cik": 1839341,
+   "files_with_sec": true,
+   "layer": "buildings",
+   "summary": "Hosts about 590 MW of CoreWeave's computing infrastructure across six sites.",
+   "about": null,
+   "is_seed": false,
+   "degree": 1
   },
   {
    "id": "cik-0001769628",
@@ -704,7 +789,7 @@
     }
    },
    "is_seed": true,
-   "degree": 8
+   "degree": 12
   },
   {
    "id": "cik-0001807794",
@@ -730,7 +815,7 @@
     }
    },
    "is_seed": false,
-   "degree": 6
+   "degree": 8
   },
   {
    "id": "cik-0001571996",
@@ -756,7 +841,7 @@
     }
    },
    "is_seed": false,
-   "degree": 4
+   "degree": 5
   },
   {
    "id": "cik-0001297996",
@@ -833,6 +918,20 @@
      "status": "found"
     }
    },
+   "is_seed": false,
+   "degree": 1
+  },
+  {
+   "id": "cik-0000065984",
+   "ref": "ETR",
+   "name": "Entergy",
+   "legal_name": null,
+   "ticker": "ETR",
+   "cik": 65984,
+   "files_with_sec": true,
+   "layer": "power",
+   "summary": "A utility; Louisiana regulators approved its plan to build three gas plants to power Meta's Hyperion data center.",
+   "about": null,
    "is_seed": false,
    "degree": 1
   },
@@ -967,6 +1066,20 @@
    "degree": 1
   },
   {
+   "id": "name-fluidstack",
+   "ref": "Fluidstack",
+   "name": "Fluidstack",
+   "legal_name": null,
+   "ticker": null,
+   "cik": null,
+   "files_with_sec": false,
+   "layer": "neocloud",
+   "summary": "An AI cloud platform. It leases data center capacity from TeraWulf and Cipher and is building Anthropic's data centers.",
+   "about": null,
+   "is_seed": false,
+   "degree": 3
+  },
+  {
    "id": "name-hon-hai-precision-industry",
    "ref": "Hon Hai Precision Industry Co., Ltd.",
    "name": "Foxconn (Hon Hai)",
@@ -991,6 +1104,20 @@
    },
    "is_seed": false,
    "degree": 3
+  },
+  {
+   "id": "cik-0001859392",
+   "ref": "GLXY",
+   "name": "Galaxy Digital",
+   "legal_name": null,
+   "ticker": "GLXY",
+   "cik": 1859392,
+   "files_with_sec": true,
+   "layer": "buildings",
+   "summary": "Leases its Helios data center campus in West Texas to CoreWeave under a 15-year lease.",
+   "about": null,
+   "is_seed": false,
+   "degree": 1
   },
   {
    "id": "cik-0001996810",
@@ -1146,7 +1273,21 @@
     }
    },
    "is_seed": false,
-   "degree": 2
+   "degree": 6
+  },
+  {
+   "id": "name-intersect",
+   "ref": "Intersect",
+   "name": "Intersect",
+   "legal_name": null,
+   "ticker": null,
+   "cik": null,
+   "files_with_sec": false,
+   "layer": "buildings",
+   "summary": "Provides data center and energy infrastructure. Alphabet agreed to buy it for $4.8 billion plus debt.",
+   "about": null,
+   "is_seed": false,
+   "degree": 1
   },
   {
    "id": "cik-0001878848",
@@ -1169,7 +1310,7 @@
     "verified": {
      "method": "Fetched the page and matched the quote word for word",
      "status": "found",
-     "checked": "2026-11-17"
+     "checked": "2026-11-19"
     }
    },
    "is_seed": false,
@@ -1340,7 +1481,7 @@
     "verified": {
      "method": "Fetched the page and matched the quote word for word",
      "status": "found",
-     "checked": "2026-11-17"
+     "checked": "2026-11-19"
     }
    },
    "is_seed": false,
@@ -1396,7 +1537,7 @@
     }
    },
    "is_seed": false,
-   "degree": 0
+   "degree": 1
   },
   {
    "id": "cik-0001835632",
@@ -1422,7 +1563,7 @@
     }
    },
    "is_seed": false,
-   "degree": 0
+   "degree": 1
   },
   {
    "id": "cik-0001326801",
@@ -1448,7 +1589,7 @@
     }
    },
    "is_seed": true,
-   "degree": 7
+   "degree": 12
   },
   {
    "id": "cik-0000723125",
@@ -1474,7 +1615,7 @@
     }
    },
    "is_seed": false,
-   "degree": 2
+   "degree": 3
   },
   {
    "id": "cik-0000789019",
@@ -1500,7 +1641,7 @@
     }
    },
    "is_seed": true,
-   "degree": 9
+   "degree": 15
   },
   {
    "id": "cik-0001513845",
@@ -1523,7 +1664,7 @@
     "verified": {
      "method": "Fetched the page and matched the quote word for word",
      "status": "found",
-     "checked": "2026-11-17"
+     "checked": "2026-11-19"
     }
    },
    "is_seed": false,
@@ -1570,6 +1711,20 @@
    "degree": 1
   },
   {
+   "id": "name-nscale",
+   "ref": "Nscale",
+   "name": "Nscale",
+   "legal_name": null,
+   "ticker": null,
+   "cik": null,
+   "files_with_sec": false,
+   "layer": "neocloud",
+   "summary": "An AI cloud company with a deal to provide Microsoft about 200,000 NVIDIA GB300 GPUs of infrastructure.",
+   "about": null,
+   "is_seed": false,
+   "degree": 1
+  },
+  {
    "id": "cik-0001045810",
    "ref": "NVDA",
    "name": "NVIDIA",
@@ -1593,7 +1748,21 @@
     }
    },
    "is_seed": false,
-   "degree": 17
+   "degree": 25
+  },
+  {
+   "id": "cik-0001849056",
+   "ref": "OKLO",
+   "name": "Oklo",
+   "legal_name": null,
+   "ticker": "OKLO",
+   "cik": 1849056,
+   "files_with_sec": true,
+   "layer": "power",
+   "summary": "An energy company Vertiv is working with to explore power for future data centers.",
+   "about": null,
+   "is_seed": false,
+   "degree": 1
   },
   {
    "id": "name-openai",
@@ -1619,7 +1788,7 @@
     }
    },
    "is_seed": false,
-   "degree": 10
+   "degree": 14
   },
   {
    "id": "cik-0001341439",
@@ -1645,7 +1814,7 @@
     }
    },
    "is_seed": true,
-   "degree": 3
+   "degree": 6
   },
   {
    "id": "cik-0000804328",
@@ -1723,7 +1892,7 @@
     }
    },
    "is_seed": false,
-   "degree": 3
+   "degree": 4
   },
   {
    "id": "cik-0000897723",
@@ -1801,7 +1970,21 @@
     }
    },
    "is_seed": false,
-   "degree": 2
+   "degree": 3
+  },
+  {
+   "id": "name-softbank-group",
+   "ref": "SoftBank",
+   "name": "SoftBank Group",
+   "legal_name": null,
+   "ticker": null,
+   "cik": null,
+   "files_with_sec": false,
+   "layer": "other",
+   "summary": "A Japanese investment group. It has put $30 billion into OpenAI through its Vision Fund 2.",
+   "about": null,
+   "is_seed": false,
+   "degree": 1
   },
   {
    "id": "name-siliconware-precision-industries",
@@ -1896,6 +2079,20 @@
    "degree": 1
   },
   {
+   "id": "cik-0001083301",
+   "ref": "WULF",
+   "name": "TeraWulf",
+   "legal_name": null,
+   "ticker": "WULF",
+   "cik": 1083301,
+   "files_with_sec": true,
+   "layer": "buildings",
+   "summary": "Leases data center capacity at its Lake Mariner campus in New York to Fluidstack, with Google backing part of the debt.",
+   "about": null,
+   "is_seed": false,
+   "degree": 2
+  },
+  {
    "id": "name-tongfu-microelectronics",
    "ref": "Tongfu Microelectronics Co., Ltd.",
    "name": "Tongfu",
@@ -1971,7 +2168,7 @@
     }
    },
    "is_seed": false,
-   "degree": 7
+   "degree": 10
   },
   {
    "id": "cik-0001033767",
@@ -2049,6 +2246,20 @@
     }
    },
    "is_seed": false,
+   "degree": 2
+  },
+  {
+   "id": "cik-0001692819",
+   "ref": "VST",
+   "name": "Vistra",
+   "legal_name": null,
+   "ticker": "VST",
+   "cik": 1692819,
+   "files_with_sec": true,
+   "layer": "power",
+   "summary": "A power company selling Meta more than 2,600 MW from three nuclear plants under 20-year agreements.",
+   "about": null,
+   "is_seed": false,
    "degree": 1
   },
   {
@@ -2076,9 +2287,101 @@
    },
    "is_seed": false,
    "degree": 1
+  },
+  {
+   "id": "name-x-energy",
+   "ref": "X-energy",
+   "name": "X-energy",
+   "legal_name": null,
+   "ticker": null,
+   "cik": null,
+   "files_with_sec": false,
+   "layer": "power",
+   "summary": "Develops small modular nuclear reactors. Amazon invested in it.",
+   "about": null,
+   "is_seed": false,
+   "degree": 1
   }
  ],
  "edges": [
+  {
+   "source": "cik-0000002488",
+   "target": "cik-0000789019",
+   "deals": [
+    {
+     "id": "amd-msft-mi300x",
+     "relationship": "supplies",
+     "what": "AMD Instinct MI300X GPUs running AI models in production on Azure",
+     "what_is_label": false,
+     "amount": null,
+     "confirmed": true,
+     "origin": "curated",
+     "evidence": [
+      {
+       "quote": "Microsoft announced AMD Instinct MI300X is now powering both proprietary and open-source models in production on Azure.",
+       "url": "https://newsroom.amd.com/news/amd-unveils-vision-for-an-open-ai-ecosystem-detai.html",
+       "publisher": "AMD",
+       "type": "company",
+       "date": "2025-06-12",
+       "context": null,
+       "note": null,
+       "verified": {
+        "method": "Fetched the page and matched the quote word for word",
+        "status": "found",
+        "checked": "2026-11-19"
+       }
+      }
+     ]
+    }
+   ],
+   "id": "cik-0000002488--cik-0000789019",
+   "source_types": [
+    "company"
+   ],
+   "strongest_source": "company",
+   "kind": "supply",
+   "confirmed": true,
+   "latest_date": "2025-06-12"
+  },
+  {
+   "source": "cik-0000002488",
+   "target": "cik-0001326801",
+   "deals": [
+    {
+     "id": "amd-meta-mi300x",
+     "relationship": "supplies",
+     "what": "AMD EPYC CPUs and Instinct accelerators; MI300X served all live traffic on Meta's Llama 405B",
+     "what_is_label": false,
+     "amount": null,
+     "confirmed": true,
+     "origin": "curated",
+     "evidence": [
+      {
+       "quote": "Meta detailed how AMD EPYC CPUs and AMD Instinct accelerators power its compute infrastructure across AI deployments and services, with MI300X serving all live traffic on Llama 405B.",
+       "url": "https://ir.amd.com/news-events/press-releases/detail/1218/amd-unveils-leadership-ai-solutions-at-advancing-ai-2024",
+       "publisher": "AMD",
+       "type": "company",
+       "date": "2024-10-10",
+       "context": null,
+       "note": null,
+       "verified": {
+        "method": "Fetched the page and matched the quote word for word",
+        "status": "found",
+        "checked": "2026-11-19"
+       }
+      }
+     ]
+    }
+   ],
+   "id": "cik-0000002488--cik-0001326801",
+   "source_types": [
+    "company"
+   ],
+   "strongest_source": "company",
+   "kind": "supply",
+   "confirmed": true,
+   "latest_date": "2024-10-10"
+  },
   {
    "source": "cik-0000002488",
    "target": "cik-0001341439",
@@ -2103,7 +2406,7 @@
        "verified": {
         "method": "Fetched the page and matched the quote word for word",
         "status": "found",
-        "checked": "2026-11-17"
+        "checked": "2026-11-19"
        }
       }
      ]
@@ -2194,6 +2497,151 @@
   },
   {
    "source": "cik-0000050863",
+   "target": "cik-0000789019",
+   "deals": [
+    {
+     "id": "intc-msft-18a",
+     "relationship": "manufactures_for",
+     "what": "A Microsoft-designed chip Microsoft plans to have made on Intel 18A",
+     "what_is_label": false,
+     "amount": null,
+     "confirmed": true,
+     "origin": "curated",
+     "evidence": [
+      {
+       "quote": "Microsoft Design on Intel 18A Headlines Customer Momentum",
+       "url": "https://www.businesswire.com/news/home/20240221189319/en",
+       "publisher": "Intel (via Business Wire)",
+       "type": "company",
+       "date": "2024-02-21",
+       "context": null,
+       "note": null,
+       "verified": {
+        "method": "Found word for word in the page text returned by web search",
+        "status": "found",
+        "checked": "2026-11-19"
+       }
+      },
+      {
+       "quote": "Microsoft CEO Satya Nadella shares that Microsoft has chosen a chip design it plans to produce on the Intel 18A process.",
+       "url": "https://newsroom.intel.com/intel-foundry/foundry-news-roadmaps-updates",
+       "publisher": "Intel",
+       "type": "company",
+       "date": "2024-02-21",
+       "context": null,
+       "note": null,
+       "verified": {
+        "method": "Fetched the page and matched the quote word for word",
+        "status": "unreachable",
+        "checked": "2026-11-19"
+       }
+      }
+     ]
+    }
+   ],
+   "id": "cik-0000050863--cik-0000789019",
+   "source_types": [
+    "company"
+   ],
+   "strongest_source": "company",
+   "kind": "supply",
+   "confirmed": true,
+   "latest_date": "2024-02-21"
+  },
+  {
+   "source": "cik-0000050863",
+   "target": "cik-0001018724",
+   "deals": [
+    {
+     "id": "intc-amzn-18a",
+     "relationship": "manufactures_for",
+     "what": "A custom AI fabric chip on Intel 18A and a custom Xeon 6 chip on Intel 3 for AWS",
+     "what_is_label": false,
+     "amount": null,
+     "confirmed": true,
+     "origin": "curated",
+     "evidence": [
+      {
+       "quote": "As part of the expanded collaboration, Intel will produce an AI fabric chip for AWS on Intel 18A, the company’s most advanced process node.",
+       "url": "https://www.intel.com/content/www/us/en/newsroom/news/intel-strategic-collaboration.html",
+       "publisher": "Intel",
+       "type": "company",
+       "date": "2024-09-16",
+       "context": null,
+       "note": null,
+       "verified": {
+        "method": "Found word for word in the page text returned by web search",
+        "status": "found",
+        "checked": "2026-11-19"
+       }
+      },
+      {
+       "quote": "Intel will also produce a custom Xeon 6 chip on Intel 3, building on the existing partnership under which Intel produces Xeon Scalable processors for AWS.",
+       "url": "https://www.intel.com/content/www/us/en/newsroom/news/intel-strategic-collaboration.html",
+       "publisher": "Intel",
+       "type": "company",
+       "date": "2024-09-16",
+       "context": null,
+       "note": null,
+       "verified": {
+        "method": "Found word for word in the page text returned by web search",
+        "status": "found",
+        "checked": "2026-11-19"
+       }
+      }
+     ]
+    }
+   ],
+   "id": "cik-0000050863--cik-0001018724",
+   "source_types": [
+    "company"
+   ],
+   "strongest_source": "company",
+   "kind": "supply",
+   "confirmed": true,
+   "latest_date": "2024-09-16"
+  },
+  {
+   "source": "cik-0000050863",
+   "target": "cik-0001045810",
+   "deals": [
+    {
+     "id": "intc-nvda-cpus",
+     "relationship": "supplies",
+     "what": "Custom x86 data center CPUs for NVIDIA AI platforms (announced September 2025)",
+     "what_is_label": false,
+     "amount": null,
+     "confirmed": true,
+     "origin": "curated",
+     "evidence": [
+      {
+       "quote": "For data centers, Intel will make custom chips that Nvidia will use in its AI infrastructure platforms.",
+       "url": "https://abc30.com/amp/post/nvidia-invest-5-billion-intel-companies-will-work-together-ai-infrastructure-pcs/17841300/",
+       "publisher": "Associated Press (via ABC30)",
+       "type": "press",
+       "date": "2025-09-18",
+       "context": null,
+       "note": null,
+       "verified": {
+        "method": "Fetched the page and matched the quote word for word",
+        "status": "found",
+        "checked": "2026-11-19"
+       }
+      }
+     ]
+    }
+   ],
+   "id": "cik-0000050863--cik-0001045810",
+   "source_types": [
+    "press"
+   ],
+   "strongest_source": "press",
+   "kind": "supply",
+   "confirmed": true,
+   "latest_date": "2025-09-18"
+  },
+  {
+   "source": "cik-0000050863",
    "target": "cik-0001769628",
    "deals": [
     {
@@ -2228,6 +2676,59 @@
    "kind": "supply",
    "confirmed": true,
    "latest_date": "2026-03-02"
+  },
+  {
+   "source": "cik-0000065984",
+   "target": "cik-0001326801",
+   "deals": [
+    {
+     "id": "etr-meta-hyperion",
+     "relationship": "supplies",
+     "what": "Power from three new natural gas plants for Meta's Hyperion data center in Louisiana",
+     "what_is_label": false,
+     "amount": null,
+     "confirmed": true,
+     "origin": "curated",
+     "evidence": [
+      {
+       "quote": "Louisiana regulators approved Entergy Corp.’s plan to build three natural gas plants to power Meta Platform Inc.’s biggest data center.",
+       "url": "https://amp.insurancejournal.com/news/southcentral/2025/08/21/836573.htm",
+       "publisher": "Bloomberg (via Insurance Journal)",
+       "type": "press",
+       "date": "2025-08-21",
+       "context": null,
+       "note": null,
+       "verified": {
+        "method": "Fetched the page and matched the quote word for word",
+        "status": "found",
+        "checked": "2026-11-19"
+       }
+      },
+      {
+       "quote": "Meta Chief Executive Officer Mark Zuckerberg has said the facility, dubbed Hyperion, will near the size of Manhattan.",
+       "url": "https://amp.insurancejournal.com/news/southcentral/2025/08/21/836573.htm",
+       "publisher": "Bloomberg (via Insurance Journal)",
+       "type": "press",
+       "date": "2025-08-21",
+       "context": null,
+       "note": null,
+       "verified": {
+        "method": "Fetched the page and matched the quote word for word",
+        "status": "found",
+        "checked": "2026-11-19"
+       }
+      }
+     ]
+    }
+   ],
+   "id": "cik-0000065984--cik-0001326801",
+   "source_types": [
+    "press"
+   ],
+   "strongest_source": "press",
+   "kind": "supply",
+   "confirmed": true,
+   "latest_date": "2025-08-21"
   },
   {
    "source": "cik-0000319201",
@@ -2416,6 +2917,45 @@
   },
   {
    "source": "cik-0000723125",
+   "target": "cik-0000002488",
+   "deals": [
+    {
+     "id": "mu-amd-hbm",
+     "relationship": "supplies",
+     "what": "HBM3E high-bandwidth memory for AMD Instinct MI350 GPUs",
+     "what_is_label": false,
+     "amount": null,
+     "confirmed": true,
+     "origin": "curated",
+     "evidence": [
+      {
+       "quote": "Micron HBM3E 36GB 12-high solution brings industry-leading memory technology to AMD Instinct™ MI350 Series GPU platforms, providing outstanding bandwidth and lower power consumption.",
+       "url": "https://www.nasdaq.com/press-release/micron-hbm-designed-leading-amd-ai-platform-2025-06-12",
+       "publisher": "Micron (press release via Nasdaq)",
+       "type": "company",
+       "date": "2025-06-12",
+       "context": null,
+       "note": null,
+       "verified": {
+        "method": "Fetched the page and matched the quote word for word",
+        "status": "found",
+        "checked": "2026-11-19"
+       }
+      }
+     ]
+    }
+   ],
+   "id": "cik-0000723125--cik-0000002488",
+   "source_types": [
+    "company"
+   ],
+   "strongest_source": "company",
+   "kind": "supply",
+   "confirmed": true,
+   "latest_date": "2025-06-12"
+  },
+  {
+   "source": "cik-0000723125",
    "target": "cik-0001045810",
    "deals": [
     {
@@ -2475,7 +3015,7 @@
        "verified": {
         "method": "Fetched the page and matched the quote word for word",
         "status": "found",
-        "checked": "2026-11-17"
+        "checked": "2026-11-19"
        }
       },
       {
@@ -2489,7 +3029,7 @@
        "verified": {
         "method": "Fetched the page and matched the quote word for word",
         "status": "found",
-        "checked": "2026-11-17"
+        "checked": "2026-11-19"
        }
       }
      ]
@@ -2578,7 +3118,7 @@
        "verified": {
         "method": "Fetched the page and matched the quote word for word",
         "status": "found",
-        "checked": "2026-11-17"
+        "checked": "2026-11-19"
        }
       }
      ]
@@ -2640,7 +3180,7 @@
        "verified": {
         "method": "Fetched the page and matched the quote word for word",
         "status": "found",
-        "checked": "2026-11-17"
+        "checked": "2026-11-19"
        }
       }
      ]
@@ -2665,7 +3205,7 @@
        "verified": {
         "method": "Fetched the page and matched the quote word for word",
         "status": "found",
-        "checked": "2026-11-17"
+        "checked": "2026-11-19"
        }
       }
      ]
@@ -2697,6 +3237,30 @@
        "quote": "During fiscal 2026, we announced the expansion of our Sherman, Texas, manufacturing facility, entered into a strategic multi-year supply agreement with NVIDIA for advanced lasers and optical networking products supporting next-generation AI infrastructure, and received a $50 million preliminary memorandum of terms under the CHIPS and Science Act to support the Sherman expansion.",
        "url": "https://www.sec.gov/Archives/edgar/data/820318/000082031826000020/iivi-20260630.htm",
        "publisher": "10-K filing",
+       "type": "sec_filing",
+       "date": "2026-08-14",
+       "context": null,
+       "note": null,
+       "verified": {
+        "method": "Matched word for word in the cached filing",
+        "status": "found"
+       }
+      }
+     ]
+    },
+    {
+     "id": "cohr-nvda-supply",
+     "relationship": "supplies",
+     "what": "Lasers and optical networking products under a multi-year agreement with a multi-billion-dollar purchase commitment",
+     "what_is_label": false,
+     "amount": null,
+     "confirmed": true,
+     "origin": "curated",
+     "evidence": [
+      {
+       "quote": "The non-exclusive agreement includes a multi-billion-dollar purchase commitment with NVIDIA, as well as future access and capacity rights for advanced laser and optical networking products.",
+       "url": "https://www.sec.gov/Archives/edgar/data/820318/000082031826000020/iivi-20260630.htm",
+       "publisher": "Coherent 10-K",
        "type": "sec_filing",
        "date": "2026-08-14",
        "context": null,
@@ -2927,6 +3491,59 @@
    "latest_date": "2026-02-17"
   },
   {
+   "source": "cik-0000937966",
+   "target": "cik-0000050863",
+   "deals": [
+    {
+     "id": "asml-intc-highna",
+     "relationship": "supplies",
+     "what": "The first High NA EUV lithography system",
+     "what_is_label": false,
+     "amount": null,
+     "confirmed": true,
+     "origin": "curated",
+     "evidence": [
+      {
+       "quote": "Intel Foundry has received and assembled the industry’s first High Numerical Aperture (High NA) Extreme Ultraviolet (EUV) lithography system.",
+       "url": "https://www.intel.com/content/www/us/en/newsroom/resources/intel-high-na-euv.html",
+       "publisher": "Intel",
+       "type": "company",
+       "date": "",
+       "context": null,
+       "note": null,
+       "verified": {
+        "method": "Fetched the page and matched the quote word for word",
+        "status": "unreachable",
+        "checked": "2026-11-19"
+       }
+      },
+      {
+       "quote": "High NA EUV is the next-generation lithography system developed by ASML following decades of collaboration with Intel.",
+       "url": "https://www.intel.com/content/www/us/en/newsroom/resources/intel-high-na-euv.html",
+       "publisher": "Intel",
+       "type": "company",
+       "date": "",
+       "context": null,
+       "note": null,
+       "verified": {
+        "method": "Fetched the page and matched the quote word for word",
+        "status": "unreachable",
+        "checked": "2026-11-19"
+       }
+      }
+     ]
+    }
+   ],
+   "id": "cik-0000937966--cik-0000050863",
+   "source_types": [
+    "company"
+   ],
+   "strongest_source": "company",
+   "kind": "supply",
+   "confirmed": true,
+   "latest_date": ""
+  },
+  {
    "source": "cik-0001018724",
    "target": "name-anthropic",
    "deals": [
@@ -2973,7 +3590,7 @@
        "verified": {
         "method": "Fetched the page and matched the quote word for word",
         "status": "found",
-        "checked": "2026-11-17"
+        "checked": "2026-11-19"
        }
       }
      ]
@@ -3037,7 +3654,7 @@
        "verified": {
         "method": "Fetched the page and matched the quote word for word",
         "status": "found",
-        "checked": "2026-11-17"
+        "checked": "2026-11-19"
        }
       },
       {
@@ -3051,7 +3668,7 @@
        "verified": {
         "method": "Fetched the page and matched the quote word for word",
         "status": "found",
-        "checked": "2026-11-17"
+        "checked": "2026-11-19"
        }
       }
      ]
@@ -3066,6 +3683,59 @@
    "kind": "supply",
    "confirmed": true,
    "latest_date": "2025-11-03"
+  },
+  {
+   "source": "cik-0001018724",
+   "target": "name-x-energy",
+   "deals": [
+    {
+     "id": "amzn-xenergy",
+     "relationship": "invests_in",
+     "what": "An investment in X-energy; the two aim to bring more than 5 GW of small nuclear reactors online by 2039",
+     "what_is_label": false,
+     "amount": null,
+     "confirmed": true,
+     "origin": "curated",
+     "evidence": [
+      {
+       "quote": "Amazon Invests in X-energy to Support Advanced Small Modular Nuclear Reactors and Expand Carbon-Free Power",
+       "url": "https://www.businesswire.com/news/home/20241016547140/en",
+       "publisher": "X-energy (via Business Wire)",
+       "type": "company",
+       "date": "2024-10-16",
+       "context": null,
+       "note": null,
+       "verified": {
+        "method": "Found word for word in the page text returned by web search",
+        "status": "found",
+        "checked": "2026-11-19"
+       }
+      },
+      {
+       "quote": "Amazon and X-energy are also collaborating to bring more than 5 gigawatts of new power projects online across the United States by 2039, representing the largest commercial deployment target of SMRs to date.",
+       "url": "https://www.businesswire.com/news/home/20241016547140/en",
+       "publisher": "X-energy (via Business Wire)",
+       "type": "company",
+       "date": "2024-10-16",
+       "context": null,
+       "note": null,
+       "verified": {
+        "method": "Found word for word in the page text returned by web search",
+        "status": "found",
+        "checked": "2026-11-19"
+       }
+      }
+     ]
+    }
+   ],
+   "id": "cik-0001018724--name-x-energy",
+   "source_types": [
+    "company"
+   ],
+   "strongest_source": "company",
+   "kind": "money",
+   "confirmed": true,
+   "latest_date": "2024-10-16"
   },
   {
    "source": "cik-0001030894",
@@ -3499,16 +4169,94 @@
        }
       }
      ]
+    },
+    {
+     "id": "nvda-intc-invest",
+     "relationship": "invests_in",
+     "what": "$5 billion of Intel common stock",
+     "what_is_label": false,
+     "amount": "$5 billion",
+     "confirmed": true,
+     "origin": "curated",
+     "evidence": [
+      {
+       "quote": "Nvidia said it will spend $5 billion to buy Intel common stock at $23.28 a share.",
+       "url": "https://abc30.com/amp/post/nvidia-invest-5-billion-intel-companies-will-work-together-ai-infrastructure-pcs/17841300/",
+       "publisher": "Associated Press (via ABC30)",
+       "type": "press",
+       "date": "2025-09-18",
+       "context": null,
+       "note": null,
+       "verified": {
+        "method": "Fetched the page and matched the quote word for word",
+        "status": "found",
+        "checked": "2026-11-19"
+       }
+      },
+      {
+       "quote": "including gains from our previously announced investment in Intel's common stock",
+       "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+       "publisher": "NVIDIA 10-K",
+       "type": "sec_filing",
+       "date": "2026-02-25",
+       "context": null,
+       "note": null,
+       "verified": {
+        "method": "Matched word for word in the cached filing",
+        "status": "found"
+       }
+      }
+     ]
     }
    ],
    "id": "cik-0001045810--cik-0000050863",
    "source_types": [
-    "sec_filing"
+    "sec_filing",
+    "press"
    ],
    "strongest_source": "sec_filing",
-   "kind": "undirected",
+   "kind": "supply",
    "confirmed": true,
-   "latest_date": "2026-02-04"
+   "latest_date": "2026-02-25"
+  },
+  {
+   "source": "cik-0001045810",
+   "target": "cik-0000789019",
+   "deals": [
+    {
+     "id": "nvda-msft-gb300",
+     "relationship": "supplies",
+     "what": "NVIDIA GB300 NVL72 systems for an Azure cluster built for OpenAI workloads, more than 4,600 of them",
+     "what_is_label": false,
+     "amount": null,
+     "confirmed": true,
+     "origin": "curated",
+     "evidence": [
+      {
+       "quote": "Microsoft delivers the first at-scale production cluster with more than 4,600 NVIDIA GB300 NVL72, featuring NVIDIA Blackwell Ultra GPUs connected through the next-generation NVIDIA InfiniBand network.",
+       "url": "https://azure.microsoft.com/en-us/blog/microsoft-azure-delivers-the-first-large-scale-cluster-with-nvidia-gb300-nvl72-for-openai-workloads/",
+       "publisher": "Microsoft Azure",
+       "type": "company",
+       "date": "",
+       "context": null,
+       "note": null,
+       "verified": {
+        "method": "Fetched the page and matched the quote word for word",
+        "status": "found",
+        "checked": "2026-11-19"
+       }
+      }
+     ]
+    }
+   ],
+   "id": "cik-0001045810--cik-0000789019",
+   "source_types": [
+    "company"
+   ],
+   "strongest_source": "company",
+   "kind": "supply",
+   "confirmed": true,
+   "latest_date": ""
   },
   {
    "source": "cik-0001045810",
@@ -3549,6 +4297,175 @@
   },
   {
    "source": "cik-0001045810",
+   "target": "cik-0000820318",
+   "deals": [
+    {
+     "id": "nvda-cohr-invest",
+     "relationship": "invests_in",
+     "what": "$2 billion of Coherent stock, alongside a multi-year optics supply agreement",
+     "what_is_label": false,
+     "amount": "$2 billion",
+     "confirmed": true,
+     "origin": "curated",
+     "evidence": [
+      {
+       "quote": "Separately, on March 2, 2026, NVIDIA made a $2 billion investment in the Company, through the purchase of shares of the Company's Common Stock in a private placement.",
+       "url": "https://www.sec.gov/Archives/edgar/data/820318/000082031826000020/iivi-20260630.htm",
+       "publisher": "Coherent 10-K",
+       "type": "sec_filing",
+       "date": "2026-08-14",
+       "context": null,
+       "note": null,
+       "verified": {
+        "method": "Matched word for word in the cached filing",
+        "status": "found"
+       }
+      }
+     ]
+    }
+   ],
+   "id": "cik-0001045810--cik-0000820318",
+   "source_types": [
+    "sec_filing"
+   ],
+   "strongest_source": "sec_filing",
+   "kind": "money",
+   "confirmed": true,
+   "latest_date": "2026-08-14"
+  },
+  {
+   "source": "cik-0001045810",
+   "target": "cik-0001018724",
+   "deals": [
+    {
+     "id": "nvda-amzn-gb200",
+     "relationship": "supplies",
+     "what": "NVIDIA Grace Blackwell systems behind AWS P6e-GB200 UltraServers",
+     "what_is_label": false,
+     "amount": null,
+     "confirmed": true,
+     "origin": "curated",
+     "evidence": [
+      {
+       "quote": "To accelerate innovation across emerging generative AI developments such as reasoning models and agentic AI systems, we’re excited to announce general availability of P6e-GB200 UltraServers, accelerated by NVIDIA Grace Blackwell Superchips.",
+       "url": "https://aws.amazon.com/blogs/machine-learning/aws-ai-infrastructure-with-nvidia-blackwell-two-powerful-compute-solutions-for-the-next-frontier-of-ai",
+       "publisher": "Amazon Web Services",
+       "type": "company",
+       "date": "",
+       "context": null,
+       "note": null,
+       "verified": {
+        "method": "Fetched the page and matched the quote word for word",
+        "status": "found",
+        "checked": "2026-11-19"
+       }
+      }
+     ]
+    }
+   ],
+   "id": "cik-0001045810--cik-0001018724",
+   "source_types": [
+    "company"
+   ],
+   "strongest_source": "company",
+   "kind": "supply",
+   "confirmed": true,
+   "latest_date": ""
+  },
+  {
+   "source": "cik-0001045810",
+   "target": "cik-0001326801",
+   "deals": [
+    {
+     "id": "nvda-meta-clusters",
+     "relationship": "supplies",
+     "what": "NVIDIA GPUs for Meta's AI training clusters",
+     "what_is_label": false,
+     "amount": null,
+     "confirmed": true,
+     "origin": "curated",
+     "evidence": [
+      {
+       "quote": "While we’ve had a long history of building AI infrastructure, we first shared details on our AI Research SuperCluster (RSC), featuring 16,000 NVIDIA A100 GPUs, in 2022.",
+       "url": "https://engineering.fb.com/2024/03/12/data-center-engineering/building-metas-genai-infrastructure/",
+       "publisher": "Meta Engineering",
+       "type": "company",
+       "date": "2024-03-12",
+       "context": null,
+       "note": null,
+       "verified": {
+        "method": "Fetched the page and matched the quote word for word",
+        "status": "found",
+        "checked": "2026-11-19"
+       }
+      },
+      {
+       "quote": "Today, we’re sharing details on two versions of our 24,576-GPU data center scale cluster at Meta.",
+       "url": "https://engineering.fb.com/2024/03/12/data-center-engineering/building-metas-genai-infrastructure/",
+       "publisher": "Meta Engineering",
+       "type": "company",
+       "date": "2024-03-12",
+       "context": null,
+       "note": null,
+       "verified": {
+        "method": "Fetched the page and matched the quote word for word",
+        "status": "found",
+        "checked": "2026-11-19"
+       }
+      }
+     ]
+    }
+   ],
+   "id": "cik-0001045810--cik-0001326801",
+   "source_types": [
+    "company"
+   ],
+   "strongest_source": "company",
+   "kind": "supply",
+   "confirmed": true,
+   "latest_date": "2024-03-12"
+  },
+  {
+   "source": "cik-0001045810",
+   "target": "cik-0001341439",
+   "deals": [
+    {
+     "id": "nvda-orcl-zettascale10",
+     "relationship": "supplies",
+     "what": "NVIDIA GPUs for OCI Zettascale10, the cluster design behind the Stargate site in Abilene, Texas",
+     "what_is_label": false,
+     "amount": null,
+     "confirmed": true,
+     "origin": "curated",
+     "evidence": [
+      {
+       "quote": "OCI Zettascale10 connects hundreds of thousands of NVIDIA GPUs across multiple data centers to form multi-gigawatt clusters that deliver up to an unprecedented 16 zettaFLOPS of peak performance.",
+       "url": "https://www.oracle.com/news/announcement/ai-world-oracle-unveils-next-generation-oci-zettascale10-cluster-for-ai-2025-10-14/",
+       "publisher": "Oracle",
+       "type": "company",
+       "date": "2025-10-14",
+       "context": null,
+       "note": null,
+       "verified": {
+        "method": "Fetched the page and matched the quote word for word",
+        "status": "found",
+        "checked": "2026-11-19"
+       }
+      }
+     ]
+    }
+   ],
+   "id": "cik-0001045810--cik-0001341439",
+   "source_types": [
+    "company"
+   ],
+   "strongest_source": "company",
+   "kind": "supply",
+   "confirmed": true,
+   "latest_date": "2025-10-14"
+  },
+  {
+   "source": "cik-0001045810",
    "target": "cik-0001375365",
    "deals": [
     {
@@ -3583,6 +4500,83 @@
    "kind": "supply",
    "confirmed": true,
    "latest_date": "2025-08-28"
+  },
+  {
+   "source": "cik-0001045810",
+   "target": "cik-0001633978",
+   "deals": [
+    {
+     "id": "nvda-lite-invest",
+     "relationship": "invests_in",
+     "what": "Convertible preferred stock in Lumentum, bought in March 2026",
+     "what_is_label": false,
+     "amount": null,
+     "confirmed": true,
+     "origin": "curated",
+     "evidence": [
+      {
+       "quote": "On March 2, 2026, we completed the issuance and sale of approximately 2.9 million shares of our Series A Convertible Preferred Stock, par value $0.001 per share (the \"Preferred Stock\") to NVIDIA Corporation (\"NVIDIA\"), in a private placement pursuant to a Securities Purchase Agreement.",
+       "url": "https://www.sec.gov/Archives/edgar/data/1633978/000162828026057358/lite-20260627.htm",
+       "publisher": "Lumentum 10-K",
+       "type": "sec_filing",
+       "date": "2026-08-17",
+       "context": null,
+       "note": null,
+       "verified": {
+        "method": "Matched word for word in the cached filing",
+        "status": "found"
+       }
+      }
+     ]
+    }
+   ],
+   "id": "cik-0001045810--cik-0001633978",
+   "source_types": [
+    "sec_filing"
+   ],
+   "strongest_source": "sec_filing",
+   "kind": "money",
+   "confirmed": true,
+   "latest_date": "2026-08-17"
+  },
+  {
+   "source": "cik-0001045810",
+   "target": "cik-0001652044",
+   "deals": [
+    {
+     "id": "nvda-googl-gb200",
+     "relationship": "supplies",
+     "what": "NVIDIA GB200 NVL72 systems behind Google Cloud A4X virtual machines",
+     "what_is_label": false,
+     "amount": null,
+     "confirmed": true,
+     "origin": "curated",
+     "evidence": [
+      {
+       "quote": "Today, we're excited to announce the preview of A4X VMs, powered by NVIDIA GB200 NVL72, a system consisting of 72 NVIDIA Blackwell GPUs and 36 Arm-based NVIDIA Grace CPUs connected via fifth-generation NVIDIA NVLink.",
+       "url": "https://cloud.google.com/blog/products/compute/new-a4x-vms-powered-by-nvidia-gb200-gpus",
+       "publisher": "Google Cloud",
+       "type": "company",
+       "date": "2025-02-20",
+       "context": null,
+       "note": null,
+       "verified": {
+        "method": "Fetched the page and matched the quote word for word",
+        "status": "found",
+        "checked": "2026-11-19"
+       }
+      }
+     ]
+    }
+   ],
+   "id": "cik-0001045810--cik-0001652044",
+   "source_types": [
+    "company"
+   ],
+   "strongest_source": "company",
+   "kind": "supply",
+   "confirmed": true,
+   "latest_date": "2025-02-20"
   },
   {
    "source": "cik-0001045810",
@@ -3685,6 +4679,30 @@
        }
       }
      ]
+    },
+    {
+     "id": "nvda-crwv-invest",
+     "relationship": "invests_in",
+     "what": "$2 billion of CoreWeave Class A stock, in January 2026",
+     "what_is_label": false,
+     "amount": "$2 billion",
+     "confirmed": true,
+     "origin": "curated",
+     "evidence": [
+      {
+       "quote": "In January 2026, NVIDIA Corporation invested $2 billion in the Company's Class A common stock at a purchase price of $87.20 per share.",
+       "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000104/crwv-20251231.htm",
+       "publisher": "CoreWeave 10-K",
+       "type": "sec_filing",
+       "date": "2026-03-02",
+       "context": null,
+       "note": null,
+       "verified": {
+        "method": "Matched word for word in the cached filing",
+        "status": "found"
+       }
+      }
+     ]
     }
    ],
    "id": "cik-0001045810--cik-0001769628",
@@ -3720,7 +4738,7 @@
        "verified": {
         "method": "Fetched the page and matched the quote word for word",
         "status": "found",
-        "checked": "2026-11-17"
+        "checked": "2026-11-19"
        }
       }
      ]
@@ -3759,7 +4777,7 @@
        "verified": {
         "method": "Fetched the page and matched the quote word for word",
         "status": "found",
-        "checked": "2026-11-17"
+        "checked": "2026-11-19"
        }
       }
      ]
@@ -3784,7 +4802,7 @@
        "verified": {
         "method": "Fetched the page and matched the quote word for word",
         "status": "found",
-        "checked": "2026-11-17"
+        "checked": "2026-11-19"
        }
       }
      ]
@@ -3890,6 +4908,45 @@
   },
   {
    "source": "cik-0001046179",
+   "target": "cik-0000789019",
+   "deals": [
+    {
+     "id": "tsm-msft-maia",
+     "relationship": "manufactures_for",
+     "what": "Microsoft's Maia 100 AI accelerator, made on a 5nm process with TSMC packaging",
+     "what_is_label": false,
+     "amount": null,
+     "confirmed": true,
+     "origin": "curated",
+     "evidence": [
+      {
+       "quote": "Maia 100 is one of the largest processors made on 5nm node using advanced packaging technology from TSMC.",
+       "url": "https://azure.microsoft.com/en-us/blog/azure-maia-for-the-era-of-ai-from-silicon-to-software-to-systems/",
+       "publisher": "Microsoft Azure",
+       "type": "company",
+       "date": "",
+       "context": null,
+       "note": null,
+       "verified": {
+        "method": "Fetched the page and matched the quote word for word",
+        "status": "found",
+        "checked": "2026-11-19"
+       }
+      }
+     ]
+    }
+   ],
+   "id": "cik-0001046179--cik-0000789019",
+   "source_types": [
+    "company"
+   ],
+   "strongest_source": "company",
+   "kind": "supply",
+   "confirmed": true,
+   "latest_date": ""
+  },
+  {
+   "source": "cik-0001046179",
    "target": "cik-0001045810",
    "deals": [
     {
@@ -3937,6 +4994,45 @@
    "kind": "supply",
    "confirmed": true,
    "latest_date": "2026-03-02"
+  },
+  {
+   "source": "cik-0001046179",
+   "target": "cik-0001326801",
+   "deals": [
+    {
+     "id": "tsm-meta-mtia",
+     "relationship": "manufactures_for",
+     "what": "Meta's first in-house AI chip (MTIA v1), made on TSMC's 7nm process",
+     "what_is_label": false,
+     "amount": null,
+     "confirmed": true,
+     "origin": "curated",
+     "evidence": [
+      {
+       "quote": "The accelerator is fabricated in TSMC 7nm process and runs at 800 MHz, providing 102.4 TOPS at INT8 precision and 51.2 TFLOPS at FP16 precision.",
+       "url": "https://ai.meta.com/blog/meta-training-inference-accelerator-AI-MTIA/",
+       "publisher": "Meta AI",
+       "type": "company",
+       "date": "2023-05-18",
+       "context": null,
+       "note": null,
+       "verified": {
+        "method": "Fetched the page and matched the quote word for word",
+        "status": "found",
+        "checked": "2026-11-19"
+       }
+      }
+     ]
+    }
+   ],
+   "id": "cik-0001046179--cik-0001326801",
+   "source_types": [
+    "company"
+   ],
+   "strongest_source": "company",
+   "kind": "supply",
+   "confirmed": true,
+   "latest_date": "2023-05-18"
   },
   {
    "source": "cik-0001046179",
@@ -4189,6 +5285,59 @@
   },
   {
    "source": "cik-0001047127",
+   "target": "cik-0001046179",
+   "deals": [
+    {
+     "id": "amkr-tsm-arizona",
+     "relationship": "supplies",
+     "what": "Advanced packaging and test services in Arizona for chips from TSMC's Phoenix fabs",
+     "what_is_label": false,
+     "amount": null,
+     "confirmed": true,
+     "origin": "curated",
+     "evidence": [
+      {
+       "quote": "Amkor Technology, Inc. (Nasdaq: AMKR) and TSMC (TWSE: 2330, NYSE: TSM) announced today that the two companies have signed a memorandum of understanding to collaborate and bring advanced packaging and test capabilities to Arizona, further expanding the region’s semiconductor ecosystem.",
+       "url": "https://www.businesswire.com/news/home/20241003738370/en",
+       "publisher": "Amkor and TSMC (via Business Wire)",
+       "type": "company",
+       "date": "2024-10-03",
+       "context": null,
+       "note": null,
+       "verified": {
+        "method": "Found word for word in the page text returned by web search",
+        "status": "found",
+        "checked": "2026-11-19"
+       }
+      },
+      {
+       "quote": "Under the agreement, TSMC will contract turnkey advanced packaging and test services from Amkor in their planned facility in Peoria, Arizona.",
+       "url": "https://www.businesswire.com/news/home/20241003738370/en",
+       "publisher": "Amkor and TSMC (via Business Wire)",
+       "type": "company",
+       "date": "2024-10-03",
+       "context": null,
+       "note": null,
+       "verified": {
+        "method": "Fetched the page and matched the quote word for word",
+        "status": "unreachable",
+        "checked": "2026-11-19"
+       }
+      }
+     ]
+    }
+   ],
+   "id": "cik-0001047127--cik-0001046179",
+   "source_types": [
+    "company"
+   ],
+   "strongest_source": "company",
+   "kind": "supply",
+   "confirmed": true,
+   "latest_date": "2024-10-03"
+  },
+  {
+   "source": "cik-0001047127",
    "target": "cik-0001730168",
    "deals": [
     {
@@ -4273,6 +5422,45 @@
    "kind": "supply",
    "confirmed": true,
    "latest_date": "2026-06-15"
+  },
+  {
+   "source": "cik-0001083301",
+   "target": "name-fluidstack",
+   "deals": [
+    {
+     "id": "wulf-fluidstack",
+     "relationship": "leases_capacity_to",
+     "what": "Data center capacity at TeraWulf's Lake Mariner campus in New York",
+     "what_is_label": false,
+     "amount": null,
+     "confirmed": true,
+     "origin": "curated",
+     "evidence": [
+      {
+       "quote": "today announced that Fluidstack, a premier AI cloud platform, has exercised its option to expand at the Company’s Lake Mariner data center campus in Western New York.",
+       "url": "https://www.barchart.com/story/news/34218778/terawulf-announces-fluidstack-expansion-with-160-mw-cb-5-lease-at-lake-mariner",
+       "publisher": "TeraWulf (press release via Barchart)",
+       "type": "company",
+       "date": "2025-08-18",
+       "context": null,
+       "note": null,
+       "verified": {
+        "method": "Found word for word in the page text returned by web search",
+        "status": "found",
+        "checked": "2026-11-19"
+       }
+      }
+     ]
+    }
+   ],
+   "id": "cik-0001083301--name-fluidstack",
+   "source_types": [
+    "company"
+   ],
+   "strongest_source": "company",
+   "kind": "supply",
+   "confirmed": true,
+   "latest_date": "2025-08-18"
   },
   {
    "source": "cik-0001090727",
@@ -4360,6 +5548,59 @@
    "kind": "supply",
    "confirmed": true,
    "latest_date": "2026-02-11"
+  },
+  {
+   "source": "cik-0001144879",
+   "target": "cik-0001769628",
+   "deals": [
+    {
+     "id": "apld-crwv-lease",
+     "relationship": "leases_capacity_to",
+     "what": "Data center space at the Polaris Forge 1 campus in North Dakota, under long-term leases",
+     "what_is_label": false,
+     "amount": null,
+     "confirmed": true,
+     "origin": "curated",
+     "evidence": [
+      {
+       "quote": "Applied Digital (NASDAQ: APLD) announced today that it has finalized a new lease agreement with CoreWeave, the AI Hyperscaler™, for an additional 150MW at its Polaris Forge 1 Campus in Ellendale, North Dakota.",
+       "url": "https://seekingalpha.com/pr/20215809-applied-digital-finalizes-additional-150mw-lease-with-coreweave-in-north-dakota",
+       "publisher": "Applied Digital (press release)",
+       "type": "company",
+       "date": "2025-08-29",
+       "context": null,
+       "note": null,
+       "verified": {
+        "method": "Found word for word in the page text returned by web search",
+        "status": "found",
+        "checked": "2026-11-19"
+       }
+      },
+      {
+       "quote": "high-performance computing (HPC) initiatives of its hyperscale tenant at Polaris Forge 1, CoreWeave.",
+       "url": "https://ir.applieddigital.com/news-events/press-releases/detail/133/applied-digital-achieves-ready-for-service-for-phase-1-at",
+       "publisher": "Applied Digital",
+       "type": "company",
+       "date": "2025-10-27",
+       "context": null,
+       "note": null,
+       "verified": {
+        "method": "Fetched the page and matched the quote word for word",
+        "status": "found",
+        "checked": "2026-11-19"
+       }
+      }
+     ]
+    }
+   ],
+   "id": "cik-0001144879--cik-0001769628",
+   "source_types": [
+    "company"
+   ],
+   "strongest_source": "company",
+   "kind": "supply",
+   "confirmed": true,
+   "latest_date": "2025-10-27"
   },
   {
    "source": "cik-0001297996",
@@ -4461,7 +5702,7 @@
        "verified": {
         "method": "Fetched the page and matched the quote word for word",
         "status": "found",
-        "checked": "2026-11-17"
+        "checked": "2026-11-19"
        }
       }
      ]
@@ -4865,7 +6106,7 @@
        "verified": {
         "method": "Fetched the page and matched the quote word for word",
         "status": "found",
-        "checked": "2026-11-17"
+        "checked": "2026-11-19"
        }
       },
       {
@@ -4919,7 +6160,7 @@
        "verified": {
         "method": "Fetched the page and matched the quote word for word",
         "status": "found",
-        "checked": "2026-11-17"
+        "checked": "2026-11-19"
        }
       }
      ]
@@ -4933,6 +6174,45 @@
    "kind": "supply",
    "confirmed": true,
    "latest_date": "2025-11-11"
+  },
+  {
+   "source": "cik-0001533232",
+   "target": "cik-0000789019",
+   "deals": [
+    {
+     "id": "bep-msft-framework",
+     "relationship": "supplies",
+     "what": "New renewable power capacity under a five-year framework agreement, over 10.5 GW planned",
+     "what_is_label": false,
+     "amount": null,
+     "confirmed": true,
+     "origin": "curated",
+     "evidence": [
+      {
+       "quote": "The five-year agreement outlines plans for the development of over 10.5 gigawatts of new renewable energy capacity",
+       "url": "https://bep.brookfield.com/press-releases/bep/brookfield-and-microsoft-collaborating-deliver-over-105-gw-new-renewable-power",
+       "publisher": "Brookfield Renewable",
+       "type": "company",
+       "date": "2024-05-01",
+       "context": null,
+       "note": null,
+       "verified": {
+        "method": "Found word for word in the page text returned by web search",
+        "status": "found",
+        "checked": "2026-11-19"
+       }
+      }
+     ]
+    }
+   ],
+   "id": "cik-0001533232--cik-0000789019",
+   "source_types": [
+    "company"
+   ],
+   "strongest_source": "company",
+   "kind": "supply",
+   "confirmed": true,
+   "latest_date": "2024-05-01"
   },
   {
    "source": "cik-0001571996",
@@ -4973,6 +6253,59 @@
   },
   {
    "source": "cik-0001571996",
+   "target": "cik-0001769628",
+   "deals": [
+    {
+     "id": "dell-crwv-gb300",
+     "relationship": "supplies",
+     "what": "The first NVIDIA GB300 NVL72 racks, built by Dell",
+     "what_is_label": false,
+     "amount": null,
+     "confirmed": true,
+     "origin": "curated",
+     "evidence": [
+      {
+       "quote": "Today we reached another milestone in advancing enterprise AI by becoming the first to ship NVIDIA GB300 NVL72.",
+       "url": "https://www.dell.com/en-us/blog/dell-delivers-market-s-first-nvidia-gb300-nvl72-to-coreweave/",
+       "publisher": "Dell Technologies",
+       "type": "company",
+       "date": "2025-07-03",
+       "context": null,
+       "note": null,
+       "verified": {
+        "method": "Fetched the page and matched the quote word for word",
+        "status": "found",
+        "checked": "2026-11-19"
+       }
+      },
+      {
+       "quote": "CoreWeave’s adoption of Dell Integrated Racks with NVIDIA GB300 NVL72 pushes the boundaries of scalability for cloud services.",
+       "url": "https://www.dell.com/en-us/blog/dell-delivers-market-s-first-nvidia-gb300-nvl72-to-coreweave/",
+       "publisher": "Dell Technologies",
+       "type": "company",
+       "date": "2025-07-03",
+       "context": null,
+       "note": null,
+       "verified": {
+        "method": "Fetched the page and matched the quote word for word",
+        "status": "found",
+        "checked": "2026-11-19"
+       }
+      }
+     ]
+    }
+   ],
+   "id": "cik-0001571996--cik-0001769628",
+   "source_types": [
+    "company"
+   ],
+   "strongest_source": "company",
+   "kind": "supply",
+   "confirmed": true,
+   "latest_date": "2025-07-03"
+  },
+  {
+   "source": "cik-0001571996",
    "target": "cik-0001878848",
    "deals": [
     {
@@ -4995,7 +6328,7 @@
        "verified": {
         "method": "Fetched the page and matched the quote word for word",
         "status": "found",
-        "checked": "2026-11-17"
+        "checked": "2026-11-19"
        }
       }
      ]
@@ -5034,7 +6367,7 @@
        "verified": {
         "method": "Fetched the page and matched the quote word for word",
         "status": "found",
-        "checked": "2026-11-17"
+        "checked": "2026-11-19"
        }
       }
      ]
@@ -5048,6 +6381,45 @@
    "kind": "supply",
    "confirmed": true,
    "latest_date": "2025-06-11"
+  },
+  {
+   "source": "cik-0001652044",
+   "target": "cik-0001083301",
+   "deals": [
+    {
+     "id": "googl-wulf-backstop",
+     "relationship": "finances",
+     "what": "A backstop supporting the debt for TeraWulf's Fluidstack project, in exchange for warrants on TeraWulf shares",
+     "what_is_label": false,
+     "amount": null,
+     "confirmed": true,
+     "origin": "curated",
+     "evidence": [
+      {
+       "quote": "In connection with the new CB-5 lease, Google will provide an incremental backstop of $1.4 billion in support of project-related debt financing and will receive warrants to acquire 32.5 million shares of TeraWulf common stock.",
+       "url": "https://www.barchart.com/story/news/34218778/terawulf-announces-fluidstack-expansion-with-160-mw-cb-5-lease-at-lake-mariner",
+       "publisher": "TeraWulf (press release via Barchart)",
+       "type": "company",
+       "date": "2025-08-18",
+       "context": null,
+       "note": null,
+       "verified": {
+        "method": "Found word for word in the page text returned by web search",
+        "status": "found",
+        "checked": "2026-11-19"
+       }
+      }
+     ]
+    }
+   ],
+   "id": "cik-0001652044--cik-0001083301",
+   "source_types": [
+    "company"
+   ],
+   "strongest_source": "company",
+   "kind": "money",
+   "confirmed": true,
+   "latest_date": "2025-08-18"
   },
   {
    "source": "cik-0001652044",
@@ -5073,7 +6445,7 @@
        "verified": {
         "method": "Fetched the page and matched the quote word for word",
         "status": "found",
-        "checked": "2026-11-17"
+        "checked": "2026-11-19"
        }
       }
      ]
@@ -5112,7 +6484,7 @@
        "verified": {
         "method": "Fetched the page and matched the quote word for word",
         "status": "found",
-        "checked": "2026-11-17"
+        "checked": "2026-11-19"
        }
       }
      ]
@@ -5126,6 +6498,161 @@
    "kind": "supply",
    "confirmed": true,
    "latest_date": "2025-10-23"
+  },
+  {
+   "source": "cik-0001652044",
+   "target": "name-commonwealth-fusion-systems",
+   "deals": [
+    {
+     "id": "googl-cfs-invest",
+     "relationship": "invests_in",
+     "what": "A second capital investment in Commonwealth Fusion Systems",
+     "what_is_label": false,
+     "amount": null,
+     "confirmed": true,
+     "origin": "curated",
+     "evidence": [
+      {
+       "quote": "We're also making our second capital investment in CFS to help them build on promising scientific and engineering breakthroughs and continue moving their technology toward commercialization.",
+       "url": "https://blog.google/outreach-initiatives/sustainability/our-latest-bet-on-a-fusion-powered-future/",
+       "publisher": "Google",
+       "type": "company",
+       "date": "2025-06-30",
+       "context": null,
+       "note": null,
+       "verified": {
+        "method": "Fetched the page and matched the quote word for word",
+        "status": "found",
+        "checked": "2026-11-19"
+       }
+      }
+     ]
+    }
+   ],
+   "id": "cik-0001652044--name-commonwealth-fusion-systems",
+   "source_types": [
+    "company"
+   ],
+   "strongest_source": "company",
+   "kind": "money",
+   "confirmed": true,
+   "latest_date": "2025-06-30"
+  },
+  {
+   "source": "cik-0001652044",
+   "target": "name-intersect",
+   "deals": [
+    {
+     "id": "googl-intersect",
+     "relationship": "acquires",
+     "what": "Agreed to buy Intersect, a data center and energy infrastructure developer, for $4.8 billion plus debt",
+     "what_is_label": false,
+     "amount": "$4.8 billion",
+     "confirmed": true,
+     "origin": "curated",
+     "evidence": [
+      {
+       "quote": "In 2025, we entered into definitive agreements to acquire Wiz, a leading cloud security platform, for $32.0 billion, and Intersect, a provider of data center and energy infrastructure solutions, for $4.8 billion in cash plus the assumption of debt.",
+       "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000018/goog-20251231.htm",
+       "publisher": "Alphabet 10-K",
+       "type": "sec_filing",
+       "date": "2026-02-05",
+       "context": null,
+       "note": null,
+       "verified": {
+        "method": "Matched word for word in the cached filing",
+        "status": "found"
+       }
+      }
+     ]
+    }
+   ],
+   "id": "cik-0001652044--name-intersect",
+   "source_types": [
+    "sec_filing"
+   ],
+   "strongest_source": "sec_filing",
+   "kind": "money",
+   "confirmed": true,
+   "latest_date": "2026-02-05"
+  },
+  {
+   "source": "cik-0001652044",
+   "target": "name-openai",
+   "deals": [
+    {
+     "id": "googl-openai-gpus",
+     "relationship": "supplies",
+     "what": "Google Cloud capacity with NVIDIA GB200 and GB300 systems for OpenAI inference",
+     "what_is_label": false,
+     "amount": null,
+     "confirmed": true,
+     "origin": "curated",
+     "evidence": [
+      {
+       "quote": "OpenAI is running large‑scale inference on NVIDIA GB300 (A4X Max VMs) and GB200 NVL72 systems",
+       "url": "https://blogs.nvidia.com/blog/google-cloud-agentic-physical-ai-factories/",
+       "publisher": "NVIDIA",
+       "type": "company",
+       "date": "",
+       "context": null,
+       "note": null,
+       "verified": {
+        "method": "Fetched the page and matched the quote word for word",
+        "status": "found",
+        "checked": "2026-11-19"
+       }
+      }
+     ]
+    }
+   ],
+   "id": "cik-0001652044--name-openai",
+   "source_types": [
+    "company"
+   ],
+   "strongest_source": "company",
+   "kind": "supply",
+   "confirmed": true,
+   "latest_date": ""
+  },
+  {
+   "source": "cik-0001664703",
+   "target": "cik-0001341439",
+   "deals": [
+    {
+     "id": "be-orcl-fuelcells",
+     "relationship": "supplies",
+     "what": "Fuel cells for on-site power at some Oracle Cloud data centers in the U.S.",
+     "what_is_label": false,
+     "amount": null,
+     "confirmed": true,
+     "origin": "curated",
+     "evidence": [
+      {
+       "quote": "Bloom Energy (NYSE: BE), a global leader in power solutions, today announced that it will deploy its fuel cell technology at select Oracle Cloud Infrastructure (OCI) data centers in the U.S.",
+       "url": "https://www.businesswire.com/news/home/20250723479385/en/Oracle-and-Bloom-Energy-Collaborate-to-Deliver-Power-to-Data-Centers-at-the-Speed-of-AI",
+       "publisher": "Bloom Energy (via Business Wire)",
+       "type": "company",
+       "date": "2025-07-24",
+       "context": null,
+       "note": null,
+       "verified": {
+        "method": "Found word for word in the page text returned by web search",
+        "status": "found",
+        "checked": "2026-11-19"
+       }
+      }
+     ]
+    }
+   ],
+   "id": "cik-0001664703--cik-0001341439",
+   "source_types": [
+    "company"
+   ],
+   "strongest_source": "company",
+   "kind": "supply",
+   "confirmed": true,
+   "latest_date": "2025-07-24"
   },
   {
    "source": "cik-0001674101",
@@ -5164,6 +6691,83 @@
    "kind": "undirected",
    "confirmed": true,
    "latest_date": "2026-02-13"
+  },
+  {
+   "source": "cik-0001674101",
+   "target": "cik-0001849056",
+   "deals": [
+    {
+     "id": "vrt-oklo",
+     "relationship": "partners_with",
+     "what": "Exploring nuclear power for future data centers",
+     "what_is_label": false,
+     "amount": null,
+     "confirmed": true,
+     "origin": "curated",
+     "evidence": [
+      {
+       "quote": "our collaboration with Oklo reflects exploration of alternative energy solutions that could support future data center power requirements",
+       "url": "https://www.sec.gov/Archives/edgar/data/1674101/000167410126000008/vrt-20251231.htm",
+       "publisher": "Vertiv 10-K",
+       "type": "sec_filing",
+       "date": "2026-02-13",
+       "context": null,
+       "note": null,
+       "verified": {
+        "method": "Matched word for word in the cached filing",
+        "status": "found"
+       }
+      }
+     ]
+    }
+   ],
+   "id": "cik-0001674101--cik-0001849056",
+   "source_types": [
+    "sec_filing"
+   ],
+   "strongest_source": "sec_filing",
+   "kind": "undirected",
+   "confirmed": true,
+   "latest_date": "2026-02-13"
+  },
+  {
+   "source": "cik-0001692819",
+   "target": "cik-0001326801",
+   "deals": [
+    {
+     "id": "vst-meta-nuclear",
+     "relationship": "supplies",
+     "what": "More than 2,600 MW from three Vistra nuclear plants under 20-year agreements",
+     "what_is_label": false,
+     "amount": null,
+     "confirmed": true,
+     "origin": "curated",
+     "evidence": [
+      {
+       "quote": "today announced it has entered into 20-year PPAs to provide more than 2,600 megawatts of zero-carbon energy from a combination of three different Vistra nuclear plants",
+       "url": "https://investor.vistracorp.com/2026-01-09-Vistra-and-Meta-Announce-Agreements-to-Support-Nuclear-Plants-in-PJM-and-Add-New-Nuclear-Generation-to-the-Grid",
+       "publisher": "Vistra",
+       "type": "company",
+       "date": "2026-01-09",
+       "context": null,
+       "note": null,
+       "verified": {
+        "method": "Fetched the page and matched the quote word for word",
+        "status": "found",
+        "checked": "2026-11-19"
+       }
+      }
+     ]
+    }
+   ],
+   "id": "cik-0001692819--cik-0001326801",
+   "source_types": [
+    "company"
+   ],
+   "strongest_source": "company",
+   "kind": "supply",
+   "confirmed": true,
+   "latest_date": "2026-01-09"
   },
   {
    "source": "cik-0001709048",
@@ -5362,7 +6966,7 @@
        "verified": {
         "method": "Fetched the page and matched the quote word for word",
         "status": "found",
-        "checked": "2026-11-17"
+        "checked": "2026-11-19"
        }
       },
       {
@@ -5376,7 +6980,7 @@
        "verified": {
         "method": "Fetched the page and matched the quote word for word",
         "status": "found",
-        "checked": "2026-11-17"
+        "checked": "2026-11-19"
        }
       }
      ]
@@ -5452,7 +7056,7 @@
        "verified": {
         "method": "Fetched the page and matched the quote word for word",
         "status": "found",
-        "checked": "2026-11-17"
+        "checked": "2026-11-19"
        }
       },
       {
@@ -5466,7 +7070,7 @@
        "verified": {
         "method": "Fetched the page and matched the quote word for word",
         "status": "found",
-        "checked": "2026-11-17"
+        "checked": "2026-11-19"
        }
       }
      ]
@@ -5557,6 +7161,173 @@
    "latest_date": "2026-03-02"
   },
   {
+   "source": "cik-0001807794",
+   "target": "cik-0001018724",
+   "deals": [
+    {
+     "id": "crdo-amzn-warrant",
+     "relationship": "supplies",
+     "what": "Credo's products; Amazon earns Credo shares as it pays Credo, through a 'customer warrant'",
+     "what_is_label": false,
+     "amount": null,
+     "confirmed": true,
+     "origin": "curated",
+     "evidence": [
+      {
+       "quote": "During fiscal year 2022, the Company issued a warrant to Amazon.com NV Investment Holdings LLC (Holder) to purchase an aggregate of up to 4.1 million of our ordinary shares at an exercise price of $10.74 per share (the Customer Warrant).",
+       "url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm",
+       "publisher": "Credo 10-K",
+       "type": "sec_filing",
+       "date": "2026-06-15",
+       "context": null,
+       "note": null,
+       "verified": {
+        "method": "Matched word for word in the cached filing",
+        "status": "found"
+       }
+      },
+      {
+       "quote": "The shares issuable vest in tranches over the contract term based on the amount of global payments by Holder and its affiliates to the Company, up to $201.0 million in aggregate payments.",
+       "url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm",
+       "publisher": "Credo 10-K",
+       "type": "sec_filing",
+       "date": "2026-06-15",
+       "context": null,
+       "note": null,
+       "verified": {
+        "method": "Matched word for word in the cached filing",
+        "status": "found"
+       }
+      }
+     ]
+    }
+   ],
+   "id": "cik-0001807794--cik-0001018724",
+   "source_types": [
+    "sec_filing"
+   ],
+   "strongest_source": "sec_filing",
+   "kind": "supply",
+   "confirmed": true,
+   "latest_date": "2026-06-15"
+  },
+  {
+   "source": "cik-0001807794",
+   "target": "cik-0001341439",
+   "deals": [
+    {
+     "id": "crdo-orcl-zeroflap",
+     "relationship": "partners_with",
+     "what": "Co-developed ZeroFlap Optics for AI data centers",
+     "what_is_label": false,
+     "amount": null,
+     "confirmed": true,
+     "origin": "curated",
+     "evidence": [
+      {
+       "quote": "We partnered with Oracle to develop our ZeroFlap Optics that helps address the reliability issues known as Link Flap which plague commodity options in AI data centers enabling faster AI cluster turn on and time to first revenue.",
+       "url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm",
+       "publisher": "Credo 10-K",
+       "type": "sec_filing",
+       "date": "2026-06-15",
+       "context": null,
+       "note": null,
+       "verified": {
+        "method": "Matched word for word in the cached filing",
+        "status": "found"
+       }
+      }
+     ]
+    }
+   ],
+   "id": "cik-0001807794--cik-0001341439",
+   "source_types": [
+    "sec_filing"
+   ],
+   "strongest_source": "sec_filing",
+   "kind": "undirected",
+   "confirmed": true,
+   "latest_date": "2026-06-15"
+  },
+  {
+   "source": "cik-0001819989",
+   "target": "cik-0001018724",
+   "deals": [
+    {
+     "id": "cifr-amzn-lease",
+     "relationship": "leases_capacity_to",
+     "what": "Space and power for AI workloads under a 15-year lease worth about $5.5 billion",
+     "what_is_label": false,
+     "amount": "about $5.5 billion",
+     "confirmed": true,
+     "origin": "curated",
+     "evidence": [
+      {
+       "quote": "Cipher today announced an approximately $5.5 billion, 15-year lease agreement with Amazon Web Services to provide turnkey space and power for AI workloads.",
+       "url": "https://seekingalpha.com/pr/20289377",
+       "publisher": "Cipher Mining (press release)",
+       "type": "company",
+       "date": "2025-11-03",
+       "context": null,
+       "note": null,
+       "verified": {
+        "method": "Found word for word in the page text returned by web search",
+        "status": "found",
+        "checked": "2026-11-19"
+       }
+      }
+     ]
+    }
+   ],
+   "id": "cik-0001819989--cik-0001018724",
+   "source_types": [
+    "company"
+   ],
+   "strongest_source": "company",
+   "kind": "supply",
+   "confirmed": true,
+   "latest_date": "2025-11-03"
+  },
+  {
+   "source": "cik-0001819989",
+   "target": "name-fluidstack",
+   "deals": [
+    {
+     "id": "cifr-fluidstack",
+     "relationship": "leases_capacity_to",
+     "what": "AI hosting under a 10-year agreement that also involves Google",
+     "what_is_label": false,
+     "amount": null,
+     "confirmed": true,
+     "origin": "curated",
+     "evidence": [
+      {
+       "quote": "Executed 10-Year AI Hosting Agreement with Fluidstack and Google",
+       "url": "https://seekingalpha.com/pr/20289377",
+       "publisher": "Cipher Mining (press release)",
+       "type": "company",
+       "date": "2025-11-03",
+       "context": null,
+       "note": null,
+       "verified": {
+        "method": "Found word for word in the page text returned by web search",
+        "status": "found",
+        "checked": "2026-11-19"
+       }
+      }
+     ]
+    }
+   ],
+   "id": "cik-0001819989--name-fluidstack",
+   "source_types": [
+    "company"
+   ],
+   "strongest_source": "company",
+   "kind": "supply",
+   "confirmed": true,
+   "latest_date": "2025-11-03"
+  },
+  {
    "source": "cik-0001823945",
    "target": "cik-0001326801",
    "deals": [
@@ -5580,7 +7351,7 @@
        "verified": {
         "method": "Fetched the page and matched the quote word for word",
         "status": "found",
-        "checked": "2026-11-17"
+        "checked": "2026-11-19"
        }
       },
       {
@@ -5594,7 +7365,7 @@
        "verified": {
         "method": "Fetched the page and matched the quote word for word",
         "status": "found",
-        "checked": "2026-11-17"
+        "checked": "2026-11-19"
        }
       }
      ]
@@ -5608,6 +7379,137 @@
    "kind": "money",
    "confirmed": true,
    "latest_date": "2025-10-21"
+  },
+  {
+   "source": "cik-0001835632",
+   "target": "cik-0001018724",
+   "deals": [
+    {
+     "id": "mrvl-amzn",
+     "relationship": "supplies",
+     "what": "Data center chips including custom AI products, under a five-year agreement",
+     "what_is_label": false,
+     "amount": null,
+     "confirmed": true,
+     "origin": "curated",
+     "evidence": [
+      {
+       "quote": "announced today the expansion of their strategic relationship with Amazon Web Services (AWS) through a five-year, multi-generational agreement that includes collaboration across multiple AWS products and the use of AWS cloud infrastructure",
+       "url": "https://www.marvell.com/company/newsroom/marvell-expands-strategic-collaboration-aws-enable-accelerated-infrastructure-ai-cloud.html",
+       "publisher": "Marvell",
+       "type": "company",
+       "date": "2024-12-02",
+       "context": null,
+       "note": null,
+       "verified": {
+        "method": "Found word for word in the page text returned by web search",
+        "status": "found",
+        "checked": "2026-11-19"
+       }
+      },
+      {
+       "quote": "This agreement covers a broad range of data center semiconductors from Marvell, including the supply of custom AI products, optical digital signal processors (DSPs), active electrical cable (AEC) DSPs, PCIe retimers",
+       "url": "https://www.marvell.com/company/newsroom/marvell-expands-strategic-collaboration-aws-enable-accelerated-infrastructure-ai-cloud.html",
+       "publisher": "Marvell",
+       "type": "company",
+       "date": "2024-12-02",
+       "context": null,
+       "note": null,
+       "verified": {
+        "method": "Fetched the page and matched the quote word for word",
+        "status": "unreachable",
+        "checked": "2026-11-19"
+       }
+      }
+     ]
+    }
+   ],
+   "id": "cik-0001835632--cik-0001018724",
+   "source_types": [
+    "company"
+   ],
+   "strongest_source": "company",
+   "kind": "supply",
+   "confirmed": true,
+   "latest_date": "2024-12-02"
+  },
+  {
+   "source": "cik-0001839341",
+   "target": "cik-0001769628",
+   "deals": [
+    {
+     "id": "corz-crwv",
+     "relationship": "leases_capacity_to",
+     "what": "About 590 MW of data center capacity across six Core Scientific sites",
+     "what_is_label": false,
+     "amount": null,
+     "confirmed": true,
+     "origin": "curated",
+     "evidence": [
+      {
+       "quote": "The agreement increases CoreWeave’s total contracted HPC infrastructure with Core Scientific to approximately 590 MW across six sites.",
+       "url": "https://investors.corescientific.com/news-events/press-releases/detail/110/core-scientific-and-coreweave-expand-partnership-with-new-70-mw-contract",
+       "publisher": "Core Scientific",
+       "type": "company",
+       "date": "2025-02-26",
+       "context": null,
+       "note": null,
+       "verified": {
+        "method": "Fetched the page and matched the quote word for word",
+        "status": "found",
+        "checked": "2026-11-19"
+       }
+      }
+     ]
+    }
+   ],
+   "id": "cik-0001839341--cik-0001769628",
+   "source_types": [
+    "company"
+   ],
+   "strongest_source": "company",
+   "kind": "supply",
+   "confirmed": true,
+   "latest_date": "2025-02-26"
+  },
+  {
+   "source": "cik-0001859392",
+   "target": "cik-0001769628",
+   "deals": [
+    {
+     "id": "glxy-crwv-helios",
+     "relationship": "leases_capacity_to",
+     "what": "Power and data center capacity at the Helios campus in West Texas, under a 15-year lease",
+     "what_is_label": false,
+     "amount": null,
+     "confirmed": true,
+     "origin": "curated",
+     "evidence": [
+      {
+       "quote": "Galaxy today announced that it has completed delivery of the first phase of power at its Helios data center campus (“Helios”) in West Texas, delivering approximately 200 megawatts (“MW”) of gross power — 133 MW of critical IT load — to CoreWeave under the Company’s 15-year lease agreement.",
+       "url": "https://www.galaxy.com/newsroom/galaxy-completes-phase-i-of-its-helios-data-center-campus",
+       "publisher": "Galaxy",
+       "type": "company",
+       "date": "2026-07-06",
+       "context": null,
+       "note": null,
+       "verified": {
+        "method": "Fetched the page and matched the quote word for word",
+        "status": "not_found",
+        "checked": "2026-11-19"
+       }
+      }
+     ]
+    }
+   ],
+   "id": "cik-0001859392--cik-0001769628",
+   "source_types": [
+    "company"
+   ],
+   "strongest_source": "company",
+   "kind": "supply",
+   "confirmed": true,
+   "latest_date": "2026-07-06"
   },
   {
    "source": "cik-0001868275",
@@ -5633,7 +7535,7 @@
        "verified": {
         "method": "Fetched the page and matched the quote word for word",
         "status": "found",
-        "checked": "2026-11-17"
+        "checked": "2026-11-19"
        }
       },
       {
@@ -5647,7 +7549,7 @@
        "verified": {
         "method": "Fetched the page and matched the quote word for word",
         "status": "found",
-        "checked": "2026-11-17"
+        "checked": "2026-11-19"
        }
       }
      ]
@@ -5687,7 +7589,7 @@
        "verified": {
         "method": "Fetched the page and matched the quote word for word",
         "status": "found",
-        "checked": "2026-11-17"
+        "checked": "2026-11-19"
        }
       }
      ]
@@ -5726,7 +7628,7 @@
        "verified": {
         "method": "Fetched the page and matched the quote word for word",
         "status": "found",
-        "checked": "2026-11-17"
+        "checked": "2026-11-19"
        }
       }
      ]
@@ -6066,6 +7968,45 @@
    "latest_date": "2026-06-15"
   },
   {
+   "source": "name-commonwealth-fusion-systems",
+   "target": "cik-0001652044",
+   "deals": [
+    {
+     "id": "cfs-googl-offtake",
+     "relationship": "supplies",
+     "what": "200 MW from a fusion power plant that Commonwealth Fusion Systems plans to build in Virginia (not yet built)",
+     "what_is_label": false,
+     "amount": null,
+     "confirmed": true,
+     "origin": "curated",
+     "evidence": [
+      {
+       "quote": "we will offtake 200 megawatts (MW) of carbon free energy from their first commercial plant, to be developed in Chesterfield, Virginia.",
+       "url": "https://blog.google/outreach-initiatives/sustainability/our-latest-bet-on-a-fusion-powered-future/",
+       "publisher": "Google",
+       "type": "company",
+       "date": "2025-06-30",
+       "context": null,
+       "note": null,
+       "verified": {
+        "method": "Fetched the page and matched the quote word for word",
+        "status": "found",
+        "checked": "2026-11-19"
+       }
+      }
+     ]
+    }
+   ],
+   "id": "name-commonwealth-fusion-systems--cik-0001652044",
+   "source_types": [
+    "company"
+   ],
+   "strongest_source": "company",
+   "kind": "supply",
+   "confirmed": true,
+   "latest_date": "2025-06-30"
+  },
+  {
    "source": "name-compuware-technology",
    "target": "cik-0001375365",
    "deals": [
@@ -6228,6 +8169,59 @@
    "kind": "supply",
    "confirmed": true,
    "latest_date": "2025-08-28"
+  },
+  {
+   "source": "name-fluidstack",
+   "target": "name-anthropic",
+   "deals": [
+    {
+     "id": "anthropic-fluidstack",
+     "relationship": "partners_with",
+     "what": "Building Anthropic's own data centers in Texas and New York, part of a $50 billion plan",
+     "what_is_label": false,
+     "amount": null,
+     "confirmed": true,
+     "origin": "curated",
+     "evidence": [
+      {
+       "quote": "Today, we are announcing a $50 billion investment in American computing infrastructure, building data centers with Fluidstack in Texas and New York, with more sites to come.",
+       "url": "https://www.anthropic.com/news/anthropic-invests-50-billion-in-american-ai-infrastructure",
+       "publisher": "Anthropic",
+       "type": "company",
+       "date": "2025-11-12",
+       "context": null,
+       "note": null,
+       "verified": {
+        "method": "Fetched the page and matched the quote word for word",
+        "status": "found",
+        "checked": "2026-11-19"
+       }
+      },
+      {
+       "quote": "We selected Fluidstack as our partner for its ability to move with exceptional agility, enabling rapid delivery of gigawatts of power.",
+       "url": "https://www.anthropic.com/news/anthropic-invests-50-billion-in-american-ai-infrastructure",
+       "publisher": "Anthropic",
+       "type": "company",
+       "date": "2025-11-12",
+       "context": null,
+       "note": null,
+       "verified": {
+        "method": "Fetched the page and matched the quote word for word",
+        "status": "found",
+        "checked": "2026-11-19"
+       }
+      }
+     ]
+    }
+   ],
+   "id": "name-fluidstack--name-anthropic",
+   "source_types": [
+    "company"
+   ],
+   "strongest_source": "company",
+   "kind": "undirected",
+   "confirmed": true,
+   "latest_date": "2025-11-12"
   },
   {
    "source": "name-groq",
@@ -6414,7 +8408,7 @@
        "verified": {
         "method": "Fetched the page and matched the quote word for word",
         "status": "found",
-        "checked": "2026-11-17"
+        "checked": "2026-11-19"
        }
       },
       {
@@ -6428,7 +8422,7 @@
        "verified": {
         "method": "Fetched the page and matched the quote word for word",
         "status": "found",
-        "checked": "2026-11-17"
+        "checked": "2026-11-19"
        }
       }
      ]
@@ -6554,7 +8548,7 @@
        "verified": {
         "method": "Fetched the page and matched the quote word for word",
         "status": "found",
-        "checked": "2026-11-17"
+        "checked": "2026-11-19"
        }
       }
      ]
@@ -6568,6 +8562,45 @@
    "kind": "supply",
    "confirmed": true,
    "latest_date": "2025-11-03"
+  },
+  {
+   "source": "name-nscale",
+   "target": "cik-0000789019",
+   "deals": [
+    {
+     "id": "nscale-msft",
+     "relationship": "supplies",
+     "what": "About 200,000 NVIDIA GB300 GPUs of AI infrastructure across Europe and the U.S.",
+     "what_is_label": false,
+     "amount": null,
+     "confirmed": true,
+     "origin": "curated",
+     "evidence": [
+      {
+       "quote": "Nscale today announced it has signed an expanded deal with Microsoft to approximately 200,000 NVIDIA GB300 GPUs of hyperscale NVIDIA AI infrastructure across Europe and the U.S.",
+       "url": "https://www.nscale.com/press-releases/nscale-microsoft-2025",
+       "publisher": "Nscale",
+       "type": "company",
+       "date": "2025-10-15",
+       "context": null,
+       "note": null,
+       "verified": {
+        "method": "Fetched the page and matched the quote word for word",
+        "status": "found",
+        "checked": "2026-11-19"
+       }
+      }
+     ]
+    }
+   ],
+   "id": "name-nscale--cik-0000789019",
+   "source_types": [
+    "company"
+   ],
+   "strongest_source": "company",
+   "kind": "supply",
+   "confirmed": true,
+   "latest_date": "2025-10-15"
   },
   {
    "source": "name-openai",
@@ -6794,6 +8827,45 @@
    "latest_date": "2026-02-25"
   },
   {
+   "source": "name-samsung-electronics",
+   "target": "name-openai",
+   "deals": [
+    {
+     "id": "samsung-openai-loi",
+     "relationship": "supplies",
+     "what": "Memory chips for Stargate data centers (a letter of intent, not a final contract)",
+     "what_is_label": false,
+     "amount": null,
+     "confirmed": true,
+     "origin": "curated",
+     "evidence": [
+      {
+       "quote": "Samsung Electronics (005930.KS) and SK Hynix (000660.KS) have signed letters of intent to supply memory chips for OpenAI's data centres, as South Korean chipmakers join forces with the ChatGPT maker to meet rising demand from its Stargate project.",
+       "url": "https://tribune.com.pk/story/2570028/openais-stargate-project-taps-samsung-sk-hynix-for-chip-supply?amp=1",
+       "publisher": "Reuters (via The Express Tribune)",
+       "type": "press",
+       "date": "2025-10-01",
+       "context": null,
+       "note": null,
+       "verified": {
+        "method": "Fetched the page and matched the quote word for word",
+        "status": "found",
+        "checked": "2026-11-19"
+       }
+      }
+     ]
+    }
+   ],
+   "id": "name-samsung-electronics--name-openai",
+   "source_types": [
+    "press"
+   ],
+   "strongest_source": "press",
+   "kind": "supply",
+   "confirmed": true,
+   "latest_date": "2025-10-01"
+  },
+  {
    "source": "name-sigurd-microelectronics",
    "target": "cik-0001807794",
    "deals": [
@@ -6953,6 +9025,84 @@
    "kind": "supply",
    "confirmed": true,
    "latest_date": "2026-02-25"
+  },
+  {
+   "source": "name-sk-hynix",
+   "target": "name-openai",
+   "deals": [
+    {
+     "id": "skhynix-openai-loi",
+     "relationship": "supplies",
+     "what": "Memory chips for Stargate data centers (a letter of intent, not a final contract)",
+     "what_is_label": false,
+     "amount": null,
+     "confirmed": true,
+     "origin": "curated",
+     "evidence": [
+      {
+       "quote": "Samsung Electronics (005930.KS) and SK Hynix (000660.KS) have signed letters of intent to supply memory chips for OpenAI's data centres, as South Korean chipmakers join forces with the ChatGPT maker to meet rising demand from its Stargate project.",
+       "url": "https://tribune.com.pk/story/2570028/openais-stargate-project-taps-samsung-sk-hynix-for-chip-supply?amp=1",
+       "publisher": "Reuters (via The Express Tribune)",
+       "type": "press",
+       "date": "2025-10-01",
+       "context": null,
+       "note": null,
+       "verified": {
+        "method": "Fetched the page and matched the quote word for word",
+        "status": "found",
+        "checked": "2026-11-19"
+       }
+      }
+     ]
+    }
+   ],
+   "id": "name-sk-hynix--name-openai",
+   "source_types": [
+    "press"
+   ],
+   "strongest_source": "press",
+   "kind": "supply",
+   "confirmed": true,
+   "latest_date": "2025-10-01"
+  },
+  {
+   "source": "name-softbank-group",
+   "target": "name-openai",
+   "deals": [
+    {
+     "id": "softbank-openai",
+     "relationship": "invests_in",
+     "what": "$7.5 billion in April 2025 and $22.5 billion more at a second closing, through Vision Fund 2",
+     "what_is_label": false,
+     "amount": "$30 billion",
+     "confirmed": true,
+     "origin": "curated",
+     "evidence": [
+      {
+       "quote": "The Company completed the first closing in April 2025, investing $7.5 billion through SoftBank Vision Fund 2 (“SVF2”), and has now completed an additional investment of $22.5 billion at the second closing, also through SVF2.",
+       "url": "https://group.softbank/en/news/press/20251231",
+       "publisher": "SoftBank Group",
+       "type": "company",
+       "date": "2025-12-31",
+       "context": null,
+       "note": null,
+       "verified": {
+        "method": "Fetched the page and matched the quote word for word",
+        "status": "found",
+        "checked": "2026-11-19"
+       }
+      }
+     ]
+    }
+   ],
+   "id": "name-softbank-group--name-openai",
+   "source_types": [
+    "company"
+   ],
+   "strongest_source": "company",
+   "kind": "money",
+   "confirmed": true,
+   "latest_date": "2025-12-31"
   },
   {
    "source": "name-tongfu-microelectronics",
@@ -7152,6 +9302,14 @@
      "edge": "name-kairos-power--cik-0001652044"
     },
     {
+     "from": "VST",
+     "to": "META",
+     "text": "Meta also signed 20-year agreements with Vistra for more than 2,600 MW from three existing nuclear plants.",
+     "from_id": "cik-0001692819",
+     "to_id": "cik-0001326801",
+     "edge": "cik-0001692819--cik-0001326801"
+    },
+    {
      "from": "VRT",
      "to": "NVDA",
      "text": "Inside the building, Vertiv says its partnership with NVIDIA covers power and thermal infrastructure for next-generation AI systems.",
@@ -7232,7 +9390,7 @@
     {
      "from": "NVDA",
      "to": "CRWV",
-     "text": "NVIDIA also supplies GPU systems to CoreWeave.",
+     "text": "NVIDIA also supplies GPU systems to CoreWeave, and in January 2026 it invested $2 billion in CoreWeave stock.",
      "from_id": "cik-0001045810",
      "to_id": "cik-0001769628",
      "edge": "cik-0001045810--cik-0001769628"
@@ -7317,6 +9475,179 @@
      "edge": "cik-0001047127--cik-0001730168"
     }
    ]
+  },
+  {
+   "id": "new-power",
+   "title": "Building new power plants",
+   "intro": "Beyond buying from plants that already run, the cloud companies are paying for new ones, from gas turbines to fusion.",
+   "steps": [
+    {
+     "from": "ETR",
+     "to": "META",
+     "text": "Louisiana regulators approved Entergy's plan to build three natural gas plants to power Meta's Hyperion data center.",
+     "from_id": "cik-0000065984",
+     "to_id": "cik-0001326801",
+     "edge": "cik-0000065984--cik-0001326801"
+    },
+    {
+     "from": "BEP",
+     "to": "MSFT",
+     "text": "Brookfield and Microsoft agreed a five-year framework for over 10.5 GW of new renewable capacity.",
+     "from_id": "cik-0001533232",
+     "to_id": "cik-0000789019",
+     "edge": "cik-0001533232--cik-0000789019"
+    },
+    {
+     "from": "BE",
+     "to": "ORCL",
+     "text": "Bloom Energy is deploying fuel cells that make power on site at some Oracle Cloud data centers.",
+     "from_id": "cik-0001664703",
+     "to_id": "cik-0001341439",
+     "edge": "cik-0001664703--cik-0001341439"
+    },
+    {
+     "from": "AMZN",
+     "to": "X-energy",
+     "text": "Amazon invested in X-energy, and the two aim to bring more than 5 GW of small modular nuclear reactors online by 2039.",
+     "from_id": "cik-0001018724",
+     "to_id": "name-x-energy",
+     "edge": "cik-0001018724--name-x-energy"
+    },
+    {
+     "from": "CFS",
+     "to": "GOOGL",
+     "text": "Google agreed to buy 200 MW from Commonwealth Fusion Systems' first fusion power plant, which is still to be built in Virginia.",
+     "from_id": "name-commonwealth-fusion-systems",
+     "to_id": "cik-0001652044",
+     "edge": "name-commonwealth-fusion-systems--cik-0001652044"
+    }
+   ]
+  },
+  {
+   "id": "custom-chips",
+   "title": "Chips the clouds design themselves",
+   "intro": "Besides buying NVIDIA GPUs, the big clouds design chips of their own and pay other companies to make them.",
+   "steps": [
+    {
+     "from": "TSM",
+     "to": "MSFT",
+     "text": "Microsoft's first in-house AI accelerator, Maia 100, is made on a 5nm process with TSMC's advanced packaging.",
+     "from_id": "cik-0001046179",
+     "to_id": "cik-0000789019",
+     "edge": "cik-0001046179--cik-0000789019"
+    },
+    {
+     "from": "TSM",
+     "to": "META",
+     "text": "Meta's first in-house AI chip, MTIA v1, is made on TSMC's 7nm process.",
+     "from_id": "cik-0001046179",
+     "to_id": "cik-0001326801",
+     "edge": "cik-0001046179--cik-0001326801"
+    },
+    {
+     "from": "MRVL",
+     "to": "AMZN",
+     "text": "Marvell signed a five-year agreement with AWS that includes supplying custom AI products, along with optical and connectivity chips.",
+     "from_id": "cik-0001835632",
+     "to_id": "cik-0001018724",
+     "edge": "cik-0001835632--cik-0001018724"
+    },
+    {
+     "from": "INTC",
+     "to": "AMZN",
+     "text": "Intel will make a custom AI fabric chip for AWS on Intel 18A, its most advanced process, and a custom Xeon 6 chip on Intel 3.",
+     "from_id": "cik-0000050863",
+     "to_id": "cik-0001018724",
+     "edge": "cik-0000050863--cik-0001018724"
+    },
+    {
+     "from": "INTC",
+     "to": "MSFT",
+     "text": "Microsoft has also chosen a chip design that it plans to produce on Intel 18A.",
+     "from_id": "cik-0000050863",
+     "to_id": "cik-0000789019",
+     "edge": "cik-0000050863--cik-0000789019"
+    },
+    {
+     "from": "ASML",
+     "to": "INTC",
+     "text": "To make chips that small, Intel received the industry's first High NA EUV lithography system, developed by ASML.",
+     "from_id": "cik-0000937966",
+     "to_id": "cik-0000050863",
+     "edge": "cik-0000937966--cik-0000050863"
+    },
+    {
+     "from": "NVDA",
+     "to": "INTC",
+     "text": "NVIDIA is now an Intel shareholder too. It agreed to buy $5 billion of Intel stock, and Intel will make custom data center CPUs for NVIDIA.",
+     "from_id": "cik-0001045810",
+     "to_id": "cik-0000050863",
+     "edge": "cik-0001045810--cik-0000050863"
+    }
+   ]
+  },
+  {
+   "id": "landlords",
+   "title": "Who owns the buildings",
+   "intro": "Many AI clouds don't own their data centers. They lease the building and its power from developers.",
+   "steps": [
+    {
+     "from": "APLD",
+     "to": "CRWV",
+     "text": "Applied Digital leases capacity to CoreWeave at its Polaris Forge 1 campus in North Dakota, including another 150 MW finalized in August 2025.",
+     "from_id": "cik-0001144879",
+     "to_id": "cik-0001769628",
+     "edge": "cik-0001144879--cik-0001769628"
+    },
+    {
+     "from": "GLXY",
+     "to": "CRWV",
+     "text": "Galaxy delivered the first phase of its Helios campus in West Texas to CoreWeave, about 133 MW of critical IT load under a 15-year lease.",
+     "from_id": "cik-0001859392",
+     "to_id": "cik-0001769628",
+     "edge": "cik-0001859392--cik-0001769628"
+    },
+    {
+     "from": "CORZ",
+     "to": "CRWV",
+     "text": "Core Scientific hosts about 590 MW of CoreWeave's infrastructure across six sites.",
+     "from_id": "cik-0001839341",
+     "to_id": "cik-0001769628",
+     "edge": "cik-0001839341--cik-0001769628"
+    },
+    {
+     "from": "CIFR",
+     "to": "AMZN",
+     "text": "Hyperscalers lease this way too. Cipher signed a 15-year lease with Amazon Web Services worth about $5.5 billion.",
+     "from_id": "cik-0001819989",
+     "to_id": "cik-0001018724",
+     "edge": "cik-0001819989--cik-0001018724"
+    },
+    {
+     "from": "WULF",
+     "to": "Fluidstack",
+     "text": "TeraWulf leases capacity at its Lake Mariner campus in New York to Fluidstack, an AI cloud platform.",
+     "from_id": "cik-0001083301",
+     "to_id": "name-fluidstack",
+     "edge": "cik-0001083301--name-fluidstack"
+    },
+    {
+     "from": "GOOGL",
+     "to": "WULF",
+     "text": "Google stands behind part of that deal, with an added $1.4 billion backstop for the project's debt, in exchange for warrants on TeraWulf shares.",
+     "from_id": "cik-0001652044",
+     "to_id": "cik-0001083301",
+     "edge": "cik-0001652044--cik-0001083301"
+    },
+    {
+     "from": "Fluidstack",
+     "to": "Anthropic",
+     "text": "Fluidstack is also building Anthropic's own data centers in Texas and New York, part of a $50 billion plan.",
+     "from_id": "name-fluidstack",
+     "to_id": "name-anthropic",
+     "edge": "name-fluidstack--name-anthropic"
+    }
+   ]
   }
  ],
  "glossary": [
@@ -7391,6 +9722,30 @@
   {
    "term": "Letter of intent",
    "definition": "A statement that two companies plan to make a deal. It is not yet a final, binding contract."
+  },
+  {
+   "term": "Letter of intent",
+   "definition": "A signed statement that two companies plan to make a deal. It comes before, and is weaker than, a final contract."
+  },
+  {
+   "term": "Lease",
+   "definition": "Here, an agreement to rent space and power in a data center building for years at a time, often 10 to 15."
+  },
+  {
+   "term": "Backstop",
+   "definition": "A promise to cover someone else's payments if they can't, which makes lenders more willing to fund a project."
+  },
+  {
+   "term": "Small modular reactor (SMR)",
+   "definition": "A nuclear reactor smaller than a traditional plant, designed to be built in a factory and installed in units."
+  },
+  {
+   "term": "Fusion",
+   "definition": "Making energy by fusing light atoms together, as the sun does. No fusion plant sells power to the grid yet."
+  },
+  {
+   "term": "EUV lithography",
+   "definition": "Printing the smallest chip features with extreme ultraviolet light. ASML is the only maker of these machines."
   }
  ]
 }

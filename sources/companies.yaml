@@ -1022,6 +1022,116 @@ companies:
     type: sec_filing
     date: '2026-02-20'
     note: The filing sentence that put this company on the map.
+- ref: APLD
+  id: cik-0001144879
+  name: Applied Digital
+  layer: buildings
+  summary: Builds and leases AI data centers in North Dakota; CoreWeave is the tenant at its Polaris Forge 1 campus.
+  cik: 1144879
+  about: FROM_CLAIMS
+- ref: BE
+  id: cik-0001664703
+  name: Bloom Energy
+  layer: power
+  summary: Makes fuel cells that generate power on site; it is deploying them at some Oracle Cloud data centers.
+  cik: 1664703
+  about: FROM_CLAIMS
+- ref: BEP
+  id: cik-0001533232
+  name: Brookfield Renewable
+  layer: power
+  summary: A renewable power company with a framework to develop over 10.5 GW of new capacity for Microsoft.
+  cik: 1533232
+  about: FROM_CLAIMS
+- ref: CFS
+  id: name-commonwealth-fusion-systems
+  name: Commonwealth Fusion Systems
+  layer: power
+  summary: A fusion energy company. Google has invested in it and agreed to buy power from its first planned plant.
+  about: FROM_CLAIMS
+- ref: CIFR
+  id: cik-0001819989
+  name: Cipher Digital
+  layer: buildings
+  summary: Formerly Cipher Mining. Leases data center space and power for AI, to Amazon Web Services and to Fluidstack.
+  cik: 1819989
+  about: FROM_CLAIMS
+- ref: CORZ
+  id: cik-0001839341
+  name: Core Scientific
+  layer: buildings
+  summary: Hosts about 590 MW of CoreWeave's computing infrastructure across six sites.
+  cik: 1839341
+  about: FROM_CLAIMS
+- ref: ETR
+  id: cik-0000065984
+  name: Entergy
+  layer: power
+  summary: A utility; Louisiana regulators approved its plan to build three gas plants to power Meta's Hyperion
+    data center.
+  cik: 65984
+  about: FROM_CLAIMS
+- ref: Fluidstack
+  id: name-fluidstack
+  name: Fluidstack
+  layer: neocloud
+  summary: An AI cloud platform. It leases data center capacity from TeraWulf and Cipher and is building Anthropic's
+    data centers.
+  about: FROM_CLAIMS
+- ref: GLXY
+  id: cik-0001859392
+  name: Galaxy Digital
+  layer: buildings
+  summary: Leases its Helios data center campus in West Texas to CoreWeave under a 15-year lease.
+  cik: 1859392
+  about: FROM_CLAIMS
+- ref: Intersect
+  id: name-intersect
+  name: Intersect
+  layer: buildings
+  summary: Provides data center and energy infrastructure. Alphabet agreed to buy it for $4.8 billion plus debt.
+  about: FROM_CLAIMS
+- ref: Nscale
+  id: name-nscale
+  name: Nscale
+  layer: neocloud
+  summary: An AI cloud company with a deal to provide Microsoft about 200,000 NVIDIA GB300 GPUs of infrastructure.
+  about: FROM_CLAIMS
+- ref: OKLO
+  id: cik-0001849056
+  name: Oklo
+  layer: power
+  summary: An energy company Vertiv is working with to explore power for future data centers.
+  cik: 1849056
+  about: FROM_CLAIMS
+- ref: SoftBank
+  id: name-softbank-group
+  name: SoftBank Group
+  layer: other
+  summary: A Japanese investment group. It has put $30 billion into OpenAI through its Vision Fund 2.
+  about: FROM_CLAIMS
+- ref: VST
+  id: cik-0001692819
+  name: Vistra
+  layer: power
+  summary: A power company selling Meta more than 2,600 MW from three nuclear plants under 20-year agreements.
+  cik: 1692819
+  about: FROM_CLAIMS
+- ref: WULF
+  id: cik-0001083301
+  name: TeraWulf
+  layer: buildings
+  summary: Leases data center capacity at its Lake Mariner campus in New York to Fluidstack, with Google backing
+    part of the debt.
+  cik: 1083301
+  about: FROM_CLAIMS
+- ref: X-energy
+  id: name-x-energy
+  name: X-energy
+  layer: power
+  summary: Develops small modular nuclear reactors. Amazon invested in it.
+  about: FROM_CLAIMS
+
 hidden:
   GE: Licenses its name to GE Vernova; not a supply relationship.
   HTHIY: Nuclear joint venture partner of GE Vernova; outside the AI data center chain.
