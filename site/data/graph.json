@@ -54,6 +54,25 @@
       "services": "Services & other",
       "unstated": "Not stated in any filing"
     },
+    "function_tiers": {
+      "materials": 0,
+      "equipment": 0,
+      "fabrication": 1,
+      "packaging": 2,
+      "memory": 2,
+      "silicon": 3,
+      "interconnect": 4,
+      "systems": 5,
+      "construction": 6,
+      "power": 6,
+      "cooling": 6,
+      "logistics": 6,
+      "datacenter": 7,
+      "carrier": 7,
+      "software": 7,
+      "services": 7,
+      "unstated": 8
+    },
     "function_descriptions": {
       "fabrication": "The factories that actually print chips onto silicon wafers. Almost nobody owns one; almost everybody depends on one.",
       "packaging": "Takes finished wafers, cuts them up, wraps each chip in its casing and tests that it works. The unglamorous step between a wafer and a part you can solder down.",
